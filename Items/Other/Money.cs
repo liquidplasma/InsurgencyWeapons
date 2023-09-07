@@ -1,0 +1,57 @@
+﻿using InsurgencyWeapons.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace InsurgencyWeapons.Items.Other
+{
+    internal class MoneyDrop : GlobalNPC
+    {
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+        {
+            if (!npc.boss)
+            {
+                int amount = Math.Clamp(npc.lifeMax / 20, 1, 20);
+                npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 2, 2 + amount, 4 + amount));
+            }
+            else
+            {
+                int amount = Math.Clamp(npc.lifeMax / 250, 1, 70);
+                npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 1, 20 + amount, 60 + amount));
+            }
+        }
+    }
+
+    internal class Money : ModItem
+    {
+        public override void SetDefaults()
+        {
+            Item.width = 28;
+            Item.height = 22;
+            Item.value = Item.sellPrice(silver: 10);
+            Item.rare = ItemRarityID.Lime;
+            Item.maxStack = 999;
+        }
+
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            rotation += Item.velocity.X * 0.1f + Item.velocity.Y * 0.1f;
+            return base.PreDrawInWorld(spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
+        }
+
+        public override void PostUpdate()
+        {
+            Lighting.AddLight(Item.Center, Color.Green.ToVector3() * 0.75f);
+            if (Main.rand.NextBool(15))
+            {
+                Dust dust = Dust.NewDustDirect(Item.position, Item.width, Item.height, DustID.GreenTorch);
+                dust.noLight = true;
+                dust.noGravity = true;
+            }
+        }
+    }
+}

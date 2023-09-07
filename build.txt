@@ -1,0 +1,3 @@
+displayName = Insurgency Weapons
+author = marviN
+version = 0.1

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\tModLoader.targets" />
+  <PropertyGroup>
+    <AssemblyName>InsurgencyWeapons</AssemblyName>
+    <TargetFramework>net6.0</TargetFramework>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AdditionalFiles Remove="Projectiles\Magazines\NewFolder\**" />
+    <Compile Remove="Projectiles\Magazines\NewFolder\**" />
+    <EmbeddedResource Remove="Projectiles\Magazines\NewFolder\**" />
+    <None Remove="Projectiles\Magazines\NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Items\Weapons\Ranged\M1GarandEnbloc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
+    <Folder Include="Sounds\Weapons\Ins2\" />
+  </ItemGroup>
+</Project>
