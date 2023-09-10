@@ -62,7 +62,7 @@ namespace InsurgencyWeapons.Items.Weapons.Ranged
 
         public override void AddRecipes()
         {
-            this.RegisterINS2Recipe(290);
+            this.RegisterINS2RecipeWeapon(290);
         }
     }
 }

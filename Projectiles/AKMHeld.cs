@@ -114,7 +114,7 @@ namespace InsurgencyWeapons.Projectiles
                     Projectile.NewProjectileDirect(
                         spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
                         position: Player.MountedCenter + (Player.MountedCenter.DirectionTo(Player.Top) * 4f),
-                        velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom((MathHelper.PiOver4)),
+                        velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
                         type: ModContent.ProjectileType<RifleCasing>(),
                         damage: 0,
                         knockback: 0,

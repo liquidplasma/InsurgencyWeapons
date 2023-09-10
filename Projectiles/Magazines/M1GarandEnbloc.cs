@@ -15,17 +15,19 @@ namespace InsurgencyWeapons.Projectiles.Magazines
 
         public override void SetDefaults()
         {
-            Projectile.width = 8;
-            Projectile.height = 8;
+            Projectile.width = 16;
+            Projectile.height = 10;
             Projectile.penetrate = 5;
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Projectile.MyTexture();
             Rectangle rect = texture.Bounds;
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, rect, Color.White, Projectile.rotation, texture.Size() / 2, 0.75f, SpriteEffects.None);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, rect, lightColor, Projectile.rotation, texture.Size() / 2, 0.75f, SpriteEffects.None);
             return false;
         }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             SoundEngine.PlaySound(Tink, Projectile.Center);

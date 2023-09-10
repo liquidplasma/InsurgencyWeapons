@@ -4,7 +4,7 @@
     {
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 6;
+            Projectile.width = Projectile.height = 12;
             Projectile.penetrate = 5;
         }
     }

@@ -32,6 +32,10 @@ namespace InsurgencyWeapons
         {
             Insurgency.AmmoTypes.Clear();
             Insurgency.WeaponTypes.Clear();
+
+            Insurgency.AssaultRifles.Clear();
+            Insurgency.Rifles.Clear();
+
         }
     }
 }

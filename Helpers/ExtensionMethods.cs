@@ -1,5 +1,4 @@
-﻿using InsurgencyWeapons.Items.Other;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -30,7 +29,7 @@ namespace InsurgencyWeapons.Helpers
                 .Register();
         }
 
-        public static void RegisterINS2Recipe(this ModItem Item, int money)
+        public static void RegisterINS2RecipeWeapon(this ModItem Item, int money)
         {
             Item.CreateRecipe()
                 .AddIngredient(ItemID.IllegalGunParts, 2)
@@ -70,7 +69,7 @@ namespace InsurgencyWeapons.Helpers
 
         /// <summary>
         /// This projectile will rotate based on it's velocity with the following formula
-        /// <para>projectile.rotation += (projectile.velocity.X * 0.04f) + (projectile.velocity.Y * 0.04f)</para>
+        /// <code>projectile.rotation += (projectile.velocity.X * 0.04f) + (projectile.velocity.Y * 0.04f)</code>
         /// </summary>
         /// <param name="projectile"></param>
         public static void RotateBasedOnVelocity(this Projectile projectile)
@@ -89,12 +88,14 @@ namespace InsurgencyWeapons.Helpers
         }
 
         /// <summary>
-        /// Returns the player stealth when he is Vortex
+        /// Returns the player stealth
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
         public static float GetStealth(this Player player)
         {
+            if (player.shroomiteStealth)
+                return Math.Clamp(Math.Abs(player.stealth - 2f), 0f, 1.6f);
             return Math.Clamp(Math.Abs(player.stealth - 2f), 0f, 1.8f);
         }
 

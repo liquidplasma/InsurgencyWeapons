@@ -15,7 +15,7 @@ namespace InsurgencyWeapons.Items.Ammo
     internal class VOG_25P : ModItem
     {
         private int
-            realAKMDamage;
+            realVOGDamage;
 
         private Item Ammo, AKM;
 
@@ -37,7 +37,7 @@ namespace InsurgencyWeapons.Items.Ammo
                     if (H.active)
                     {
                         AKMHeld AKMHeldProj = H.ModProjectile as AKMHeld;
-                        realAKMDamage = AKMHeldProj.VOGDamage;
+                        realVOGDamage = AKMHeldProj.VOGDamage;
                         Ammo = AKMHeldProj.Ammo;
                     }
                 }
@@ -47,12 +47,11 @@ namespace InsurgencyWeapons.Items.Ammo
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             AKM ??= ContentSamples.ItemsByType[ModContent.ItemType<AKM>()];
-            if (AKM != null && Ammo != null && realAKMDamage > 0)
+            if (AKM != null && Ammo != null && realVOGDamage > 0)
             {
                 int index = tooltips.FindIndex(tip => tip.Name == "Damage");
                 tooltips.RemoveAt(index);
-                Main.NewText(realAKMDamage);
-                TooltipLine actualDamage = new(Mod, "actualDamage", realAKMDamage + Language.GetTextValue("LegacyTooltip.3"));
+                TooltipLine actualDamage = new(Mod, "actualDamage", realVOGDamage + Language.GetTextValue("LegacyTooltip.3"));
                 tooltips.Insert(index, actualDamage);
             }
         }

@@ -61,12 +61,13 @@ namespace InsurgencyWeapons.Projectiles
             AmmoType = ModContent.ItemType<Bullet3006>();
             base.SetDefaults();
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
             Main.EntitySpriteDraw(myTexture, Projectile.Center - Main.screenPosition, rect, Color.White, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.Yellow, 54f, 0.7f, new Vector2(0,-4f));
+            DrawMuzzleFlash(Color.Yellow, 54f, 0.7f, new Vector2(0, -4f));
             return false;
         }
 
@@ -136,6 +137,11 @@ namespace InsurgencyWeapons.Projectiles
                 }
                 Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
+            }
+
+            if(ReloadTimer > 0 )
+            {
+                Player.SetDummyItemTime(2);
             }
             if (Player.channel && CurrentAmmo == 0 && CanFire && Projectile.soundDelay == 0)
             {
