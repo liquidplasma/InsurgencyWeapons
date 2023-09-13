@@ -10,6 +10,15 @@ namespace InsurgencyWeapons.Helpers
 {
     internal static class ExtensionMethods
     {
+        /// <summary>
+        /// This EntityDraw call already subtracts screen position
+        /// <code>position - Main.screenPosition</code>
+        /// </summary>
+        public static void BetterEntityDraw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float worthless = 0f)
+        {
+            Main.EntitySpriteDraw(texture, position - Main.screenPosition, sourceRectangle, color, rotation, origin, new Vector2(scale), effects, worthless);
+        }
+
         public static void DefaultsToInsurgencyAmmo(this Item Item, int damage)
         {
             Item.damage = damage;
@@ -69,12 +78,12 @@ namespace InsurgencyWeapons.Helpers
 
         /// <summary>
         /// This projectile will rotate based on it's velocity with the following formula
-        /// <code>projectile.rotation += (projectile.velocity.X * 0.04f) + (projectile.velocity.Y * 0.04f)</code>
+        /// <code>projectile.rotation += (projectile.velocity.X * mult)</code>
         /// </summary>
         /// <param name="projectile"></param>
-        public static void RotateBasedOnVelocity(this Projectile projectile)
+        public static void RotateBasedOnVelocity(this Projectile projectile, float mult = 0.04f)
         {
-            projectile.rotation += (projectile.velocity.X * 0.04f) + (projectile.velocity.Y * 0.04f);
+            projectile.rotation += (projectile.velocity.X * mult);
         }
 
         /// <summary>

@@ -8,13 +8,7 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AdditionalFiles Remove="Projectiles\Magazines\NewFolder\**" />
-    <Compile Remove="Projectiles\Magazines\NewFolder\**" />
-    <EmbeddedResource Remove="Projectiles\Magazines\NewFolder\**" />
-    <None Remove="Projectiles\Magazines\NewFolder\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Items\Weapons\Ranged\M1GarandEnbloc.png" />
+    <None Remove="Items\Weapons\Grenades\M24St.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />

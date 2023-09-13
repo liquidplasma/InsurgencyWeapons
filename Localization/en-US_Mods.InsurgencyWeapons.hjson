@@ -38,6 +38,16 @@ Items: {
 		DisplayName: VOG-25P
 		Tooltip: ""
 	}
+
+	M24St: {
+		DisplayName: Stielhandgranate M24
+		Tooltip: ""
+	}
+
+	MK2: {
+		DisplayName: Mk. 2 Pineapple Grenade
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -50,5 +60,7 @@ Projectiles: {
 	STG44Held.DisplayName: StG44 Held
 	M1GarandEnbloc.DisplayName: M1 Garand Enbloc
 	M1GarandHeld.DisplayName: M1 Garand Held
-	AKMVOG_25P.DisplayName: A K M V O G_25 P
+	AKMVOG_25P.DisplayName: VOG 25P
+	M24StExplosive.DisplayName: Stielhandgranate
+	MK2Explosive.DisplayName: MK2 Pineapple
 }

@@ -1,1 +1,7 @@
-Insurgency Weapons is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+This mod is a port to tModLoader of [url=https://github.com/KernCore91/-SC-Insurgency-Weapons-Project] Insurgency Weapons Project [/url]
+This mod is licensed under [url=https://insurgency-support.newworldinteractive.com/hc/en-us/articles/360046247492-End-User-License-Agreement] New World Interactive End-User License Agreement [/url]
+
+Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
+
+Changelog//
+v0.1 - First release

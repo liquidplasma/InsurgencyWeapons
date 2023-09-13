@@ -1,6 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Items.Weapons.Ranged;
-using InsurgencyWeapons.Projectiles;
+using InsurgencyWeapons.Items.Weapons.AssaultRifles;
+using InsurgencyWeapons.Projectiles.AssaultRifles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;

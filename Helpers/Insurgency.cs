@@ -25,7 +25,7 @@ namespace InsurgencyWeapons.Helpers
         /// <summary>
         /// All of the weapons type goes here
         /// </summary>
-        public static List<int> WeaponTypes = new();
+        public static List<int> AllWeapons = new();
 
         /// <summary>
         /// All the rifles goes here
@@ -57,8 +57,9 @@ namespace InsurgencyWeapons.Helpers
         public enum MagazineState
         {
             Reloaded,
-            EmptyMagOut,
+            Fired,
             EmptyMagIn,
+            EmptyMagOut,
         }
     }
 }

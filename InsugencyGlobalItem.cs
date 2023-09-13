@@ -28,7 +28,7 @@ namespace InsurgencyWeapons
                 Texture2D texture = TextureAssets.Item[item.type].Value;
                 Rectangle rect = texture.Bounds;
                 scale = 0.5f;
-                Main.EntitySpriteDraw(texture, item.Center - Main.screenPosition, rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
+                ExtensionMethods.BetterEntityDraw(texture, item.Center, rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
                 return false;
             }
             return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
@@ -41,7 +41,7 @@ namespace InsurgencyWeapons
                 if (Insurgency.AmmoTypes.Contains(item.type))
                     SoundEngine.PlaySound(CraftNoise, Main.LocalPlayer.Center);
 
-                if (Insurgency.WeaponTypes.Contains(item.type))
+                if (Insurgency.AllWeapons.Contains(item.type))
                     SoundEngine.PlaySound(GetWeapon, Main.LocalPlayer.Center);
             }
         }

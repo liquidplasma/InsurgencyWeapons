@@ -1,3 +1,3 @@
-displayName = Insurgency Weapons
+displayName = [c/A017A0:Insurgency Weapons]
 author = marviN
 version = 0.1
