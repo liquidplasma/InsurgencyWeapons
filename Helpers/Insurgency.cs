@@ -37,6 +37,11 @@ namespace InsurgencyWeapons.Helpers
         /// </summary>
         public static List<int> AssaultRifles = new();
 
+        /// <summary>
+        /// All of the grenades goes here
+        /// </summary>
+        public static List<int> Grenades = new();
+
         public enum RiflesEnum
         {
             M1Garand

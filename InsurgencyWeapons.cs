@@ -1,6 +1,7 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.AssaultRifles;
+using InsurgencyWeapons.Items.Weapons.Grenades;
 using InsurgencyWeapons.Items.Weapons.Rifles;
 using Terraria.ModLoader;
 
@@ -19,11 +20,17 @@ namespace InsurgencyWeapons
             //Weapon types
             Insurgency.AllWeapons.Add(ModContent.ItemType<AKM>());
             Insurgency.AllWeapons.Add(ModContent.ItemType<STG44>());
+            Insurgency.AllWeapons.Add(ModContent.ItemType<MK2>());
+            Insurgency.AllWeapons.Add(ModContent.ItemType<M24St>());
             //Insurgency.AllWeapons.Add(ModContent.ItemType<M1Garand>());
 
             //Assault rifles
             Insurgency.AssaultRifles.Add(ModContent.ItemType<AKM>());
             Insurgency.AssaultRifles.Add(ModContent.ItemType<STG44>());
+
+            //Grenades
+            Insurgency.Grenades.Add(ModContent.ItemType<MK2>());
+            Insurgency.Grenades.Add(ModContent.ItemType<M24St>());
 
             //Rifles
             //Insurgency.Rifles.Add(ModContent.ItemType<M1Garand>());
@@ -35,6 +42,7 @@ namespace InsurgencyWeapons
             Insurgency.AllWeapons.Clear();
 
             Insurgency.AssaultRifles.Clear();
+            Insurgency.Grenades.Clear();
             Insurgency.Rifles.Clear();
         }
     }

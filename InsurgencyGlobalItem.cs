@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 
 namespace InsurgencyWeapons
 {
-    internal class InsugencyGlobalItem : GlobalItem
+    internal class InsurgencyGlobalItem : GlobalItem
     {
-        private static SoundStyle CraftNoise => new("InsurgencyWeapons/Sounds/Weapons/Craft/ammo")
+        private static SoundStyle AmmoNoise => new("InsurgencyWeapons/Sounds/Weapons/Craft/ammo")
         {
             MaxInstances = 0
         };
@@ -38,11 +38,17 @@ namespace InsurgencyWeapons
         {
             if (context is RecipeItemCreationContext)
             {
-                if (Insurgency.AmmoTypes.Contains(item.type))
-                    SoundEngine.PlaySound(CraftNoise, Main.LocalPlayer.Center);
+                if (Insurgency.AmmoTypes.Contains(item.type) &&
+                    Insurgency.Grenades.Contains(item.type))
+                {
+                    SoundEngine.PlaySound(AmmoNoise, Main.LocalPlayer.Center);
+                }
 
-                if (Insurgency.AllWeapons.Contains(item.type))
+                if (Insurgency.AllWeapons.Contains(item.type) &&
+                    !Insurgency.Grenades.Contains(item.type))
+                {
                     SoundEngine.PlaySound(GetWeapon, Main.LocalPlayer.Center);
+                }
             }
         }
     }
