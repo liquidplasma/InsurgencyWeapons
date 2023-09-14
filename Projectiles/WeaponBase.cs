@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
-namespace InsurgencyWeapons.Projectiles.WeaponExtras
+namespace InsurgencyWeapons.Projectiles
 {
     internal abstract class WeaponBase : ModProjectile
     {
@@ -79,7 +79,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
             MouseRightPressed,
             HasUnderBarrelGrenadeLauncer;
 
-        public int lessThanMaxAmmo;
+        public int AmmoStackCount;
 
         /// <summary>
         /// Time in ticks
@@ -120,8 +120,8 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
             {
                 Vector2 muzzleDrawPos = Player.RotatedRelativePoint(Player.MountedCenter + jankFix + Player.MountedCenter.DirectionTo(MouseAim) * offset) - recoil + recoilVertical;
                 Texture2D muzzleFlash = HelperStats.MuzzleFlash;
-                Rectangle rect = muzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay,0,6));
-                ExtensionMethods.BetterEntityDraw(muzzleFlash, muzzleDrawPos, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+                Rectangle rect = muzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay, 0, 6));
+                ExtensionMethods.BetterEntityDraw(muzzleFlash, muzzleDrawPos, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);                
             }
         }
 

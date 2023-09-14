@@ -12,7 +12,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
     {
         public Player Player => Main.player[Projectile.owner];
         public float FuseTime { get; set; }
-
+        public bool Moving => Projectile.velocity.Length() >= 0.5f;
         public bool HitOnce;
 
         public int AITimer
@@ -54,7 +54,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (HitOnce)
+            if (HitOnce || (Moving && State == ((int)Exploded.Exploding)))
                 return false;
             return base.Colliding(projHitbox, targetHitbox);
         }
@@ -106,7 +106,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             {
                 State = (int)Exploded.Exploding;
                 HitOnce = false;
-                Projectile.Resize(384, 384);
+                Projectile.Resize(240, 240);
                 Projectile.alpha = 255;
                 Projectile.velocity *= 0;
                 Projectile.tileCollide = false;
@@ -120,7 +120,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             Projectile.Bounce(4);
             Projectile.velocity *= 0.7f;
 
-            if (Projectile.velocity.Length() >= 0.5f)
+            if (Moving)
                 SoundEngine.PlaySound(Sounds.GrenadeTink, Projectile.Center);
             return false;
         }
@@ -133,7 +133,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
                 Player.HurtInfo greandeSelfDamage = new()
                 {
                     Dodgeable = true,
-                    HitDirection = Player.direction,
+                    HitDirection = Projectile.Center.DirectionTo(Player.Center).X > 0f ? 1 : -1,
                     Damage = (int)(Projectile.damage * 0.45f),
                     DamageSource = PlayerDeathReason.ByProjectile(Player.whoAmI, Projectile.identity),
                     Knockback = 6f

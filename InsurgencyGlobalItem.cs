@@ -38,7 +38,7 @@ namespace InsurgencyWeapons
         {
             if (context is RecipeItemCreationContext)
             {
-                if (Insurgency.AmmoTypes.Contains(item.type) &&
+                if (Insurgency.AmmoTypes.Contains(item.type) ||
                     Insurgency.Grenades.Contains(item.type))
                 {
                     SoundEngine.PlaySound(AmmoNoise, Main.LocalPlayer.Center);

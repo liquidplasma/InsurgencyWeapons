@@ -72,7 +72,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
             ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.Yellow, 58f, 1f, new Vector2(0, -3f));
+            DrawMuzzleFlash(Color.Yellow, 61f, 1f, new Vector2(0, -3.33f));
             return false;
         }
 
@@ -144,7 +144,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 }
             }
 
-            if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
+            if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
                 ReloadStarted = true;
@@ -167,18 +167,12 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
 
-                    if (Ammo.stack >= MaxAmmo)
-                        Ammo.stack -= MaxAmmo;
-                    else
+                    if (Ammo.stack > 0)
                     {
-                        lessThanMaxAmmo = Player.CountItem(Ammo.type);
-                        Ammo.stack -= lessThanMaxAmmo;
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
+                        Ammo.stack -= AmmoStackCount;
+                        CurrentAmmo = AmmoStackCount;
                     }
-
-                    if (Ammo.stack >= MaxAmmo)
-                        CurrentAmmo = MaxAmmo;
-                    else
-                        CurrentAmmo = lessThanMaxAmmo;
 
                     break;
 

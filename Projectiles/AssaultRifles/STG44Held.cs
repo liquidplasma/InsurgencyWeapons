@@ -1,7 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.AssaultRifles;
-using InsurgencyWeapons.Projectiles.WeaponExtras;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.AssaultRifles;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using Microsoft.Xna.Framework;
@@ -112,7 +111,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 }
             }
 
-            if (CurrentAmmo == 0 && Player.CountItem(AmmoType) >= MaxAmmo && !ReloadStarted)
+            if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
                 ReloadStarted = true;
@@ -136,18 +135,12 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
 
-                    if (Ammo.stack >= MaxAmmo)
-                        Ammo.stack -= MaxAmmo;
-                    else
+                    if (Ammo.stack > 0)
                     {
-                        lessThanMaxAmmo = Player.CountItem(Ammo.type);
-                        Ammo.stack -= lessThanMaxAmmo;
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
+                        Ammo.stack -= AmmoStackCount;
+                        CurrentAmmo = AmmoStackCount;
                     }
-
-                    if (Ammo.stack >= MaxAmmo)
-                        CurrentAmmo = MaxAmmo;
-                    else
-                        CurrentAmmo = lessThanMaxAmmo;
 
                     break;
 
