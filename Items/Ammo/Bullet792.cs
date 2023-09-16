@@ -7,7 +7,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// StG-44 7.92x33mm Ammo
     /// </summary>
-    internal class Bullet792 : ModItem
+    internal class Bullet792 : AmmoItem
     {
         public override void SetDefaults()
         {

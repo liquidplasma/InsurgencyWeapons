@@ -34,7 +34,7 @@ namespace InsurgencyWeapons.Items.Other
             Item.height = 22;
             Item.value = Item.sellPrice(silver: 10);
             Item.rare = ItemRarityID.Lime;
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack;
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)

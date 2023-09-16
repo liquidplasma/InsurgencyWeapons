@@ -4,4 +4,4 @@ This mod is licensed under [url=https://insurgency-support.newworldinteractive.c
 Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
 
 Changelog//
-v0.1 - First release
+v0.2 - Added: MP7, M1928, PPSH41, M1 Garand, Colt Python, AKS74U, RGO Grenade

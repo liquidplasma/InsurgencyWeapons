@@ -76,6 +76,7 @@ namespace InsurgencyWeapons.Projectiles
         public Vector2 SpecificWeaponFix = new(0, 0);
 
         public bool
+            isPistol, isASmallSprite, isIdle,
             MouseRightPressed,
             HasUnderBarrelGrenadeLauncer;
 
@@ -86,8 +87,8 @@ namespace InsurgencyWeapons.Projectiles
         /// </summary>
         public int ShotDelay
         {
-            get => (int)Projectile.localAI[0];
-            set => Projectile.localAI[0] = value;
+            get => (int)Projectile.ai[0];
+            set => Projectile.ai[0] = value;
         }
 
         /// <summary>
@@ -95,8 +96,8 @@ namespace InsurgencyWeapons.Projectiles
         /// </summary>
         public int ReloadTimer
         {
-            get => (int)Projectile.localAI[1];
-            set => Projectile.localAI[1] = value;
+            get => (int)Projectile.ai[1];
+            set => Projectile.ai[1] = value;
         }
 
         /// <summary>
@@ -104,8 +105,8 @@ namespace InsurgencyWeapons.Projectiles
         /// </summary>
         public int AlternateFireCoolDown
         {
-            get => (int)Projectile.localAI[2];
-            set => Projectile.localAI[2] = value;
+            get => (int)Projectile.ai[2];
+            set => Projectile.ai[2] = value;
         }
 
         /// <summary>
@@ -116,13 +117,15 @@ namespace InsurgencyWeapons.Projectiles
         /// <param name="scale">The scale</param>
         public void DrawMuzzleFlash(Color color, float offset, float scale, Vector2 jankFix)
         {
-            if (ShotDelay <= HeldItem.useTime && Player.channel && !UnderAlternateFireCoolDown)
+            /*if (ShotDelay <= HeldItem.useTime && Player.channel && !UnderAlternateFireCoolDown)
             {
-                Vector2 muzzleDrawPos = Player.RotatedRelativePoint(Player.MountedCenter + jankFix + Player.MountedCenter.DirectionTo(MouseAim) * offset) - recoil + recoilVertical;
+                Vector2 position = Player.MountedCenter + jankFix;
+                Vector2 muzzleDrawPos = position - recoil + recoilVertical;
+                muzzleDrawPos += muzzleDrawPos.DirectionTo(MouseAim) * offset;
                 Texture2D muzzleFlash = HelperStats.MuzzleFlash;
                 Rectangle rect = muzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay, 0, 6));
-                ExtensionMethods.BetterEntityDraw(muzzleFlash, muzzleDrawPos, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);                
-            }
+                ExtensionMethods.BetterEntityDraw(muzzleFlash, muzzleDrawPos, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            }*/
         }
 
         /// <summary>
@@ -178,11 +181,19 @@ namespace InsurgencyWeapons.Projectiles
         public override bool PreAI()
         {
             Projectile.CheckPlayerActiveAndNotDead(Player);
+
             ///Check if ammo is 0 or less then remove it if necessary, since I'm directly reducing stack size
             if (Ammo != null && Ammo.stack <= 0)
                 Ammo.TurnToAir();
             if (AmmoGL != null && AmmoGL.stack <= 0)
                 AmmoGL.TurnToAir();
+
+            //Muzzleflash light
+            if (ShotDelay == 1)
+            {
+                Lighting.AddLight(Player.Center, Color.Gold.ToVector3());
+            }
+
             return base.PreAI();
         }
 
@@ -222,19 +233,40 @@ namespace InsurgencyWeapons.Projectiles
             //positioning / velocity
             #region
             idlePos = new Vector2(-12, -40);
-            if (Player.channel || ReloadTimer > 0 || UnderAlternateFireCoolDown || Insurgency.Rifles.Contains(HeldItem.type))
+            if (isPistol)
             {
+                int X = Player.direction == -1
+                    ? 2 //true
+                    : -22; //false
+
+                idlePos = new Vector2(X, -10);
+            }
+            if (isASmallSprite)
+            {
+                int X = Player.direction == -1
+                    ? -12 //true
+                    : -16; //false
+
+                idlePos = new Vector2(X, -20);
+            }
+
+            if (Player.channel
+                || ReloadTimer > 0
+                || UnderAlternateFireCoolDown
+                || Insurgency.Rifles.Contains(HeldItem.type))
+            {
+                isIdle = false;
                 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
                 recoilVertical = Vector2.UnitY * (-ShotDelay / 6f);
-                Vector2 distance = Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter - recoil + recoilVertical + SpecificWeaponFix;
-                Projectile.Center = Player.RotatedRelativePoint(Player.MountedCenter + distance);
+                Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + recoilVertical + SpecificWeaponFix;
+                Projectile.Center = Player.MountedCenter + distance - new Vector2(0f, Projectile.gfxOffY - Player.gfxOffY);
                 Projectile.velocity = Vector2.Zero;
                 int mouseDirection = Player.DirectionTo(MouseAim).X > 0f ? 1 : -1;
                 Projectile.rotation = Player.AngleTo(MouseAim) + MathHelper.PiOver2;
                 Player.ChangeDir(mouseDirection);
                 Projectile.spriteDirection = Player.direction;
                 Player.heldProj = Projectile.whoAmI;
-                Player.HoldOutArm(Projectile, MouseAim);
+                Player.HoldOutArm(MouseAim, ShotDelay * 2f);
                 if (!Insurgency.Rifles.Contains(HeldItem.type))
                 {
                     Player.SetDummyItemTime(2);
@@ -242,9 +274,14 @@ namespace InsurgencyWeapons.Projectiles
             }
             else if (ReloadTimer == 0)
             {
+                isIdle = true;
                 Projectile.position = Player.Center + idlePos;
                 Projectile.spriteDirection = Player.direction;
                 Projectile.rotation = Player.direction == -1 ? -MathHelper.PiOver4 : MathHelper.PiOver4;
+                if (isPistol)
+                {
+                    Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
+                }
                 Projectile.frame = 0;
             }
             #endregion

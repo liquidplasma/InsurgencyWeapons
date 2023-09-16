@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Weapons.Grenades
 {
-    internal class M24St : ModItem
+    internal class M24St : Grenade
     {
         private int M24StType => ModContent.ProjectileType<M24StExplosive>();
         private bool Fired;

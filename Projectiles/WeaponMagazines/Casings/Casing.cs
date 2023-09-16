@@ -4,7 +4,7 @@ using Terraria.Audio;
 
 namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Casings
 {
-    internal class RifleCasing : MagazineBase
+    internal class Casing : MagazineBase
     {
         private SoundStyle Tink => new("InsurgencyWeapons/Sounds/Weapons/Shells/pl_shell", 7)
         {

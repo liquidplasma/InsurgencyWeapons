@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {
-    internal class AKM : ModItem
+    internal class AKM : AssaultRifle
     {
         private int AKMType => ModContent.ProjectileType<AKMHeld>();
 
@@ -33,21 +33,6 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.value = Item.sellPrice(0, 4, 0, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            return base.CanUseItem(player);
-        }
-
-        public override bool? CanChooseAmmo(Item ammo, Player player)
-        {
-            return null;
-        }
-
-        public override bool CanConsumeAmmo(Item ammo, Player player)
-        {
-            return false;
         }
 
         public override void HoldItem(Player player)

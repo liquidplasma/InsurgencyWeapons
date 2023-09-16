@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {
-    internal class STG44 : ModItem
+    internal class STG44 : AssaultRifle
     {
         private int STGType => ModContent.ProjectileType<STG44Held>();
 
@@ -33,16 +33,6 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.value = Item.sellPrice(0, 4, 0, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            return base.CanUseItem(player);
-        }
-
-        public override bool CanConsumeAmmo(Item ammo, Player player)
-        {
-            return false;
         }
 
         public override void HoldItem(Player player)

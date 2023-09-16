@@ -50,7 +50,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         public override void SetDefaults()
         {
             Projectile.width = 28;
-            Projectile.height = 72;
+            Projectile.height = 74;
             MaxAmmo = 30;
             AmmoType = ModContent.ItemType<Bullet792>();
             base.SetDefaults();
@@ -83,7 +83,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Projectile.Center.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-2, 2))) * HeldItem.shootSpeed;
+                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-2, 2))) * HeldItem.shootSpeed;
                 int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
                 int type = Ammo.shoot;
                 if (type == ProjectileID.Bullet)
@@ -93,7 +93,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     //Bullet
                     Projectile.NewProjectileDirect(
                        spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                       position: Player.MountedCenter + Player.MountedCenter.DirectionTo(Player.Top) * 4f,
+                       position: Player.MountedCenter,
                        velocity: aim,
                        type: type,
                        damage: damage,
@@ -102,9 +102,9 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     //Casing
                     Projectile.NewProjectileDirect(
                         spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                        position: Player.MountedCenter + Player.MountedCenter.DirectionTo(Player.Top) * 4f,
+                        position: Player.MountedCenter,
                         velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                        type: ModContent.ProjectileType<RifleCasing>(),
+                        type: ModContent.ProjectileType<Casing>(),
                         damage: 0,
                         knockback: 0,
                         owner: Player.whoAmI);
@@ -141,7 +141,6 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                         Ammo.stack -= AmmoStackCount;
                         CurrentAmmo = AmmoStackCount;
                     }
-
                     break;
 
                 case 80:

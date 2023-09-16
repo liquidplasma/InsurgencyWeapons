@@ -1,5 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Ammo
@@ -7,7 +8,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// M1 Garand 7.62x63mm Ammo
     /// </summary>
-    internal class Bullet3006 : ModItem
+    internal class Bullet3006 : AmmoItem
     {
         public override void SetDefaults()
         {

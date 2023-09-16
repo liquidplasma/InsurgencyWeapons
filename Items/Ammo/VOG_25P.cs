@@ -12,7 +12,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// GP-25 40mm VOG-25P Grenade Ammo
     /// </summary>
-    internal class VOG_25P : ModItem
+    internal class VOG_25P : AmmoItem
     {
         private int
             realVOGDamage;
@@ -21,8 +21,8 @@ namespace InsurgencyWeapons.Items.Ammo
 
         public override void SetDefaults()
         {
-            Item.width = 8;
-            Item.height = 16;
+            Item.width = 6;
+            Item.height = 18;
             Item.DefaultsToInsurgencyAmmo(60);
         }
 

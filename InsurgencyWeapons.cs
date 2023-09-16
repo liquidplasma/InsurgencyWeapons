@@ -1,8 +1,7 @@
 using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.AssaultRifles;
-using InsurgencyWeapons.Items.Weapons.Grenades;
-using InsurgencyWeapons.Items.Weapons.Rifles;
+using InsurgencyWeapons.Items;
+using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons
@@ -11,29 +10,42 @@ namespace InsurgencyWeapons
     {
         public override void PostSetupContent()
         {
-            //Ammo types
-            Insurgency.AmmoTypes.Add(ModContent.ItemType<Bullet762>());
-            Insurgency.AmmoTypes.Add(ModContent.ItemType<VOG_25P>());
-            Insurgency.AmmoTypes.Add(ModContent.ItemType<Bullet3006>());
-            Insurgency.AmmoTypes.Add(ModContent.ItemType<Bullet792>());
+            for (int i = 1; i < ItemLoader.ItemCount; i++)
+            {
+                Item item = ContentSamples.ItemsByType[i];
 
-            //Weapon types
-            Insurgency.AllWeapons.Add(ModContent.ItemType<AKM>());
-            Insurgency.AllWeapons.Add(ModContent.ItemType<STG44>());
-            Insurgency.AllWeapons.Add(ModContent.ItemType<MK2>());
-            Insurgency.AllWeapons.Add(ModContent.ItemType<M24St>());
-            //Insurgency.AllWeapons.Add(ModContent.ItemType<M1Garand>());
+                if (item.ModItem is not null and AmmoItem)
+                    //Ammo types
+                    Insurgency.AmmoTypes.Add(item.type);
 
-            //Assault rifles
-            Insurgency.AssaultRifles.Add(ModContent.ItemType<AKM>());
-            Insurgency.AssaultRifles.Add(ModContent.ItemType<STG44>());
+                if (item.ModItem is not null and WeaponUtils)
+                    //All weapons
+                    Insurgency.AllWeapons.Add(item.type);
 
-            //Grenades
-            Insurgency.Grenades.Add(ModContent.ItemType<MK2>());
-            Insurgency.Grenades.Add(ModContent.ItemType<M24St>());
+                if (item.ModItem is not null and AssaultRifle)
+                    //Assault rifles
+                    Insurgency.AssaultRifles.Add(item.type);
 
-            //Rifles
-            //Insurgency.Rifles.Add(ModContent.ItemType<M1Garand>());
+                if (item.ModItem is not null and Carbine)
+                    //Carbines
+                    Insurgency.Carbines.Add(item.type);
+
+                if (item.ModItem is not null and Grenade)
+                    //Grenades
+                    Insurgency.Grenades.Add(item.type);
+
+                if (item.ModItem is not null and Revolver)
+                    //Revolvers
+                    Insurgency.Revolvers.Add(item.type);
+
+                if (item.ModItem is not null and Rifle)
+                    //Rifles
+                    Insurgency.Rifles.Add(item.type);
+
+                if (item.ModItem is not null and SubMachineGun)
+                    //Sub machine guns
+                    Insurgency.SubMachineGuns.Add(item.type);
+            }
         }
 
         public override void Unload()
@@ -42,8 +54,11 @@ namespace InsurgencyWeapons
             Insurgency.AllWeapons.Clear();
 
             Insurgency.AssaultRifles.Clear();
+            Insurgency.Carbines.Clear();
             Insurgency.Grenades.Clear();
             Insurgency.Rifles.Clear();
+            Insurgency.Revolvers.Clear();
+            Insurgency.SubMachineGuns.Clear();
         }
     }
 }

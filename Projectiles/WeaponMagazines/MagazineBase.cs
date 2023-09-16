@@ -28,24 +28,27 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             {
                 Projectile.alpha -= 16;
                 Projectile.velocity.Y += 0.1f;
+
+                if (Projectile.velocity.Y >= 12f)
+                    Projectile.velocity = Projectile.oldVelocity;
+
+                
                 Projectile.RotateBasedOnVelocity();
+            }else if (Projectile.penetrate == 1)
+            {
+                Projectile.tileCollide = false;
+                Projectile.velocity = Vector2.Zero;
             }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Projectile.penetrate--;
-            if (Projectile.penetrate == 1)
-            {
-                Projectile.tileCollide = false;
-                Projectile.velocity *= 0;
-            }
-            else
+            if (Projectile.penetrate > 1)
             {
                 Projectile.Bounce(60);
                 Projectile.velocity *= 0.5f;
             }
-
+            Projectile.penetrate--;
             return false;
         }
     }

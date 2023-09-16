@@ -27,7 +27,7 @@ namespace InsurgencyWeapons.Helpers
             Item.shoot = Insurgency.Bullet;
             Item.rare = ItemRarityID.Lime;
             Item.consumable = false;
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack;
         }
 
         public static void RegisterINS2RecipeAmmo(this ModItem Item, int money, int amountToCraft = 1)
@@ -113,16 +113,19 @@ namespace InsurgencyWeapons.Helpers
         /// </summary>
         /// <param name="Player"></param>
         /// <param name="Projectile"></param>
-        public static void HoldOutArm(this Player Player, Projectile Projectile, Vector2 vector)
+        public static void HoldOutArm(this Player Player, Vector2 vector, float offset)
         {
-            float VisualRotation = Projectile.Center.AngleTo(vector);
+            float VisualRotation = Player.MountedCenter.AngleTo(vector + new Vector2(offset));
+            float sin = (float)Math.Sin(VisualRotation) * 0.5f;            
             if (Player.direction == 1)
             {
-                Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, VisualRotation - MathHelper.PiOver2 + (MathHelper.PiOver2 / (10 - Math.Abs(VisualRotation))));
+                VisualRotation -= sin;
+                Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.ThreeQuarters, VisualRotation - MathHelper.PiOver2 + (MathHelper.PiOver2 / (10 - Math.Abs(VisualRotation))));
             }
             else
             {
-                Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, VisualRotation - MathHelper.PiOver2 - (MathHelper.PiOver2 / (10 - Math.Abs(VisualRotation))));
+                VisualRotation += sin;
+                Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.ThreeQuarters, VisualRotation - MathHelper.PiOver2 - (MathHelper.PiOver2 / (10 - Math.Abs(VisualRotation))));
             }
         }
 

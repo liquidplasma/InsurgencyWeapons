@@ -53,6 +53,24 @@ namespace InsurgencyWeapons.Helpers
         }
 
         /// <summary>
+        /// Returns the amount of active projectiles in this world
+        /// </summary>
+        /// <returns></returns>
+        public static int GetProjectileAmount()
+        {
+            int amount = 0;
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (proj.active)
+                {
+                    amount++;
+                }
+            }
+            return amount;
+        }
+
+        /// <summary>
         /// Finds said item type in the player inventory
         /// </summary>
         /// <param name="player"></param>

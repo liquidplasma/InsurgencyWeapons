@@ -14,7 +14,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         public float FuseTime { get; set; }
         public bool Moving => Projectile.velocity.Length() >= 0.5f;
         public bool HitOnce;
-
+        public int TileCollides;
         public int AITimer
         {
             get => (int)Projectile.ai[0];
@@ -101,7 +101,11 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             Projectile.RotateBasedOnVelocity(mult: 0.075f);
             AITimer++;
             if (AITimer > FuseTime / 18f)
+            {
                 Projectile.velocity.Y += 0.24f;
+                if (Projectile.velocity.Y >= 10f)
+                    Projectile.velocity = Projectile.oldVelocity;
+            }
             if (Projectile.timeLeft < 3)
             {
                 State = (int)Exploded.Exploding;
@@ -117,6 +121,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            TileCollides++;
             Projectile.Bounce(4);
             Projectile.velocity *= 0.7f;
 

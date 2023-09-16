@@ -1,11 +1,11 @@
 Items: {
 	AKM: {
-		DisplayName: AKM + GP25
+		DisplayName: AKM 7.62x39mm + GP-25 40mm VOG-25P
 		Tooltip: ""
 	}
 
 	STG44: {
-		DisplayName: StG-44
+		DisplayName: StG-44 7.92x33mm
 		Tooltip: ""
 	}
 
@@ -48,19 +48,85 @@ Items: {
 		DisplayName: Mk. 2 Pineapple Grenade
 		Tooltip: ""
 	}
+
+	Bullet545: {
+		DisplayName: 5.45x39mm Ammo
+		Tooltip: ""
+	}
+
+	AKS74U: {
+		DisplayName: AKS-74U 5.45x39mm
+		Tooltip: ""
+	}
+
+	RGO: {
+		DisplayName: RGO Grenade
+		Tooltip: ""
+	}
+
+	Bullet357: {
+		DisplayName: Python .357 Magnum Ammo
+		Tooltip: ""
+	}
+
+	ColtPython: {
+		DisplayName: Colt Python .357 Magnum
+		Tooltip: ""
+	}
+
+	Bullet4630: {
+		DisplayName: MP7 4.6x30mm Ammo
+		Tooltip: ""
+	}
+
+	MP7: {
+		DisplayName: H&K MP7 4.6x30mm
+		Tooltip: ""
+	}
+
+	Bullet45ACP: {
+		DisplayName: .45ACP Ammo
+		Tooltip: ""
+	}
+
+	ChicagoTypewriter: {
+		DisplayName: Thompson M1928 .45ACP
+		Tooltip: ""
+	}
+
+	Bullet76225: {
+		DisplayName: PPSh-41 7.62x25mm Ammo
+		Tooltip: ""
+	}
+
+	PPSH41: {
+		DisplayName: PPSh-41 7.62x25mm
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
-	AKMHeld.DisplayName: AKM Held
+	AKMHeld.DisplayName: AKM
 	NormalBullet.DisplayName: Normal Bullet
 	AKMMagazine.DisplayName: AKM Magazine
 	RifleCasing.DisplayName: Rifle Casing
 	AKMVOG_25.DisplayName: AKM VOG_25
 	STGMagazine.DisplayName: StG Magazine
-	STG44Held.DisplayName: StG44 Held
+	STG44Held.DisplayName: StG44
 	M1GarandEnbloc.DisplayName: M1 Garand Enbloc
-	M1GarandHeld.DisplayName: M1 Garand Held
+	M1GarandHeld.DisplayName: M1 Garand
 	AKMVOG_25P.DisplayName: VOG 25P
 	M24StExplosive.DisplayName: Stielhandgranate
 	MK2Explosive.DisplayName: MK2 Pineapple
+	AKS74UHeld.DisplayName: AKS74U
+	AKS74UMagazine.DisplayName: AKS74U Magazine
+	RGOExplosive.DisplayName: RGO Grenade
+	ColtPythonHeld.DisplayName: Colt Python Held
+	Casing.DisplayName: Casing
+	MP7Held.DisplayName: M P7 Held
+	MP7Magazine.DisplayName: M P7 Magazine
+	ChicagoTypewriterHeld.DisplayName: Chicago Typewriter Held
+	M1928Magazine.DisplayName: M1928 Magazine
+	PPSH41Held.DisplayName: P P S H41 Held
+	PPSH41Magazine.DisplayName: P P S H41 Magazine
 }

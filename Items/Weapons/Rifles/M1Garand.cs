@@ -8,10 +8,9 @@ using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Weapons.Rifles
 {
-    /*internal class M1Garand : ModItem
+    internal class M1Garand : Rifle
     {
-        //TODO
-        //private int M1Type => ModContent.ProjectileType<M1GarandHeld>();
+        private int M1Type => ModContent.ProjectileType<M1GarandHeld>();
 
         public override void SetStaticDefaults()
         {
@@ -27,7 +26,7 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
             Item.width = 76;
             Item.height = 24;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 15;
+            Item.damage = 23;
             Item.shootSpeed = 16f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
@@ -36,7 +35,6 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
             Item.DamageType = DamageClass.Ranged;
         }
 
-        //TODO
         public override void HoldItem(Player player)
         {
             if (player.ownedProjectileCounts[M1Type] < 1)
@@ -56,5 +54,5 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
         {
             this.RegisterINS2RecipeWeapon(255);
         }
-    }*/
+    }
 }
