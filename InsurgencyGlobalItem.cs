@@ -44,8 +44,7 @@ namespace InsurgencyWeapons
                     SoundEngine.PlaySound(AmmoNoise, Main.LocalPlayer.Center);
                 }
 
-                if (Insurgency.AllWeapons.Contains(item.type) &&
-                    !Insurgency.Grenades.Contains(item.type))
+                if (Insurgency.AllWeapons.Contains(item.type))
                 {
                     SoundEngine.PlaySound(GetWeapon, Main.LocalPlayer.Center);
                 }

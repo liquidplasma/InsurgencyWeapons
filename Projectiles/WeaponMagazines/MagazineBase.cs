@@ -32,9 +32,9 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
                 if (Projectile.velocity.Y >= 12f)
                     Projectile.velocity = Projectile.oldVelocity;
 
-                
                 Projectile.RotateBasedOnVelocity();
-            }else if (Projectile.penetrate == 1)
+            }
+            else if (Projectile.penetrate == 1)
             {
                 Projectile.tileCollide = false;
                 Projectile.velocity = Vector2.Zero;

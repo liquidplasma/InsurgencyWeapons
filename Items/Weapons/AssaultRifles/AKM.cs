@@ -8,6 +8,9 @@ using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {
+    /// <summary>
+    /// AKM 7.62x39mm + GP-25 40mm VOG-25P
+    /// </summary>
     internal class AKM : AssaultRifle
     {
         private int AKMType => ModContent.ProjectileType<AKMHeld>();

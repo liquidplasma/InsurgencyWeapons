@@ -8,7 +8,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Casings
     {
         private SoundStyle Tink => new("InsurgencyWeapons/Sounds/Weapons/Shells/pl_shell", 7)
         {
-            Volume = 0.1f,
+            Volume = 0.4f,
         };
 
         public override void SetDefaults()

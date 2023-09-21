@@ -91,24 +91,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                     type = Insurgency.Bullet;
                 if (Player.whoAmI == Main.myPlayer)
                 {
-                    //Bullet
-                    Projectile.NewProjectileDirect(
-                       spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                       position: Player.MountedCenter,
-                       velocity: aim,
-                       type: type,
-                       damage: damage,
-                       knockback: Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack),
-                       owner: Player.whoAmI);
-                    //Casing
-                    Projectile.NewProjectileDirect(
-                        spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                        position: Player.MountedCenter,
-                        velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                        type: ModContent.ProjectileType<Casing>(),
-                        damage: 0,
-                        knockback: 0,
-                        owner: Player.whoAmI);
+                    Shoot(aim, type, damage);
                 }
             }
 
@@ -148,7 +131,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (Player.whoAmI == Main.myPlayer)
-                        Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo), Projectile.Center, new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), -Main.rand.NextFloat(1f, 1.5f)).RotatedByRandom(MathHelper.PiOver4), ModContent.ProjectileType<AKS74UMagazine>(), 0, 0f, Player.whoAmI);
+                        DropMagazine(ModContent.ProjectileType<AKS74UMagazine>());
                     break;
             }
 

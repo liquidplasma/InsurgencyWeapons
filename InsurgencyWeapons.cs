@@ -1,5 +1,6 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,7 +19,7 @@ namespace InsurgencyWeapons
                     //Ammo types
                     Insurgency.AmmoTypes.Add(item.type);
 
-                if (item.ModItem is not null and WeaponUtils)
+                if (item.ModItem is not null and WeaponUtils and not Grenade)
                     //All weapons
                     Insurgency.AllWeapons.Add(item.type);
 

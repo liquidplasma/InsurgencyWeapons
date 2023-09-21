@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework;
 
 namespace InsurgencyWeapons.Items.Weapons.Grenades
 {
-    internal class MK2 : ModItem
+    internal class MK2 : Grenade
     {
         private int MK2Type => ModContent.ProjectileType<MK2Explosive>();
         private bool Fired;

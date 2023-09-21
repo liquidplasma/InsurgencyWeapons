@@ -1,7 +1,8 @@
 ﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Items;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
@@ -11,6 +12,8 @@ namespace InsurgencyWeapons.Projectiles
 {
     internal abstract class WeaponBase : ModProjectile
     {
+        private static Dictionary<int, Vector2>? weaponBarrelEndPositions;
+
         /// <summary>
         /// The projectile owner of this weapon
         /// </summary>
@@ -62,7 +65,7 @@ namespace InsurgencyWeapons.Projectiles
         public float OffsetFromPlayerCenter { get; set; }
 
         public bool ReloadStarted { get; set; }
-        public bool CanFire => ShotDelay >= HeldItem.useTime;
+        public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
         public bool UnderAlternateFireCoolDown => AlternateFireCoolDown > PercentageOfAltFireCoolDown;
 
         public Vector2
@@ -121,7 +124,8 @@ namespace InsurgencyWeapons.Projectiles
             {
                 Vector2 position = Player.MountedCenter + jankFix;
                 Vector2 muzzleDrawPos = position - recoil + recoilVertical;
-                muzzleDrawPos += muzzleDrawPos.DirectionTo(MouseAim) * offset;
+                float sin = (float)Math.Sin(muzzleDrawPos.AngleTo(MouseAim));
+                muzzleDrawPos += muzzleDrawPos.DirectionTo(MouseAim) * (offset - sin);
                 Texture2D muzzleFlash = HelperStats.MuzzleFlash;
                 Rectangle rect = muzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay, 0, 6));
                 ExtensionMethods.BetterEntityDraw(muzzleFlash, muzzleDrawPos, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
@@ -144,6 +148,46 @@ namespace InsurgencyWeapons.Projectiles
                     Main.instance.MouseText(CurrentAmmo + " / " + Player.CountItem(AmmoType) + grenadeName + Player.CountItem(ammoTypeGL));
                 else
                     Main.instance.MouseText(CurrentAmmo + " / " + Player.CountItem(AmmoType));
+            }
+        }
+        public void DropMagazine(int type)
+        {
+            Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo), Projectile.Center, new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), -Main.rand.NextFloat(1f, 1.5f)).RotatedByRandom(MathHelper.PiOver4), type, 0, 0f, Player.whoAmI);
+
+        }
+        /// <summary>
+        /// Should be used inside a Main.myPlayer check
+        /// </summary>
+        /// <param name="aim"></param>
+        /// <param name="type"></param>
+        /// <param name="damage"></param>
+        /// <param name="dropCasing"></param>
+        public void Shoot(Vector2 aim, int type, int damage, bool dropCasing = true)
+        {
+            float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
+            if(HeldItem.ModItem is not null and Rifle || HeldItem.ModItem is not null and Shotgun)            
+                knockBack *= 1.5f;            
+
+            //Bullet
+            Projectile.NewProjectileDirect(
+               spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+               position: Player.MountedCenter,
+               velocity: aim,
+               type: type,
+               damage: damage,
+               knockback: knockBack,
+               owner: Player.whoAmI);
+            if (dropCasing)
+            {
+                //Casing
+                Projectile.NewProjectileDirect(
+                    spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                    position: Player.MountedCenter,
+                    velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
+                    type: ModContent.ProjectileType<Casing>(),
+                    damage: 0,
+                    knockback: 0,
+                    owner: Player.whoAmI);
             }
         }
 
@@ -252,8 +296,7 @@ namespace InsurgencyWeapons.Projectiles
 
             if (Player.channel
                 || ReloadTimer > 0
-                || UnderAlternateFireCoolDown
-                || Insurgency.Rifles.Contains(HeldItem.type))
+                || UnderAlternateFireCoolDown)
             {
                 isIdle = false;
                 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
@@ -266,11 +309,8 @@ namespace InsurgencyWeapons.Projectiles
                 Player.ChangeDir(mouseDirection);
                 Projectile.spriteDirection = Player.direction;
                 Player.heldProj = Projectile.whoAmI;
-                Player.HoldOutArm(MouseAim, ShotDelay * 2f);
-                if (!Insurgency.Rifles.Contains(HeldItem.type))
-                {
-                    Player.SetDummyItemTime(2);
-                }
+                Player.HoldOutArm(Projectile, MouseAim);
+                Player.SetDummyItemTime(2);
             }
             else if (ReloadTimer == 0)
             {

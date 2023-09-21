@@ -13,7 +13,7 @@ namespace InsurgencyWeapons.Items.Ammo
         public override void SetDefaults()
         {
             Item.width = 7;
-            Item.height = 25;
+            Item.height = 36;
             Item.DefaultsToInsurgencyAmmo(14);
         }
 

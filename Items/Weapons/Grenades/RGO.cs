@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Weapons.Grenades
 {
-    internal class RGO : ModItem
+    internal class RGO : Grenade
     {
         private int RGOType => ModContent.ProjectileType<RGOExplosive>();
         private bool Fired;

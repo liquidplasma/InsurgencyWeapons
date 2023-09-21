@@ -22,7 +22,7 @@ namespace InsurgencyWeapons.Helpers
         /// <summary>
         /// Goes from 0f to 1f slowly, MP friendly (probably?)
         /// </summary>
-        public static float GlobalTick => Main.GameUpdateCount % 1500 / 1500f;
+        public static float GlobalTick => Main.GameUpdateCount % 900 / 900f;
 
         public static void SmokeGore(IEntitySource source, Vector2 position, int amount, float magnitudeRange, float rotationRange = MathHelper.TwoPi)
         {
@@ -50,6 +50,16 @@ namespace InsurgencyWeapons.Helpers
                 }
                 dusty.fadeIn = 1f;
             }
+        }
+
+        public static bool TestRange(float numberToCheck, float bottom, float top)
+        {
+            return numberToCheck >= bottom && numberToCheck <= top;
+        }
+
+        public static bool TestRange(int numberToCheck, int bottom, int top)
+        {
+            return numberToCheck >= bottom && numberToCheck <= top;
         }
 
         /// <summary>

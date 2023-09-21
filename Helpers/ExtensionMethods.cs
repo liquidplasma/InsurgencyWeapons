@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using InsurgencyWeapons.VendingMachines;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -34,7 +36,7 @@ namespace InsurgencyWeapons.Helpers
         {
             Item.CreateRecipe(amountToCraft)
                 .AddIngredient(Insurgency.Money, money)
-                .AddTile(TileID.WorkBenches)
+                .AddTile(ModContent.TileType<VendingMachineTile>())
                 .Register();
         }
 
@@ -43,7 +45,7 @@ namespace InsurgencyWeapons.Helpers
             Item.CreateRecipe()
                 .AddIngredient(ItemID.IllegalGunParts, 2)
                 .AddIngredient(Insurgency.Money, money)
-                .AddTile(TileID.WorkBenches)
+                .AddTile(ModContent.TileType<VendingMachineTile>())
                 .Register();
         }
 
@@ -113,19 +115,34 @@ namespace InsurgencyWeapons.Helpers
         /// </summary>
         /// <param name="Player"></param>
         /// <param name="Projectile"></param>
-        public static void HoldOutArm(this Player Player, Vector2 vector, float offset)
+        public static void HoldOutArm(this Player Player, Projectile Projectile, Vector2 angleVector)
         {
-            float VisualRotation = Player.MountedCenter.AngleTo(vector + new Vector2(offset));
-            float sin = (float)Math.Sin(VisualRotation) * 0.5f;            
+            //Vanilla code below, ech
+            float angleFloat = MathF.Sin(Player.Center.AngleTo(angleVector));
+            bool addAngle = HelperStats.TestRange(angleFloat, 0.12f, 1f);
+            angleFloat /= 2f;
+            float num7 = -MathF.PI / 10f;
+            if (Player.direction == -1)
+            {
+                num7 *= -1f;
+            }
+            float num8 = Projectile.rotation - MathF.PI / 4f + MathF.PI;
             if (Player.direction == 1)
             {
-                VisualRotation -= sin;
-                Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.ThreeQuarters, VisualRotation - MathHelper.PiOver2 + (MathHelper.PiOver2 / (10 - Math.Abs(VisualRotation))));
+                num8 += MathF.PI / 2f;
+            }
+            float rotation = num8 + num7;
+            if (Player.direction == 1)
+            {
+                if (addAngle)
+                    rotation -= angleFloat;
+                Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation);
             }
             else
             {
-                VisualRotation += sin;
-                Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.ThreeQuarters, VisualRotation - MathHelper.PiOver2 - (MathHelper.PiOver2 / (10 - Math.Abs(VisualRotation))));
+                if (addAngle)
+                    rotation += angleFloat;
+                Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation);
             }
         }
 

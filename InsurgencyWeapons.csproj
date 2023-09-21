@@ -8,19 +8,7 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Items\Ammo\VOG_25P.png" />
-    <None Remove="Items\Weapons\Grenades\M24St.png" />
-    <None Remove="Items\Weapons\Grenades\RGO.png" />
-    <None Remove="Items\Weapons\Revolvers\ColtPython.png" />
-    <None Remove="Items\Weapons\SubMachineGuns\ChicagoTypewriter.png" />
-    <None Remove="Items\Weapons\SubMachineGuns\MP7.png" />
-    <None Remove="Items\Weapons\SubMachineGuns\PPSH41.png" />
-    <None Remove="Projectiles\Grenades\RGOExplosive.png" />
-    <None Remove="Projectiles\Revolvers\ColtPythonHeld.png" />
-    <None Remove="Projectiles\SubMachineGuns\ChicagoTypewriterHeld.png" />
-    <None Remove="Projectiles\SubMachineGuns\MP7Held.png" />
-    <None Remove="Projectiles\SubMachineGuns\PPSH41Held.png" />
-    <None Remove="Projectiles\WeaponExtras\AKMVOG_25P.png" />
+    <None Remove="Items\Ammo\Bullet76251.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />

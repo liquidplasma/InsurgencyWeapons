@@ -1,8 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Rifles;
-using InsurgencyWeapons.Projectiles.WeaponExtras;
-using InsurgencyWeapons.Projectiles.WeaponMagazines;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
 using Microsoft.Xna.Framework;
@@ -86,7 +84,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             Ammo ??= ContentSamples.ItemsByType[AmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
-            SpecificWeaponFix = new Vector2(0, -1.4f);
+            SpecificWeaponFix = new Vector2(0, 0);
             if (!Player.channel)
                 SemiAuto = false;
 
@@ -103,25 +101,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     type = Insurgency.Bullet;
                 if (Player.whoAmI == Main.myPlayer)
                 {
-                    //Bullet
-                    Projectile.NewProjectileDirect(
-                        spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                        position: Player.MountedCenter,
-                        velocity: aim,
-                        type: type,
-                        damage: damage,
-                        knockback: Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack),
-                        owner: Player.whoAmI,
-                        ai0: (int)Insurgency.RiflesEnum.M1Garand);
-                    //Casing
-                    Projectile.NewProjectileDirect(
-                        spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                        position: Player.MountedCenter,
-                        velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                        type: ModContent.ProjectileType<Casing>(),
-                        damage: 0,
-                        knockback: 0,
-                        owner: Player.whoAmI);
+                    Shoot(aim, type, damage);
                 }
             }
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
@@ -130,14 +110,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 SoundEngine.PlaySound(GarandPing, Projectile.Center);
                 if (Player.whoAmI == Main.myPlayer)
                 {
-                    Projectile.NewProjectileDirect(
-                            Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                            Projectile.Center,
-                            new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                            ModContent.ProjectileType<M1GarandEnbloc>(),
-                            0,
-                            0f,
-                            Player.whoAmI);
+                    DropMagazine(ModContent.ProjectileType<M1GarandEnbloc>());
                 }
                 Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
@@ -183,7 +156,9 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             else if (ShotDelay == HeldItem.useTime && !(ReloadTimer > 0))
                 Projectile.frame = 0;
 
-            if (HeldItem.type != ModContent.ItemType<M1Garand>()) Projectile.Kill();
+            if (HeldItem.type != ModContent.ItemType<M1Garand>())
+                Projectile.Kill();
+
             base.AI();
         }
     }

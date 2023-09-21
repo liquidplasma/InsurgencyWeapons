@@ -1,9 +1,15 @@
-﻿using Terraria.ModLoader;
+﻿using Terraria;
+using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items
 {
     internal abstract class AmmoItem : ModItem
-    { }
+    {        
+        public override bool CanStackInWorld(Item source)
+        {
+            return true;
+        }
+    }
 
     /// <summary>
     /// Main class

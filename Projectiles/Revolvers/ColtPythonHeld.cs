@@ -88,12 +88,16 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
             OffsetFromPlayerCenter = 10f;
             if (!Player.channel)
                 SemiAuto = false;
+
             if (Player.channel && !SemiAuto)
             {
                 FireDelay++;
                 if (FireDelay == 4)
                     SoundEngine.PlaySound(Hammer, Projectile.Center);
             }
+            else
+                FireDelay = 0;
+
             if (AllowedToFire && !UnderAlternateFireCoolDown && !SemiAuto && FireDelay >= 8)
             {
                 SemiAuto = true;
@@ -107,15 +111,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     type = Insurgency.Bullet;
                 if (Player.whoAmI == Main.myPlayer)
                 {
-                    //Bullet
-                    Projectile.NewProjectileDirect(
-                        spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                        position: Player.MountedCenter,
-                        velocity: aim,
-                        type: type,
-                        damage: damage,
-                        knockback: Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack),
-                        owner: Player.whoAmI);
+                    Shoot(aim, type, damage, dropCasing: false);
                 }
             }
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)

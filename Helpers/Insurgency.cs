@@ -65,6 +65,7 @@ namespace InsurgencyWeapons.Helpers
         public enum ReloadModifiers
         {
             AssaultRifles = 20,
+            BattleRifles = 30,
             Carbines = 23,
             Rifles = 8,
             Revolvers = 21,

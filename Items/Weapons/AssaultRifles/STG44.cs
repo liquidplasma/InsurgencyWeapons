@@ -8,6 +8,9 @@ using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {
+    /// <summary>
+    /// StG-44 7.92x33mm
+    /// </summary>
     internal class STG44 : AssaultRifle
     {
         private int STGType => ModContent.ProjectileType<STG44Held>();
