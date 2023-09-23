@@ -1,11 +1,10 @@
 ﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Projectiles.AssaultRifles;
+using InsurgencyWeapons.Projectiles.Revolvers;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using InsurgencyWeapons.Projectiles.Revolvers;
 
 namespace InsurgencyWeapons.Items.Weapons.Revolvers
 {

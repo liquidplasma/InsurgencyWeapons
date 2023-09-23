@@ -43,23 +43,34 @@ namespace InsurgencyWeapons.Helpers
         public static List<int> Rifles = new();
 
         /// <summary>
+        /// All sniper rifles goes here
+        /// </summary>
+        public static List<int> SniperRifles = new();
+
+        /// <summary>
         /// All of the revolvers goes here
         /// </summary>
         public static List<int> Revolvers = new();
 
         /// <summary>
-        /// All of the submachineguns goes here
+        /// All of the SMGs goes here
         /// </summary>
         public static List<int> SubMachineGuns = new();
+
+        /// <summary>
+        /// All of the LMGs go here
+        /// </summary>
+        public static List<int> LightMachineGuns = new();
 
         /// <summary>
         /// All of the grenades goes here
         /// </summary>
         public static List<int> Grenades = new();
 
-        public enum RiflesEnum
+        public enum APCaliber
         {
-            M1Garand = 1
+            c762x51mm = 1,
+            c762x63mm
         }
 
         public enum ReloadModifiers
@@ -68,8 +79,10 @@ namespace InsurgencyWeapons.Helpers
             BattleRifles = 30,
             Carbines = 23,
             Rifles = 8,
+            SniperRifles = 4,
             Revolvers = 21,
-            SubMachineGuns = 30
+            SubMachineGuns = 30,
+            LightMachineGuns = 40
         }
 
         public enum MagazineState

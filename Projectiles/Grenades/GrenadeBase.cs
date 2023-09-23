@@ -15,6 +15,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         public bool Moving => Projectile.velocity.Length() >= 0.5f;
         public bool HitOnce;
         public int TileCollides;
+
         public int AITimer
         {
             get => (int)Projectile.ai[0];

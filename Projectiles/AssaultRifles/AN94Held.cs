@@ -2,19 +2,14 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.AssaultRifles;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.AssaultRifles;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
 
 namespace InsurgencyWeapons.Projectiles.AssaultRifles
 {
@@ -70,6 +65,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
             return false;
         }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.AN94Magazine;
@@ -92,27 +88,19 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-1, 1))) * HeldItem.shootSpeed;
+                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(1))) * HeldItem.shootSpeed;
                 int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
-                int type = Ammo.shoot;
-                if (type == ProjectileID.Bullet)
-                    type = Insurgency.Bullet;
 
                 if (!AN94Double && CurrentAmmo > 2)
                 {
                     AN94Double = true;
                     SoundEngine.PlaySound(Fire, Projectile.Center);
                     CurrentAmmo--;
-                    if (Player.whoAmI == Main.myPlayer)
-                    {
-                        Shoot(aim, type, damage);
-                    }
+
+                    Shoot(aim, BulletType, damage);
                 }
 
-                if (Player.whoAmI == Main.myPlayer)
-                {
-                    Shoot(aim, type, damage);
-                }
+                Shoot(aim, BulletType, damage);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)

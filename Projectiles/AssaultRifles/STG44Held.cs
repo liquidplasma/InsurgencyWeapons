@@ -2,7 +2,6 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.AssaultRifles;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.AssaultRifles;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -83,15 +82,9 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-2, 2))) * HeldItem.shootSpeed;
+                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
                 int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
-                int type = Ammo.shoot;
-                if (type == ProjectileID.Bullet)
-                    type = Insurgency.Bullet;
-                if (Player.whoAmI == Main.myPlayer)
-                {
-                    Shoot(aim, type, damage);
-                }
+                Shoot(aim, BulletType, damage);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)
@@ -130,7 +123,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (Player.whoAmI == Main.myPlayer)
-                        DropMagazine(ModContent.ProjectileType<STGMagazine>()); 
+                        DropMagazine(ModContent.ProjectileType<STGMagazine>());
                     break;
             }
 

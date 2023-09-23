@@ -1,4 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.VendingMachines.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,14 +9,14 @@ using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.VendingMachines
 {
-    internal class VendingMachineItem : ModItem
+    internal class VendingMachineGunItem : ModItem
     {
         public override void SetDefaults()
         {
             Item.width = 32;
             Item.height = 32;
             Item.noUseGraphic = true;
-            Item.DefaultToPlaceableTile(ModContent.TileType<VendingMachineTile>());
+            Item.DefaultToPlaceableTile(ModContent.TileType<VendingMachineGunsTile>());
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)

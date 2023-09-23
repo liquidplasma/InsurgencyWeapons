@@ -1,7 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Rifles;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -94,15 +93,9 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-2, 2))) * HeldItem.shootSpeed;
+                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
                 int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
-                int type = Ammo.shoot;
-                if (type == ProjectileID.Bullet)
-                    type = Insurgency.Bullet;
-                if (Player.whoAmI == Main.myPlayer)
-                {
-                    Shoot(aim, type, damage);
-                }
+                Shoot(aim, BulletType, damage, ai0: (float)Insurgency.APCaliber.c762x63mm);
             }
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
             {

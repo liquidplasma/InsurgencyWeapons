@@ -1,6 +1,7 @@
 ﻿using InsurgencyWeapons.Helpers;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -11,8 +12,11 @@ namespace InsurgencyWeapons.Projectiles
     internal class NormalBullet : ModProjectile
     {
         private VertexStrip _vertexStrip = new();
-        private int FromWeapon => (int)Projectile.ai[0];
+        private int CaliberSize => (int)Projectile.ai[0];
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
+
+        private Player Player => Main.player[Projectile.owner];
+        private Item HeldItem => Player.HeldItem;
 
         public override void SetStaticDefaults()
         {
@@ -32,11 +36,24 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            switch (FromWeapon)
+            switch (CaliberSize)
             {
-                case (int)Insurgency.RiflesEnum.M1Garand:
-                    modifiers.ArmorPenetration += 15;
+                case (int)Insurgency.APCaliber.c762x51mm:
+                    modifiers.ArmorPenetration += 12;
                     break;
+
+                case (int)Insurgency.APCaliber.c762x63mm:
+                    modifiers.ArmorPenetration += 25;
+                    break;
+            }
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Insurgency.SniperRifles.Contains(HeldItem.type))
+            {
+                Projectile.extraUpdates += 4;
+                Projectile.netUpdate = true;
             }
         }
 

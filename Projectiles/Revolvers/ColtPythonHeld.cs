@@ -104,15 +104,9 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 ShotDelay = FireDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-2, 2))) * HeldItem.shootSpeed;
+                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
                 int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
-                int type = Ammo.shoot;
-                if (type == ProjectileID.Bullet)
-                    type = Insurgency.Bullet;
-                if (Player.whoAmI == Main.myPlayer)
-                {
-                    Shoot(aim, type, damage, dropCasing: false);
-                }
+                Shoot(aim, BulletType, damage, dropCasing: false);
             }
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
             {

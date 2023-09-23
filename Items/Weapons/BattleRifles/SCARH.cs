@@ -1,16 +1,10 @@
 ﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Projectiles.Carbines;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using InsurgencyWeapons.Projectiles.BattleRifles;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using Microsoft.Xna.Framework;
-using InsurgencyWeapons.Projectiles.BattleRifles;
 
 namespace InsurgencyWeapons.Items.Weapons.BattleRifles
 {

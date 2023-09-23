@@ -111,34 +111,29 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
                 int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
 
-                int type = Ammo.shoot;
-                if (type == ProjectileID.Bullet)
-                    type = Insurgency.Bullet;
-                if (Player.whoAmI == Main.myPlayer)
+                int both = 1;
+                if (CanFireBothBarrels)
                 {
-                    int both = 1;
-                    if (CanFireBothBarrels)
+                    AlternateFireCoolDown = 180;
+                    both = 2;
+                }
+
+                for (int i = 0; i < both; i++)
+                {
+                    CurrentAmmo--;
+                    for (int j = 0; j < 6; j++)
                     {
-                        AlternateFireCoolDown = 180;
-                        both = 2;
+                        Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(14))) * HeldItem.shootSpeed;
+                        //Buck
+                        Shoot(aim, BulletType, damage, dropCasing: false);
                     }
 
-                    for (int i = 0; i < both; i++)
-                    {
-                        CurrentAmmo--;
-                        for (int j = 0; j < 6; j++)
-                        {
-                            Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-14, 14))) * HeldItem.shootSpeed;
-                            //Buck
-                            Shoot(aim, type, damage, dropCasing:false);
-                        }
-
-                        Vector2 aimNoSpread = Player.MountedCenter.DirectionTo(MouseAim) * HeldItem.shootSpeed;
-                        //Slug
-                        Shoot(aimNoSpread,type,damage, dropCasing:false);                
-                    }
+                    Vector2 aimNoSpread = Player.MountedCenter.DirectionTo(MouseAim) * HeldItem.shootSpeed;
+                    //Slug
+                    Shoot(aimNoSpread, BulletType, damage, dropCasing: false);
                 }
             }
+
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
@@ -184,15 +179,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     SoundEngine.PlaySound(Eject, Projectile.Center);
                     for (int i = 0; i < 2; i++)
                     {
-                        //Casing
-                        Projectile.NewProjectileDirect(
-                            spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                            position: Player.MountedCenter,
-                            velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                            type: ModContent.ProjectileType<Shells>(),
-                            damage: 0,
-                            knockback: 0,
-                            owner: Player.whoAmI);
+                        DropCasingManually(ModContent.ProjectileType<Shells>());
                     }
                     break;
 

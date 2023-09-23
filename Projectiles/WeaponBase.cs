@@ -2,7 +2,6 @@
 using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
@@ -12,8 +11,6 @@ namespace InsurgencyWeapons.Projectiles
 {
     internal abstract class WeaponBase : ModProjectile
     {
-        private static Dictionary<int, Vector2>? weaponBarrelEndPositions;
-
         /// <summary>
         /// The projectile owner of this weapon
         /// </summary>
@@ -64,9 +61,20 @@ namespace InsurgencyWeapons.Projectiles
         /// </summary>
         public float OffsetFromPlayerCenter { get; set; }
 
+        /// <summary>
+        /// Shorthand for Insurgency.Bullet
+        /// </summary>
+        public int BulletType => Insurgency.Bullet;
+
         public bool ReloadStarted { get; set; }
         public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
+
         public bool UnderAlternateFireCoolDown => AlternateFireCoolDown > PercentageOfAltFireCoolDown;
+
+        /// <summary>
+        /// For bolt action snipers rifles
+        /// </summary>
+        public int BoltActionTimer { get; set; }
 
         public Vector2
            recoilVertical, recoil,
@@ -150,44 +158,71 @@ namespace InsurgencyWeapons.Projectiles
                     Main.instance.MouseText(CurrentAmmo + " / " + Player.CountItem(AmmoType));
             }
         }
+
         public void DropMagazine(int type)
         {
             Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo), Projectile.Center, new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), -Main.rand.NextFloat(1f, 1.5f)).RotatedByRandom(MathHelper.PiOver4), type, 0, 0f, Player.whoAmI);
-
         }
-        /// <summary>
-        /// Should be used inside a Main.myPlayer check
-        /// </summary>
-        /// <param name="aim"></param>
-        /// <param name="type"></param>
-        /// <param name="damage"></param>
-        /// <param name="dropCasing"></param>
-        public void Shoot(Vector2 aim, int type, int damage, bool dropCasing = true)
-        {
-            float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
-            if(HeldItem.ModItem is not null and Rifle || HeldItem.ModItem is not null and Shotgun)            
-                knockBack *= 1.5f;            
 
-            //Bullet
-            Projectile.NewProjectileDirect(
-               spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-               position: Player.MountedCenter,
-               velocity: aim,
-               type: type,
-               damage: damage,
-               knockback: knockBack,
-               owner: Player.whoAmI);
-            if (dropCasing)
+        public void DropCasingManually(int type = 0)
+        {
+            if (type == 0)
+                type = ModContent.ProjectileType<Casing>();
+
+            if (Player.whoAmI == Main.myPlayer)
             {
                 //Casing
                 Projectile.NewProjectileDirect(
                     spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
                     position: Player.MountedCenter,
                     velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                    type: ModContent.ProjectileType<Casing>(),
+                    type: type,
                     damage: 0,
                     knockback: 0,
                     owner: Player.whoAmI);
+            }
+        }
+
+        /// <summary>
+        /// Shoot boolet
+        /// </summary>
+        /// <param name="aim"></param>
+        /// <param name="type"></param>
+        /// <param name="damage"></param>
+        /// <param name="dropCasing"></param>
+        public void Shoot(Vector2 aim, int type, int damage, bool dropCasing = true, float ai0 = 0)
+        {
+            float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
+            if (HeldItem.ModItem is not null and Rifle || HeldItem.ModItem is not null and Shotgun)
+                knockBack *= 1.5f;
+
+            if (HeldItem.ModItem is not null and SniperRifle)
+                knockBack *= 1.75f;
+
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                //Bullet
+                Projectile.NewProjectileDirect(
+                   spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                   position: Player.MountedCenter,
+                   velocity: aim,
+                   type: type,
+                   damage: damage,
+                   knockback: knockBack,
+                   owner: Player.whoAmI,
+                   ai0: ai0);
+                if (dropCasing)
+                {
+                    //Casing
+                    Projectile.NewProjectileDirect(
+                        spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                        position: Player.MountedCenter,
+                        velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
+                        type: ModContent.ProjectileType<Casing>(),
+                        damage: 0,
+                        knockback: 0,
+                        owner: Player.whoAmI);
+                }
             }
         }
 
@@ -212,14 +247,14 @@ namespace InsurgencyWeapons.Projectiles
             return false;
         }
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            PercentageOfAltFireCoolDown = AlternateFireCoolDown * 0.85f;
-        }
-
         public override bool PreDraw(ref Color lightColor)
         {
             return base.PreDraw(ref lightColor);
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.damage = Projectile.originalDamage;
         }
 
         public override bool PreAI()
@@ -243,6 +278,10 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void AI()
         {
+            //Give scope to player if he is holding sniper rifles
+            if (Insurgency.SniperRifles.Contains(HeldItem.type))
+                Player.scope = true;
+
             if (Projectile.active)
             {
                 MagazineTracking.isActive = true;
@@ -261,6 +300,10 @@ namespace InsurgencyWeapons.Projectiles
             if (AlternateFireCoolDown > 0)
             {
                 AlternateFireCoolDown--;
+            }
+            if (BoltActionTimer > 0)
+            {
+                BoltActionTimer--;
             }
             #endregion
 
@@ -296,11 +339,14 @@ namespace InsurgencyWeapons.Projectiles
 
             if (Player.channel
                 || ReloadTimer > 0
-                || UnderAlternateFireCoolDown)
+                || UnderAlternateFireCoolDown
+                || BoltActionTimer > 0)
             {
                 isIdle = false;
                 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
-                recoilVertical = Vector2.UnitY * (-ShotDelay / 6f);
+                if (!Insurgency.SniperRifles.Contains(HeldItem.type))
+                    recoilVertical = Vector2.UnitY * (-ShotDelay / 6f);
+
                 Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + recoilVertical + SpecificWeaponFix;
                 Projectile.Center = Player.MountedCenter + distance - new Vector2(0f, Projectile.gfxOffY - Player.gfxOffY);
                 Projectile.velocity = Vector2.Zero;
@@ -331,12 +377,14 @@ namespace InsurgencyWeapons.Projectiles
         {
             writer.WriteVector2(MouseAim);
             writer.Write(MouseRightPressed);
+            writer.Write(BoltActionTimer);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             MouseAim = reader.ReadVector2();
             MouseRightPressed = reader.ReadBoolean();
+            BoltActionTimer = reader.ReadInt32();
         }
     }
 }

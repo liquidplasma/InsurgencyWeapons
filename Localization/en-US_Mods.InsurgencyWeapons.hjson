@@ -21,11 +21,11 @@ Items: {
 
 	Bullet3006: {
 		DisplayName: M1 Garand 7.62x63mm Ammo
-		Tooltip: Ignores 15 enemy defense
+		Tooltip: Ignores 25 enemy defense
 	}
 
 	M1Garand: {
-		DisplayName: M1 Garand 7.62x63mm + Bayonet
+		DisplayName: M1 Garand 7.62x63mm
 		Tooltip: ""
 	}
 
@@ -104,11 +104,6 @@ Items: {
 		Tooltip: ""
 	}
 
-	VendingMachineItem: {
-		DisplayName: Vending Machine
-		Tooltip: "Buy weapons here using [i:InsurgencyWeapons/Money]"
-	}
-
 	ShellBuck_Ball: {
 		DisplayName: Coach Gun Buck & Ball Ammo
 		Tooltip: ""
@@ -130,12 +125,37 @@ Items: {
 
 	Bullet76251: {
 		DisplayName: 7.62x51mm Ammo
-		Tooltip: ""
+		Tooltip: Ignores 12 enemy defense
 	}
 
 	SCARH: {
 		DisplayName: FN SCAR-H 7.62x51mm
 		Tooltip: ""
+	}
+
+	VendingMachineAmmoItem: {
+		DisplayName: Ammo Vending Machine
+		Tooltip: Buy ammo here using [i:InsurgencyWeapons/Money]
+	}
+
+	VendingMachineGunItem: {
+		DisplayName: Gun Vending Machine
+		Tooltip: Buy weapons here using [i:InsurgencyWeapons/Money]
+	}
+
+	RPK: {
+		DisplayName: RPK 7.62x39mm
+		Tooltip: ""
+	}
+
+	M40A1: {
+		DisplayName: M40A1 7.62x51mm + Leupold Scope
+		Tooltip: Has a scope
+	}
+
+	Mosin: {
+		DisplayName: Mosin Nagant M91/30 7.62x54mmR + PU Scope
+		Tooltip: Has a scope
 	}
 }
 
@@ -169,6 +189,11 @@ Projectiles: {
 	AN94Magazine.DisplayName: A N94 Magazine
 	M1928Drum.DisplayName: M1928 Drum
 	PPSH41Drum.DisplayName: PPSH41 Drum
-	SCARHHeld.DisplayName: SCARH 
+	SCARHHeld.DisplayName: SCARH
 	SCARHMagazine.DisplayName: SCARH Magazine
+	RPKHeld.DisplayName: RPK
+	RPKDrum.DisplayName: RPK Drum
+	M40A1Held.DisplayName: M40 A1 Held
+	MosinHeld.DisplayName: Mosin Held
+	Bayonet.DisplayName: Bayonet
 }

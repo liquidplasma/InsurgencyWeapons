@@ -1,8 +1,7 @@
-﻿using InsurgencyWeapons.VendingMachines;
+﻿using InsurgencyWeapons.VendingMachines.Tiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -36,7 +35,7 @@ namespace InsurgencyWeapons.Helpers
         {
             Item.CreateRecipe(amountToCraft)
                 .AddIngredient(Insurgency.Money, money)
-                .AddTile(ModContent.TileType<VendingMachineTile>())
+                .AddTile(ModContent.TileType<VendingMachineAmmoTile>())
                 .Register();
         }
 
@@ -45,7 +44,7 @@ namespace InsurgencyWeapons.Helpers
             Item.CreateRecipe()
                 .AddIngredient(ItemID.IllegalGunParts, 2)
                 .AddIngredient(Insurgency.Money, money)
-                .AddTile(ModContent.TileType<VendingMachineTile>())
+                .AddTile(ModContent.TileType<VendingMachineGunsTile>())
                 .Register();
         }
 

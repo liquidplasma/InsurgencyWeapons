@@ -62,6 +62,11 @@ namespace InsurgencyWeapons.Helpers
             return numberToCheck >= bottom && numberToCheck <= top;
         }
 
+        public static float EaseInCubic(float x)
+        {
+            return x * x * x;
+        }
+
         /// <summary>
         /// Returns the amount of active projectiles in this world
         /// </summary>

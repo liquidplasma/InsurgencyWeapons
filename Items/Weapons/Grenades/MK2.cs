@@ -1,16 +1,11 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Projectiles.Grenades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 
 namespace InsurgencyWeapons.Items.Weapons.Grenades
 {

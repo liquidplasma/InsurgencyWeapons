@@ -9,6 +9,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Items\Ammo\Bullet76251.png" />
+    <None Remove="Items\Ammo\Bullet76254R.png" />
+    <None Remove="VendingMachines\VendingMachineGunsTile.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />

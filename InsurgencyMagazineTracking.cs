@@ -28,6 +28,11 @@ namespace InsurgencyWeapons
         public int
             GarandMagazine;
 
+        //Sniper Rifles
+        public int
+            M40A1Box,
+            MosinBox;
+
         //Shotguns
         public int
             CoachBarrel;
@@ -36,6 +41,10 @@ namespace InsurgencyWeapons
         public int
             MP7Magazine,
             M1928Drum, PPShDrum;
+
+        //Light machine guns
+        public int
+            RPKDrum;
 
         public override void ResetEffects()
         {
@@ -51,12 +60,17 @@ namespace InsurgencyWeapons
             AKS74UMagazine = AN94Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet545>()), 0, 30);
 
             //Battle rifles
+            SCARHMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76251>()), 0, 20);
 
             //Revolvers
             PythonCylinder = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet357>()), 0, 6);
 
             //Rifles
             GarandMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet3006>()), 0, 8);
+
+            //Sniper rifles
+            M40A1Box = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76251>()), 0, 5);
+            MosinBox = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76254R>()), 0, 5);
 
             //Shotguns
             CoachBarrel = Math.Clamp(Player.CountItem(ModContent.ItemType<ShellBuck_Ball>()), 0, 2);
@@ -65,6 +79,9 @@ namespace InsurgencyWeapons
             MP7Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet4630>()), 0, 40);
             M1928Drum = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet45ACP>()), 0, 50);
             PPShDrum = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76225>()), 0, 71);
+
+            //Light machine guns
+            RPKDrum = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet762>()), 0, 75);
         }
     }
 }

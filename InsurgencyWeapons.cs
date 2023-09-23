@@ -1,6 +1,5 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,10 +41,17 @@ namespace InsurgencyWeapons
                 if (item.ModItem is not null and Rifle)
                     //Rifles
                     Insurgency.Rifles.Add(item.type);
+                if (item.ModItem is not null and SniperRifle)
+                    //Sniper rifles
+                    Insurgency.SniperRifles.Add(item.type);
 
                 if (item.ModItem is not null and SubMachineGun)
                     //Sub machine guns
                     Insurgency.SubMachineGuns.Add(item.type);
+
+                if (item.ModItem is not null and LightMachineGun)
+                    //Light machine guns
+                    Insurgency.LightMachineGuns.Add(item.type);
             }
         }
 
@@ -58,8 +64,10 @@ namespace InsurgencyWeapons
             Insurgency.Carbines.Clear();
             Insurgency.Grenades.Clear();
             Insurgency.Rifles.Clear();
+            Insurgency.SniperRifles.Clear();
             Insurgency.Revolvers.Clear();
             Insurgency.SubMachineGuns.Clear();
+            Insurgency.LightMachineGuns.Clear();
         }
     }
 }

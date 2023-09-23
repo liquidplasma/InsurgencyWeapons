@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 namespace InsurgencyWeapons.Items
 {
     internal abstract class AmmoItem : ModItem
-    {        
+    {
         public override bool CanStackInWorld(Item source)
         {
             return true;
@@ -36,6 +36,9 @@ namespace InsurgencyWeapons.Items
     { }
 
     internal abstract class SubMachineGun : WeaponUtils
+    { }
+
+    internal abstract class LightMachineGun : WeaponUtils
     { }
 
     internal abstract class Launcher : WeaponUtils

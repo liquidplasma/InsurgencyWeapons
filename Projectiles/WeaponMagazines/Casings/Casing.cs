@@ -1,5 +1,4 @@
-﻿using InsurgencyWeapons.Projectiles.WeaponMagazines;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria.Audio;
 
 namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Casings
