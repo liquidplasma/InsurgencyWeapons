@@ -1,7 +1,48 @@
+[h1]Weapons in the pack so far:[/h1]
+
+	[b]-Assault rifles-[/b]
+		AKM 7.62x39mm + GP-25 40mm VOG-25P
+		StG-44 7.92x33mm
+		AN-94N + PK-AS 5.45x39mm
+
+	[b]-Battle Rifles-[/b]
+		FN SCAR-H 7.62x51mm
+
+	[b]-Carbines-[/b]
+		AKS-74U 5.45x39mm
+
+	[b]-Grenades-[/b]
+		Stielhandgranate M24
+		Mk. 2 Pineapple Grenade
+		RGO Grenade
+
+	[b]-Machine guns-[/b]
+		RPK 7.62x39mm + Bipod
+
+	[b]-Revolvers-[/b]
+		Colt Python .357 Magnum
+
+	[b]-Rifles-[/b]
+		M1 Garand 7.62x63mm
+
+	[b]-Shotguns-[/b]
+		Coach Gun Buck & Ball
+
+	[b]-Sniper rifles-[/b]
+		M40A1 7.62x51mm + Leupold Scope
+		Mosin Nagant M91/30 7.62x54mmR + PU Scope
+
+	[b]-Sub machine guns-[/b]
+		Thompson M1928 .45ACP
+		PPSh-41 7.62x25mm
+		H&K MP7 4.6x30mm
+
+All enemies now drop "money" at a fixed 50% chance, with money you can craft the vending machines for gun and ammo, exchange the money for weapons and ammo.
+
 This mod is a port to tModLoader of [url=https://github.com/KernCore91/-SC-Insurgency-Weapons-Project] Insurgency Weapons Project [/url]
 This mod is licensed under [url=https://insurgency-support.newworldinteractive.com/hc/en-us/articles/360046247492-End-User-License-Agreement] New World Interactive End-User License Agreement [/url]
 
 Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
 
 Changelog//
-v0.2 - Added: MP7, M1928, PPSH41, M1 Garand, Colt Python, AKS74U, RGO Grenade
+v0.3 - Added: Coach Gun, AN-94, FN SCAR-H, RPK, M40A1, Mosin Nagant

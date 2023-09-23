@@ -31,7 +31,12 @@ Items: {
 
 	Money: {
 		DisplayName: Money
-		Tooltip: Exchange for items
+		Tooltip:
+			'''
+			Exchange for items
+			The more HP the enemy has, the more money will drop
+			Maximum obtained this way is 140 per kill
+			'''
 	}
 
 	VOG_25P: {
@@ -157,6 +162,11 @@ Items: {
 		DisplayName: Mosin Nagant M91/30 7.62x54mmR + PU Scope
 		Tooltip: Has a scope
 	}
+
+	Bullet76254R: {
+		DisplayName: 7.62x54mmR
+		Tooltip: Ignores 35 enemy defense
+	}
 }
 
 Projectiles: {
@@ -193,7 +203,6 @@ Projectiles: {
 	SCARHMagazine.DisplayName: SCARH Magazine
 	RPKHeld.DisplayName: RPK
 	RPKDrum.DisplayName: RPK Drum
-	M40A1Held.DisplayName: M40 A1 Held
-	MosinHeld.DisplayName: Mosin Held
-	Bayonet.DisplayName: Bayonet
+	M40A1Held.DisplayName: M40A1
+	MosinHeld.DisplayName: Mosin
 }

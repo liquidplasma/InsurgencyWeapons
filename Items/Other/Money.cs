@@ -13,15 +13,18 @@ namespace InsurgencyWeapons.Items.Other
     {
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            if (!npc.boss)
+            if (!npc.CountsAsACritter && npc.CanBeChasedBy())
             {
-                int amount = Math.Clamp(npc.lifeMax / 20, 1, 20);
-                npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 2, 2 + amount, 4 + amount));
-            }
-            else
-            {
-                int amount = Math.Clamp(npc.lifeMax / 250, 1, 70);
-                npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 1, 20 + amount, 60 + amount));
+                if (!npc.boss)
+                {
+                    int amount = Math.Clamp(npc.lifeMax / 20, 1, 20);
+                    npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 2, 1 + amount, 4 + amount));
+                }
+                else
+                {
+                    int amount = Math.Clamp(npc.lifeMax / 250, 1, 70);
+                    npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 1, 20 + amount, 70 + amount));
+                }
             }
         }
     }

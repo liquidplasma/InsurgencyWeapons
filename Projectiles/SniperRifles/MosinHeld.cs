@@ -39,9 +39,18 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
 
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mosin/empty");
         private SoundStyle BoltRelease => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mosin/bltrel");
-        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mosin/bltfd");
 
-        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mosin/bltbk");
+        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mosin/bltfd")
+        {
+            Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
+            MaxInstances = 0,
+        };
+
+        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mosin/bltbk")
+        {
+            Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
+            MaxInstances = 0,
+        };
 
         private SoundStyle Insert => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mosin/ins")
         {
@@ -98,7 +107,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(1))) * HeldItem.shootSpeed;
                 int damage = (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
-                Shoot(aim, BulletType, damage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x51mm);
+                Shoot(aim, BulletType, damage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x54Rmm);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)

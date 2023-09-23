@@ -66,6 +66,7 @@ namespace InsurgencyWeapons.Projectiles
         /// </summary>
         public int BulletType => Insurgency.Bullet;
 
+        public int BulletDamage => (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
         public bool ReloadStarted { get; set; }
         public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
 
@@ -254,7 +255,7 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.damage = Projectile.originalDamage;
+            base.OnSpawn(source);
         }
 
         public override bool PreAI()

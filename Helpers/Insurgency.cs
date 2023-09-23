@@ -1,6 +1,7 @@
 ﻿using InsurgencyWeapons.Items.Other;
 using InsurgencyWeapons.Projectiles;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Helpers
@@ -67,10 +68,28 @@ namespace InsurgencyWeapons.Helpers
         /// </summary>
         public static List<int> Grenades = new();
 
+        public static float WeaponScaling()
+        {
+            float modifier = 1f;
+            if (Main.hardMode)
+            {
+                if (NPC.downedPlantBoss)
+                    modifier += 0.5f;
+                else
+                    modifier += 0.1f;
+            }
+            else if (!Main.hardMode)
+            {
+                modifier -= 0.5f;
+            }
+            return modifier;
+        }
+
         public enum APCaliber
         {
             c762x51mm = 1,
-            c762x63mm
+            c762x63mm,
+            c762x54Rmm
         }
 
         public enum ReloadModifiers

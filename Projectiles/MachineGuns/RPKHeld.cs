@@ -84,8 +84,8 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(4))) * HeldItem.shootSpeed;
-                int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
-                Shoot(aim, BulletType, damage);
+
+                Shoot(aim, BulletType, BulletDamage);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)

@@ -36,6 +36,7 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
+            modifiers.FinalDamage *= Insurgency.WeaponScaling();
             switch (CaliberSize)
             {
                 case (int)Insurgency.APCaliber.c762x51mm:
@@ -44,6 +45,10 @@ namespace InsurgencyWeapons.Projectiles
 
                 case (int)Insurgency.APCaliber.c762x63mm:
                     modifiers.ArmorPenetration += 25;
+                    break;
+
+                case (int)Insurgency.APCaliber.c762x54Rmm:
+                    modifiers.ArmorPenetration += 35;
                     break;
             }
         }

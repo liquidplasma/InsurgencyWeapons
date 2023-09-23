@@ -89,7 +89,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(1))) * HeldItem.shootSpeed;
-                int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
+
 
                 if (!AN94Double && CurrentAmmo > 2)
                 {
@@ -97,10 +97,10 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     SoundEngine.PlaySound(Fire, Projectile.Center);
                     CurrentAmmo--;
 
-                    Shoot(aim, BulletType, damage);
+                    Shoot(aim, BulletType, BulletDamage);
                 }
 
-                Shoot(aim, BulletType, damage);
+                Shoot(aim, BulletType, BulletDamage);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)

@@ -39,9 +39,17 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
 
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m40a1/empty");
         private SoundStyle BoltRelease => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m40a1/bltrel");
-        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m40a1/bltfd");
+        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m40a1/bltfd")
+        {
+            Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
+            MaxInstances = 0,
+        };
 
-        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m40a1/bltbk");
+        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m40a1/bltbk")
+        {
+            Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
+            MaxInstances = 0,
+        };
 
         private SoundStyle Insert => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m40a1/ins")
         {
@@ -83,7 +91,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
             Ammo ??= ContentSamples.ItemsByType[AmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 4f;
-            SpecificWeaponFix = new Vector2(0, -3.5f);
+            SpecificWeaponFix = new Vector2(0, -3f);
             if (!Player.channel)
                 SemiAuto = false;
 
@@ -97,8 +105,8 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
 
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(1))) * HeldItem.shootSpeed;
-                int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
-                Shoot(aim, BulletType, damage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x51mm);
+
+                Shoot(aim, BulletType, BulletDamage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x51mm);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)

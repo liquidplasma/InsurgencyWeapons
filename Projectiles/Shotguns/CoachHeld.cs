@@ -109,7 +109,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 else
                     SoundEngine.PlaySound(Fire, Projectile.Center);
 
-                int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
+
 
                 int both = 1;
                 if (CanFireBothBarrels)
@@ -125,12 +125,12 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     {
                         Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(14))) * HeldItem.shootSpeed;
                         //Buck
-                        Shoot(aim, BulletType, damage, dropCasing: false);
+                        Shoot(aim, BulletType, BulletDamage, dropCasing: false);
                     }
 
                     Vector2 aimNoSpread = Player.MountedCenter.DirectionTo(MouseAim) * HeldItem.shootSpeed;
                     //Slug
-                    Shoot(aimNoSpread, BulletType, damage, dropCasing: false);
+                    Shoot(aimNoSpread, BulletType, BulletDamage, dropCasing: false);
                 }
             }
 

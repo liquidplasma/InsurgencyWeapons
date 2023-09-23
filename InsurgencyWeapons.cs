@@ -41,6 +41,7 @@ namespace InsurgencyWeapons
                 if (item.ModItem is not null and Rifle)
                     //Rifles
                     Insurgency.Rifles.Add(item.type);
+
                 if (item.ModItem is not null and SniperRifle)
                     //Sniper rifles
                     Insurgency.SniperRifles.Add(item.type);

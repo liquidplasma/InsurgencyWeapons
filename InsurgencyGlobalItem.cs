@@ -1,10 +1,12 @@
 ﻿using InsurgencyWeapons.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons
@@ -27,11 +29,23 @@ namespace InsurgencyWeapons
             {
                 Texture2D texture = TextureAssets.Item[item.type].Value;
                 Rectangle rect = texture.Bounds;
-                scale = 0.5f;
-                ExtensionMethods.BetterEntityDraw(texture, item.Center, rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
+                scale = 0.25f;
+                ExtensionMethods.BetterEntityDraw(texture, item.Bottom + new Vector2(0, -4f), rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
                 return false;
             }
             return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
+        }
+
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            if (Insurgency.AllWeapons.Contains(item.type))
+            {
+                int damage = (int)(Main.LocalPlayer.GetTotalDamage(DamageClass.Ranged).ApplyTo(item.damage) * Insurgency.WeaponScaling());
+                int index = tooltips.FindIndex(tip => tip.Name == "Damage");
+                tooltips.RemoveAt(index);
+                TooltipLine actualDamage = new(Mod, "actualDamage", damage + Language.GetTextValue("LegacyTooltip.3"));
+                tooltips.Insert(index, actualDamage);
+            }
         }
 
         public override void OnCreated(Item item, ItemCreationContext context)

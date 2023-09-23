@@ -105,8 +105,8 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
-                int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
-                Shoot(aim, BulletType, damage, dropCasing: false);
+
+                Shoot(aim, BulletType, BulletDamage, dropCasing: false);
             }
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
             {

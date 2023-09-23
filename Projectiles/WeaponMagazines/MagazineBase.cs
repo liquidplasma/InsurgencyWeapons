@@ -17,6 +17,11 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             Projectile.light = 0;
         }
 
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             return false;
@@ -38,7 +43,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             {
                 Projectile.tileCollide = false;
                 Projectile.velocity = Vector2.Zero;
-            }
+            }            
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

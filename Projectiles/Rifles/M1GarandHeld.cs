@@ -55,8 +55,8 @@ namespace InsurgencyWeapons.Projectiles.Rifles
 
         public override void SetDefaults()
         {
-            Projectile.width = 14;
-            Projectile.height = 72;
+            Projectile.width = 16;
+            Projectile.height = 68;
             MaxAmmo = 8;
             AmmoType = ModContent.ItemType<Bullet3006>();
             base.SetDefaults();
@@ -82,7 +82,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             Ammo = Player.FindItemInInventory(AmmoType);
             Ammo ??= ContentSamples.ItemsByType[AmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 12f;
+            OffsetFromPlayerCenter = 9f;
             SpecificWeaponFix = new Vector2(0, 0);
             if (!Player.channel)
                 SemiAuto = false;
@@ -94,8 +94,8 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
-                int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
-                Shoot(aim, BulletType, damage, ai0: (float)Insurgency.APCaliber.c762x63mm);
+
+                Shoot(aim, BulletType, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x63mm);
             }
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
             {
