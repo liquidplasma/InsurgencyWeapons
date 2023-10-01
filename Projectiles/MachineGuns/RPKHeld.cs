@@ -15,7 +15,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 {
     internal class RPKHeld : WeaponBase
     {
-        public int CurrentAmmo
+        public new int CurrentAmmo
         {
             get
             {
@@ -73,7 +73,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
         public override void AI()
         {
-            Ammo = Player.FindItemInInventory(AmmoType);
+            Ammo ??= Player.FindItemInInventory(AmmoType);
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 18f;
             SpecificWeaponFix = new Vector2(0, -0.5f);
@@ -86,7 +86,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 Shoot(aim, NormalBullet, BulletDamage);
             }
 
-            if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)
+            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.LightMachineGuns;
                 ReloadStarted = true;

@@ -72,7 +72,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
         public override void AI()
         {
-            Ammo = Player.FindItemInInventory(AmmoType);
+            Ammo ??= Player.FindItemInInventory(AmmoType);
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 8f;
             SpecificWeaponFix = new Vector2(0, 1f);
@@ -85,7 +85,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 Shoot(aim, NormalBullet, BulletDamage);
             }
 
-            if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)
+            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
                 ReloadStarted = true;

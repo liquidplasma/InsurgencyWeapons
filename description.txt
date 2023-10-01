@@ -37,7 +37,7 @@
 		PPSh-41 7.62x25mm
 		H&K MP7 4.6x30mm
 
-All enemies now drop "money" at a fixed 50% chance, with money you can craft the vending machines for gun and ammo, exchange the money for weapons and ammo.
+All enemies now drop "money" at a fixed 50% chance, with money you can craft the vending machines for weapons and ammo.
 
 This mod is a port to tModLoader of [url=https://github.com/KernCore91/-SC-Insurgency-Weapons-Project] Insurgency Weapons Project [/url]
 This mod is licensed under [url=https://insurgency-support.newworldinteractive.com/hc/en-us/articles/360046247492-End-User-License-Agreement] New World Interactive End-User License Agreement [/url]

@@ -6,6 +6,7 @@ using InsurgencyWeapons.Projectiles.WeaponMagazines.AssaultRifles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -84,7 +85,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
         public override void AI()
         {
-            Ammo = Player.FindItemInInventory(AmmoType);
+            Ammo ??= Player.FindItemInInventory(AmmoType);
             AmmoGL = Player.FindItemInInventory(GrenadeLauncherAmmoType);
             AmmoGL ??= ContentSamples.ItemsByType[GrenadeLauncherAmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType, true, " VOG-25P: ", GrenadeLauncherAmmoType);
@@ -117,7 +118,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     owner: Player.whoAmI);
             }
 
-            if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)
+            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
                 ReloadStarted = true;
@@ -165,6 +166,18 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 Projectile.Kill();
 
             base.AI();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(CurrentAmmo);
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            CurrentAmmo = reader.ReadInt32();
+            base.ReceiveExtraAI(reader);
         }
     }
 }
