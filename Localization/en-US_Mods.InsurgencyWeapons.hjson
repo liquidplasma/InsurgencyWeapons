@@ -111,7 +111,7 @@ Items: {
 
 	ShellBuck_Ball: {
 		DisplayName: Coach Gun Buck & Ball Ammo
-		Tooltip: ""
+		Tooltip: Contains 6 buckshot and 1 ball
 	}
 
 	Coach: {
@@ -167,6 +167,21 @@ Items: {
 		DisplayName: 7.62x54mmR
 		Tooltip: Ignores 35 enemy defense
 	}
+
+	TwelveGauge: {
+		DisplayName: 12 Gauge Ammo
+		Tooltip: Contains 8 buckshot
+	}
+
+	Ithaca: {
+		DisplayName: Ithaca
+		Tooltip: ""
+	}
+
+	LeeEnfield: {
+		DisplayName: Lee Enfield
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -205,4 +220,6 @@ Projectiles: {
 	RPKDrum.DisplayName: RPK Drum
 	M40A1Held.DisplayName: M40A1
 	MosinHeld.DisplayName: Mosin
+	IthacaHeld.DisplayName: Ithaca Held
+	EnfieldHeld.DisplayName: Enfield Held
 }

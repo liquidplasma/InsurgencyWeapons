@@ -10,6 +10,10 @@
   <ItemGroup>
     <None Remove="Items\Ammo\Bullet76251.png" />
     <None Remove="Items\Ammo\Bullet76254R.png" />
+    <None Remove="Items\Weapons\Rifles\LeeEnfield.png" />
+    <None Remove="Items\Weapons\Shotguns\Ithaca.png" />
+    <None Remove="Projectiles\Rifles\EnfieldHeld.png" />
+    <None Remove="Projectiles\Shotguns\IthacaHeld.png" />
     <None Remove="VendingMachines\VendingMachineGunsTile.png" />
   </ItemGroup>
   <ItemGroup>

@@ -42,7 +42,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 6;
+            Projectile.localNPCHitCooldown = 0;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -131,7 +131,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             return false;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(Sounds.GrenadeDetonation, Projectile.Center);
             if (Player.DistanceSQ(Projectile.Center) <= 128 * 128 && Collision.CanHitLine(Projectile.Center, 1, 1, Player.Center, 1, 1))
@@ -146,7 +146,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
                 };
                 Player.Hurt(greandeSelfDamage);
             }
-            base.Kill(timeLeft);
+            base.OnKill(timeLeft);
         }
     }
 }

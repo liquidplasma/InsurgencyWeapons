@@ -11,7 +11,6 @@ namespace InsurgencyWeapons
         //Assault rifles
         public int
             AKMMagazine,
-            AKMVOG_25P,
             AN94Magazine,
             STGMagazine,
             AKS74UMagazine;
@@ -26,7 +25,8 @@ namespace InsurgencyWeapons
 
         //Rifles
         public int
-            GarandMagazine;
+            GarandMagazine,
+            EnfieldMagazine;
 
         //Sniper Rifles
         public int
@@ -35,12 +35,14 @@ namespace InsurgencyWeapons
 
         //Shotguns
         public int
-            CoachBarrel;
+            CoachBarrel,
+            IthacaTube;
 
         //Sub machine guns
         public int
             MP7Magazine,
-            M1928Drum, PPShDrum;
+            M1928Drum,
+            PPShDrum;
 
         //Light machine guns
         public int
@@ -51,11 +53,10 @@ namespace InsurgencyWeapons
             isActive = false;
         }
 
-        public override void OnEnterWorld()
+        /*private void UpdateMagazines()
         {
             //Assault rifles
             AKMMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet762>()), 0, 30);
-            AKMVOG_25P = Math.Clamp(Player.CountItem(ModContent.ItemType<VOG_25P>()), 1, 1);
             STGMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet792>()), 0, 30);
             AKS74UMagazine = AN94Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet545>()), 0, 30);
 
@@ -67,6 +68,7 @@ namespace InsurgencyWeapons
 
             //Rifles
             GarandMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet3006>()), 0, 8);
+            EnfieldMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76251>()), 0, 10);
 
             //Sniper rifles
             M40A1Box = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76251>()), 0, 5);
@@ -82,6 +84,11 @@ namespace InsurgencyWeapons
 
             //Light machine guns
             RPKDrum = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet762>()), 0, 75);
+        }*/
+
+        public override void OnEnterWorld()
+        {
+            //UpdateMagazines();
         }
     }
 }

@@ -83,8 +83,7 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(5))) * HeldItem.shootSpeed;
-
-                Shoot(aim, BulletType, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x51mm);
+                Shoot(aim, NormalBullet, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x51mm);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)

@@ -8,6 +8,8 @@ namespace InsurgencyWeapons
 {
     public class InsurgencyWeapons : Mod
     {
+        public static Mod Instance => ModContent.GetInstance<InsurgencyWeapons>();
+
         public override void PostSetupContent()
         {
             for (int i = 1; i < ItemLoader.ItemCount; i++)

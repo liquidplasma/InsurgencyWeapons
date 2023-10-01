@@ -89,7 +89,6 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
         public override void AI()
         {
             Ammo = Player.FindItemInInventory(AmmoType);
-            Ammo ??= ContentSamples.ItemsByType[AmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 4f;
             SpecificWeaponFix = new Vector2(0, -2.5f);
@@ -107,7 +106,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(1))) * HeldItem.shootSpeed;
                 int damage = (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
-                Shoot(aim, BulletType, damage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x54Rmm);
+                Shoot(aim, NormalBullet, damage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x54Rmm);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
@@ -142,13 +141,13 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (CurrentAmmo < MaxAmmo)
                     {
-                        if (Ammo.stack > 0)
+                        if (CanReload())
                         {
                             SoundEngine.PlaySound(Insert, Projectile.Center);
                             AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
                             Ammo.stack -= AmmoStackCount;
                             CurrentAmmo += AmmoStackCount;
-                            ReloadTimer = 50;
+                            ReloadTimer = 66;
                         }
                     }
                     break;

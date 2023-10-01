@@ -27,7 +27,7 @@ namespace InsurgencyWeapons
         {
             if (Insurgency.AmmoTypes.Contains(item.type))
             {
-                Texture2D texture = TextureAssets.Item[item.type].Value;
+                Texture2D texture = item.MyTexture();
                 Rectangle rect = texture.Bounds;
                 scale = 0.25f;
                 ExtensionMethods.BetterEntityDraw(texture, item.Bottom + new Vector2(0, -4f), rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);

@@ -30,7 +30,7 @@ namespace InsurgencyWeapons.Items.Weapons.Grenades
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 0, 1, 5);
             Item.rare = ItemRarityID.LightRed;
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack; 
             Item.DamageType = DamageClass.Ranged;
         }
 
@@ -55,24 +55,23 @@ namespace InsurgencyWeapons.Items.Weapons.Grenades
                 switch (Timer)
                 {
                     case 10:
-                        SoundEngine.PlaySound(Sounds.M24StCap, player.Center);
+                        SoundEngine.PlaySound(Sounds.MK2Pin, player.Center);
                         break;
 
                     case 50:
-                        SoundEngine.PlaySound(Sounds.M24StRope, player.Center);
+                        SoundEngine.PlaySound(Sounds.MK2Spoon, player.Center);
                         Item.useStyle = ItemUseStyleID.Swing;
                         break;
 
                     case 90:
-                        SoundEngine.PlaySound(Sounds.M24StThrow, player.Center);
-                        if (player.whoAmI == Main.myPlayer)
-                        {
-                            Item.stack--;
-                            Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed;
-                            int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
-                            float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
-                            Projectile.NewProjectileDirect(player.GetSource_ItemUse(Item), player.Center, aim, MK2Type, damage, knockback, player.whoAmI);
-                        }
+                        SoundEngine.PlaySound(Sounds.MK2Throw, player.Center);
+
+                        Item.stack--;
+                        Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed;
+                        int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
+                        float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
+                        ExtensionMethods.BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, MK2Type, damage, knockback, player.whoAmI);
+
                         break;
                 }
             }

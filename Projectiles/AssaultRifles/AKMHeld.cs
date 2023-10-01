@@ -85,7 +85,6 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         public override void AI()
         {
             Ammo = Player.FindItemInInventory(AmmoType);
-            Ammo ??= ContentSamples.ItemsByType[AmmoType];
             AmmoGL = Player.FindItemInInventory(GrenadeLauncherAmmoType);
             AmmoGL ??= ContentSamples.ItemsByType[GrenadeLauncherAmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType, true, " VOG-25P: ", GrenadeLauncherAmmoType);
@@ -96,8 +95,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(5))) * HeldItem.shootSpeed;
-
-                Shoot(aim, BulletType, BulletDamage);
+                Shoot(aim, NormalBullet, BulletDamage);
             }
             if (MouseRightPressed && Player.CountItem(GrenadeLauncherAmmoType) > 0 && AlternateFireCoolDown == 0 && !(ReloadTimer > 0))
             {
@@ -105,19 +103,18 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 AmmoGL.stack--;
                 SoundEngine.PlaySound(ShootGrenade, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(4))) * HeldItem.shootSpeed;
-                VOGDamage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth()) * 5;
-                if (Player.whoAmI == Main.myPlayer)
-                {
-                    //VOG-25
-                    Projectile.NewProjectileDirect(
-                        spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                        position: Player.MountedCenter,
-                        velocity: aim,
-                        type: ModContent.ProjectileType<AKMVOG_25P>(),
-                        damage: VOGDamage,
-                        knockback: 0f,
-                        owner: Player.whoAmI);
-                }
+                VOGDamage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth() * (5f * Insurgency.WeaponScaling()));
+
+                //VOG-25
+                ExtensionMethods.BetterNewProjectile(
+                    Player,
+                    spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                    position: Player.MountedCenter,
+                    velocity: aim,
+                    type: ModContent.ProjectileType<AKMVOG_25P>(),
+                    damage: VOGDamage,
+                    knockback: 0f,
+                    owner: Player.whoAmI);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)
@@ -143,7 +140,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
 
-                    if (Ammo.stack > 0)
+                    if (CanReload())
                     {
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
                         Ammo.stack -= AmmoStackCount;

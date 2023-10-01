@@ -22,7 +22,7 @@ namespace InsurgencyWeapons.VendingMachines
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             scale = 0.5f;
-            Texture2D texture = TextureAssets.Item[Type].Value;
+            Texture2D texture = Item.MyTexture(); ;
             Rectangle rect = texture.Bounds;
             ExtensionMethods.BetterEntityDraw(texture, Item.Top + new Vector2(0, -4f), rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
             return false;

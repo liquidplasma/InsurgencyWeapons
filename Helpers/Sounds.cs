@@ -16,5 +16,17 @@ namespace InsurgencyWeapons.Helpers
         public static SoundStyle M24StRope => new("InsurgencyWeapons/Sounds/Weapons/Grenades/rope");
         public static SoundStyle M24StThrow => new("InsurgencyWeapons/Sounds/Weapons/Grenades/throw2");
         #endregion
+
+        //Mark 2 Pineapple Grenade
+        #region
+        public static SoundStyle MK2Pin => new("InsurgencyWeapons/Sounds/Weapons/Grenades/pin");
+        public static SoundStyle MK2Spoon => new("InsurgencyWeapons/Sounds/Weapons/Grenades/spoon");
+        public static SoundStyle MK2Throw => new("InsurgencyWeapons/Sounds/Weapons/Grenades/throw");
+        #endregion
+
+        //RGO
+        #region
+        public static SoundStyle RGOSpoon => new("InsurgencyWeapons/Sounds/Weapons/Grenades/spoon2");
+        #endregion
     }
 }

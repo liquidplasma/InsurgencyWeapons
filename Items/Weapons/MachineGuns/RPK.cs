@@ -40,7 +40,7 @@ namespace InsurgencyWeapons.Items.Weapons.MachineGuns
             if (player.ownedProjectileCounts[RPKType] < 1)
             {
                 int damage = (int)player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Item.damage);
-                Projectile gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, RPKType, Item.damage, Item.knockBack, player.whoAmI);
+                Projectile gun = ExtensionMethods.BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, RPKType, Item.damage, Item.knockBack, player.whoAmI);
                 gun.originalDamage = damage;
             }
         }

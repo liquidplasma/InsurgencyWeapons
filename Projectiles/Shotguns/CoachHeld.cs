@@ -91,7 +91,6 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         public override void AI()
         {
             Ammo = Player.FindItemInInventory(AmmoType);
-            Ammo ??= ContentSamples.ItemsByType[AmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
             SpecificWeaponFix = new Vector2(0, 4f);
@@ -109,8 +108,6 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 else
                     SoundEngine.PlaySound(Fire, Projectile.Center);
 
-
-
                 int both = 1;
                 if (CanFireBothBarrels)
                 {
@@ -125,12 +122,12 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     {
                         Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(14))) * HeldItem.shootSpeed;
                         //Buck
-                        Shoot(aim, BulletType, BulletDamage, dropCasing: false);
+                        Shoot(aim, NormalBullet, BulletDamage, dropCasing: false);
                     }
 
                     Vector2 aimNoSpread = Player.MountedCenter.DirectionTo(MouseAim) * HeldItem.shootSpeed;
-                    //Slug
-                    Shoot(aimNoSpread, BulletType, BulletDamage, dropCasing: false);
+                    //Ball
+                    Shoot(aimNoSpread, NormalBullet, BulletDamage, dropCasing: false);
                 }
             }
 
@@ -150,13 +147,12 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             {
                 case 15:
                     SoundEngine.PlaySound(Close, Projectile.Center);
-                    CurrentAmmo = MaxAmmo;
                     Projectile.frame = (int)CoachState.Ready;
                     ReloadStarted = false;
                     break;
 
                 case 108:
-                    if (Ammo.stack > 0)
+                    if (CanReload())
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
@@ -166,7 +162,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     break;
 
                 case 132:
-                    if (Ammo.stack > 0)
+                    if (CanReload())
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);

@@ -19,6 +19,7 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
 
         public override void SetDefaults()
         {
+            Item.crit = 17;
             Item.knockBack = 4f;
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -40,7 +41,7 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
             if (player.ownedProjectileCounts[MosinType] < 1)
             {
                 int damage = (int)player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Item.damage);
-                Projectile gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, MosinType, Item.damage, Item.knockBack, player.whoAmI);
+                Projectile gun = ExtensionMethods.BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, MosinType, Item.damage, Item.knockBack, player.whoAmI);
                 gun.originalDamage = damage;
             }
         }

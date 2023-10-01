@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles
@@ -64,11 +65,21 @@ namespace InsurgencyWeapons.Projectiles
         /// <summary>
         /// Shorthand for Insurgency.Bullet
         /// </summary>
-        public int BulletType => Insurgency.Bullet;
+        public int NormalBullet => Insurgency.Bullet;
 
-        public int BulletDamage => (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
+        public int BulletDamage
+        {
+            get
+            {
+                Ammo ??= ContentSamples.ItemsByType[AmmoType];
+                return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
+            }
+        }
+
         public bool ReloadStarted { get; set; }
         public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
+
+        public bool CanReload(int minAmmo = 0) => Ammo != null && Ammo.stack > minAmmo;
 
         public bool UnderAlternateFireCoolDown => AlternateFireCoolDown > PercentageOfAltFireCoolDown;
 
@@ -76,6 +87,11 @@ namespace InsurgencyWeapons.Projectiles
         /// For bolt action snipers rifles
         /// </summary>
         public int BoltActionTimer { get; set; }
+
+        /// <summary>
+        /// For pump action shotguns
+        /// </summary>
+        public int PumpActionTimer { get; set; }
 
         public Vector2
            recoilVertical, recoil,
@@ -160,28 +176,32 @@ namespace InsurgencyWeapons.Projectiles
             }
         }
 
-        public void DropMagazine(int type)
-        {
-            Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo), Projectile.Center, new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), -Main.rand.NextFloat(1f, 1.5f)).RotatedByRandom(MathHelper.PiOver4), type, 0, 0f, Player.whoAmI);
-        }
+        public void DropMagazine(int type) => ExtensionMethods.BetterNewProjectile(
+            Player,
+            Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+            Projectile.Center,
+            new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), -Main.rand.NextFloat(1f, 1.5f)).RotatedByRandom(MathHelper.PiOver4),
+            type,
+            0,
+            0f,
+            Player.whoAmI);
 
-        public void DropCasingManually(int type = 0)
+        public void DropCasingManually(int type = 0, float frame = 0f)
         {
             if (type == 0)
                 type = ModContent.ProjectileType<Casing>();
 
-            if (Player.whoAmI == Main.myPlayer)
-            {
-                //Casing
-                Projectile.NewProjectileDirect(
-                    spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                    position: Player.MountedCenter,
-                    velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                    type: type,
-                    damage: 0,
-                    knockback: 0,
-                    owner: Player.whoAmI);
-            }
+            //Casing
+            ExtensionMethods.BetterNewProjectile(
+                Player,
+                spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                position: Player.MountedCenter,
+                velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
+                type: type,
+                damage: 0,
+                knockback: 0,
+                owner: Player.whoAmI,
+                ai0: frame);
         }
 
         /// <summary>
@@ -200,30 +220,30 @@ namespace InsurgencyWeapons.Projectiles
             if (HeldItem.ModItem is not null and SniperRifle)
                 knockBack *= 1.75f;
 
-            if (Player.whoAmI == Main.myPlayer)
+            //Bullet
+            ExtensionMethods.BetterNewProjectile(
+               Player,
+               spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+               position: Player.MountedCenter,
+               velocity: aim,
+               type: type,
+               damage: damage,
+               knockback: knockBack,
+               owner: Player.whoAmI,
+               ai0: ai0);
+
+            if (dropCasing)
             {
-                //Bullet
-                Projectile.NewProjectileDirect(
-                   spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                   position: Player.MountedCenter,
-                   velocity: aim,
-                   type: type,
-                   damage: damage,
-                   knockback: knockBack,
-                   owner: Player.whoAmI,
-                   ai0: ai0);
-                if (dropCasing)
-                {
-                    //Casing
-                    Projectile.NewProjectileDirect(
-                        spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                        position: Player.MountedCenter,
-                        velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                        type: ModContent.ProjectileType<Casing>(),
-                        damage: 0,
-                        knockback: 0,
-                        owner: Player.whoAmI);
-                }
+                //Casing
+                ExtensionMethods.BetterNewProjectile(
+                    Player,
+                    spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                    position: Player.MountedCenter,
+                    velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
+                    type: ModContent.ProjectileType<Casing>(),
+                    damage: 0,
+                    knockback: 0,
+                    owner: Player.whoAmI);
             }
         }
 
@@ -262,7 +282,7 @@ namespace InsurgencyWeapons.Projectiles
         {
             Projectile.CheckPlayerActiveAndNotDead(Player);
 
-            ///Check if ammo is 0 or less then remove it if necessary, since I'm directly reducing stack size
+            //Check if ammo is 0 or less then remove it if necessary, since I'm directly reducing stack size
             if (Ammo != null && Ammo.stack <= 0)
                 Ammo.TurnToAir();
             if (AmmoGL != null && AmmoGL.stack <= 0)
@@ -272,20 +292,6 @@ namespace InsurgencyWeapons.Projectiles
             if (ShotDelay == 1)
             {
                 Lighting.AddLight(Player.Center, Color.Gold.ToVector3());
-            }
-
-            return base.PreAI();
-        }
-
-        public override void AI()
-        {
-            //Give scope to player if he is holding sniper rifles
-            if (Insurgency.SniperRifles.Contains(HeldItem.type))
-                Player.scope = true;
-
-            if (Projectile.active)
-            {
-                MagazineTracking.isActive = true;
             }
 
             //Resetting fields
@@ -306,7 +312,25 @@ namespace InsurgencyWeapons.Projectiles
             {
                 BoltActionTimer--;
             }
+            if (PumpActionTimer > 0)
+            {
+                PumpActionTimer--;
+            }
             #endregion
+
+            return base.PreAI();
+        }
+
+        public override void AI()
+        {
+            //Give scope to player if he is holding sniper rifles
+            if (Insurgency.SniperRifles.Contains(HeldItem.type))
+                Player.scope = true;
+
+            if (Projectile.active)
+            {
+                MagazineTracking.isActive = true;
+            }
 
             if (Player.whoAmI == Main.myPlayer)
             {
@@ -341,14 +365,13 @@ namespace InsurgencyWeapons.Projectiles
             if (Player.channel
                 || ReloadTimer > 0
                 || UnderAlternateFireCoolDown
-                || BoltActionTimer > 0)
+                || BoltActionTimer > 0
+                || PumpActionTimer > 0)
             {
                 isIdle = false;
                 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
-                if (!Insurgency.SniperRifles.Contains(HeldItem.type))
-                    recoilVertical = Vector2.UnitY * (-ShotDelay / 6f);
 
-                Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + recoilVertical + SpecificWeaponFix;
+                Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + SpecificWeaponFix;
                 Projectile.Center = Player.MountedCenter + distance - new Vector2(0f, Projectile.gfxOffY - Player.gfxOffY);
                 Projectile.velocity = Vector2.Zero;
                 int mouseDirection = Player.DirectionTo(MouseAim).X > 0f ? 1 : -1;
@@ -379,6 +402,7 @@ namespace InsurgencyWeapons.Projectiles
             writer.WriteVector2(MouseAim);
             writer.Write(MouseRightPressed);
             writer.Write(BoltActionTimer);
+            writer.Write(PumpActionTimer);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -386,6 +410,7 @@ namespace InsurgencyWeapons.Projectiles
             MouseAim = reader.ReadVector2();
             MouseRightPressed = reader.ReadBoolean();
             BoltActionTimer = reader.ReadInt32();
+            PumpActionTimer = reader.ReadInt32();
         }
     }
 }

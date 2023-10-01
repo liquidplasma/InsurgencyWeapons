@@ -40,7 +40,7 @@ namespace InsurgencyWeapons.Items.Weapons.Carbines
             if (player.ownedProjectileCounts[AKS74uType] < 1)
             {
                 int damage = (int)player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Item.damage);
-                Projectile gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, AKS74uType, Item.damage, Item.knockBack, player.whoAmI);
+                Projectile gun = ExtensionMethods.BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, AKS74uType, Item.damage, Item.knockBack, player.whoAmI);
                 gun.originalDamage = damage;
             }
         }

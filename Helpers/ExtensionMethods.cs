@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -49,11 +50,29 @@ namespace InsurgencyWeapons.Helpers
         }
 
         /// <summary>
+        /// Associated texture for this item type
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <returns></returns>
+        public static Texture2D MyTexture(this Item Item) => TextureAssets.Item[Item.type].Value;
+
+        /// <summary>
         /// Associated texture for this projectile type
         /// </summary>
         /// <param name="projectile"></param>
         /// <returns></returns>
         public static Texture2D MyTexture(this Projectile projectile) => TextureAssets.Projectile[projectile.type].Value;
+
+        /// <summary>
+        /// Already checks for if(Main.myPlayer == Player.whoAmI)
+        /// </summary>
+        /// <returns>Projectile</returns>
+        public static Projectile BetterNewProjectile(Player Player, IEntitySource spawnSource, Vector2 position, Vector2 velocity, int type, int damage, float knockback, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+        {
+            if (Player.whoAmI == Main.myPlayer)
+                return Projectile.NewProjectileDirect(spawnSource, position, velocity, type, damage, knockback, owner, ai0, ai1, ai2);
+            return null;
+        }
 
         /// <summary>
         /// Projectile will bounce back, best use in OnTileCollide

@@ -39,6 +39,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
 
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m40a1/empty");
         private SoundStyle BoltRelease => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m40a1/bltrel");
+
         private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m40a1/bltfd")
         {
             Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
@@ -88,10 +89,9 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
         public override void AI()
         {
             Ammo = Player.FindItemInInventory(AmmoType);
-            Ammo ??= ContentSamples.ItemsByType[AmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 4f;
-            SpecificWeaponFix = new Vector2(0, -3f);
+            SpecificWeaponFix = new Vector2(0, -2f);
             if (!Player.channel)
                 SemiAuto = false;
 
@@ -105,8 +105,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
 
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(1))) * HeldItem.shootSpeed;
-
-                Shoot(aim, BulletType, BulletDamage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x51mm);
+                Shoot(aim, NormalBullet, BulletDamage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x51mm);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
@@ -141,13 +140,13 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (CurrentAmmo < MaxAmmo)
                     {
-                        if (Ammo.stack > 0)
+                        if (CanReload())
                         {
                             SoundEngine.PlaySound(Insert, Projectile.Center);
                             AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
                             Ammo.stack -= AmmoStackCount;
                             CurrentAmmo += AmmoStackCount;
-                            ReloadTimer = 50;
+                            ReloadTimer = 60;
                         }
                     }
                     break;

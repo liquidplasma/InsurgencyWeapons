@@ -83,7 +83,6 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
         public override void AI()
         {
             Ammo = Player.FindItemInInventory(AmmoType);
-            Ammo ??= ContentSamples.ItemsByType[AmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 10f;
             if (!Player.channel)
@@ -105,8 +104,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
-
-                Shoot(aim, BulletType, BulletDamage, dropCasing: false);
+                Shoot(aim, NormalBullet, BulletDamage, dropCasing: false);
             }
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
             {
@@ -130,7 +128,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 case 120:
                     SoundEngine.PlaySound(Open, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    if (Ammo.stack > 0)
+                    if (CanReload())
                     {
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
                         Ammo.stack -= AmmoStackCount;
@@ -138,15 +136,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     }
                     for (int i = 0; i < 6; i++)
                     {
-                        //Casing
-                        Projectile.NewProjectileDirect(
-                            spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                            position: Player.MountedCenter,
-                            velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                            type: ModContent.ProjectileType<Casing>(),
-                            damage: 0,
-                            knockback: 0,
-                            owner: Player.whoAmI);
+                        DropCasingManually();
                     }
                     break;
 

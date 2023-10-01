@@ -73,7 +73,6 @@ namespace InsurgencyWeapons.Projectiles.Carbines
         public override void AI()
         {
             Ammo = Player.FindItemInInventory(AmmoType);
-            Ammo ??= ContentSamples.ItemsByType[AmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 8f;
             SpecificWeaponFix = new Vector2(0, 1f);
@@ -83,8 +82,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(3))) * HeldItem.shootSpeed;
-
-                Shoot(aim, BulletType, BulletDamage);
+                Shoot(aim, NormalBullet, BulletDamage);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(Ammo.type) > 0 && !ReloadStarted)
@@ -111,7 +109,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
 
-                    if (Ammo.stack > 0)
+                    if (CanReload())
                     {
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
                         Ammo.stack -= AmmoStackCount;
