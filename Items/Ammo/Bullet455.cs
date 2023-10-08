@@ -1,9 +1,4 @@
 ﻿using InsurgencyWeapons.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Items.Ammo
 {
@@ -22,7 +17,7 @@ namespace InsurgencyWeapons.Items.Ammo
 
         public override void AddRecipes()
         {
-            this.RegisterINS2RecipeAmmo(money: 10, amountToCraft: 6);
+            //this.RegisterINS2RecipeAmmo(money: 10, amountToCraft: 6);
         }
     }
 }
