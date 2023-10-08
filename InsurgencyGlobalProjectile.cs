@@ -12,10 +12,11 @@ namespace InsurgencyWeapons
 {
     internal class InsurgencyGlobalProjectile : GlobalProjectile
     {
-        private static int[] IgnoredDraws = { 
+        private static int[] IgnoredDraws = {
             ModContent.ProjectileType<M1GarandEnbloc>(),
-            ModContent.ProjectileType<Shells>() 
+            ModContent.ProjectileType<Shells>()
         };
+
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
             if (projectile.ModProjectile is not null and MagazineBase)

@@ -16,7 +16,7 @@ namespace InsurgencyWeapons.Items.Ammo
 
         public override void AddRecipes()
         {
-            this.RegisterINS2RecipeAmmo(money: 20, amountToCraft: 20);
+            this.RegisterINS2RecipeAmmo(money: 30, amountToCraft: 20);
         }
     }
 }

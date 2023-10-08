@@ -5,10 +5,10 @@ using InsurgencyWeapons.Projectiles.WeaponMagazines.BattleRifles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.BattleRifles
@@ -73,7 +73,6 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
         public override void AI()
         {
             Ammo ??= Player.FindItemInInventory(AmmoType);
-            Ammo ??= ContentSamples.ItemsByType[AmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 15f;
             SpecificWeaponFix = new Vector2(0, 0);
@@ -82,7 +81,7 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(5))) * HeldItem.shootSpeed;
+                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(6))) * HeldItem.shootSpeed;
                 Shoot(aim, NormalBullet, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x51mm);
             }
 
@@ -135,6 +134,18 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
                 Projectile.Kill();
 
             base.AI();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(CurrentAmmo);
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            CurrentAmmo = reader.ReadInt32();
+            base.ReceiveExtraAI(reader);
         }
     }
 }

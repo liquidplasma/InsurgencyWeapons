@@ -52,7 +52,7 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
 
         public override void AddRecipes()
         {
-            this.RegisterINS2RecipeWeapon(1880);
+            this.RegisterINS2RecipeWeapon(180);
         }
     }
 }

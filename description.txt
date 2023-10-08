@@ -7,6 +7,7 @@
 
 	[b]-Battle Rifles-[/b]
 		FN SCAR-H 7.62x51mm
+		H&K G3A3 7.62x51mm
 
 	[b]-Carbines-[/b]
 		AKS-74U 5.45x39mm
@@ -21,9 +22,13 @@
 
 	[b]-Revolvers-[/b]
 		Colt Python .357 Magnum
+		Webley Mk.VI .455 WMk.II
+		S&W Model 29 .44 Magnum
 
 	[b]-Rifles-[/b]
 		M1 Garand 7.62x63mm
+		Lee-Enfield No.IV Mk.I .303
+		SVT-40 7.62x54mmR
 
 	[b]-Shotguns-[/b]
 		Coach Gun Buck & Ball
@@ -45,4 +50,6 @@ This mod is licensed under [url=https://insurgency-support.newworldinteractive.c
 Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
 
 Changelog//
-v0.4 - tModLoader update
+v0.5
+	-Add: SVT-40 7.62x54mmR, S&W Model 29 .44 Magnum, H&K G3A3 7.62x51mm, Lee-Enfield No.IV Mk.I .303.
+	-Add a option to enable/disable wheter to create casing/magazines when shooting/reloading.

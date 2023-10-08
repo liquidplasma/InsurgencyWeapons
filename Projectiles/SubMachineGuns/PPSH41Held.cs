@@ -5,10 +5,10 @@ using InsurgencyWeapons.Projectiles.WeaponMagazines.SubMachineGuns;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.SubMachineGuns
@@ -135,6 +135,18 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 Projectile.Kill();
 
             base.AI();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(CurrentAmmo);
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            CurrentAmmo = reader.ReadInt32();
+            base.ReceiveExtraAI(reader);
         }
     }
 }

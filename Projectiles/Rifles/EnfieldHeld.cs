@@ -1,13 +1,14 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Rifles;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Rifles
@@ -40,13 +41,31 @@ namespace InsurgencyWeapons.Projectiles.Rifles
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/empty");
         private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/magin");
         private SoundStyle Insert => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/ins");
-        private SoundStyle BoltLock => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/bltrel");
-        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/bltfd");
-        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/bltbk");
+
+        private SoundStyle BoltLock => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/bltrel")
+        {
+            Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
+            MaxInstances = 0,
+            Volume = 0.4f
+        };
+
+        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/bltfd")
+        {
+            Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
+            MaxInstances = 0,
+            Volume = 0.4f
+        };
+
+        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/bltbk")
+        {
+            Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
+            MaxInstances = 0,
+            Volume = 0.4f
+        };
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Type] = 4;
+            Main.projFrames[Type] = 3;
         }
 
         public override void SetDefaults()
@@ -54,7 +73,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             Projectile.width = 18;
             Projectile.height = 80;
             MaxAmmo = 10;
-            AmmoType = ModContent.ItemType<Bullet76251>();
+            AmmoType = ModContent.ItemType<Bullet303>();
             base.SetDefaults();
         }
 
@@ -78,22 +97,20 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             Ammo ??= Player.FindItemInInventory(AmmoType);
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 4f;
-            SpecificWeaponFix = new Vector2(0, 0);
+            SpecificWeaponFix = new Vector2(0, -0.75f);
 
             if (AllowedToFire && !UnderAlternateFireCoolDown && BoltActionTimer == 0)
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
-                BoltActionTimer = 100;
+                BoltActionTimer = 70;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
-                Shoot(aim, NormalBullet, BulletDamage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x51mm);
+                Shoot(aim, NormalBullet, BulletDamage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c303mm);
             }
-            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
-                ReloadTimer -= 180;
-                Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
             }
 
@@ -116,7 +133,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     break;
 
                 case 80:
-                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
+                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (CurrentAmmo < MaxAmmo)
                     {
                         if (CanReload(5))
@@ -125,7 +142,8 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                             AmmoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 5);
                             Ammo.stack -= AmmoStackCount;
                             CurrentAmmo += AmmoStackCount;
-                            ReloadTimer = 140;
+                            DropMagazine(ModContent.ProjectileType<EnfieldBlock>());
+                            ReloadTimer = 150;
                         }
                         else if (CanReload())
                         {
@@ -139,7 +157,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     break;
 
                 case 165:
-                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
+                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     SoundEngine.PlaySound(BoltBack, Projectile.Center);
                     DropCasingManually();
                     break;
@@ -147,14 +165,20 @@ namespace InsurgencyWeapons.Projectiles.Rifles
 
             switch (BoltActionTimer)
             {
-                case 40:
+                case 10:
                     SoundEngine.PlaySound(BoltForward, Projectile.Center);
+                    Projectile.frame = (int)Insurgency.MagazineState.Fired;
                     break;
 
-                case 70:
+                case 20:
+                    Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                    break;
+
+                case 30:
                     if (CurrentAmmo != 0)
                     {
                         SoundEngine.PlaySound(BoltBack, Projectile.Center);
+                        Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                         DropCasingManually();
                     }
                     break;
@@ -164,6 +188,18 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 Projectile.Kill();
 
             base.AI();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(CurrentAmmo);
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            CurrentAmmo = reader.ReadInt32();
+            base.ReceiveExtraAI(reader);
         }
     }
 }

@@ -30,17 +30,20 @@ namespace InsurgencyWeapons.Projectiles
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.tileCollide = true;
-            Projectile.extraUpdates = 6;
+            Projectile.extraUpdates = 5;
             Projectile.alpha = 255;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FinalDamage *= Insurgency.WeaponScaling();
             switch (CaliberSize)
             {
                 case (int)Insurgency.APCaliber.c762x51mm:
                     modifiers.ArmorPenetration += 12;
+                    break;
+
+                case (int)Insurgency.APCaliber.c303mm:
+                    modifiers.ArmorPenetration += 25;
                     break;
 
                 case (int)Insurgency.APCaliber.c762x63mm:
@@ -57,7 +60,12 @@ namespace InsurgencyWeapons.Projectiles
         {
             if (Insurgency.SniperRifles.Contains(HeldItem.type))
             {
-                Projectile.extraUpdates += 4;
+                Projectile.extraUpdates += 5;
+                Projectile.netUpdate = true;
+            }
+            if (Insurgency.Rifles.Contains(HeldItem.type))
+            {
+                Projectile.extraUpdates += 3;
                 Projectile.netUpdate = true;
             }
         }

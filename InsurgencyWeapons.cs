@@ -28,6 +28,10 @@ namespace InsurgencyWeapons
                     //Assault rifles
                     Insurgency.AssaultRifles.Add(item.type);
 
+                if (item.ModItem is not null and BattleRifle)
+                    //Battle rifles
+                    Insurgency.BattleRifles.Add(item.type);
+
                 if (item.ModItem is not null and Carbine)
                     //Carbines
                     Insurgency.Carbines.Add(item.type);

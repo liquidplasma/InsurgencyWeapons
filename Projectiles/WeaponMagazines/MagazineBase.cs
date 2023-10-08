@@ -43,7 +43,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             {
                 Projectile.tileCollide = false;
                 Projectile.velocity = Vector2.Zero;
-            }            
+            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

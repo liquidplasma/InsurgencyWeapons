@@ -1,10 +1,10 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Projectiles.Rifles;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using Microsoft.Xna.Framework;
 
 namespace InsurgencyWeapons.Items.Weapons.Rifles
 {
@@ -22,7 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
             Item.knockBack = 4f;
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.useAnimation = Item.useTime = 48;
+            Item.useAnimation = Item.useTime = 36;
             Item.width = 78;
             Item.height = 18;
             Item.shoot = ProjectileID.PurificationPowder;
@@ -52,7 +52,7 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
 
         public override void AddRecipes()
         {
-            //this.RegisterINS2RecipeWeapon(270);
+            this.RegisterINS2RecipeWeapon(270);
         }
     }
 }

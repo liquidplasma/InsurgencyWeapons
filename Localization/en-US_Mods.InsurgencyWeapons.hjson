@@ -1,3 +1,26 @@
+WeaponClasses: {
+	AR: Assault Rifle
+	BR: Battle Rifle
+	CAR: Carbine
+	Gren: Grenade
+	RevoDB: Double Action Revolver
+	RevoBA: Break Action Revolver
+	Rifle: Rifle
+	Shotgun: Shotgun
+	Sniper: Sniper Rifle
+	SMG: Sub Machine Gun
+	LMG: Light Machine Gun
+}
+
+Configs: {
+	DropCasingDesc: Wheter to drop a casing when shooting or not
+	DropCasingLabel: Drop Casing
+	DropMagazineDesc: Wheter to drop a magazine when reloading or not
+	DropMagazineLabel: Drop Magazine
+	Config: Configuration
+	InsurgencyModConfig.DisplayName: Insurgency Mod Config
+}
+
 Items: {
 	AKM: {
 		DisplayName: AKM 7.62x39mm + GP-25 40mm VOG-25P
@@ -174,12 +197,47 @@ Items: {
 	}
 
 	Ithaca: {
-		DisplayName: Ithaca
+		DisplayName: Ithaca M37 12 Gauge
 		Tooltip: ""
 	}
 
 	LeeEnfield: {
-		DisplayName: Lee Enfield
+		DisplayName: Lee-Enfield No.IV Mk.I .303
+		Tooltip: ""
+	}
+
+	G3A3: {
+		DisplayName: H&K G3A3 7.62x51mm
+		Tooltip: ""
+	}
+
+	M29: {
+		DisplayName: S&W Model 29 .44 Magnum
+		Tooltip: ""
+	}
+
+	Webley: {
+		DisplayName: Webley Mk.VI .455 WMk.II
+		Tooltip: ""
+	}
+
+	Bullet303: {
+		DisplayName: Lee-Enfield .303
+		Tooltip: Ignores 25 enemy defense
+	}
+
+	Bullet44: {
+		DisplayName: Model 29 .44 Magnum
+		Tooltip: ""
+	}
+
+	Bullet455: {
+		DisplayName: Webley .455 WMk.II
+		Tooltip: ""
+	}
+
+	SVT40: {
+		DisplayName: SVT-40 7.62x54mmR
 		Tooltip: ""
 	}
 }
@@ -208,7 +266,7 @@ Projectiles: {
 	M1928Magazine.DisplayName: M1928 Magazine
 	PPSH41Held.DisplayName: PPSH41
 	PPSH41Magazine.DisplayName: PPSH41 Magazine
-	CoachHeld.DisplayName: Coach Held
+	CoachHeld.DisplayName: Coach
 	Shells.DisplayName: Shells
 	AN94Held.DisplayName: AN94
 	AN94Magazine.DisplayName: A N94 Magazine
@@ -220,6 +278,10 @@ Projectiles: {
 	RPKDrum.DisplayName: RPK Drum
 	M40A1Held.DisplayName: M40A1
 	MosinHeld.DisplayName: Mosin
-	IthacaHeld.DisplayName: Ithaca Held
-	EnfieldHeld.DisplayName: Enfield Held
+	IthacaHeld.DisplayName: Ithaca
+	EnfieldHeld.DisplayName: Enfield
+	G3A3Held.DisplayName: G3 A3
+	EnfieldBlock.DisplayName: Enfield Block
+	M29Held.DisplayName: M29
+	SVT40Held.DisplayName: S V T40 Held
 }

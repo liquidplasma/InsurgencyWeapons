@@ -104,7 +104,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 AmmoGL.stack--;
                 SoundEngine.PlaySound(ShootGrenade, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(4))) * HeldItem.shootSpeed;
-                VOGDamage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth() * (5f * Insurgency.WeaponScaling()));
+                VOGDamage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(AmmoGL.damage)) * Player.GetStealth() * (2f * Insurgency.WeaponScaling()));
 
                 //VOG-25
                 ExtensionMethods.BetterNewProjectile(
@@ -131,13 +131,13 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
             switch (ReloadTimer)
             {
-                case 15:
+                case 30:
                     SoundEngine.PlaySound(BoltLock, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     ReloadStarted = false;
                     break;
 
-                case 40:
+                case 70:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
 
@@ -149,7 +149,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     }
                     break;
 
-                case 80:
+                case 110:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (Player.whoAmI == Main.myPlayer)

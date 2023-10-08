@@ -15,7 +15,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Casings
             Projectile.width = 2;
             Projectile.height = 4;
             Projectile.penetrate = 8;
-            Projectile.timeLeft = 1350;
+            Projectile.timeLeft = 750;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

@@ -26,7 +26,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Casings
             Projectile.width = 4;
             Projectile.height = 4;
             Projectile.penetrate = 8;
-            Projectile.timeLeft = 1350;
+            Projectile.timeLeft = 750;
             base.SetDefaults();
         }
 

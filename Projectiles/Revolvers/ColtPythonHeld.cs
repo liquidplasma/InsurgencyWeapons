@@ -1,14 +1,13 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Revolvers;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Revolvers
@@ -111,9 +110,9 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Revolvers;
                 ReloadStarted = true;
             }
-            if (Player.channel && CurrentAmmo == 0 && CanFire && Projectile.soundDelay == 0)
+            if (Player.channel && CurrentAmmo == 0 && CanFire && Projectile.soundDelay == 0 && BoltActionTimer == 0)
             {
-                SoundEngine.PlaySound(Empty, Projectile.Center);
+                BoltActionTimer = 30;
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
             switch (ReloadTimer)
@@ -149,6 +148,23 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     break;
             }
+            switch (BoltActionTimer)
+            {
+                case 5:
+                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
+                    break;
+
+                case 10:
+                    SoundEngine.PlaySound(Hammer, Projectile.Center);
+                    SoundEngine.PlaySound(Empty, Projectile.Center);
+                    Projectile.frame = (int)Insurgency.MagazineState.Fired;
+                    break;
+
+                case 15:
+                    Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                    break;
+            }
+
             if (ShotDelay < HeldItem.useTime)
                 Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
 
@@ -156,6 +172,18 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 Projectile.Kill();
 
             base.AI();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(CurrentAmmo);
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            CurrentAmmo = reader.ReadInt32();
+            base.ReceiveExtraAI(reader);
         }
     }
 }

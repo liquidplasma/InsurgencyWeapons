@@ -26,7 +26,7 @@ namespace InsurgencyWeapons.Items.Weapons.BattleRifles
             Item.width = 82;
             Item.height = 26;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 11;
+            Item.damage = 13;
             Item.shootSpeed = 16f;
             Item.noMelee = true;
             Item.noUseGraphic = true;

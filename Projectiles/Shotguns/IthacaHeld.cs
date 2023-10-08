@@ -91,7 +91,6 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         public override void AI()
         {
             Ammo ??= Player.FindItemInInventory(AmmoType);
-            Ammo ??= ContentSamples.ItemsByType[AmmoType];
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 4f;
             SpecificWeaponFix = new Vector2(0, 4f);
@@ -190,5 +189,16 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
             base.AI();
         }
+        public override void SendExtraAI(BinaryWriter writer)
+            {
+                writer.Write(CurrentAmmo);
+                base.SendExtraAI(writer);
+            }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+            {
+                CurrentAmmo = reader.ReadInt32();
+                base.ReceiveExtraAI(reader);
+            }
     }
 }*/

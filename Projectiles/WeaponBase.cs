@@ -72,7 +72,7 @@ namespace InsurgencyWeapons.Projectiles
             get
             {
                 Ammo ??= ContentSamples.ItemsByType[AmmoType];
-                return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
+                return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth() * Insurgency.WeaponScaling());
             }
         }
 
@@ -81,7 +81,13 @@ namespace InsurgencyWeapons.Projectiles
 
         public bool CanReload(int minAmmo = 0) => Ammo != null && Ammo.stack > minAmmo;
 
-        public bool UnderAlternateFireCoolDown => AlternateFireCoolDown > PercentageOfAltFireCoolDown;
+        private bool underAlternateFireCoolDown;
+
+        public bool UnderAlternateFireCoolDown
+        {
+            get => AlternateFireCoolDown > PercentageOfAltFireCoolDown;
+            set => underAlternateFireCoolDown = value;
+        }
 
         /// <summary>
         /// For bolt action snipers rifles
@@ -176,7 +182,12 @@ namespace InsurgencyWeapons.Projectiles
             }
         }
 
-        public void DropMagazine(int type) => ExtensionMethods.BetterNewProjectile(
+        public void DropMagazine(int type)
+        {
+            if (!InsurgencyModConfig.Instance.DropMagazine)
+                return;
+
+            ExtensionMethods.BetterNewProjectile(
             Player,
             Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
             Projectile.Center,
@@ -185,9 +196,13 @@ namespace InsurgencyWeapons.Projectiles
             0,
             0f,
             Player.whoAmI);
+        }
 
         public void DropCasingManually(int type = 0, float frame = 0f)
         {
+            if (!InsurgencyModConfig.Instance.DropCasing)
+                return;
+
             if (type == 0)
                 type = ModContent.ProjectileType<Casing>();
 
@@ -234,16 +249,7 @@ namespace InsurgencyWeapons.Projectiles
 
             if (dropCasing)
             {
-                //Casing
-                ExtensionMethods.BetterNewProjectile(
-                    Player,
-                    spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                    position: Player.MountedCenter,
-                    velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                    type: ModContent.ProjectileType<Casing>(),
-                    damage: 0,
-                    knockback: 0,
-                    owner: Player.whoAmI);
+                DropCasingManually();
             }
         }
 
@@ -401,6 +407,9 @@ namespace InsurgencyWeapons.Projectiles
         {
             writer.WriteVector2(MouseAim);
             writer.Write(MouseRightPressed);
+            writer.Write(UnderAlternateFireCoolDown);
+            writer.Write(PercentageOfAltFireCoolDown);
+            writer.Write(AlternateFireCoolDown);
             writer.Write(BoltActionTimer);
             writer.Write(PumpActionTimer);
         }
@@ -409,6 +418,9 @@ namespace InsurgencyWeapons.Projectiles
         {
             MouseAim = reader.ReadVector2();
             MouseRightPressed = reader.ReadBoolean();
+            UnderAlternateFireCoolDown = reader.ReadBoolean();
+            PercentageOfAltFireCoolDown = reader.ReadSingle();
+            AlternateFireCoolDown = reader.ReadInt32();
             BoltActionTimer = reader.ReadInt32();
             PumpActionTimer = reader.ReadInt32();
         }

@@ -8,11 +8,22 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Items\Ammo\Bullet303.png" />
+    <None Remove="Items\Ammo\Bullet44.png" />
+    <None Remove="Items\Ammo\Bullet455.png" />
     <None Remove="Items\Ammo\Bullet76251.png" />
     <None Remove="Items\Ammo\Bullet76254R.png" />
+    <None Remove="Items\Weapons\BattleRifles\G3A3.png" />
+    <None Remove="Items\Weapons\Revolvers\M29.png" />
+    <None Remove="Items\Weapons\Revolvers\Webley.png" />
     <None Remove="Items\Weapons\Rifles\LeeEnfield.png" />
+    <None Remove="Items\Weapons\Rifles\SVT40.png" />
     <None Remove="Items\Weapons\Shotguns\Ithaca.png" />
+    <None Remove="Projectiles\BattleRifles\G3A3Held.png" />
+    <None Remove="Projectiles\Revolvers\M29Held.png" />
+    <None Remove="Projectiles\Revolvers\WebleyHold.png" />
     <None Remove="Projectiles\Rifles\EnfieldHeld.png" />
+    <None Remove="Projectiles\Rifles\SVT40Held.png" />
     <None Remove="Projectiles\Shotguns\IthacaHeld.png" />
     <None Remove="VendingMachines\VendingMachineGunsTile.png" />
   </ItemGroup>

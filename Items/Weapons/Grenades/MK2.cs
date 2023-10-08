@@ -30,7 +30,7 @@ namespace InsurgencyWeapons.Items.Weapons.Grenades
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 0, 1, 5);
             Item.rare = ItemRarityID.LightRed;
-            Item.maxStack = Item.CommonMaxStack; 
+            Item.maxStack = Item.CommonMaxStack;
             Item.DamageType = DamageClass.Ranged;
         }
 

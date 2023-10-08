@@ -5,10 +5,10 @@ using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Rifles
@@ -93,12 +93,12 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
-
                 Shoot(aim, NormalBullet, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x63mm);
             }
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
+                ReloadTimer += 30;
                 SoundEngine.PlaySound(GarandPing, Projectile.Center);
                 if (Player.whoAmI == Main.myPlayer)
                 {
@@ -107,11 +107,6 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
             }
-
-            if (ReloadTimer > 0)
-            {
-                Player.SetDummyItemTime(2);
-            }
             if (Player.channel && CurrentAmmo == 0 && CanFire && Projectile.soundDelay == 0)
             {
                 SoundEngine.PlaySound(Empty, Projectile.Center);
@@ -119,14 +114,13 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             }
             switch (ReloadTimer)
             {
-                case 15:
+                case 25:
                     SoundEngine.PlaySound(BoltLock, Projectile.Center);
-                    CurrentAmmo = MaxAmmo;
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     ReloadStarted = false;
                     break;
 
-                case 40:
+                case 80:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (CanReload())
@@ -137,21 +131,30 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     }
                     break;
             }
-            if (CurrentAmmo != 0 && ShotDelay % 4 == 0 && Player.channel)
+            if (CurrentAmmo != 0 && ReloadTimer == 0)
             {
-                Projectile.frame++;
-                if (Projectile.frame == 3)
-                {
+                if (ShotDelay <= 3)
+                    Projectile.frame = ShotDelay;
+                else
                     Projectile.frame = 0;
-                }
             }
-            else if (ShotDelay == HeldItem.useTime && !(ReloadTimer > 0))
-                Projectile.frame = 0;
 
             if (HeldItem.type != ModContent.ItemType<M1Garand>())
                 Projectile.Kill();
 
             base.AI();
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(CurrentAmmo);
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            CurrentAmmo = reader.ReadInt32();
+            base.ReceiveExtraAI(reader);
         }
     }
 }
