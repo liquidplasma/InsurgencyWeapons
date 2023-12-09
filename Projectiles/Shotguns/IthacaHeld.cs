@@ -1,10 +1,11 @@
-﻿/*using InsurgencyWeapons.Helpers;
+﻿using InsurgencyWeapons.Gores.Casing;
+using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Shotguns;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -13,7 +14,7 @@ using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Shotguns
 {
-    /internal class IthacaHeld : WeaponBase
+    internal class IthacaHeld : WeaponBase
     {
         public int CurrentAmmo
         {
@@ -61,13 +62,13 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Type] = 4;
+            Main.projFrames[Type] = 3;
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = 26;
-            Projectile.height = 82;
+            Projectile.width = 18;
+            Projectile.height = 84;
             MaxAmmo = 6;
             AmmoType = ModContent.ItemType<TwelveGauge>();
             base.SetDefaults();
@@ -77,7 +78,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.8f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
             return false;
         }
@@ -92,14 +93,14 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         {
             Ammo ??= Player.FindItemInInventory(AmmoType);
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 4f;
-            SpecificWeaponFix = new Vector2(0, 4f);
+            OffsetFromPlayerCenter = 0f;
+            SpecificWeaponFix = new Vector2(0, 3.5f);
 
             if (AllowedToFire && !UnderAlternateFireCoolDown && PumpActionTimer == 0)
             {
                 CurrentAmmo--;
                 if (CurrentAmmo != 0)
-                    PumpActionTimer = HeldItem.useTime * 2 - 40;
+                    PumpActionTimer = HeldItem.useTime * 2 - 25;
                 ShotDelay = 0;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 for (int j = 0; j < 8; j++)
@@ -164,9 +165,9 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     break;
 
                 case 200:
-                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
+                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     SoundEngine.PlaySound(PumpBack, Projectile.Center);
-                    DropCasingManually(ModContent.ProjectileType<Shells>(), frame: 1);
+                    DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
                     break;
             }
 
@@ -177,10 +178,14 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     break;
 
+                case 22:
+                    Projectile.frame = (int)Insurgency.MagazineState.Fired;
+                    break;
+
                 case 36:
                     SoundEngine.PlaySound(PumpBack, Projectile.Center);
-                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    DropCasingManually(ModContent.ProjectileType<Shells>(), frame: 1);
+                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
+                    DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
                     break;
             }
 
@@ -189,16 +194,17 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
             base.AI();
         }
+
         public override void SendExtraAI(BinaryWriter writer)
-            {
-                writer.Write(CurrentAmmo);
-                base.SendExtraAI(writer);
-            }
+        {
+            writer.Write(CurrentAmmo);
+            base.SendExtraAI(writer);
+        }
 
         public override void ReceiveExtraAI(BinaryReader reader)
-            {
-                CurrentAmmo = reader.ReadInt32();
-                base.ReceiveExtraAI(reader);
-            }
+        {
+            CurrentAmmo = reader.ReadInt32();
+            base.ReceiveExtraAI(reader);
+        }
     }
-}*/
+}

@@ -1,6 +1,6 @@
-﻿using InsurgencyWeapons.Helpers;
+﻿using InsurgencyWeapons.Gores.Casing;
+using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using Microsoft.Xna.Framework;
 using System.IO;
 using Terraria;
@@ -41,7 +41,10 @@ namespace InsurgencyWeapons.Projectiles
         /// Max amount of ammo per reload, should be assigned in set defaults
         /// </summary>
         public int MaxAmmo { get; set; }
-
+        /// <summary>
+        /// Used for weapon spread
+        /// </summary>
+        private int Degree { get; set; }
         /// <summary>
         /// Ammo item type
         /// </summary>
@@ -72,7 +75,10 @@ namespace InsurgencyWeapons.Projectiles
             get
             {
                 Ammo ??= ContentSamples.ItemsByType[AmmoType];
-                return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth() * Insurgency.WeaponScaling());
+                if (InsurgencyModConfig.Instance.DamageScaling)
+                    return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth() * Insurgency.WeaponScaling());
+
+                return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
             }
         }
 
@@ -144,7 +150,7 @@ namespace InsurgencyWeapons.Projectiles
         }
 
         /// <summary>
-        /// Draws muzzleflash
+        /// Draws muzzleflash (Cancelled until I can position it better)
         /// </summary>
         /// <param name="color">The color of the muzzleflash</param>
         /// <param name="offset">The offset</param>
@@ -162,6 +168,23 @@ namespace InsurgencyWeapons.Projectiles
                 ExtensionMethods.BetterEntityDraw(muzzleFlash, muzzleDrawPos, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             }*/
         }
+        /// <summary>
+        /// Returns increasing int until cap that gets multiplied
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="maxDegree"></param>
+        /// <returns></returns>
+        public float AutomaticWeaponFireSpreadCalc(float multiplier, int maxDegree)
+        {
+            bool shouldNotIncrease = Player.scope && MouseRightPressed;
+            if(shouldNotIncrease)            
+                return 0;
+            
+            if(!shouldNotIncrease && Degree < maxDegree && Player.channel && Main.rand.NextBool(5))            
+                Degree += 1;
+
+            return Degree * multiplier;
+        }
 
         /// <summary>
         /// Draws ammo counter near the mouse
@@ -173,7 +196,8 @@ namespace InsurgencyWeapons.Projectiles
         /// <param name="ammoTypeGL"></param>
         public void ShowAmmoCounter(int CurrentAmmo, int AmmoType, bool hasGL = false, string grenadeName = "", int ammoTypeGL = -1)
         {
-            if (Player.whoAmI == Main.myPlayer && !Player.mouseInterface)
+            bool overGrave = Main.tile[MouseAim.ToTileCoordinates()].TileType == 85;
+            if (!overGrave && Player.whoAmI == Main.myPlayer && !Player.mouseInterface)
             {
                 if (hasGL && ammoTypeGL != -1)
                     Main.instance.MouseText(CurrentAmmo + " / " + Player.CountItem(AmmoType) + grenadeName + Player.CountItem(ammoTypeGL));
@@ -198,25 +222,15 @@ namespace InsurgencyWeapons.Projectiles
             Player.whoAmI);
         }
 
-        public void DropCasingManually(int type = 0, float frame = 0f)
+        public void DropCasingManually(int type = 0)
         {
             if (!InsurgencyModConfig.Instance.DropCasing)
                 return;
 
             if (type == 0)
-                type = ModContent.ProjectileType<Casing>();
+                type = ModContent.GoreType<CasingGore>();
 
-            //Casing
-            ExtensionMethods.BetterNewProjectile(
-                Player,
-                spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                position: Player.MountedCenter,
-                velocity: new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4),
-                type: type,
-                damage: 0,
-                knockback: 0,
-                owner: Player.whoAmI,
-                ai0: frame);
+            Gore.NewGoreDirect(Player.GetSource_ItemUse(HeldItem), Player.MountedCenter + Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter, new Vector2(0, -Main.rand.NextFloat(2f, 3f)).RotatedByRandom(MathHelper.PiOver4), type);
         }
 
         /// <summary>
@@ -230,10 +244,10 @@ namespace InsurgencyWeapons.Projectiles
         {
             float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
             if (HeldItem.ModItem is not null and Rifle || HeldItem.ModItem is not null and Shotgun)
-                knockBack *= 1.5f;
+                knockBack *= 1.175f;
 
             if (HeldItem.ModItem is not null and SniperRifle)
-                knockBack *= 1.75f;
+                knockBack *= 1.33f;
 
             //Bullet
             ExtensionMethods.BetterNewProjectile(
@@ -248,9 +262,7 @@ namespace InsurgencyWeapons.Projectiles
                ai0: ai0);
 
             if (dropCasing)
-            {
                 DropCasingManually();
-            }
         }
 
         public override void SetDefaults()
@@ -322,6 +334,10 @@ namespace InsurgencyWeapons.Projectiles
             {
                 PumpActionTimer--;
             }
+            if (!Player.channel)
+            {
+                Degree = 0;
+            }
             #endregion
 
             return base.PreAI();
@@ -334,17 +350,14 @@ namespace InsurgencyWeapons.Projectiles
                 Player.scope = true;
 
             if (Projectile.active)
-            {
                 MagazineTracking.isActive = true;
-            }
 
             if (Player.whoAmI == Main.myPlayer)
             {
                 MouseAim = Main.MouseWorld;
                 if (!Player.mouseInterface)
-                {
                     MouseRightPressed = Main.mouseRight;
-                }
+
                 Projectile.netUpdate = true;
             }
 
@@ -395,9 +408,8 @@ namespace InsurgencyWeapons.Projectiles
                 Projectile.spriteDirection = Player.direction;
                 Projectile.rotation = Player.direction == -1 ? -MathHelper.PiOver4 : MathHelper.PiOver4;
                 if (isPistol)
-                {
                     Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
-                }
+
                 Projectile.frame = 0;
             }
             #endregion

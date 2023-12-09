@@ -81,7 +81,7 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(6))) * HeldItem.shootSpeed;
+                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(AutomaticWeaponFireSpreadCalc(1.1f, 4))) * HeldItem.shootSpeed;
                 Shoot(aim, NormalBullet, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x51mm);
             }
 

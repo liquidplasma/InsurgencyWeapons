@@ -87,17 +87,15 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(1))) * HeldItem.shootSpeed;
+                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(AutomaticWeaponFireSpreadCalc(1, 3))) * HeldItem.shootSpeed;
 
                 if (!AN94Double && CurrentAmmo > 2)
                 {
                     AN94Double = true;
                     SoundEngine.PlaySound(Fire, Projectile.Center);
                     CurrentAmmo--;
-
                     Shoot(aim, NormalBullet, BulletDamage);
                 }
-
                 Shoot(aim, NormalBullet, BulletDamage);
             }
 

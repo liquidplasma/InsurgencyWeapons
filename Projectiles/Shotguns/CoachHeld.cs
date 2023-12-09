@@ -1,7 +1,7 @@
-﻿using InsurgencyWeapons.Helpers;
+﻿using InsurgencyWeapons.Gores.Casing;
+using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Shotguns;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -133,7 +133,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
+                ReloadTimer = 200;
                 ReloadStarted = true;
             }
 
@@ -175,7 +175,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     SoundEngine.PlaySound(Eject, Projectile.Center);
                     for (int i = 0; i < 2; i++)
                     {
-                        DropCasingManually(ModContent.ProjectileType<Shells>());
+                        DropCasingManually(type: ModContent.GoreType<ShellBuckBallGore>());
                     }
                     break;
 

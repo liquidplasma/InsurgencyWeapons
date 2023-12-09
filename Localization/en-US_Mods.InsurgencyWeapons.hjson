@@ -17,8 +17,16 @@ Configs: {
 	DropCasingLabel: Drop Casing
 	DropMagazineDesc: Wheter to drop a magazine when reloading or not
 	DropMagazineLabel: Drop Magazine
+	CasingLifeTimeDesc: How many seconds a casing will be active
+	CasingLifeTimeLabel: Casing Lifetime
+	DamageScalingDesc: Should weapons get extra damage in hardmode and specific boss deaths? (Potentially unbalanced)
+	DamageScalingLabel: Damage Scaling
 	Config: Configuration
-	InsurgencyModConfig.DisplayName: Insurgency Mod Config
+
+	InsurgencyModConfig: {
+		DisplayName: Insurgency Mod Config
+		CasingVolume.Tooltip: ""
+	}
 }
 
 Items: {
@@ -193,7 +201,7 @@ Items: {
 
 	TwelveGauge: {
 		DisplayName: 12 Gauge Ammo
-		Tooltip: Contains 8 buckshot
+		Tooltip: Contains 8 pellets
 	}
 
 	Ithaca: {

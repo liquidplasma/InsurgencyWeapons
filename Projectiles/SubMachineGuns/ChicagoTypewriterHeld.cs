@@ -81,7 +81,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(4))) * HeldItem.shootSpeed;
+                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(AutomaticWeaponFireSpreadCalc(1, 4))) * HeldItem.shootSpeed;
                 Shoot(aim, NormalBullet, BulletDamage);
             }
             if (CanReload() && CurrentAmmo == 0 && !ReloadStarted)

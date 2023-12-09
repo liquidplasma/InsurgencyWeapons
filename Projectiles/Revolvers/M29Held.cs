@@ -86,7 +86,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
-                Shoot(aim, NormalBullet, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x63mm);
+                Shoot(aim, NormalBullet, BulletDamage, dropCasing: false);
             }
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
             {

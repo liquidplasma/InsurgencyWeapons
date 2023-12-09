@@ -1,4 +1,4 @@
-﻿/*using InsurgencyWeapons.Helpers;
+﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Projectiles.Shotguns;
 using System;
 using System.Collections.Generic;
@@ -31,11 +31,11 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = Item.useTime = 45;
-            Item.width = 80;
-            Item.height = 26;
+            Item.width = 82;
+            Item.height = 18;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 17;
-            Item.shootSpeed = 16f;
+            Item.damage = 14;
+            Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 4, 0, 0);
@@ -63,4 +63,4 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
             this.RegisterINS2RecipeWeapon(295);
         }
     }
-}*/
+}

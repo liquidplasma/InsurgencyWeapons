@@ -20,5 +20,17 @@ namespace InsurgencyWeapons
         [LabelKey("$Mods.InsurgencyWeapons.Configs.DropMagazineLabel")]
         [TooltipKey("$Mods.InsurgencyWeapons.Configs.DropMagazineDesc")]
         public bool DropMagazine { get; set; }
+
+        [Range(1, 100)]
+        [Increment(1)]
+        [DefaultValue(15)]
+        [LabelKey("$Mods.InsurgencyWeapons.Configs.CasingLifeTimeLabel")]
+        [TooltipKey("$Mods.InsurgencyWeapons.Configs.CasingLifeTimeDesc")]
+        public int CasingLifeTime { get; set; }
+        
+        [DefaultValue(true)]
+        [LabelKey("$Mods.InsurgencyWeapons.Configs.DamageScalingLabel")]
+        [TooltipKey("$Mods.InsurgencyWeapons.Configs.DamageScalingDesc")]
+        public bool DamageScaling { get; set; }
     }
 }

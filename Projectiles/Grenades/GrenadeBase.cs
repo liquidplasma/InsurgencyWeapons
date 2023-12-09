@@ -136,7 +136,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             SoundEngine.PlaySound(Sounds.GrenadeDetonation, Projectile.Center);
             if (Player.DistanceSQ(Projectile.Center) <= 128 * 128 && Collision.CanHitLine(Projectile.Center, 1, 1, Player.Center, 1, 1))
             {
-                Player.HurtInfo greandeSelfDamage = new()
+                Player.HurtInfo grenadeSelfDamage = new()
                 {
                     Dodgeable = true,
                     HitDirection = Projectile.Center.DirectionTo(Player.Center).X > 0f ? 1 : -1,
@@ -144,7 +144,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
                     DamageSource = PlayerDeathReason.ByProjectile(Player.whoAmI, Projectile.identity),
                     Knockback = 6f
                 };
-                Player.Hurt(greandeSelfDamage);
+                Player.Hurt(grenadeSelfDamage);
             }
             base.OnKill(timeLeft);
         }

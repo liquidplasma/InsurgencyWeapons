@@ -27,7 +27,7 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
             Item.height = 20;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.damage = 27;
-            Item.shootSpeed = 16f;
+            Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 4, 0, 0);

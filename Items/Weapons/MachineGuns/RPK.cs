@@ -27,7 +27,7 @@ namespace InsurgencyWeapons.Items.Weapons.MachineGuns
             Item.height = 22;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.damage = 12;
-            Item.shootSpeed = 16f;
+            Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 4, 0, 0);

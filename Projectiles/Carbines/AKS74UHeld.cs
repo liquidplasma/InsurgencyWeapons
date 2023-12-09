@@ -81,7 +81,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(3))) * HeldItem.shootSpeed;
+                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(AutomaticWeaponFireSpreadCalc(0.8f,3))) * HeldItem.shootSpeed;
                 Shoot(aim, NormalBullet, BulletDamage);
             }
 

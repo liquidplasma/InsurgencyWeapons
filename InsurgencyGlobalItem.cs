@@ -37,7 +37,7 @@ namespace InsurgencyWeapons
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (Insurgency.AllWeapons.Contains(item.type))
+            if (InsurgencyModConfig.Instance.DamageScaling && Insurgency.AllWeapons.Contains(item.type))
             {
                 int damage = (int)(Main.LocalPlayer.GetTotalDamage(DamageClass.Ranged).ApplyTo(item.damage) * Insurgency.WeaponScaling());
                 int index = tooltips.FindIndex(tip => tip.Name == "Damage");

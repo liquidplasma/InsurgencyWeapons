@@ -1,6 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Projectiles.WeaponMagazines;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Casings;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +13,6 @@ namespace InsurgencyWeapons
     {
         private static int[] IgnoredDraws = {
             ModContent.ProjectileType<M1GarandEnbloc>(),
-            ModContent.ProjectileType<Shells>()
         };
 
         public override bool PreDraw(Projectile projectile, ref Color lightColor)

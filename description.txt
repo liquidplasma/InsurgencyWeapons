@@ -50,6 +50,6 @@ This mod is licensed under [url=https://insurgency-support.newworldinteractive.c
 Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
 
 Changelog//
-v0.5
-	-Add: SVT-40 7.62x54mmR, S&W Model 29 .44 Magnum, H&K G3A3 7.62x51mm, Lee-Enfield No.IV Mk.I .303.
-	-Add a option to enable/disable wheter to create casing/magazines when shooting/reloading.
+v0.5.3
+	-Switched casings to the gore system in hopes of better performance
+	-Removed illegal gun parts from gun recipes

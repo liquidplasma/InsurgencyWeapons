@@ -1,5 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics;
@@ -14,7 +15,6 @@ namespace InsurgencyWeapons.Projectiles
         private VertexStrip _vertexStrip = new();
         private int CaliberSize => (int)Projectile.ai[0];
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
-
         private Player Player => Main.player[Projectile.owner];
         private Item HeldItem => Player.HeldItem;
 
@@ -35,7 +35,7 @@ namespace InsurgencyWeapons.Projectiles
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
+        {            
             switch (CaliberSize)
             {
                 case (int)Insurgency.APCaliber.c762x51mm:
@@ -94,7 +94,7 @@ namespace InsurgencyWeapons.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Collision.HitTiles(Projectile.Center, Projectile.velocity, Projectile.width, Projectile.height);
+            Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
             return base.OnTileCollide(oldVelocity);
         }
     }

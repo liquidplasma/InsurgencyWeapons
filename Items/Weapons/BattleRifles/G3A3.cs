@@ -30,7 +30,7 @@ namespace InsurgencyWeapons.Items.Weapons.BattleRifles
             Item.height = 24;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.damage = 11;
-            Item.shootSpeed = 16f;
+            Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 4, 0, 0);
