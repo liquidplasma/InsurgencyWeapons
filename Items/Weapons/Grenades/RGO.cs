@@ -32,6 +32,7 @@ namespace InsurgencyWeapons.Items.Weapons.Grenades
             Item.rare = ItemRarityID.LightRed;
             Item.maxStack = Item.CommonMaxStack;
             Item.DamageType = DamageClass.Ranged;
+            base.SetDefaults();
         }
 
         public override void HoldItem(Player player)

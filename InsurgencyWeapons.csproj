@@ -21,12 +21,16 @@
     <None Remove="Items\Weapons\Rifles\LeeEnfield.png" />
     <None Remove="Items\Weapons\Rifles\SVT40.png" />
     <None Remove="Items\Weapons\Shotguns\Ithaca.png" />
+    <None Remove="Items\Weapons\Shotguns\M1014.png" />
+    <None Remove="Items\Weapons\Shotguns\M590.png" />
     <None Remove="Projectiles\BattleRifles\G3A3Held.png" />
     <None Remove="Projectiles\Revolvers\M29Held.png" />
     <None Remove="Projectiles\Revolvers\WebleyHold.png" />
     <None Remove="Projectiles\Rifles\EnfieldHeld.png" />
     <None Remove="Projectiles\Rifles\SVT40Held.png" />
     <None Remove="Projectiles\Shotguns\IthacaHeld.png" />
+    <None Remove="Projectiles\Shotguns\M1014Held.png" />
+    <None Remove="Projectiles\Shotguns\M590Held.png" />
     <None Remove="VendingMachines\VendingMachineGunsTile.png" />
   </ItemGroup>
   <ItemGroup>

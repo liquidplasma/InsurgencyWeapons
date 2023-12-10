@@ -32,6 +32,9 @@
 
 	[b]-Shotguns-[/b]
 		Coach Gun Buck & Ball
+		Mossberg M590 12 Gauge
+		Ithaca M37 12 Gauge
+		Benelli M1014 12 Gauge
 
 	[b]-Sniper rifles-[/b]
 		M40A1 7.62x51mm + Leupold Scope
@@ -50,6 +53,11 @@ This mod is licensed under [url=https://insurgency-support.newworldinteractive.c
 Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
 
 Changelog//
-v0.5.3
-	-Switched casings to the gore system in hopes of better performance
-	-Removed illegal gun parts from gun recipes
+v0.6
+	- Shotgun update
+		Added the following guns
+		- Mossberg M590 12 Gauge
+		- Benelli M1014 12 Gauge
+		- Ithaca M37 12 Gauge
+	- Decreased bullet velocity slightly
+	- Added option to increase gun damage on hardmode and after defeating Plantera

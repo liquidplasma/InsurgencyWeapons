@@ -19,7 +19,7 @@ Configs: {
 	DropMagazineLabel: Drop Magazine
 	CasingLifeTimeDesc: How many seconds a casing will be active
 	CasingLifeTimeLabel: Casing Lifetime
-	DamageScalingDesc: Should weapons get extra damage in hardmode and specific boss deaths? (Potentially unbalanced)
+	DamageScalingDesc: Should weapons get extra damage upon entering hardmode and defeating Plantera?
 	DamageScalingLabel: Damage Scaling
 	Config: Configuration
 
@@ -248,6 +248,16 @@ Items: {
 		DisplayName: SVT-40 7.62x54mmR
 		Tooltip: ""
 	}
+
+	M590: {
+		DisplayName: Mossberg M590 12 Gauge
+		Tooltip: ""
+	}
+
+	M1014: {
+		DisplayName: Benelli M1014 12 Gauge
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -292,4 +302,6 @@ Projectiles: {
 	EnfieldBlock.DisplayName: Enfield Block
 	M29Held.DisplayName: M29
 	SVT40Held.DisplayName: S V T40 Held
+	M590Held.DisplayName: M590 Held
+	M1014Held.DisplayName: M1014 Held
 }

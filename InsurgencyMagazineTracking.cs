@@ -41,7 +41,9 @@ namespace InsurgencyWeapons
         //Shotguns
         public int
             CoachBarrel,
-            IthacaTube;
+            IthacaTube,
+            M590Tube,
+            M1014Tube;
 
         //Sub machine guns
         public int
@@ -87,6 +89,8 @@ namespace InsurgencyWeapons
             //Shotguns
             CoachBarrel = Math.Clamp(Player.CountItem(ModContent.ItemType<ShellBuck_Ball>()), 0, 2);
             IthacaTube = Math.Clamp(Player.CountItem(ModContent.ItemType<TwelveGauge>()), 0, 6);
+            M590Tube = Math.Clamp(Player.CountItem(ModContent.ItemType<TwelveGauge>()), 0, 8);
+            M1014Tube = Math.Clamp(Player.CountItem(ModContent.ItemType<TwelveGauge>()), 0, 7);
 
             //Sub machine guns
             MP7Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet4630>()), 0, 40);
@@ -96,7 +100,6 @@ namespace InsurgencyWeapons
             //Light machine guns
             RPKDrum = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet762>()), 0, 75);
         }
-
         public override void OnEnterWorld()
         {
             UpdateMagazines();

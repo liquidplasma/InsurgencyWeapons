@@ -10,8 +10,6 @@ namespace InsurgencyWeapons.Items.Weapons.MachineGuns
 {
     internal class RPK : LightMachineGun
     {
-        private int RPKType => ModContent.ProjectileType<RPKHeld>();
-
         public override void SetStaticDefaults()
         {
             ItemID.Sets.gunProj[Type] = true;
@@ -33,21 +31,7 @@ namespace InsurgencyWeapons.Items.Weapons.MachineGuns
             Item.value = Item.sellPrice(0, 4, 0, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
-        }
-
-        public override void HoldItem(Player player)
-        {
-            if (player.ownedProjectileCounts[RPKType] < 1)
-            {
-                int damage = (int)player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Item.damage);
-                Projectile gun = ExtensionMethods.BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, RPKType, Item.damage, Item.knockBack, player.whoAmI);
-                gun.originalDamage = damage;
-            }
-        }
-
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            return false;
+            WeaponHeldProjectile = ModContent.ProjectileType<RPKHeld>();
         }
 
         public override void AddRecipes()

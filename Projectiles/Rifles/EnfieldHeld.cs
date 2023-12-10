@@ -36,8 +36,6 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             Volume = 0.4f
         };
 
-        private bool SemiAuto;
-
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/empty");
         private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/magin");
         private SoundStyle Insert => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/ins");

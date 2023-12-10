@@ -140,7 +140,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                             AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
                             Ammo.stack -= AmmoStackCount;
                             CurrentAmmo += AmmoStackCount;
-                            ReloadTimer = 80;
+                            ReloadTimer = 70;
                         }
                     }
                     break;

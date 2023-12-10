@@ -83,13 +83,17 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 9f;
             SpecificWeaponFix = new Vector2(0, 0);
-            if (!Player.channel)
+            if (!Player.channel || AutoAttack == 0)
+            { 
                 SemiAuto = false;
+                AutoAttack = HeldItem.useTime * 2;
+            }
 
             if (AllowedToFire && !UnderAlternateFireCoolDown && !SemiAuto)
             {
                 SemiAuto = true;
                 ShotDelay = 0;
+                PumpActionTimer = HeldItem.useTime;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;

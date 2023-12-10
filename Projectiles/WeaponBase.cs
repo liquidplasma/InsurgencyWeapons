@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static InsurgencyWeapons.Helpers.ExtensionMethods;
 
 namespace InsurgencyWeapons.Projectiles
 {
@@ -41,10 +42,12 @@ namespace InsurgencyWeapons.Projectiles
         /// Max amount of ammo per reload, should be assigned in set defaults
         /// </summary>
         public int MaxAmmo { get; set; }
+
         /// <summary>
         /// Used for weapon spread
         /// </summary>
         private int Degree { get; set; }
+
         /// <summary>
         /// Ammo item type
         /// </summary>
@@ -68,7 +71,7 @@ namespace InsurgencyWeapons.Projectiles
         /// <summary>
         /// Shorthand for Insurgency.Bullet
         /// </summary>
-        public int NormalBullet => Insurgency.Bullet;
+        public static int NormalBullet => Insurgency.Bullet;
 
         public int BulletDamage
         {
@@ -99,6 +102,11 @@ namespace InsurgencyWeapons.Projectiles
         /// For bolt action snipers rifles
         /// </summary>
         public int BoltActionTimer { get; set; }
+
+        /// <summary>
+        /// For lazy people who like to hold left mouse
+        /// </summary>
+        public int AutoAttack { get; set; }
 
         /// <summary>
         /// For pump action shotguns
@@ -168,6 +176,7 @@ namespace InsurgencyWeapons.Projectiles
                 ExtensionMethods.BetterEntityDraw(muzzleFlash, muzzleDrawPos, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             }*/
         }
+
         /// <summary>
         /// Returns increasing int until cap that gets multiplied
         /// </summary>
@@ -177,10 +186,10 @@ namespace InsurgencyWeapons.Projectiles
         public float AutomaticWeaponFireSpreadCalc(float multiplier, int maxDegree)
         {
             bool shouldNotIncrease = Player.scope && MouseRightPressed;
-            if(shouldNotIncrease)            
+            if (shouldNotIncrease)
                 return 0;
-            
-            if(!shouldNotIncrease && Degree < maxDegree && Player.channel && Main.rand.NextBool(5))            
+
+            if (!shouldNotIncrease && Degree < maxDegree && Player.channel && Main.rand.NextBool(5))
                 Degree += 1;
 
             return Degree * multiplier;
@@ -211,7 +220,7 @@ namespace InsurgencyWeapons.Projectiles
             if (!InsurgencyModConfig.Instance.DropMagazine)
                 return;
 
-            ExtensionMethods.BetterNewProjectile(
+            BetterNewProjectile(
             Player,
             Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
             Projectile.Center,
@@ -250,7 +259,7 @@ namespace InsurgencyWeapons.Projectiles
                 knockBack *= 1.33f;
 
             //Bullet
-            ExtensionMethods.BetterNewProjectile(
+            BetterNewProjectile(
                Player,
                spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
                position: Player.MountedCenter,
@@ -315,29 +324,26 @@ namespace InsurgencyWeapons.Projectiles
             //Resetting fields
             #region
             if (ShotDelay <= HeldItem.useTime)
-            {
                 ShotDelay++;
-            }
+
             if (ReloadTimer > 0)
-            {
                 ReloadTimer--;
-            }
+
             if (AlternateFireCoolDown > 0)
-            {
                 AlternateFireCoolDown--;
-            }
+
             if (BoltActionTimer > 0)
-            {
                 BoltActionTimer--;
-            }
+
             if (PumpActionTimer > 0)
-            {
                 PumpActionTimer--;
-            }
+
             if (!Player.channel)
-            {
                 Degree = 0;
-            }
+
+            if (AutoAttack > 0)
+                AutoAttack--;
+
             #endregion
 
             return base.PreAI();

@@ -15,7 +15,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 {
     internal class RPKHeld : WeaponBase
     {
-        public new int CurrentAmmo
+        public int CurrentAmmo
         {
             get
             {

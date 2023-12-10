@@ -1,6 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics;
@@ -17,6 +16,7 @@ namespace InsurgencyWeapons.Projectiles
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
         private Player Player => Main.player[Projectile.owner];
         private Item HeldItem => Player.HeldItem;
+        private int countPierce;
 
         public override void SetStaticDefaults()
         {
@@ -32,10 +32,12 @@ namespace InsurgencyWeapons.Projectiles
             Projectile.tileCollide = true;
             Projectile.extraUpdates = 5;
             Projectile.alpha = 255;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {            
+        {
             switch (CaliberSize)
             {
                 case (int)Insurgency.APCaliber.c762x51mm:
@@ -54,6 +56,11 @@ namespace InsurgencyWeapons.Projectiles
                     modifiers.ArmorPenetration += 35;
                     break;
             }
+            if (countPierce > 0)
+            {
+                float pierceDecrease = 1f - (countPierce * 0.15f);
+                modifiers.FinalDamage *= pierceDecrease;
+            }
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -68,10 +75,16 @@ namespace InsurgencyWeapons.Projectiles
                 Projectile.extraUpdates += 3;
                 Projectile.netUpdate = true;
             }
+            if (Insurgency.Shotguns.Contains(HeldItem.type))
+            {
+                Projectile.penetrate = 3;
+                Projectile.netUpdate = true;
+            }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            countPierce++;
             base.OnHitNPC(target, hit, damageDone);
         }
 

@@ -52,6 +52,10 @@ namespace InsurgencyWeapons
                     //Sniper rifles
                     Insurgency.SniperRifles.Add(item.type);
 
+                if (item.ModItem is not null and Shotgun)
+                    //Shotguns
+                    Insurgency.Shotguns.Add(item.type);
+
                 if (item.ModItem is not null and SubMachineGun)
                     //Sub machine guns
                     Insurgency.SubMachineGuns.Add(item.type);
@@ -71,6 +75,7 @@ namespace InsurgencyWeapons
             Insurgency.Carbines.Clear();
             Insurgency.Grenades.Clear();
             Insurgency.Rifles.Clear();
+            Insurgency.Shotguns.Clear();
             Insurgency.SniperRifles.Clear();
             Insurgency.Revolvers.Clear();
             Insurgency.SubMachineGuns.Clear();
