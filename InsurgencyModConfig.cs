@@ -27,7 +27,7 @@ namespace InsurgencyWeapons
         [LabelKey("$Mods.InsurgencyWeapons.Configs.CasingLifeTimeLabel")]
         [TooltipKey("$Mods.InsurgencyWeapons.Configs.CasingLifeTimeDesc")]
         public int CasingLifeTime { get; set; }
-        
+
         [DefaultValue(true)]
         [LabelKey("$Mods.InsurgencyWeapons.Configs.DamageScalingLabel")]
         [TooltipKey("$Mods.InsurgencyWeapons.Configs.DamageScalingDesc")]

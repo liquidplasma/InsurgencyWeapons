@@ -85,12 +85,11 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
-                Shoot(aim, NormalBullet, BulletDamage, dropCasing: false);
+                Shoot(1, 0, NormalBullet, BulletDamage, dropCasing: false);
             }
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
             {
-                ReloadTimer = 230;
+                ReloadTimer = 180;
                 Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
             }
@@ -115,11 +114,11 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                         AmmoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 1);
                         Ammo.stack -= AmmoStackCount;
                         CurrentAmmo += AmmoStackCount;
-                        ReloadTimer = 130;
+                        ReloadTimer = 100;
                     }
                     break;
 
-                case 140:
+                case 125:
                     SoundEngine.PlaySound(Dump, Projectile.Center);
                     for (int i = 0; i < 6; i++)
                     {
@@ -127,7 +126,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     }
                     break;
 
-                case 170:
+                case 145:
                     SoundEngine.PlaySound(Open, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     break;

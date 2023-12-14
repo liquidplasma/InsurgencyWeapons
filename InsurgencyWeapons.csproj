@@ -15,7 +15,10 @@
     <None Remove="Items\Ammo\Bullet455.png" />
     <None Remove="Items\Ammo\Bullet76251.png" />
     <None Remove="Items\Ammo\Bullet76254R.png" />
+    <None Remove="Items\Ammo\Bullet939.png" />
+    <None Remove="Items\Weapons\AssaultRifles\ASVAL.png" />
     <None Remove="Items\Weapons\BattleRifles\G3A3.png" />
+    <None Remove="Items\Weapons\MachineGuns\M60.png" />
     <None Remove="Items\Weapons\Revolvers\M29.png" />
     <None Remove="Items\Weapons\Revolvers\Webley.png" />
     <None Remove="Items\Weapons\Rifles\LeeEnfield.png" />
@@ -23,7 +26,9 @@
     <None Remove="Items\Weapons\Shotguns\Ithaca.png" />
     <None Remove="Items\Weapons\Shotguns\M1014.png" />
     <None Remove="Items\Weapons\Shotguns\M590.png" />
+    <None Remove="Projectiles\AssaultRifles\ASVALHeld.png" />
     <None Remove="Projectiles\BattleRifles\G3A3Held.png" />
+    <None Remove="Projectiles\MachineGuns\M60Held.png" />
     <None Remove="Projectiles\Revolvers\M29Held.png" />
     <None Remove="Projectiles\Revolvers\WebleyHold.png" />
     <None Remove="Projectiles\Rifles\EnfieldHeld.png" />
@@ -31,6 +36,7 @@
     <None Remove="Projectiles\Shotguns\IthacaHeld.png" />
     <None Remove="Projectiles\Shotguns\M1014Held.png" />
     <None Remove="Projectiles\Shotguns\M590Held.png" />
+    <None Remove="Projectiles\WeaponMagazines\AssaultRifles\ASVALMagazine.png" />
     <None Remove="VendingMachines\VendingMachineGunsTile.png" />
   </ItemGroup>
   <ItemGroup>

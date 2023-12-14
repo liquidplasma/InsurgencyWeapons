@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -12,6 +11,7 @@ namespace InsurgencyWeapons.Gores.Casing
         {
             ChildSafety.SafeGore[Type] = true;
         }
+
         public override void OnSpawn(Terraria.Gore gore, IEntitySource source)
         {
             gore.timeLeft = InsurgencyModConfig.Instance.CasingLifeTime * 60;

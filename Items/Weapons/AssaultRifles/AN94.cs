@@ -1,8 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Projectiles.AssaultRifles;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,7 +11,6 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
     /// </summary>
     internal class AN94 : AssaultRifle
     {
-
         public override void SetStaticDefaults()
         {
             ItemID.Sets.gunProj[Type] = true;
@@ -37,8 +34,6 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<AN94Held>();
         }
-
-      
 
         public override void AddRecipes()
         {

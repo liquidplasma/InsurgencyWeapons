@@ -84,7 +84,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             OffsetFromPlayerCenter = 9f;
             SpecificWeaponFix = new Vector2(0, 0);
             if (!Player.channel || AutoAttack == 0)
-            { 
+            {
                 SemiAuto = false;
                 AutoAttack = HeldItem.useTime * 2;
             }
@@ -96,18 +96,16 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 PumpActionTimer = HeldItem.useTime;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
-                Shoot(aim, NormalBullet, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x63mm);
+                Shoot(1, 2, NormalBullet, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x63mm);
             }
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
                 ReloadTimer += 30;
                 SoundEngine.PlaySound(GarandPing, Projectile.Center);
-                if (Player.whoAmI == Main.myPlayer)
-                {
-                    DropMagazine(ModContent.ProjectileType<M1GarandEnbloc>());
-                }
+
+                DropMagazine(ModContent.ProjectileType<M1GarandEnbloc>());
+
                 Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
             }

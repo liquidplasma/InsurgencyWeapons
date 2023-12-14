@@ -87,16 +87,15 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(AutomaticWeaponFireSpreadCalc(1, 3))) * HeldItem.shootSpeed;
 
                 if (!AN94Double && CurrentAmmo > 2)
                 {
                     AN94Double = true;
                     SoundEngine.PlaySound(Fire, Projectile.Center);
                     CurrentAmmo--;
-                    Shoot(aim, NormalBullet, BulletDamage);
+                    Shoot(1, 3, NormalBullet, BulletDamage);
                 }
-                Shoot(aim, NormalBullet, BulletDamage);
+                Shoot(1, 3, NormalBullet, BulletDamage);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -134,8 +133,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 case 110:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    if (Player.whoAmI == Main.myPlayer)
-                        DropMagazine(ModContent.ProjectileType<AN94Magazine>());
+                    DropMagazine(ModContent.ProjectileType<AN94Magazine>());
                     break;
             }
 

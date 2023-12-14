@@ -102,8 +102,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 ShotDelay = FireDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(2))) * HeldItem.shootSpeed;
-                Shoot(aim, NormalBullet, BulletDamage, dropCasing: false);
+                Shoot(1, 2, NormalBullet, BulletDamage, dropCasing: false);
             }
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {

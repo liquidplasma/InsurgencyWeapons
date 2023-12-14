@@ -258,6 +258,21 @@ Items: {
 		DisplayName: Benelli M1014 12 Gauge
 		Tooltip: ""
 	}
+
+	M60: {
+		DisplayName: M60 7.62x51mm
+		Tooltip: ""
+	}
+
+	Bullet939: {
+		DisplayName: 9x39mm Ammo
+		Tooltip: ""
+	}
+
+	ASVAL: {
+		DisplayName: AS VAL 9x39mm
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -298,10 +313,14 @@ Projectiles: {
 	MosinHeld.DisplayName: Mosin
 	IthacaHeld.DisplayName: Ithaca
 	EnfieldHeld.DisplayName: Enfield
-	G3A3Held.DisplayName: G3 A3
+	G3A3Held.DisplayName: G3A3
 	EnfieldBlock.DisplayName: Enfield Block
 	M29Held.DisplayName: M29
-	SVT40Held.DisplayName: S V T40 Held
-	M590Held.DisplayName: M590 Held
-	M1014Held.DisplayName: M1014 Held
+	SVT40Held.DisplayName: SVT40
+	M590Held.DisplayName: M590
+	M1014Held.DisplayName: M1014
+	M60Held.DisplayName: M60 Held
+	ShotgunPellet.DisplayName: Shotgun Pellet
+	ASVALHeld.DisplayName: ASVAL
+	ASVALMagazine.DisplayName: ASVALMagazine
 }

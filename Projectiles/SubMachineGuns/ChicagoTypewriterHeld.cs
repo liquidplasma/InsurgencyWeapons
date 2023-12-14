@@ -81,8 +81,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(AutomaticWeaponFireSpreadCalc(1, 4))) * HeldItem.shootSpeed;
-                Shoot(aim, NormalBullet, BulletDamage);
+                Shoot(1, 2, NormalBullet, BulletDamage);
             }
             if (CanReload() && CurrentAmmo == 0 && !ReloadStarted)
             {
@@ -119,8 +118,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 case 120:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    if (Player.whoAmI == Main.myPlayer)
-                        DropMagazine(ModContent.ProjectileType<M1928Drum>());
+                    DropMagazine(ModContent.ProjectileType<M1928Drum>());
                     break;
             }
 

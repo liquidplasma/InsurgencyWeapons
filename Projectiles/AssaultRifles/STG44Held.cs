@@ -81,8 +81,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(AutomaticWeaponFireSpreadCalc(1, 2))) * HeldItem.shootSpeed;
-                Shoot(aim, NormalBullet, BulletDamage);
+                Shoot(1, 2, NormalBullet, BulletDamage);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -120,8 +119,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 case 110:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    if (Player.whoAmI == Main.myPlayer)
-                        DropMagazine(ModContent.ProjectileType<STGMagazine>());
+                    DropMagazine(ModContent.ProjectileType<STGMagazine>());
                     break;
             }
 

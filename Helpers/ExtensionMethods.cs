@@ -100,14 +100,14 @@ namespace InsurgencyWeapons.Helpers
         /// <code>projectile.rotation += (projectile.velocity.X * mult)</code>
         /// </summary>
         /// <param name="projectile"></param>
-        public static void RotateBasedOnVelocity(this Projectile projectile, float mult = 0.04f) => projectile.rotation += (projectile.velocity.X * mult);        
+        public static void RotateBasedOnVelocity(this Projectile projectile, float mult = 0.04f) => projectile.rotation += (projectile.velocity.X * mult);
 
         /// <summary>
         /// Correctly angles a projectile sprite based on velocity if the sprite is facing up.
         /// <para>Rotating in the direction of travel is often used in projectiles like arrows.</para>
         /// </summary>
         /// <param name="proj"></param>
-        public static void FaceForward(this Projectile proj) => proj.rotation = proj.velocity.ToRotation() + MathHelper.PiOver2;        
+        public static void FaceForward(this Projectile proj) => proj.rotation = proj.velocity.ToRotation() + MathHelper.PiOver2;
 
         /// <summary>
         /// Returns the player stealth

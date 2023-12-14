@@ -120,14 +120,12 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     CurrentAmmo--;
                     for (int j = 0; j < 6; j++)
                     {
-                        Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(14))) * HeldItem.shootSpeed;
                         //Buck
-                        Shoot(aim, NormalBullet, BulletDamage, dropCasing: false);
+                        Shoot(1, 1, ShotgunPellet, BulletDamage, dropCasing: false, shotgun: true);
                     }
 
-                    Vector2 aimNoSpread = Player.MountedCenter.DirectionTo(MouseAim) * HeldItem.shootSpeed;
                     //Ball
-                    Shoot(aimNoSpread, NormalBullet, BulletDamage, dropCasing: false);
+                    Shoot(1, 1, ShotgunPellet, BulletDamage, dropCasing: false);
                 }
             }
 

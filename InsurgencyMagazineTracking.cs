@@ -1,21 +1,26 @@
 ﻿using InsurgencyWeapons.Items.Ammo;
 using System;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons
 {
     internal class InsurgencyMagazineTracking : ModPlayer
     {
-        public bool isActive;
+        public bool
+            isActive,
+            mouseOverFriendlyNPC;
 
         //Assault rifles
         public int
             AKMMagazine,
             AN94Magazine,
-            STGMagazine;
+            STGMagazine,
+            ASValMagazine;
 
         //Carbines
-        public int AKS74UMagazine;
+        public int
+            AKS74UMagazine;
 
         //Battle rifles
         public int
@@ -53,11 +58,47 @@ namespace InsurgencyWeapons
 
         //Light machine guns
         public int
-            RPKDrum;
+            RPKDrum,
+            M60Box;
+
+        //Ammo display UI
+        public int
+            CurrentAmmo,
+            AmmoType,
+            AmmoTypeGL;
+
+        public bool HasGL;
+        public string GrenadeName;
+
+        public void BuildUI(int currentAmmo, int ammoType, bool hasGL, int ammoTypeGL, string grenadeName)
+        {
+            CurrentAmmo = currentAmmo;
+            AmmoType = ammoType;
+            HasGL = hasGL;
+            AmmoTypeGL = ammoTypeGL;
+            GrenadeName = grenadeName;
+        }
 
         public override void ResetEffects()
         {
             isActive = false;
+        }
+
+        private bool OverFriendlyNPC()
+        {
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC target = Main.npc[i];
+                if (target.active && target.friendly && target.Hitbox.Contains(Main.MouseWorld.ToPoint()))
+                    return true;
+            }
+            return false;
+        }
+
+        public override void PostUpdate()
+        {
+            mouseOverFriendlyNPC = OverFriendlyNPC();
+            base.PostUpdate();
         }
 
         private void UpdateMagazines()
@@ -99,7 +140,9 @@ namespace InsurgencyWeapons
 
             //Light machine guns
             RPKDrum = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet762>()), 0, 75);
+            M60Box = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76251>()), 0, 100);
         }
+
         public override void OnEnterWorld()
         {
             UpdateMagazines();

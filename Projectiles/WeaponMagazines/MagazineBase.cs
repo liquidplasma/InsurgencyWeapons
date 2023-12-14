@@ -13,7 +13,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
             Projectile.tileCollide = true;
-            Projectile.timeLeft = 3600;
+            Projectile.timeLeft = 1800;
             Projectile.light = 0;
         }
 

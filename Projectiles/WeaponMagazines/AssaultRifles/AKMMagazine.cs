@@ -7,6 +7,7 @@
             Projectile.width = 12;
             Projectile.height = 14;
             Projectile.penetrate = 5;
+            base.SetDefaults();
         }
     }
 }

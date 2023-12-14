@@ -11,7 +11,7 @@ namespace InsurgencyWeapons.Items.Ammo
         {
             Item.width = 7;
             Item.height = 31;
-            Item.DefaultsToInsurgencyAmmo(16);
+            Item.DefaultsToInsurgencyAmmo(11);
         }
 
         public override void AddRecipes()

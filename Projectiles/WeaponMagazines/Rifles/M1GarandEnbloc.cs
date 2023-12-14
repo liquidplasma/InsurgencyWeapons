@@ -18,6 +18,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles
             Projectile.width = 16;
             Projectile.height = 10;
             Projectile.penetrate = 5;
+            base.SetDefaults();
         }
 
         public override bool PreDraw(ref Color lightColor)

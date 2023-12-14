@@ -46,11 +46,6 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             State = (int)Exploding.Ready;
-            if (target.CanBeChasedBy(this) && !target.boss)
-            {
-                target.velocity += target.Center.DirectionFrom(Projectile.Center) * 4f;
-                target.netUpdate = true;
-            }
         }
 
         public override void AI()
@@ -74,6 +69,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
             {
                 if (Delay >= 30)
                     Projectile.velocity.Y += 0.075f;
+
                 HelperStats.SmokeyTrail(Projectile.Center, Projectile.oldVelocity);
             }
             if (State == (int)Exploding.Ready && !Exploded)

@@ -95,8 +95,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(AutomaticWeaponFireSpreadCalc(1.1f, 5))) * HeldItem.shootSpeed;
-                Shoot(aim, NormalBullet, BulletDamage);
+                Shoot(1.1f, 5, NormalBullet, BulletDamage);
             }
             if (MouseRightPressed && Player.CountItem(GrenadeLauncherAmmoType) > 0 && AlternateFireCoolDown == 0 && !(ReloadTimer > 0))
             {
@@ -104,9 +103,11 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 AmmoGL.stack--;
                 SoundEngine.PlaySound(ShootGrenade, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(4))) * HeldItem.shootSpeed;
-                VOGDamage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(AmmoGL.damage)) * Player.GetStealth() * 2f);
+                VOGDamage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(AmmoGL.damage)) * Player.GetStealth() * 4f);
                 if (InsurgencyModConfig.Instance.DamageScaling)
                     VOGDamage = (int)(VOGDamage * Insurgency.WeaponScaling());
+
+                float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
 
                 //VOG-25
                 ExtensionMethods.BetterNewProjectile(
@@ -116,7 +117,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     velocity: aim,
                     type: ModContent.ProjectileType<AKMVOG_25P>(),
                     damage: VOGDamage,
-                    knockback: 0f,
+                    knockback: knockBack * 1.5f,
                     owner: Player.whoAmI);
             }
 
@@ -154,8 +155,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 case 110:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    if (Player.whoAmI == Main.myPlayer)
-                        DropMagazine(ModContent.ProjectileType<AKMMagazine>());
+                    DropMagazine(ModContent.ProjectileType<AKMMagazine>());
                     break;
             }
 

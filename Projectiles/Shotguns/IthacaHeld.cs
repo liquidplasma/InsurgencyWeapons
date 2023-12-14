@@ -9,7 +9,6 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Shotguns
@@ -100,14 +99,13 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             {
                 CurrentAmmo--;
                 if (CurrentAmmo != 0)
-                    PumpActionTimer = HeldItem.useTime * 2 - 25;
+                    PumpActionTimer = 50;
                 ShotDelay = 0;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 for (int j = 0; j < 8; j++)
                 {
-                    Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(10))) * HeldItem.shootSpeed;
                     //Buck
-                    Shoot(aim, NormalBullet, BulletDamage, dropCasing: false);
+                    Shoot(1, 1, ShotgunPellet, BulletDamage, dropCasing: false, shotgun: true);
                 }
             }
 
@@ -173,16 +171,16 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
             switch (PumpActionTimer)
             {
-                case 9:
+                case 4:
                     SoundEngine.PlaySound(PumpForward, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     break;
 
-                case 22:
+                case 14:
                     Projectile.frame = (int)Insurgency.MagazineState.Fired;
                     break;
 
-                case 36:
+                case 28:
                     SoundEngine.PlaySound(PumpBack, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());

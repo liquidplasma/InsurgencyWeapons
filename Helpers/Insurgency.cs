@@ -14,6 +14,11 @@ namespace InsurgencyWeapons.Helpers
         public static int Bullet => ModContent.ProjectileType<NormalBullet>();
 
         /// <summary>
+        /// Shorthand for ShotgunPellet projectile type
+        /// </summary>
+        public static int Pellet => ModContent.ProjectileType<ShotgunPellet>();
+
+        /// <summary>
         /// Shorthand for Money item type
         /// </summary>
         public static int Money => ModContent.ItemType<Money>();
@@ -47,10 +52,12 @@ namespace InsurgencyWeapons.Helpers
         /// All the rifles goes here
         /// </summary>
         public static List<int> Rifles = new();
+
         /// <summary>
         /// All shotguns goes here
         /// </summary>
         public static List<int> Shotguns = new();
+
         /// <summary>
         /// All sniper rifles goes here
         /// </summary>

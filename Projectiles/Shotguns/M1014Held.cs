@@ -2,18 +2,14 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Shotguns;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using Terraria;
 
 namespace InsurgencyWeapons.Projectiles.Shotguns
 {
@@ -109,9 +105,8 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 for (int j = 0; j < 8; j++)
                 {
-                    Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(10))) * HeldItem.shootSpeed;
                     //Buck
-                    Shoot(aim, NormalBullet, BulletDamage, dropCasing: false);
+                    Shoot(1, 1, ShotgunPellet, BulletDamage, dropCasing: false, shotgun: true);
                 }
                 DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
             }

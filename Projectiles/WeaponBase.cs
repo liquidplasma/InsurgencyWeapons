@@ -73,6 +73,11 @@ namespace InsurgencyWeapons.Projectiles
         /// </summary>
         public static int NormalBullet => Insurgency.Bullet;
 
+        /// <summary>
+        /// Shorthand for Insurgency.Pellet
+        /// </summary>
+        public static int ShotgunPellet => Insurgency.Pellet;
+
         public int BulletDamage
         {
             get
@@ -183,16 +188,21 @@ namespace InsurgencyWeapons.Projectiles
         /// <param name="multiplier"></param>
         /// <param name="maxDegree"></param>
         /// <returns></returns>
-        public float AutomaticWeaponFireSpreadCalc(float multiplier, int maxDegree)
+        public Vector2 WeaponFireSpreadCalc(float multiplier, int maxDegree, bool shotgun = false)
         {
             bool shouldNotIncrease = Player.scope && MouseRightPressed;
             if (shouldNotIncrease)
-                return 0;
+                Degree = 0;
 
             if (!shouldNotIncrease && Degree < maxDegree && Player.channel && Main.rand.NextBool(5))
                 Degree += 1;
 
-            return Degree * multiplier;
+            Degree = (int)(Degree * multiplier);
+
+            if (shotgun)
+                return Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(6, 10))) * HeldItem.shootSpeed;
+
+            return Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Degree)) * HeldItem.shootSpeed;
         }
 
         /// <summary>
@@ -201,18 +211,11 @@ namespace InsurgencyWeapons.Projectiles
         /// <param name="CurrentAmmo"></param>
         /// <param name="AmmoType"></param>
         /// <param name="hasGL"></param>
-        /// <param name="grenadeName"></param>
-        /// <param name="ammoTypeGL"></param>
-        public void ShowAmmoCounter(int CurrentAmmo, int AmmoType, bool hasGL = false, string grenadeName = "", int ammoTypeGL = -1)
+        /// <param name="GrenadeName"></param>
+        /// <param name="AmmoTypeGL"></param>
+        public void ShowAmmoCounter(int CurrentAmmo, int AmmoType, bool hasGL = false, string GrenadeName = "", int AmmoTypeGL = -1)
         {
-            bool overGrave = Main.tile[MouseAim.ToTileCoordinates()].TileType == 85;
-            if (!overGrave && Player.whoAmI == Main.myPlayer && !Player.mouseInterface)
-            {
-                if (hasGL && ammoTypeGL != -1)
-                    Main.instance.MouseText(CurrentAmmo + " / " + Player.CountItem(AmmoType) + grenadeName + Player.CountItem(ammoTypeGL));
-                else
-                    Main.instance.MouseText(CurrentAmmo + " / " + Player.CountItem(AmmoType));
-            }
+            MagazineTracking.BuildUI(CurrentAmmo, AmmoType, hasGL, AmmoTypeGL, GrenadeName);
         }
 
         public void DropMagazine(int type)
@@ -221,14 +224,14 @@ namespace InsurgencyWeapons.Projectiles
                 return;
 
             BetterNewProjectile(
-            Player,
-            Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-            Projectile.Center,
-            new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), -Main.rand.NextFloat(1f, 1.5f)).RotatedByRandom(MathHelper.PiOver4),
-            type,
-            0,
-            0f,
-            Player.whoAmI);
+                Player,
+                Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                Projectile.Center,
+                new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), -Main.rand.NextFloat(1f, 1.5f)).RotatedByRandom(MathHelper.PiOver4),
+                type,
+                0,
+                0f,
+                Player.whoAmI);
         }
 
         public void DropCasingManually(int type = 0)
@@ -245,11 +248,16 @@ namespace InsurgencyWeapons.Projectiles
         /// <summary>
         /// Shoot boolet
         /// </summary>
-        /// <param name="aim"></param>
+        /// <param name="multiplier"></param>
+        /// <param name="maxDegree"></param>
         /// <param name="type"></param>
         /// <param name="damage"></param>
         /// <param name="dropCasing"></param>
-        public void Shoot(Vector2 aim, int type, int damage, bool dropCasing = true, float ai0 = 0)
+        /// <param name="ai0"></param>
+        /// <param name="ai1"></param>
+        /// <param name="ai2"></param>
+        /// <param name="shotgun"></param>
+        public void Shoot(float multiplier, int maxDegree, int type, int damage, bool dropCasing = true, float ai0 = 0, float ai1 = 0, float ai2 = 0, bool shotgun = false)
         {
             float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
             if (HeldItem.ModItem is not null and Rifle || HeldItem.ModItem is not null and Shotgun)
@@ -257,6 +265,8 @@ namespace InsurgencyWeapons.Projectiles
 
             if (HeldItem.ModItem is not null and SniperRifle)
                 knockBack *= 1.33f;
+
+            Vector2 aim = WeaponFireSpreadCalc(multiplier, maxDegree, shotgun);
 
             //Bullet
             BetterNewProjectile(
@@ -268,7 +278,9 @@ namespace InsurgencyWeapons.Projectiles
                damage: damage,
                knockback: knockBack,
                owner: Player.whoAmI,
-               ai0: ai0);
+               ai0: ai0,
+               ai1: ai1,
+               ai2: ai2);
 
             if (dropCasing)
                 DropCasingManually();
