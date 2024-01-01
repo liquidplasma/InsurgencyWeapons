@@ -4,8 +4,8 @@
     {
         public override void SetDefaults()
         {
-            Projectile.width = 8;
-            Projectile.height = 12;
+            Projectile.width = 4;
+            Projectile.height = 6;
             Projectile.penetrate = 5;
             base.SetDefaults();
         }

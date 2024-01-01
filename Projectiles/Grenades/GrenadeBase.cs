@@ -41,8 +41,6 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             Projectile.tileCollide = true;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 0;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -79,7 +77,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
                     Dust effect = Dust.NewDustDirect(target.position, target.width, target.height, HelperStats.SmokeyDust);
                     effect.velocity =
                         Main.rand.NextBool()
-                        ? dustPos.DirectionFrom(Projectile.Center) * 8f //true
+                        ? dustPos.DirectionFrom(target.Center) * 8f //true
                         : Utils.RandomVector2(Main.rand, -8f, 8f); //false
 
                     effect.scale = 3f * Main.rand.NextFloat();
@@ -92,7 +90,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         {
             if (State != (int)Exploded.Exploding)
             {
-                modifiers.FinalDamage *= 0.067f;
+                modifiers.FinalDamage *= 0.5f;
             }
             base.ModifyHitNPC(target, ref modifiers);
         }
@@ -105,16 +103,18 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             {
                 Projectile.velocity.Y += 0.24f;
                 if (Projectile.velocity.Y >= 10f)
-                    Projectile.velocity = Projectile.oldVelocity;
+                    Projectile.velocity.Y = Projectile.oldVelocity.Y;
             }
-            if (Projectile.timeLeft < 3)
+            if (Projectile.timeLeft < 6)
             {
                 State = (int)Exploded.Exploding;
                 HitOnce = false;
                 Projectile.Resize(240, 240);
                 Projectile.alpha = 255;
-                Projectile.velocity *= 0;
+                Projectile.velocity = Vector2.Zero;
                 Projectile.tileCollide = false;
+                Projectile.usesLocalNPCImmunity = true;
+                Projectile.localNPCHitCooldown = -1;
                 Projectile.netUpdate = true;
                 HelperStats.SmokeGore(Projectile.GetSource_Death(), Projectile.Center, 35, 4);
             }

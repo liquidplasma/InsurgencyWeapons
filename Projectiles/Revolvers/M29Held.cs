@@ -87,6 +87,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Shoot(1, 0, NormalBullet, BulletDamage, dropCasing: false);
             }
+
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
             {
                 ReloadTimer = 180;
@@ -99,6 +100,14 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 SoundEngine.PlaySound(Empty, Projectile.Center);
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
+
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            {
+                ManualReload = true;
+                ReloadStarted = true;
+                ReloadTimer = 180;
+            }
+
             switch (ReloadTimer)
             {
                 case 35:
@@ -110,6 +119,8 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 case 70:
                     if (CurrentAmmo < MaxAmmo && CanReload())
                     {
+                        if (ManualReload)
+                            DropCasingManually();
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         AmmoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 1);
                         Ammo.stack -= AmmoStackCount;
@@ -119,10 +130,13 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     break;
 
                 case 125:
-                    SoundEngine.PlaySound(Dump, Projectile.Center);
-                    for (int i = 0; i < 6; i++)
+                    if (!ManualReload)
                     {
-                        DropCasingManually();
+                        SoundEngine.PlaySound(Dump, Projectile.Center);
+                        for (int i = 0; i < 6; i++)
+                        {
+                            DropCasingManually();
+                        }
                     }
                     break;
 

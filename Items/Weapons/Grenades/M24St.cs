@@ -71,7 +71,6 @@ namespace InsurgencyWeapons.Items.Weapons.Grenades
                         int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
                         float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
                         ExtensionMethods.BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, M24StType, damage, knockback, player.whoAmI);
-
                         break;
                 }
             }

@@ -94,8 +94,8 @@ namespace InsurgencyWeapons.Projectiles.Rifles
         {
             Ammo ??= Player.FindItemInInventory(AmmoType);
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 4f;
-            SpecificWeaponFix = new Vector2(0, -0.75f);
+            OffsetFromPlayerCenter = 6f;
+            SpecificWeaponFix = new Vector2(0, 0);
 
             if (AllowedToFire && !UnderAlternateFireCoolDown && BoltActionTimer == 0)
             {
@@ -117,12 +117,19 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            {
+                ManualReload = true;
+                ReloadStarted = true;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
+            }
+
             switch (ReloadTimer)
             {
                 case 20:
                     SoundEngine.PlaySound(BoltLock, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = false;
+                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 54:
@@ -133,7 +140,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (CurrentAmmo < MaxAmmo)
                     {
-                        if (CanReload(5))
+                        if (CurrentAmmo <= 5 && CanReload(5))
                         {
                             SoundEngine.PlaySound(MagIn, Projectile.Center);
                             AmmoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 5);
@@ -157,6 +164,11 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     SoundEngine.PlaySound(BoltBack, Projectile.Center);
                     DropCasingManually();
+                    if (ManualReload)
+                    {
+                        CurrentAmmo--;
+                        Ammo.stack++;
+                    }
                     break;
             }
 

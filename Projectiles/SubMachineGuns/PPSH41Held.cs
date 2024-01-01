@@ -96,30 +96,55 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            {
+                ManualReload = true;
+                ReloadStarted = true;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.SubMachineGuns;
+            }
+
             switch (ReloadTimer)
             {
                 case 15:
-                    SoundEngine.PlaySound(BoltLock, Projectile.Center);
+                    if (!ManualReload)
+                        SoundEngine.PlaySound(BoltLock, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = false;
+                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 40:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
+                    if (ManualReload)
+                        Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
 
                     if (CanReload())
                     {
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
-                        Ammo.stack -= AmmoStackCount;
-                        CurrentAmmo = AmmoStackCount;
+                        if (ManualReload)
+                        {
+                            AmmoStackCount++;
+                            Ammo.stack -= AmmoStackCount;
+                            CurrentAmmo = AmmoStackCount;
+                        }
+                        else
+                        {
+                            Ammo.stack -= AmmoStackCount;
+                            CurrentAmmo = AmmoStackCount;
+                        }
                     }
                     break;
 
                 case 80:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    DropMagazine(ModContent.ProjectileType<PPSH41Drum>());
+                    AmmoStackCount = CurrentAmmo;
+                    Ammo.stack += AmmoStackCount;
+                    CurrentAmmo = 0;
+                    if (!ManualReload)
+                    {
+                        DropMagazine(ModContent.ProjectileType<PPSH41Drum>());
+                    }
                     break;
             }
 

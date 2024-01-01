@@ -78,6 +78,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 15f;
             SpecificWeaponFix = new Vector2(0, 1f);
+            Player.scope = true;
 
             if (!Player.channel)
                 AN94Double = false;
@@ -98,7 +99,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 Shoot(1, 3, NormalBullet, BulletDamage);
             }
 
-            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (CanReload() && CurrentAmmo == 0 && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
                 ReloadStarted = true;
@@ -110,30 +111,55 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            {
+                ManualReload = true;
+                ReloadStarted = true;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
+            }
+
             switch (ReloadTimer)
             {
                 case 30:
-                    SoundEngine.PlaySound(BoltLock, Projectile.Center);
+                    if (!ManualReload)
+                        SoundEngine.PlaySound(BoltLock, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = false;
+                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 70:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
+                    if (ManualReload)
+                        Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
 
                     if (CanReload())
                     {
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
-                        Ammo.stack -= AmmoStackCount;
-                        CurrentAmmo = AmmoStackCount;
+                        if (ManualReload)
+                        {
+                            AmmoStackCount++;
+                            Ammo.stack -= AmmoStackCount;
+                            CurrentAmmo = AmmoStackCount;
+                        }
+                        else
+                        {
+                            Ammo.stack -= AmmoStackCount;
+                            CurrentAmmo = AmmoStackCount;
+                        }
                     }
                     break;
 
                 case 110:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    DropMagazine(ModContent.ProjectileType<AN94Magazine>());
+                    AmmoStackCount = CurrentAmmo;
+                    Ammo.stack += AmmoStackCount;
+                    CurrentAmmo = 0;
+                    if (!ManualReload)
+                    {
+                        DropMagazine(ModContent.ProjectileType<ASVALMagazine>());
+                    }
                     break;
             }
 

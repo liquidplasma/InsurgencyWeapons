@@ -8,6 +8,8 @@ namespace InsurgencyWeapons.Helpers
 {
     internal static class Insurgency
     {
+        public static bool HoldingInsurgencyWeapon(Player player) => Insurgency.AllWeapons.Contains(player.HeldItem.type);
+
         /// <summary>
         /// Shorthand for NormalBullet projectile type
         /// </summary>

@@ -117,10 +117,18 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
             {
                 Player.SetDummyItemTime(2);
             }
+
             if (Player.channel && CurrentAmmo == 0 && CanFire && Projectile.soundDelay == 0)
             {
                 SoundEngine.PlaySound(Empty, Projectile.Center);
                 Projectile.soundDelay = HeldItem.useTime * 2;
+            }
+
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MaxAmmo)
+            {
+                ManualReload = true;
+                ReloadStarted = true;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.SniperRifles;
             }
 
             switch (ReloadTimer)
@@ -128,7 +136,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                 case 5:
                     SoundEngine.PlaySound(BoltForward, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = false;
+                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 10:
@@ -153,6 +161,11 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                 case 90:
                     SoundEngine.PlaySound(BoltBack, Projectile.Center);
                     DropCasingManually();
+                    if (ManualReload)
+                    {
+                        CurrentAmmo--;
+                        Ammo.stack++;
+                    }
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     break;
             }

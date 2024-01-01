@@ -120,11 +120,8 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (countPierce > 0)
-            {
-                float pierceDecrease = 1f - (countPierce * 0.15f);
-                modifiers.FinalDamage *= pierceDecrease;
-            }
+            float pierceDecrease = 1f - (countPierce * 0.15f);
+            modifiers.FinalDamage *= pierceDecrease;
             base.ModifyHitNPC(target, ref modifiers);
         }
     }

@@ -13,6 +13,7 @@ namespace InsurgencyWeapons
     {
         private static int[] IgnoredDraws = {
             ModContent.ProjectileType<M1GarandEnbloc>(),
+            ModContent.ProjectileType<EnfieldBlock>(),
         };
 
         public override bool PreDraw(Projectile projectile, ref Color lightColor)

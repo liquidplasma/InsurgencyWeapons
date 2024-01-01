@@ -85,6 +85,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Shoot(1, 2, NormalBullet, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x54Rmm);
             }
+
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
@@ -92,17 +93,27 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
             }
+
             if (Player.channel && CurrentAmmo == 0 && CanFire && Projectile.soundDelay == 0)
             {
                 SoundEngine.PlaySound(Empty, Projectile.Center);
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
+
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            {
+                ManualReload = true;
+                ReloadStarted = true;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
+                ReloadTimer += 30;
+            }
+
             switch (ReloadTimer)
             {
                 case 15:
                     SoundEngine.PlaySound(BoltLock, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = false;
+                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 40:
@@ -118,6 +129,12 @@ namespace InsurgencyWeapons.Projectiles.Rifles
 
                 case 80:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
+                    if (ManualReload)
+                    {
+                        AmmoStackCount = CurrentAmmo;
+                        Ammo.stack += AmmoStackCount;
+                        CurrentAmmo = 0;
+                    }
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     break;
 

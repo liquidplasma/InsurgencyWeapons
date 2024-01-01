@@ -46,6 +46,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
 
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/garand/empty");
         private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/garand/magin");
+        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/garand/magout");
         private SoundStyle BoltLock => new("InsurgencyWeapons/Sounds/Weapons/Ins2/garand/bltrel");
 
         public override void SetStaticDefaults()
@@ -83,6 +84,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 9f;
             SpecificWeaponFix = new Vector2(0, 0);
+
             if (!Player.channel || AutoAttack == 0)
             {
                 SemiAuto = false;
@@ -98,28 +100,37 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Shoot(1, 2, NormalBullet, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x63mm);
             }
+
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
-                ReloadTimer += 30;
+                ReloadTimer += 100;
                 SoundEngine.PlaySound(GarandPing, Projectile.Center);
-
                 DropMagazine(ModContent.ProjectileType<M1GarandEnbloc>());
-
                 Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
             }
+
             if (Player.channel && CurrentAmmo == 0 && CanFire && Projectile.soundDelay == 0)
             {
                 SoundEngine.PlaySound(Empty, Projectile.Center);
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
+
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            {
+                ManualReload = true;
+                ReloadStarted = true;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
+                ReloadTimer += 100;
+            }
+
             switch (ReloadTimer)
             {
                 case 25:
                     SoundEngine.PlaySound(BoltLock, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = false;
+                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 80:
@@ -132,7 +143,19 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                         CurrentAmmo = AmmoStackCount;
                     }
                     break;
+
+                case 150:
+                    if (ManualReload)
+                    {
+                        AmmoStackCount = CurrentAmmo;
+                        Ammo.stack += AmmoStackCount;
+                        CurrentAmmo = 0;
+                        SoundEngine.PlaySound(MagOut, Projectile.Center);
+                        DropMagazine(ModContent.ProjectileType<M1GarandEnbloc>());
+                    }
+                    break;
             }
+
             if (CurrentAmmo != 0 && ReloadTimer == 0)
             {
                 if (ShotDelay <= 3)

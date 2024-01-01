@@ -91,7 +91,10 @@ namespace InsurgencyWeapons.Projectiles
         }
 
         public bool ReloadStarted { get; set; }
+        public bool ManualReload { get; set; }
         public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
+
+        public bool CanManualReload(int CurrentAmmo) => CurrentAmmo != 0 && CurrentAmmo != MaxAmmo + 1;
 
         public bool CanReload(int minAmmo = 0) => Ammo != null && Ammo.stack > minAmmo;
 
@@ -323,9 +326,9 @@ namespace InsurgencyWeapons.Projectiles
 
             //Check if ammo is 0 or less then remove it if necessary, since I'm directly reducing stack size
             if (Ammo != null && Ammo.stack <= 0)
-                Ammo.TurnToAir();
+                Ammo.TurnToAir(true);
             if (AmmoGL != null && AmmoGL.stack <= 0)
-                AmmoGL.TurnToAir();
+                AmmoGL.TurnToAir(true);
 
             //Muzzleflash light
             if (ShotDelay == 1)
@@ -407,7 +410,6 @@ namespace InsurgencyWeapons.Projectiles
             {
                 isIdle = false;
                 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
-
                 Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + SpecificWeaponFix;
                 Projectile.Center = Player.MountedCenter + distance - new Vector2(0f, Projectile.gfxOffY - Player.gfxOffY);
                 Projectile.velocity = Vector2.Zero;

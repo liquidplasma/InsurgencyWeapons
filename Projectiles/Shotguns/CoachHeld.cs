@@ -141,12 +141,19 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            {
+                ManualReload = true;
+                ReloadStarted = true;
+                ReloadTimer = 200;
+            }
+
             switch (ReloadTimer)
             {
                 case 15:
                     SoundEngine.PlaySound(Close, Projectile.Center);
                     Projectile.frame = (int)CoachState.Ready;
-                    ReloadStarted = false;
+                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 108:
@@ -160,7 +167,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     break;
 
                 case 132:
-                    if (CanReload())
+                    if (!ManualReload && CanReload())
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
@@ -171,10 +178,15 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
                 case 162:
                     SoundEngine.PlaySound(Eject, Projectile.Center);
-                    for (int i = 0; i < 2; i++)
+                    if (!ManualReload)
                     {
-                        DropCasingManually(type: ModContent.GoreType<ShellBuckBallGore>());
+                        for (int i = 0; i < 2; i++)
+                        {
+                            DropCasingManually(type: ModContent.GoreType<ShellBuckBallGore>());
+                        }
                     }
+                    else
+                        DropCasingManually(type: ModContent.GoreType<ShellBuckBallGore>());
                     break;
 
                 case 180:

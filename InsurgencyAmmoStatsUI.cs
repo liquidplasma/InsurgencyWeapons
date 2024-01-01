@@ -14,7 +14,7 @@ namespace InsurgencyWeapons
         private UIElement Area;
         private Player Player => Main.LocalPlayer;
         private InsurgencyMagazineTracking AmmoTracking => Player.GetModPlayer<InsurgencyMagazineTracking>();
-        private bool HoldingInsurgencyWeapon => Insurgency.AllWeapons.Contains(Player.HeldItem.type);
+        private bool HoldingInsurgencyWeapon => Insurgency.HoldingInsurgencyWeapon(Player);
         private bool OverFriendlyNPC => AmmoTracking.mouseOverFriendlyNPC;
 
         public override void OnInitialize()

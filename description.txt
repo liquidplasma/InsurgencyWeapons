@@ -47,6 +47,7 @@
 		H&K MP7 4.6x30mm
 
 All enemies now drop "money" at a fixed 50% chance, with money you can craft the vending machines for weapons and ammo.
+Bind the key in the config screen if you want the ability to manually reload the guns.
 
 This mod is a port to tModLoader of [url=https://github.com/KernCore91/-SC-Insurgency-Weapons-Project] Insurgency Weapons Project [/url]
 This mod is licensed under [url=https://insurgency-support.newworldinteractive.com/hc/en-us/articles/360046247492-End-User-License-Agreement] New World Interactive End-User License Agreement [/url]
@@ -54,6 +55,5 @@ This mod is licensed under [url=https://insurgency-support.newworldinteractive.c
 Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
 
 Changelog//
-v0.6.1
-	- Added M60 and ASVal
-	- Reworked how ammo is displayed near the mouse, now shows indication of what bullet weapon will use
+v0.6.2
+	- Introduced manual reload system, you must bind the key in the configs

@@ -324,3 +324,5 @@ Projectiles: {
 	ASVALHeld.DisplayName: ASVAL
 	ASVALMagazine.DisplayName: ASVALMagazine
 }
+
+Keybinds.ReloadKey.DisplayName: Reload Key

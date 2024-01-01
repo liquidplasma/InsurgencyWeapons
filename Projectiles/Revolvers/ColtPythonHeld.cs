@@ -40,6 +40,8 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
 
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/python/empty");
         private SoundStyle Dump => new("InsurgencyWeapons/Sounds/Weapons/Ins2/python/dump", 2);
+        private SoundStyle Insert => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m29/ins");
+
         private SoundStyle Hammer => new("InsurgencyWeapons/Sounds/Weapons/Ins2/python/hammer");
         private SoundStyle Open => new("InsurgencyWeapons/Sounds/Weapons/Ins2/python/open");
         private SoundStyle Close => new("InsurgencyWeapons/Sounds/Weapons/Ins2/python/close");
@@ -104,37 +106,62 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Shoot(1, 2, NormalBullet, BulletDamage, dropCasing: false);
             }
+
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Revolvers;
                 ReloadStarted = true;
             }
+
             if (Player.channel && CurrentAmmo == 0 && CanFire && Projectile.soundDelay == 0 && BoltActionTimer == 0)
             {
                 BoltActionTimer = 30;
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
+
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            {
+                ManualReload = true;
+                ReloadStarted = true;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Revolvers;
+            }
+
             switch (ReloadTimer)
             {
                 case 30:
                     SoundEngine.PlaySound(Close, Projectile.Center);
-                    CurrentAmmo = MaxAmmo;
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = false;
+                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 120:
-                    SoundEngine.PlaySound(Open, Projectile.Center);
+                    if (!ManualReload)
+                        SoundEngine.PlaySound(Open, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    if (CanReload())
+                    if (CanReload() && !ManualReload)
                     {
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
                         Ammo.stack -= AmmoStackCount;
                         CurrentAmmo = AmmoStackCount;
                     }
-                    for (int i = 0; i < 6; i++)
+
+                    if (CurrentAmmo < MaxAmmo && CanReload() && ManualReload)
                     {
+                        SoundEngine.PlaySound(Insert, Projectile.Center);
                         DropCasingManually();
+                        Ammo.stack--;
+                        CurrentAmmo++;
+                        ReloadTimer = 170;
+                        if (CurrentAmmo == MaxAmmo)
+                            ReloadTimer = 120;
+                    }
+
+                    if (!ManualReload)
+                    {
+                        for (int i = 0; i < 6; i++)
+                        {
+                            DropCasingManually();
+                        }
                     }
                     break;
 
@@ -147,6 +174,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     break;
             }
+
             switch (BoltActionTimer)
             {
                 case 5:

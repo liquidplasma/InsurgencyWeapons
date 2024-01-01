@@ -18,7 +18,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Contact)
-                Projectile.timeLeft = 3;
+                Projectile.timeLeft = 6;
 
             base.OnHitNPC(target, hit, damageDone);
         }
@@ -26,7 +26,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (Contact)
-                Projectile.timeLeft = 3;
+                Projectile.timeLeft = 6;
 
             return base.OnTileCollide(oldVelocity);
         }

@@ -100,11 +100,19 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 SoundEngine.PlaySound(Empty, Projectile.Center);
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
+
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            {
+                ManualReload = true;
+                ReloadStarted = true;
+                ReloadTimer = HeldItem.useTime * 2 * (int)Insurgency.ReloadModifiers.LightMachineGuns;
+            }
+
             switch (ReloadTimer)
             {
                 case 30:
                     SoundEngine.PlaySound(Hit, Projectile.Center);
-                    ReloadStarted = false;
+                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 100:
@@ -118,11 +126,32 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
                 case 160:
                     SoundEngine.PlaySound(Throw, Projectile.Center);
+                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
+                    if (ManualReload)
+                        Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+
                     if (CanReload())
                     {
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
-                        Ammo.stack -= AmmoStackCount;
-                        CurrentAmmo = AmmoStackCount;
+                        if (ManualReload)
+                        {
+                            Ammo.stack -= AmmoStackCount;
+                            CurrentAmmo = AmmoStackCount;
+                        }
+                        else
+                        {
+                            Ammo.stack -= AmmoStackCount;
+                            CurrentAmmo = AmmoStackCount;
+                        }
+                    }
+                    break;
+
+                case 210:
+                    if (ManualReload)
+                    {
+                        AmmoStackCount = CurrentAmmo;
+                        Ammo.stack += AmmoStackCount;
+                        CurrentAmmo = 0;
                     }
                     break;
 
