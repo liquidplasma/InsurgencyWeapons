@@ -6,6 +6,7 @@ Weapons in the pack so far:
 
 -Assault rifles-
 * AKM 7.62x39mm + GP-25 40mm VOG-25P
+* AS VAL 9x39mm
 * StG-44 7.92x33mm
 * AN-94N + PK-AS 5.45x39mm
 
@@ -22,7 +23,8 @@ Weapons in the pack so far:
 * RGO Grenade
 
 -Machine guns-
-* RPK 7.62x39mm + Bipod
+* RPK 7.62x39mm
+* M60 7.62x51mm
 
 -Revolvers-
 * Colt Python .357 Magnum
