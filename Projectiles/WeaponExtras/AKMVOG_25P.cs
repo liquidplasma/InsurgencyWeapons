@@ -11,6 +11,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
     {
         private bool Exploded;
         private Player Player => Main.player[Projectile.owner];
+
         private enum Exploding
         {
             Not = 0,

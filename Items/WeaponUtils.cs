@@ -8,6 +8,14 @@ namespace InsurgencyWeapons.Items
 {
     internal abstract class AmmoItem : ModItem
     {
+        public int Money { get; set; }
+        public int CraftStack { get; set; }
+
+        public override void SetDefaults()
+        {
+            Item.value = Money;
+        }
+
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 60;
@@ -16,6 +24,11 @@ namespace InsurgencyWeapons.Items
         public override bool CanStackInWorld(Item source)
         {
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            this.RegisterINS2RecipeAmmo(Money, CraftStack);
         }
     }
 

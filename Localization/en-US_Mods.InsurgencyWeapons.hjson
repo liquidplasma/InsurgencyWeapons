@@ -1,6 +1,10 @@
 NPCs: {
 	AmmoSeller: {
 		DescriptionBestiary: Arrives randomly and has good deals on various ammo
+		StandardDialogue1: I've got good things on sale stranger
+		StandardDialogue2: Good ammo for cheap
+		StandardDialogue3: Grab it while it's hot
+		Die: "{0} has left in a hurry!"
 		DisplayName: Ammo Seller
 	}
 }

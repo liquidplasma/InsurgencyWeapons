@@ -1,6 +1,8 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
+using InsurgencyWeapons.Items.Other;
 using Terraria;
+using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,6 +11,7 @@ namespace InsurgencyWeapons
     public class InsurgencyWeapons : Mod
     {
         public static Mod Instance => ModContent.GetInstance<InsurgencyWeapons>();
+        public static int MoneyCurrency;
 
         public override void PostSetupContent()
         {
@@ -64,6 +67,12 @@ namespace InsurgencyWeapons
                     //Light machine guns
                     Insurgency.LightMachineGuns.Add(item.type);
             }
+        }
+
+        public override void Load()
+        {
+            MoneyCurrency = CustomCurrencyManager.RegisterCurrency(new Currency.MoneyForShop(ModContent.ItemType<Money>(), 9999L, "Mods.InsurgencyWeapons.Items.Money.DisplayName"));
+            base.Load();
         }
 
         public override void Unload()

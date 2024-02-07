@@ -1,14 +1,31 @@
-﻿using Terraria;
+﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Items;
+using InsurgencyWeapons.Items.Other;
+using InsurgencyWeapons.Projectiles;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace InsurgencyWeapons.NPCs.Townie
 {
     internal class AmmoSeller : ModNPC
     {
         private static Profiles.StackedNPCProfile NPCProfile;
+
+        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/aks/shoot")
+        {
+            Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
+            MaxInstances = 0,
+            Volume = 0.4f
+        };
 
         public override void SetStaticDefaults()
         {
@@ -84,6 +101,138 @@ namespace InsurgencyWeapons.NPCs.Townie
                 new FlavorTextBestiaryInfoElement("Mods.InsurgencyWeapons.NPCs.AmmoSeller.DescriptionBestiary")
             });
             base.SetBestiary(database, bestiaryEntry);
+        }
+
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            int num = NPC.life > 0 ? 1 : 5;
+            for (int k = 0; k < num; k++)
+            {
+                Dust dusty = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Scorpion);
+                dusty.color = Color.Red;
+            }
+
+            if (NPC.life <= 0)
+            {
+                for (int i = 0; i < 36; i++)
+                {
+                    Dust dusty = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Scorpion);
+                    dusty.color = Color.Red;
+                }
+            }
+        }
+
+        public override ITownNPCProfile TownNPCProfile()
+        {
+            return NPCProfile;
+        }
+
+        public override List<string> SetNPCNameList()
+        {
+            return new List<string> {
+                "James",
+                "John Wick",
+                "JC Denton",
+                "Randy"
+            };
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneForest && spawnInfo.Player.inventory.Any(item => item.type == ModContent.ItemType<Money>()))
+            {
+                return 0.27f;
+            }
+
+            return 0f;
+        }
+
+        public override string GetChat()
+        {
+            WeightedRandom<string> chat = new();
+
+            chat.Add(Language.GetTextValue("Mods.InsurgencyWeapons.NPCs.AmmoSeller.StandardDialogue1"));
+            chat.Add(Language.GetTextValue("Mods.InsurgencyWeapons.NPCs.AmmoSeller.StandardDialogue2"));
+            chat.Add(Language.GetTextValue("Mods.InsurgencyWeapons.NPCs.AmmoSeller.StandardDialogue3"));
+            return chat;
+        }
+
+        public override void SetChatButtons(ref string button, ref string button2)
+        {
+            button = Language.GetTextValue("LegacyInterface.28");
+        }
+
+        public override void OnChatButtonClicked(bool firstButton, ref string shop)
+        {
+            if (firstButton)
+            {
+                shop = "Shop";
+            }
+        }
+
+        public override void AddShops()
+        {
+            NPCShop AmmoShop = new(Type);
+            foreach (int AmmoType in Insurgency.AmmoTypes)
+            {
+                Item AmmoItem = ContentSamples.ItemsByType[AmmoType];
+                AmmoItem grabStack = AmmoItem.ModItem as AmmoItem;
+                AmmoShop.Add(new Item(AmmoType)
+                {
+                    shopCustomPrice = (int?)(AmmoItem.value * 0.8f),
+                    shopSpecialCurrency = InsurgencyWeapons.MoneyCurrency,
+                    stack = grabStack.CraftStack
+                });
+            }
+            AmmoShop.Register();
+        }
+
+        public override void TownNPCAttackStrength(ref int damage, ref float knockback)
+        {
+            damage = 16;
+            knockback = 2f;
+        }
+
+        public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
+        {
+            cooldown = 25;
+            randExtraCooldown = 30;
+        }
+
+        public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
+        {
+            projType = ModContent.ProjectileType<NormalBullet>();
+            attackDelay = 1;
+
+            // This code progressively delays subsequent shots.
+            if (NPC.localAI[3] > attackDelay)
+            {
+                attackDelay = 6;
+            }
+            if (NPC.localAI[3] > attackDelay)
+            {
+                attackDelay = 8;
+            }
+            if (NPC.localAI[3] > attackDelay)
+            {
+                attackDelay = 12;
+            }
+            if (NPC.localAI[3] > attackDelay)
+            {
+                attackDelay = 14;
+            }
+        }
+
+        public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
+        {
+            multiplier = 10f;
+            randomOffset = 0.4f;
+        }
+
+        public override void OnKill()
+        {
+            HelperStats.Announce(Color.Red, NPC.GivenName + "Mods.InsurgencyWeapons.NPCs.AmmoSeller.Die");
+            base.OnKill();
         }
     }
 }

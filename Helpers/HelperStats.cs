@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Helpers
@@ -49,6 +51,18 @@ namespace InsurgencyWeapons.Helpers
                     extraDusty.velocity = (velocity * 0.1f) + Vector2.Zero + Utils.NextVector2Circular(Main.rand, -4, 4) * (Main.rand.NextBool() ? 0.2f : 0.53f);
                 }
                 dusty.fadeIn = 1f;
+            }
+        }
+
+        public static void Announce(Color color, string text, params string[] substitutions)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                ChatHelper.BroadcastChatMessage(NetworkText.FromKey(text, substitutions), color);
+            }
+            else if (Main.netMode == NetmodeID.SinglePlayer)
+            {
+                Main.NewText(Language.GetTextValue(text, substitutions), color);
             }
         }
 

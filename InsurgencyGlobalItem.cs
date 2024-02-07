@@ -1,11 +1,9 @@
 ﻿using InsurgencyWeapons.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons

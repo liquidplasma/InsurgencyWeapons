@@ -35,11 +35,12 @@ namespace InsurgencyWeapons.Items.Other
         {
             Item.ResearchUnlockCount = 1000;
         }
+
         public override void SetDefaults()
         {
             Item.width = 28;
             Item.height = 22;
-            Item.value = Item.sellPrice(silver: 10);
+            Item.value = Item.sellPrice(silver: 1);
             Item.rare = ItemRarityID.Lime;
             Item.maxStack = Item.CommonMaxStack;
         }

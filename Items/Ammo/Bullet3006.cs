@@ -10,14 +10,12 @@ namespace InsurgencyWeapons.Items.Ammo
     {
         public override void SetDefaults()
         {
+            Money = 15;
+            CraftStack = 8;
             Item.width = 7;
             Item.height = 36;
             Item.DefaultsToInsurgencyAmmo(14);
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeAmmo(money: 15, amountToCraft: 8);
+            base.SetDefaults();
         }
     }
 }
