@@ -1,4 +1,5 @@
-﻿using InsurgencyWeapons.Items.Ammo;
+﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Items.Ammo;
 using System;
 using Terraria;
 using Terraria.ModLoader;
@@ -7,9 +8,10 @@ namespace InsurgencyWeapons
 {
     internal class InsurgencyMagazineTracking : ModPlayer
     {
+        public bool MouseOverFriendlyNPC { get; set; }
+
         public bool
-            isActive,
-            mouseOverFriendlyNPC;
+            isActive;
 
         //Assault rifles
         public int
@@ -97,7 +99,8 @@ namespace InsurgencyWeapons
 
         public override void PostUpdate()
         {
-            mouseOverFriendlyNPC = OverFriendlyNPC();
+            if (Insurgency.HoldingInsurgencyWeapon(Player) && isActive)
+                MouseOverFriendlyNPC = OverFriendlyNPC();
             base.PostUpdate();
         }
 

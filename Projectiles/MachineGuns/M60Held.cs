@@ -86,7 +86,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 5, NormalBullet, BulletDamage);
+                Shoot(1, 5);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)

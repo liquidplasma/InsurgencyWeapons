@@ -94,9 +94,9 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     AN94Double = true;
                     SoundEngine.PlaySound(Fire, Projectile.Center);
                     CurrentAmmo--;
-                    Shoot(1, 3, NormalBullet, BulletDamage);
+                    Shoot(1, 3);
                 }
-                Shoot(1, 3, NormalBullet, BulletDamage);
+                Shoot(1, 3);
             }
 
             if (CanReload() && CurrentAmmo == 0 && !ReloadStarted)

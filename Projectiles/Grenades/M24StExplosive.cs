@@ -7,8 +7,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 10;
-            FuseTime = 60 * 4.5f;
-            Projectile.timeLeft = (int)FuseTime;
+            FuseTime = 4.5f;
             base.SetDefaults();
         }
     }

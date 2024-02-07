@@ -96,7 +96,7 @@ namespace InsurgencyWeapons.Helpers
                     modifier += 0.15f;
             }
             else if (!Main.hardMode)
-                modifier -= 0.5f;
+                modifier -= 0.1f;
 
             return modifier;
         }

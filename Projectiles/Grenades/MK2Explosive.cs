@@ -5,8 +5,7 @@
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 16;
-            FuseTime = 60 * 4f;
-            Projectile.timeLeft = (int)FuseTime;
+            FuseTime = 4f;
             base.SetDefaults();
         }
     }

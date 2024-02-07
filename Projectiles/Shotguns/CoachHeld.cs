@@ -121,11 +121,11 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     for (int j = 0; j < 6; j++)
                     {
                         //Buck
-                        Shoot(1, 1, ShotgunPellet, BulletDamage, dropCasing: false, shotgun: true);
+                        Shoot(1, 1, dropCasing: false, shotgun: true);
                     }
 
                     //Ball
-                    Shoot(1, 1, ShotgunPellet, BulletDamage, dropCasing: false);
+                    Shoot(1, 1, dropCasing: false);
                 }
             }
 

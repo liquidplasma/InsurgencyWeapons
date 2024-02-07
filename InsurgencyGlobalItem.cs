@@ -35,16 +35,13 @@ namespace InsurgencyWeapons
             return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
 
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
             if (InsurgencyModConfig.Instance.DamageScaling && Insurgency.AllWeapons.Contains(item.type))
             {
-                int damage = (int)(Main.LocalPlayer.GetTotalDamage(DamageClass.Ranged).ApplyTo(item.damage) * Insurgency.WeaponScaling());
-                int index = tooltips.FindIndex(tip => tip.Name == "Damage");
-                tooltips.RemoveAt(index);
-                TooltipLine actualDamage = new(Mod, "actualDamage", damage + Language.GetTextValue("LegacyTooltip.3"));
-                tooltips.Insert(index, actualDamage);
+                damage *= Insurgency.WeaponScaling();
             }
+            base.ModifyWeaponDamage(item, player, ref damage);
         }
 
         public override void OnCreated(Item item, ItemCreationContext context)

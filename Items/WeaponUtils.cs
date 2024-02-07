@@ -8,6 +8,11 @@ namespace InsurgencyWeapons.Items
 {
     internal abstract class AmmoItem : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 60;
+        }
+
         public override bool CanStackInWorld(Item source)
         {
             return true;

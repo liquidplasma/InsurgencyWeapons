@@ -38,7 +38,7 @@ namespace InsurgencyWeapons.Helpers
 
         public static void SmokeyTrail(Vector2 position, Vector2 velocity)
         {
-            for (int i = 0; i < Main.rand.Next(4, 18); i++)
+            for (int i = 0; i < Main.rand.Next(2, 4); i++)
             {
                 int type = Main.rand.NextBool(12) ? DustID.Torch : DustID.Smoke;
                 Dust dusty = Dust.NewDustPerfect(position, type);

@@ -83,7 +83,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 2, NormalBullet, BulletDamage, ai0: (float)Insurgency.APCaliber.c762x54Rmm);
+                Shoot(1, 2, ai0: (float)Insurgency.APCaliber.c762x54Rmm);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)

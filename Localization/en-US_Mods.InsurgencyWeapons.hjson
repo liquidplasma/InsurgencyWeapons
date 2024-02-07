@@ -1,3 +1,10 @@
+NPCs: {
+	AmmoSeller: {
+		DescriptionBestiary: Arrives randomly and has good deals on various ammo
+		DisplayName: Ammo Seller
+	}
+}
+
 WeaponClasses: {
 	AR: Assault Rifle
 	BR: Battle Rifle

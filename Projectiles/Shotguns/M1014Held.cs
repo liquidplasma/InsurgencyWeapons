@@ -106,7 +106,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 for (int j = 0; j < 8; j++)
                 {
                     //Buck
-                    Shoot(1, 1, ShotgunPellet, BulletDamage, dropCasing: false, shotgun: true);
+                    Shoot(1, 1, dropCasing: false, shotgun: true);
                 }
                 DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
             }

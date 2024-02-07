@@ -81,7 +81,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(0.8f, 3, NormalBullet, BulletDamage);
+                Shoot(0.8f, 3);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)

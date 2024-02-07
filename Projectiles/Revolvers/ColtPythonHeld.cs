@@ -104,7 +104,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 ShotDelay = FireDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 2, NormalBullet, BulletDamage, dropCasing: false);
+                Shoot(1, 2, dropCasing: false);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)

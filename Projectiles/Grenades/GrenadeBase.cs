@@ -11,7 +11,12 @@ namespace InsurgencyWeapons.Projectiles.Grenades
     internal abstract class GrenadeBase : ModProjectile
     {
         public Player Player => Main.player[Projectile.owner];
+
+        /// <summary>
+        /// In seconds
+        /// </summary>
         public float FuseTime { get; set; }
+
         public bool Moving => Projectile.velocity.Length() >= 0.5f;
         public bool HitOnce;
         public int TileCollides;
@@ -31,6 +36,10 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         public enum Exploded
         {
             Not,
+
+            /// <summary>
+            /// Projectile timeleft is less than 6
+            /// </summary>
             Exploding
         }
 
@@ -41,6 +50,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             Projectile.tileCollide = true;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
+            Projectile.timeLeft = (int)(FuseTime * 60);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -65,7 +75,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
                 SoundEngine.PlaySound(Sounds.GrenadeTink, Projectile.Center);
                 HitOnce = true;
                 Vector2 oldVel = Projectile.velocity;
-                Projectile.velocity = (Projectile.Center.DirectionFrom(target.Center).RotatedByRandom(MathHelper.ToRadians(15)) * oldVel.Length());
+                Projectile.velocity = Projectile.Center.DirectionFrom(target.Center).RotatedByRandom(MathHelper.ToRadians(15)) * oldVel.Length();
                 Projectile.velocity *= 0.7f;
                 Projectile.netUpdate = true;
             }
@@ -133,7 +143,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
 
         public override void OnKill(int timeLeft)
         {
-            SoundEngine.PlaySound(Sounds.GrenadeDetonation, Projectile.Center);
+            SoundEngine.PlaySound(Sounds.GrenadeDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
             if (Player.DistanceSQ(Projectile.Center) <= 128 * 128 && Collision.CanHitLine(Projectile.Center, 1, 1, Player.Center, 1, 1))
             {
                 Player.HurtInfo grenadeSelfDamage = new()

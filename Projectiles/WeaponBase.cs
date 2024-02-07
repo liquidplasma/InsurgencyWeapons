@@ -253,14 +253,14 @@ namespace InsurgencyWeapons.Projectiles
         /// </summary>
         /// <param name="multiplier"></param>
         /// <param name="maxDegree"></param>
-        /// <param name="type"></param>
-        /// <param name="damage"></param>
         /// <param name="dropCasing"></param>
         /// <param name="ai0"></param>
         /// <param name="ai1"></param>
         /// <param name="ai2"></param>
         /// <param name="shotgun"></param>
-        public void Shoot(float multiplier, int maxDegree, int type, int damage, bool dropCasing = true, float ai0 = 0, float ai1 = 0, float ai2 = 0, bool shotgun = false)
+        ///
+        ///
+        public void Shoot(float multiplier, int maxDegree, bool dropCasing = true, float ai0 = 0, float ai1 = 0, float ai2 = 0, bool shotgun = false)
         {
             float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
             if (HeldItem.ModItem is not null and Rifle || HeldItem.ModItem is not null and Shotgun)
@@ -271,6 +271,10 @@ namespace InsurgencyWeapons.Projectiles
 
             Vector2 aim = WeaponFireSpreadCalc(multiplier, maxDegree, shotgun);
 
+            int type = NormalBullet;
+            if (shotgun)
+                type = ShotgunPellet;
+
             //Bullet
             BetterNewProjectile(
                Player,
@@ -278,7 +282,7 @@ namespace InsurgencyWeapons.Projectiles
                position: Player.MountedCenter,
                velocity: aim,
                type: type,
-               damage: damage,
+               damage: BulletDamage,
                knockback: knockBack,
                owner: Player.whoAmI,
                ai0: ai0,

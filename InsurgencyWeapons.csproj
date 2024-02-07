@@ -26,6 +26,10 @@
     <None Remove="Items\Weapons\Shotguns\Ithaca.png" />
     <None Remove="Items\Weapons\Shotguns\M1014.png" />
     <None Remove="Items\Weapons\Shotguns\M590.png" />
+    <None Remove="NPCs\Townie\AmmoSeller.png" />
+    <None Remove="NPCs\Townie\AmmoSeller_Head.png" />
+    <None Remove="NPCs\Townie\AmmoSeller_Shimmer.png" />
+    <None Remove="NPCs\Townie\AmmoSeller_Shimmer_Head.png" />
     <None Remove="Projectiles\AssaultRifles\ASVALHeld.png" />
     <None Remove="Projectiles\BattleRifles\G3A3Held.png" />
     <None Remove="Projectiles\MachineGuns\M60Held.png" />

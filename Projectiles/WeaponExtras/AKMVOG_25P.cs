@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.WeaponExtras
@@ -9,7 +10,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
     internal class AKMVOG_25P : ModProjectile
     {
         private bool Exploded;
-
+        private Player Player => Main.player[Projectile.owner];
         private enum Exploding
         {
             Not = 0,
@@ -88,6 +89,18 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(Sounds.GrenadeDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
+            if (Player.DistanceSQ(Projectile.Center) <= 128 * 128 && Collision.CanHitLine(Projectile.Center, 1, 1, Player.Center, 1, 1))
+            {
+                Player.HurtInfo grenadeSelfDamage = new()
+                {
+                    Dodgeable = true,
+                    HitDirection = Projectile.Center.DirectionTo(Player.Center).X > 0f ? 1 : -1,
+                    Damage = (int)(Projectile.damage * 0.45f),
+                    DamageSource = PlayerDeathReason.ByProjectile(Player.whoAmI, Projectile.identity),
+                    Knockback = 6f
+                };
+                Player.Hurt(grenadeSelfDamage);
+            }
         }
     }
 }

@@ -87,15 +87,18 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         {
             Ammo ??= Player.FindItemInInventory(AmmoType);
             AmmoGL = Player.FindItemInInventory(GrenadeLauncherAmmoType);
-            AmmoGL ??= ContentSamples.ItemsByType[GrenadeLauncherAmmoType];
+            if (AmmoGL == null)
+                AmmoGL ??= ContentSamples.ItemsByType[GrenadeLauncherAmmoType];
+
             ShowAmmoCounter(CurrentAmmo, AmmoType, true, " VOG-25P: ", GrenadeLauncherAmmoType);
             OffsetFromPlayerCenter = 12f;
+            SpecificWeaponFix = new Vector2(0, 2f);
             if (AllowedToFire && !UnderAlternateFireCoolDown)
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1.1f, 5, NormalBullet, BulletDamage);
+                Shoot(1.1f, 5);
             }
             if (MouseRightPressed && Player.CountItem(GrenadeLauncherAmmoType) > 0 && AlternateFireCoolDown == 0 && !(ReloadTimer > 0))
             {
@@ -103,9 +106,9 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 AmmoGL.stack--;
                 SoundEngine.PlaySound(ShootGrenade, Projectile.Center);
                 Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(4))) * HeldItem.shootSpeed;
-                VOGDamage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(AmmoGL.damage)) * Player.GetStealth() * 4f);
+                VOGDamage = (int)(BulletDamage * 3f);
                 if (InsurgencyModConfig.Instance.DamageScaling)
-                    VOGDamage = (int)(VOGDamage * Insurgency.WeaponScaling());
+                    VOGDamage = (int)(BulletDamage * 3f * Insurgency.WeaponScaling());
 
                 float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
 

@@ -15,7 +15,7 @@ namespace InsurgencyWeapons
         private Player Player => Main.LocalPlayer;
         private InsurgencyMagazineTracking AmmoTracking => Player.GetModPlayer<InsurgencyMagazineTracking>();
         private bool HoldingInsurgencyWeapon => Insurgency.HoldingInsurgencyWeapon(Player);
-        private bool OverFriendlyNPC => AmmoTracking.mouseOverFriendlyNPC;
+        private bool OverFriendlyNPC => AmmoTracking.MouseOverFriendlyNPC;
 
         public override void OnInitialize()
         {

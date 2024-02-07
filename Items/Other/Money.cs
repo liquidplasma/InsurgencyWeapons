@@ -31,6 +31,10 @@ namespace InsurgencyWeapons.Items.Other
 
     internal class Money : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 1000;
+        }
         public override void SetDefaults()
         {
             Item.width = 28;

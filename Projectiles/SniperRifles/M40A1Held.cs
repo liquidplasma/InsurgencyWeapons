@@ -104,7 +104,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                     BoltActionTimer = HeldItem.useTime * 2;
 
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 1, NormalBullet, BulletDamage, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x51mm);
+                Shoot(1, 1, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x51mm);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
