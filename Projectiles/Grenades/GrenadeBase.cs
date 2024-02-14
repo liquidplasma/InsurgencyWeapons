@@ -17,6 +17,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         /// </summary>
         public float FuseTime { get; set; }
 
+        public bool NPCProj { get; set; }
         public bool Moving => Projectile.velocity.Length() >= 0.5f;
         public bool HitOnce;
         public int TileCollides;
@@ -144,7 +145,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(Sounds.GrenadeDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
-            if (Player.DistanceSQ(Projectile.Center) <= 128 * 128 && Collision.CanHitLine(Projectile.Center, 1, 1, Player.Center, 1, 1))
+            if (!NPCProj && Player.DistanceSQ(Projectile.Center) <= 128 * 128 && Collision.CanHitLine(Projectile.Center, 1, 1, Player.Center, 1, 1))
             {
                 Player.HurtInfo grenadeSelfDamage = new()
                 {

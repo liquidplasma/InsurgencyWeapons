@@ -1,12 +1,13 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Other;
-using InsurgencyWeapons.Projectiles;
+using InsurgencyWeapons.Projectiles.Grenades;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
+using Terraria.Chat;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -19,13 +20,7 @@ namespace InsurgencyWeapons.NPCs.Townie
     internal class AmmoSeller : ModNPC
     {
         private static Profiles.StackedNPCProfile NPCProfile;
-
-        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/aks/shoot")
-        {
-            Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
-            MaxInstances = 0,
-            Volume = 0.4f
-        };
+        private static float RandomDiscount;
 
         public override void SetStaticDefaults()
         {
@@ -35,7 +30,7 @@ namespace InsurgencyWeapons.NPCs.Townie
             NPCID.Sets.AttackFrameCount[Type] = 4;
             NPCID.Sets.DangerDetectRange[Type] = 700; // The amount of pixels away from the center of the npc that it tries to attack enemies.
             NPCID.Sets.PrettySafe[Type] = 300;
-            NPCID.Sets.AttackType[Type] = 1; // Shoots a weapon.
+            NPCID.Sets.AttackType[Type] = 0; // Shoots a weapon.
             NPCID.Sets.AttackTime[Type] = 60; // The amount of time it takes for the NPC's attack animation to be over once it starts.
             NPCID.Sets.AttackAverageChance[Type] = 30;
             NPCID.Sets.HatOffsetY[Type] = 4; // For when a party is active, the party hat spawns at a Y offset.
@@ -61,7 +56,7 @@ namespace InsurgencyWeapons.NPCs.Townie
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new()
             {
                 Velocity = 1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
-                Direction = 1 // -1 is left and 1 is right. NPCs are drawn facing the left by default but ExamplePerson will be drawn facing the right
+                Direction = -1 // -1 is left and 1 is right. NPCs are drawn facing the left by default but ExamplePerson will be drawn facing the right
             };
 
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
@@ -74,7 +69,7 @@ namespace InsurgencyWeapons.NPCs.Townie
 
         public override void SetDefaults()
         {
-            NPC.friendly = true; // NPC Will not attack player
+            NPC.friendly = true;
             NPC.width = 18;
             NPC.height = 40;
             NPC.aiStyle = 7;
@@ -84,8 +79,38 @@ namespace InsurgencyWeapons.NPCs.Townie
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.5f;
-
             AnimationType = NPCID.Guide;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            RandomDiscount = Utils.SelectRandom(Main.rand, 0.667f, 0.7f, 0.85f);
+            base.OnSpawn(source);
+        }
+
+        public override bool PreAI()
+        {
+            if ((!Main.dayTime || Main.time >= Time.Its6PM) && !IsNpcOnscreen(NPC.Center)) // If it's past the despawn time and the NPC isn't onscreen
+            {
+                // Here we despawn the NPC and send a message stating that the NPC has despawned
+                // LegacyMisc.35 is {0} has departed!
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.NewText(Language.GetTextValue("LegacyMisc.35", NPC.FullName), 50, 125, 255);
+                else
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromKey("LegacyMisc.35", NPC.GetFullNetName()), new Color(50, 125, 255));
+
+                NPC.active = false;
+                NPC.netSkip = -1;
+                NPC.life = 0;
+                return false;
+            }
+            return true;
+        }
+
+        public override void AI()
+        {
+            Lighting.AddLight(NPC.Center, Color.Wheat.ToVector3() * 0.25f);
+            base.AI();
         }
 
         public override bool CanChat()
@@ -105,19 +130,21 @@ namespace InsurgencyWeapons.NPCs.Townie
 
         public override void HitEffect(NPC.HitInfo hit)
         {
-            int num = NPC.life > 0 ? 1 : 5;
-            for (int k = 0; k < num; k++)
+            for (int k = 0; k < 12; k++)
             {
                 Dust dusty = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Scorpion);
                 dusty.color = Color.Red;
+                dusty.noGravity = Main.rand.NextBool();
             }
 
             if (NPC.life <= 0)
             {
-                for (int i = 0; i < 36; i++)
+                for (int i = 0; i < 54; i++)
                 {
                     Dust dusty = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Scorpion);
+                    dusty.scale *= Main.rand.NextFloat(3f);
                     dusty.color = Color.Red;
+                    dusty.noGravity = true;
                 }
             }
         }
@@ -133,27 +160,32 @@ namespace InsurgencyWeapons.NPCs.Townie
                 "James",
                 "John Wick",
                 "JC Denton",
-                "Randy"
+                "Randy",
+                "Duke"
             };
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneForest && spawnInfo.Player.inventory.Any(item => item.type == ModContent.ItemType<Money>()))
-            {
-                return 0.27f;
-            }
+            bool condition =
+                NPC.downedBoss1 &&
+                Main.dayTime &&
+                !NPC.AnyNPCs(Type) &&
+                spawnInfo.Player.ZoneOverworldHeight &&
+                spawnInfo.Player.inventory.Any(item => item.type == ModContent.ItemType<Money>());
 
-            return 0f;
+            return condition ? 1f : 0f;
         }
 
         public override string GetChat()
         {
             WeightedRandom<string> chat = new();
 
-            chat.Add(Language.GetTextValue("Mods.InsurgencyWeapons.NPCs.AmmoSeller.StandardDialogue1"));
-            chat.Add(Language.GetTextValue("Mods.InsurgencyWeapons.NPCs.AmmoSeller.StandardDialogue2"));
-            chat.Add(Language.GetTextValue("Mods.InsurgencyWeapons.NPCs.AmmoSeller.StandardDialogue3"));
+            for (int i = 1; i <= 4; i++)
+            {
+                chat.Add(Language.GetTextValue("Mods.InsurgencyWeapons.NPCs.AmmoSeller.StandardDialogue" + i));
+            }
+
             return chat;
         }
 
@@ -176,51 +208,46 @@ namespace InsurgencyWeapons.NPCs.Townie
             foreach (int AmmoType in Insurgency.AmmoTypes)
             {
                 Item AmmoItem = ContentSamples.ItemsByType[AmmoType];
-                AmmoItem grabStack = AmmoItem.ModItem as AmmoItem;
+                AmmoItem grabStack = (AmmoItem)AmmoItem.ModItem;
                 AmmoShop.Add(new Item(AmmoType)
                 {
-                    shopCustomPrice = (int?)(AmmoItem.value * 0.8f),
+                    shopCustomPrice = grabStack.MoneyCost / grabStack.CraftStack,
                     shopSpecialCurrency = InsurgencyWeapons.MoneyCurrency,
-                    stack = grabStack.CraftStack
                 });
             }
             AmmoShop.Register();
         }
 
+        public override void ModifyActiveShop(string shopName, Item[] items)
+        {
+            foreach (Item item in items)
+            {
+                if (item is null)
+                    continue;
+
+                item.shopCustomPrice = (int?)(item.shopCustomPrice * RandomDiscount);
+                if (item.shopCustomPrice == 0)
+                    item.shopCustomPrice = 1;
+            }
+            base.ModifyActiveShop(shopName, items);
+        }
+
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
         {
-            damage = 16;
+            damage = 60;
             knockback = 2f;
         }
 
         public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
         {
-            cooldown = 25;
+            cooldown = 120;
             randExtraCooldown = 30;
         }
 
         public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
         {
-            projType = ModContent.ProjectileType<NormalBullet>();
+            projType = ModContent.ProjectileType<MK2ExplosiveNPC>();
             attackDelay = 1;
-
-            // This code progressively delays subsequent shots.
-            if (NPC.localAI[3] > attackDelay)
-            {
-                attackDelay = 6;
-            }
-            if (NPC.localAI[3] > attackDelay)
-            {
-                attackDelay = 8;
-            }
-            if (NPC.localAI[3] > attackDelay)
-            {
-                attackDelay = 12;
-            }
-            if (NPC.localAI[3] > attackDelay)
-            {
-                attackDelay = 14;
-            }
         }
 
         public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
@@ -231,8 +258,23 @@ namespace InsurgencyWeapons.NPCs.Townie
 
         public override void OnKill()
         {
-            HelperStats.Announce(Color.Red, NPC.GivenName + "Mods.InsurgencyWeapons.NPCs.AmmoSeller.Die");
+            LocalizedText deathText = Language.GetText("Mods.InsurgencyWeapons.NPCs.AmmoSeller.Die");
+            HelperStats.Announce(Color.Red, NPC.GivenName + " " + deathText.Value);
             base.OnKill();
+        }
+
+        private static bool IsNpcOnscreen(Vector2 center)
+        {
+            int w = NPC.sWidth + NPC.safeRangeX * 2;
+            int h = NPC.sHeight + NPC.safeRangeY * 2;
+            Rectangle npcScreenRect = new Rectangle((int)center.X - w / 2, (int)center.Y - h / 2, w, h);
+            foreach (Player player in Main.player)
+            {
+                // If any player is close enough to the traveling merchant, it will prevent the npc from despawning
+                if (player.active && player.getRect().Intersects(npcScreenRect))
+                    return true;
+            }
+            return false;
         }
     }
 }

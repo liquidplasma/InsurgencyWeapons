@@ -25,6 +25,12 @@ namespace InsurgencyWeapons.Helpers
         /// Goes from 0f to 1f slowly, MP friendly (probably?)
         /// </summary>
         public static float GlobalTick => Main.GameUpdateCount % 900 / 900f;
+        /// <summary>
+        /// Returns the ticktime from the seconds
+        /// </summary>
+        /// <param name="seconds"></param>
+        /// <returns></returns>
+        public static int SecondsToTick(int seconds) => seconds * 60;
 
         public static void SmokeGore(IEntitySource source, Vector2 position, int amount, float magnitudeRange, float rotationRange = MathHelper.TwoPi)
         {

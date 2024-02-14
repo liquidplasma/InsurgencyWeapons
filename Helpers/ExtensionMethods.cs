@@ -12,6 +12,9 @@ namespace InsurgencyWeapons.Helpers
 {
     internal static class ExtensionMethods
     {
+
+
+        
         /// <summary>
         /// This EntityDraw call already subtracts screen position
         /// <code>position - Main.screenPosition</code>

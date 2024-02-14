@@ -1,11 +1,12 @@
 NPCs: {
 	AmmoSeller: {
-		DescriptionBestiary: Arrives randomly and has good deals on various ammo
+		DescriptionBestiary: Arrives randomly and has good deals on various ammunitions
 		StandardDialogue1: I've got good things on sale stranger
 		StandardDialogue2: Good ammo for cheap
 		StandardDialogue3: Grab it while it's hot
-		Die: "{0} has left in a hurry!"
-		DisplayName: Ammo Seller
+		StandardDialogue4: Time is money, get talking
+		Die: has left in a hurry!
+		DisplayName: Mysterious Stranger
 	}
 }
 
@@ -334,6 +335,7 @@ Projectiles: {
 	ShotgunPellet.DisplayName: Shotgun Pellet
 	ASVALHeld.DisplayName: ASVAL
 	ASVALMagazine.DisplayName: ASVALMagazine
+	MK2ExplosiveNPC.DisplayName: M K2 Explosive N P C
 }
 
 Keybinds.ReloadKey.DisplayName: Reload Key

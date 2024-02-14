@@ -8,11 +8,6 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
 {
     internal class M1Garand : Rifle
     {
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.gunProj[Type] = true;
-        }
-
         public override void SetDefaults()
         {
             Item.knockBack = 4f;
@@ -30,11 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<M1GarandHeld>();
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(255);
+            MoneyCost = 255;
         }
     }
 }

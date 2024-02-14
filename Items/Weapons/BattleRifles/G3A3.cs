@@ -11,11 +11,6 @@ namespace InsurgencyWeapons.Items.Weapons.BattleRifles
     /// </summary>
     internal class G3A3 : BattleRifle
     {
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.gunProj[Type] = true;
-        }
-
         public override void SetDefaults()
         {
             Item.knockBack = 4f;
@@ -33,11 +28,7 @@ namespace InsurgencyWeapons.Items.Weapons.BattleRifles
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<G3A3Held>();
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(335);
+            MoneyCost = 335;
         }
     }
 }

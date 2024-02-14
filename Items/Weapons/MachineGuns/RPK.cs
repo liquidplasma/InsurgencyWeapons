@@ -8,11 +8,6 @@ namespace InsurgencyWeapons.Items.Weapons.MachineGuns
 {
     internal class RPK : LightMachineGun
     {
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.gunProj[Type] = true;
-        }
-
         public override void SetDefaults()
         {
             Item.knockBack = 4f;
@@ -30,11 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.MachineGuns
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<RPKHeld>();
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(485);
+            MoneyCost = 485;
         }
     }
 }

@@ -11,11 +11,6 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
     /// </summary>
     internal class M1014 : Shotgun
     {
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.gunProj[Type] = true;
-        }
-
         public override void SetDefaults()
         {
             Item.knockBack = 6f;
@@ -33,11 +28,7 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<M1014Held>();
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(330);
+            MoneyCost = 330;
         }
     }
 }

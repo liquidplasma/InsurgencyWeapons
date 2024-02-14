@@ -8,11 +8,6 @@ namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
 {
     internal class MP7 : SubMachineGun
     {
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.gunProj[Type] = true;
-        }
-
         public override void SetDefaults()
         {
             Item.knockBack = 4f;
@@ -30,11 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<MP7Held>();
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(315);
+            MoneyCost = 315;
         }
     }
 }

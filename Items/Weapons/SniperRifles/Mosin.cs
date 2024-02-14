@@ -8,11 +8,6 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
 {
     internal class Mosin : SniperRifle
     {
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.gunProj[Type] = true;
-        }
-
         public override void SetDefaults()
         {
             Item.crit = 17;
@@ -31,11 +26,7 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<MosinHeld>();
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(320);
+            MoneyCost = 320;
         }
     }
 }

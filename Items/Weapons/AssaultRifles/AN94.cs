@@ -11,11 +11,6 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
     /// </summary>
     internal class AN94 : AssaultRifle
     {
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.gunProj[Type] = true;
-        }
-
         public override void SetDefaults()
         {
             Item.knockBack = 4f;
@@ -33,11 +28,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<AN94Held>();
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(300);
+            MoneyCost = 300;
         }
     }
 }

@@ -8,11 +8,6 @@ namespace InsurgencyWeapons.Items.Weapons.Carbines
 {
     internal class AKS74U : Carbine
     {
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.gunProj[Type] = true;
-        }
-
         public override void SetDefaults()
         {
             Item.knockBack = 4f;
@@ -30,11 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.Carbines
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<AKS74UHeld>();
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(235);
+            MoneyCost = 235;
         }
     }
 }

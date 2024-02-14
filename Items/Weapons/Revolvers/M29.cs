@@ -8,11 +8,6 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
 {
     internal class M29 : Revolver
     {
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.gunProj[Type] = true;
-        }
-
         public override void SetDefaults()
         {
             Item.knockBack = 4f;
@@ -30,11 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<M29Held>();
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(190);
+            MoneyCost = 190;
         }
     }
 }

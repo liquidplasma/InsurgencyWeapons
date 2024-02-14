@@ -29,7 +29,7 @@ namespace InsurgencyWeapons
         {
             AmmoDisplayUI?.Update(gameTime);
             base.UpdateUI(gameTime);
-        }
+        }      
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {

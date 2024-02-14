@@ -11,11 +11,6 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
     /// </summary>
     internal class AKM : AssaultRifle
     {
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.gunProj[Type] = true;
-        }
-
         public override void SetDefaults()
         {
             Item.knockBack = 4f;
@@ -33,11 +28,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<AKMHeld>();
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(350);
+            MoneyCost = 350;
         }
     }
 }

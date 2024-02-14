@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static InsurgencyWeapons.Helpers.ExtensionMethods;
 
@@ -8,12 +10,15 @@ namespace InsurgencyWeapons.Items
 {
     internal abstract class AmmoItem : ModItem
     {
-        public int Money { get; set; }
+        public int MoneyCost { get; set; }
         public int CraftStack { get; set; }
 
         public override void SetDefaults()
         {
-            Item.value = Money;
+            if (MoneyCost == 0 || CraftStack == 0)
+                throw new ArgumentException("MoneyCost or CraftStack property can't be 0");
+
+            Item.value = MoneyCost;
         }
 
         public override void SetStaticDefaults()
@@ -28,7 +33,7 @@ namespace InsurgencyWeapons.Items
 
         public override void AddRecipes()
         {
-            this.RegisterINS2RecipeAmmo(Money, CraftStack);
+            this.RegisterINS2RecipeAmmo(MoneyCost, CraftStack);
         }
     }
 
@@ -38,6 +43,23 @@ namespace InsurgencyWeapons.Items
     internal abstract class WeaponUtils : ModItem
     {
         public int WeaponHeldProjectile { get; set; }
+        public int MoneyCost { get; set; }
+
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 1;
+            ItemID.Sets.gunProj[Type] = true;
+            base.SetStaticDefaults();
+        }
+
+        public override void SetDefaults()
+        {
+            if (MoneyCost == 0 && this is not Grenade)
+                throw new ArgumentException("MoneyCost property can't be 0");
+
+            Item.value = MoneyCost;
+            base.SetDefaults();
+        }
 
         public override void HoldItem(Player player)
         {
@@ -53,6 +75,12 @@ namespace InsurgencyWeapons.Items
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             return false;
+        }
+
+        public override void AddRecipes()
+        {
+            this.RegisterINS2RecipeWeapon(MoneyCost);
+            base.AddRecipes();
         }
     }
 
