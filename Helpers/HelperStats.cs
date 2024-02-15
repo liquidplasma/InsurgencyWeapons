@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Chat;
 using Terraria.DataStructures;
@@ -25,6 +26,7 @@ namespace InsurgencyWeapons.Helpers
         /// Goes from 0f to 1f slowly, MP friendly (probably?)
         /// </summary>
         public static float GlobalTick => Main.GameUpdateCount % 900 / 900f;
+
         /// <summary>
         /// Returns the ticktime from the seconds
         /// </summary>
@@ -106,7 +108,8 @@ namespace InsurgencyWeapons.Helpers
         }
 
         /// <summary>
-        /// Finds said item type in the player inventory
+        /// Finds said item type in the player inventory.
+        /// Returns null if not found
         /// </summary>
         /// <param name="player"></param>
         /// <param name="type"></param>

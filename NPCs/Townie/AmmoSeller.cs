@@ -172,9 +172,11 @@ namespace InsurgencyWeapons.NPCs.Townie
                 Main.dayTime &&
                 !NPC.AnyNPCs(Type) &&
                 spawnInfo.Player.ZoneOverworldHeight &&
+                !spawnInfo.Player.ZoneCorrupt &&
+                !spawnInfo.Player.ZoneCrimson &&
                 spawnInfo.Player.inventory.Any(item => item.type == ModContent.ItemType<Money>());
 
-            return condition ? 1f : 0f;
+            return condition ? 0.045f : 0f;
         }
 
         public override string GetChat()
@@ -253,6 +255,7 @@ namespace InsurgencyWeapons.NPCs.Townie
         public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
         {
             multiplier = 10f;
+            gravityCorrection = 2f;
             randomOffset = 0.4f;
         }
 

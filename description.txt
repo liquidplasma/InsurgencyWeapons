@@ -55,5 +55,6 @@ This mod is licensed under [url=https://insurgency-support.newworldinteractive.c
 Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
 
 Changelog//
-v0.6.2
-	- Introduced manual reload system, you must bind the key in the configs
+v0.7
+	- Added an NPC that can spawn randomly
+	- Added a keybind to buy ammo for the held weapon anywhere however it costs 20% more money to do so

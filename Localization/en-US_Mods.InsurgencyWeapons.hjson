@@ -338,4 +338,7 @@ Projectiles: {
 	MK2ExplosiveNPC.DisplayName: M K2 Explosive N P C
 }
 
-Keybinds.ReloadKey.DisplayName: Reload Key
+Keybinds: {
+	ReloadKey.DisplayName: Reload Key
+	QuickBuy.DisplayName: Quick Buy
+}

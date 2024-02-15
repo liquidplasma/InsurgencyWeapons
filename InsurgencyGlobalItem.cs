@@ -10,12 +10,12 @@ namespace InsurgencyWeapons
 {
     internal class InsurgencyGlobalItem : GlobalItem
     {
-        private static SoundStyle AmmoNoise => new("InsurgencyWeapons/Sounds/Weapons/Craft/ammo")
+        public static SoundStyle AmmoNoise => new("InsurgencyWeapons/Sounds/Weapons/Craft/ammo")
         {
             MaxInstances = 0
         };
 
-        private static SoundStyle GetWeapon => new("InsurgencyWeapons/Sounds/Weapons/Craft/gunpickup")
+        public static SoundStyle GetWeapon => new("InsurgencyWeapons/Sounds/Weapons/Craft/gunpickup")
         {
             MaxInstances = 0
         };

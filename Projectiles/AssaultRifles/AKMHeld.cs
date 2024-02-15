@@ -84,11 +84,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         }
 
         public override void AI()
-        {
-            Ammo ??= Player.FindItemInInventory(AmmoType);
-            AmmoGL = Player.FindItemInInventory(GrenadeLauncherAmmoType);
-            if (AmmoGL == null)
-                AmmoGL ??= ContentSamples.ItemsByType[GrenadeLauncherAmmoType];
+        {           
 
             ShowAmmoCounter(CurrentAmmo, AmmoType, true, " VOG-25P: ", GrenadeLauncherAmmoType);
             OffsetFromPlayerCenter = 12f;

@@ -329,16 +329,22 @@ namespace InsurgencyWeapons.Projectiles
             Projectile.CheckPlayerActiveAndNotDead(Player);
 
             //Check if ammo is 0 or less then remove it if necessary, since I'm directly reducing stack size
-            if (Ammo != null && Ammo.stack <= 0)
-                Ammo.TurnToAir(true);
-            if (AmmoGL != null && AmmoGL.stack <= 0)
-                AmmoGL.TurnToAir(true);
+            if (Player.HasItem(AmmoType))
+            {
+                Ammo = Player.FindItemInInventory(AmmoType);
+                if (Ammo != null && Ammo.stack <= 0)
+                    Ammo.TurnToAir(true);
+            }
+            if (Player.HasItem(GrenadeLauncherAmmoType))
+            {
+                AmmoGL = Player.FindItemInInventory(GrenadeLauncherAmmoType);
+                if (AmmoGL != null && AmmoGL.stack <= 0)
+                    AmmoGL.TurnToAir(true);
+            }
 
             //Muzzleflash light
-            if (ShotDelay == 1)
-            {
-                Lighting.AddLight(Player.Center, Color.Gold.ToVector3());
-            }
+            if (ShotDelay == 1)            
+                Lighting.AddLight(Player.Center, Color.Gold.ToVector3());            
 
             //Resetting fields
             #region

@@ -68,7 +68,7 @@ namespace InsurgencyWeapons.Items.Weapons.Grenades
                         SoundEngine.PlaySound(Sounds.MK2Throw, player.Center);
 
                         Item.stack--;
-                        Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed;
+                        Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed * 3.5f;
                         int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
                         float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
                         ExtensionMethods.BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, MK2Type, damage, knockback, player.whoAmI);

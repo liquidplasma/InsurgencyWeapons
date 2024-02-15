@@ -25,7 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.Grenades
             Item.height = 32;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.damage = 162;
-            Item.shootSpeed = 6f;
+            Item.shootSpeed = 16f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 0, 1, 5);
@@ -67,7 +67,7 @@ namespace InsurgencyWeapons.Items.Weapons.Grenades
                     case 90:
                         SoundEngine.PlaySound(Sounds.M24StThrow, player.Center);
                         Item.stack--;
-                        Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed;
+                        Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed * 3.5f;
                         int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
                         float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
                         ExtensionMethods.BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, M24StType, damage, knockback, player.whoAmI);

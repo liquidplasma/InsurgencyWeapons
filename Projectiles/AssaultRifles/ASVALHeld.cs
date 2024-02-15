@@ -72,7 +72,6 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
         public override void AI()
         {
-            Ammo ??= Player.FindItemInInventory(AmmoType);
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 14f;
             SpecificWeaponFix = new Vector2(0, 2f);

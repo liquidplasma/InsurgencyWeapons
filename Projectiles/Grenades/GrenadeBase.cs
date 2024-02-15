@@ -15,7 +15,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         /// <summary>
         /// In seconds
         /// </summary>
-        public float FuseTime { get; set; }
+        public int FuseTime { get; set; }
 
         public bool NPCProj { get; set; }
         public bool Moving => Projectile.velocity.Length() >= 0.5f;
@@ -51,7 +51,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             Projectile.tileCollide = true;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
-            Projectile.timeLeft = (int)(FuseTime * 60);
+            Projectile.timeLeft = HelperStats.SecondsToTick(FuseTime);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -77,7 +77,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
                 HitOnce = true;
                 Vector2 oldVel = Projectile.velocity;
                 Projectile.velocity = Projectile.Center.DirectionFrom(target.Center).RotatedByRandom(MathHelper.ToRadians(15)) * oldVel.Length();
-                Projectile.velocity *= 0.7f;
+                Projectile.velocity *= 0.18f;
                 Projectile.netUpdate = true;
             }
             else

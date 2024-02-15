@@ -90,7 +90,6 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
         public override void AI()
         {
-            Ammo ??= Player.FindItemInInventory(AmmoType);
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 0f;
             SpecificWeaponFix = new Vector2(0, 3.5f);

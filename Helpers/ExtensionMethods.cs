@@ -12,9 +12,9 @@ namespace InsurgencyWeapons.Helpers
 {
     internal static class ExtensionMethods
     {
+        public static CombatText CreateCombatText(Player sourcePlayer, Color color, string text) => Main.combatText[CombatText.NewText(sourcePlayer.getRect(), color, text)];
+        public static CombatText CreateCombatText(NPC sourceNPC, Color color, string text) => Main.combatText[CombatText.NewText(sourceNPC.getRect(), color, text)];
 
-
-        
         /// <summary>
         /// This EntityDraw call already subtracts screen position
         /// <code>position - Main.screenPosition</code>

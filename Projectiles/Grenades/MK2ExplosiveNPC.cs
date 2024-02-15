@@ -8,7 +8,7 @@
         {
             Projectile.width = Projectile.height = 16;
             NPCProj = true;
-            FuseTime = 4f;
+            FuseTime = 4;
             base.SetDefaults();
         }
     }

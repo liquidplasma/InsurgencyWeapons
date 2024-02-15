@@ -99,7 +99,7 @@ namespace InsurgencyWeapons
 
         public override void PostUpdate()
         {
-            if (Insurgency.HoldingInsurgencyWeapon(Player) && isActive)
+            if (Player.HoldingInsurgencyWeapon() && isActive)
                 MouseOverFriendlyNPC = OverFriendlyNPC();
             base.PostUpdate();
         }
