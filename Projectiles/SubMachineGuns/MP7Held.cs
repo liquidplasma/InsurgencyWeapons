@@ -2,14 +2,8 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.SubMachineGuns;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.SubMachineGuns;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 {
@@ -26,8 +20,6 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 MagazineTracking.MP7Magazine = value;
             }
         }
-
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mp7/shoot")
         {
@@ -50,7 +42,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
         {
             Projectile.width = 28;
             Projectile.height = 44;
-            MaxAmmo = 40;
+            ClipSize = 40;
             AmmoType = ModContent.ItemType<Bullet4630>();
             isASmallSprite = true;
             base.SetDefaults();
@@ -77,7 +69,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 8f;
             SpecificWeaponFix = new Vector2(0, 2);
-            if (AllowedToFire)
+            if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
@@ -121,16 +113,16 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo = AmmoStackCount;
                         }
                         else
                         {
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo = AmmoStackCount;
                         }
                     }

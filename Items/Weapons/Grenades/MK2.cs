@@ -1,98 +1,19 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Projectiles.Grenades;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Weapons.Grenades
 {
     internal class MK2 : Grenade
     {
-        private int MK2Type => ModContent.ProjectileType<MK2Explosive>();
-        private bool Fired;
-        private int Timer;
-
         public override void SetDefaults()
         {
-            Item.knockBack = 4f;
-            Item.channel = true;
-            Item.useStyle = ItemUseStyleID.Shoot;
-            Item.useAnimation = Item.useTime = 120;
-            Item.width = 10;
-            Item.height = 32;
-            Item.shoot = ProjectileID.PurificationPowder;
+            GrenadeType = ModContent.ProjectileType<MK2Explosive>();
+            MoneyCost = 50;
             Item.damage = 160;
-            Item.shootSpeed = 6f;
-            Item.noMelee = true;
-            Item.noUseGraphic = true;
-            Item.value = Item.sellPrice(0, 0, 1, 5);
-            Item.rare = ItemRarityID.LightRed;
-            Item.maxStack = Item.CommonMaxStack;
-            Item.DamageType = DamageClass.Ranged;
+            Cook = Sounds.MK2Pin;
+            Spoon = Sounds.MK2Spoon;
+            Throw = Sounds.MK2Throw;
             base.SetDefaults();
-        }
-
-        public override void HoldItem(Player player)
-        {
-            if (Item.stack <= 0)
-                Item.TurnToAir();
-
-            Item.useTime = Item.useAnimation = 120;
-
-            if (player.channel && !Fired)
-                Fired = true;
-
-            if (Fired)
-            {
-                if (player.whoAmI == Main.myPlayer)
-                {
-                    int mouseDirection = player.DirectionTo(Main.MouseWorld).X > 0f ? 1 : -1;
-                    player.ChangeDir(mouseDirection);
-                }
-                Timer++;
-                switch (Timer)
-                {
-                    case 10:
-                        SoundEngine.PlaySound(Sounds.MK2Pin, player.Center);
-                        break;
-
-                    case 50:
-                        SoundEngine.PlaySound(Sounds.MK2Spoon, player.Center);
-                        Item.useStyle = ItemUseStyleID.Swing;
-                        break;
-
-                    case 90:
-                        SoundEngine.PlaySound(Sounds.MK2Throw, player.Center);
-
-                        Item.stack--;
-                        Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed * 3.5f;
-                        int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
-                        float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
-                        ExtensionMethods.BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, MK2Type, damage, knockback, player.whoAmI);
-
-                        break;
-                }
-            }
-            if (!player.channel && Fired && Timer > Item.useTime)
-            {
-                Timer = 0;
-                Fired = false;
-                Item.useStyle = ItemUseStyleID.Shoot;
-            }
-            base.HoldItem(player);
-        }
-
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            return false;
-        }
-
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeAmmo(50);
         }
     }
 }

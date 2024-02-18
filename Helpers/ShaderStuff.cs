@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
-
-namespace InsurgencyWeapons.Helpers
+﻿namespace InsurgencyWeapons.Helpers
 {
     internal static class ShaderStuff
     {

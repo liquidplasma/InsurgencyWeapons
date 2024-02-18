@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria.GameContent.UI;
+﻿using Terraria.GameContent.UI;
 
 namespace InsurgencyWeapons.Currency
 {

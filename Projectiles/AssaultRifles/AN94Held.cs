@@ -2,14 +2,8 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.AssaultRifles;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.AssaultRifles;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.AssaultRifles
 {
@@ -26,8 +20,6 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 MagazineTracking.AN94Magazine = value;
             }
         }
-
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/an94/shoot")
         {
@@ -52,7 +44,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         {
             Projectile.width = 28;
             Projectile.height = 82;
-            MaxAmmo = 30;
+            ClipSize = 30;
             AmmoType = ModContent.ItemType<Bullet545>();
             base.SetDefaults();
         }
@@ -82,7 +74,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             if (!Player.channel)
                 AN94Double = false;
 
-            if (AllowedToFire)
+            if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
@@ -93,9 +85,9 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     AN94Double = true;
                     SoundEngine.PlaySound(Fire, Projectile.Center);
                     CurrentAmmo--;
-                    Shoot(1, 3);
+                    Shoot(1, 6);
                 }
-                Shoot(1, 3);
+                Shoot(1, 6);
             }
 
             if (CanReload() && CurrentAmmo == 0 && !ReloadStarted)
@@ -134,16 +126,16 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount,Ammo.type);
                             CurrentAmmo = AmmoStackCount;
                         }
                         else
                         {
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo = AmmoStackCount;
                         }
                     }
@@ -157,15 +149,14 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     CurrentAmmo = 0;
                     if (!ManualReload)
                     {
-                        DropMagazine(ModContent.ProjectileType<ASVALMagazine>());
+                        DropMagazine(ModContent.ProjectileType<AN94Magazine>());
                     }
                     break;
             }
 
-            if (CurrentAmmo > 0 && Player.channel)
-            {
+            if (CurrentAmmo > 0 && Player.channel)            
                 Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
-            }
+            
 
             if (HeldItem.type != ModContent.ItemType<AN94>())
                 Projectile.Kill();

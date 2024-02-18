@@ -1,3 +1,14 @@
+This mod adds "realistic" guns with "realistic" mechanics like actual magazine size and reloading. 
+All of the guns are held projectiles so if you use some mod that changes how projectiles work you might have some unwanted bugs.
+
+All enemies now drop "money" at a fixed 50% chance, with money you can craft the vending machines for weapons and ammo.
+Bind the key in the config screen if you want the ability to manually reload the guns. You can also buy ammo anywhere but it costs 20% more to do so when compared to buying the ammo at the vending machine.
+
+This mod is a port to tModLoader of [url=https://github.com/KernCore91/-SC-Insurgency-Weapons-Project] Insurgency Weapons Project [/url]
+This mod is licensed under [url=https://insurgency-support.newworldinteractive.com/hc/en-us/articles/360046247492-End-User-License-Agreement] New World Interactive End-User License Agreement [/url]
+
+Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
+
 [h1]Weapons in the pack so far:[/h1]
 
 	[b]-Assault rifles-[/b]
@@ -46,15 +57,8 @@
 		PPSh-41 7.62x25mm
 		H&K MP7 4.6x30mm
 
-All enemies now drop "money" at a fixed 50% chance, with money you can craft the vending machines for weapons and ammo.
-Bind the key in the config screen if you want the ability to manually reload the guns.
-
-This mod is a port to tModLoader of [url=https://github.com/KernCore91/-SC-Insurgency-Weapons-Project] Insurgency Weapons Project [/url]
-This mod is licensed under [url=https://insurgency-support.newworldinteractive.com/hc/en-us/articles/360046247492-End-User-License-Agreement] New World Interactive End-User License Agreement [/url]
-
-Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
-
 Changelog//
 v0.7
-	- Added an NPC that can spawn randomly
+	- Added an NPC that can spawn randomly and can sell ammo at an discount
 	- Added a keybind to buy ammo for the held weapon anywhere however it costs 20% more money to do so
+[quote=tModLoader]Developed By marviN[/quote]

@@ -1,14 +1,8 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Revolvers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Revolvers
 {
@@ -27,7 +21,6 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
         }
 
         private int FireDelay { get; set; }
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/python/shoot")
         {
@@ -55,7 +48,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
         {
             Projectile.width = 18;
             Projectile.height = 36;
-            MaxAmmo = 6;
+            ClipSize = 6;
             AmmoType = ModContent.ItemType<Bullet357>();
             isPistol = true;
             base.SetDefaults();
@@ -97,7 +90,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
             else
                 FireDelay = 0;
 
-            if (AllowedToFire && !UnderAlternateFireCoolDown && !SemiAuto && FireDelay >= 8)
+            if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && !SemiAuto && FireDelay >= 8)
             {
                 SemiAuto = true;
                 ShotDelay = FireDelay = 0;
@@ -139,19 +132,19 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (CanReload() && !ManualReload)
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
-                        Ammo.stack -= AmmoStackCount;
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                         CurrentAmmo = AmmoStackCount;
                     }
 
-                    if (CurrentAmmo < MaxAmmo && CanReload() && ManualReload)
+                    if (CurrentAmmo < ClipSize && CanReload() && ManualReload)
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         DropCasingManually();
-                        Ammo.stack--;
+                        Player.ConsumeMultiple(1, Ammo.type);
                         CurrentAmmo++;
                         ReloadTimer = 170;
-                        if (CurrentAmmo == MaxAmmo)
+                        if (CurrentAmmo == ClipSize)
                             ReloadTimer = 120;
                     }
 

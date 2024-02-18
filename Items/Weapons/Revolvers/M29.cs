@@ -1,8 +1,4 @@
-﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Projectiles.Revolvers;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using InsurgencyWeapons.Projectiles.Revolvers;
 
 namespace InsurgencyWeapons.Items.Weapons.Revolvers
 {

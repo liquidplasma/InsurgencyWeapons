@@ -1,14 +1,8 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Revolvers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Revolvers
 {
@@ -25,8 +19,6 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 MagazineTracking.M29Cylinder = value;
             }
         }
-
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m29/shoot")
         {
@@ -51,7 +43,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
         {
             Projectile.width = 20;
             Projectile.height = 36;
-            MaxAmmo = 6;
+            ClipSize = 6;
             AmmoType = ModContent.ItemType<Bullet44>();
             isPistol = true;
             base.SetDefaults();
@@ -78,7 +70,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
             OffsetFromPlayerCenter = 9f;
             SpecificWeaponFix = new Vector2(0, 0);
 
-            if (AllowedToFire && !UnderAlternateFireCoolDown && BoltActionTimer == 0)
+            if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && BoltActionTimer == 0)
             {
                 BoltActionTimer = 60;
                 ShotDelay = 0;
@@ -116,13 +108,13 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     break;
 
                 case 70:
-                    if (CurrentAmmo < MaxAmmo && CanReload())
+                    if (CurrentAmmo < ClipSize && CanReload())
                     {
                         if (ManualReload)
                             DropCasingManually();
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         AmmoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 1);
-                        Ammo.stack -= AmmoStackCount;
+                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                         CurrentAmmo += AmmoStackCount;
                         ReloadTimer = 100;
                     }

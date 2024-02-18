@@ -1,8 +1,4 @@
-﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Projectiles.Shotguns;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using InsurgencyWeapons.Projectiles.Shotguns;
 
 namespace InsurgencyWeapons.Items.Weapons.Shotguns
 {

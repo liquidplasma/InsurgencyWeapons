@@ -109,7 +109,11 @@ Items: {
 
 	RGO: {
 		DisplayName: RGO Grenade
-		Tooltip: ""
+		Tooltip:
+			'''
+			Explodes on contact
+			Will not explode if contact is made too close
+			'''
 	}
 
 	Bullet357: {

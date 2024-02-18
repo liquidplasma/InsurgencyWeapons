@@ -1,14 +1,8 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Rifles;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Rifles
 {
@@ -25,8 +19,6 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 MagazineTracking.SVTMagazine = value;
             }
         }
-
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/svt40/shoot")
         {
@@ -51,7 +43,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
         {
             Projectile.width = 14;
             Projectile.height = 82;
-            MaxAmmo = 10;
+            ClipSize = 10;
             AmmoType = ModContent.ItemType<Bullet76254R>();
             base.SetDefaults();
         }
@@ -77,7 +69,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             OffsetFromPlayerCenter = 14f;
             SpecificWeaponFix = new Vector2(0, 0);
 
-            if (AllowedToFire && !UnderAlternateFireCoolDown)
+            if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown)
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
@@ -120,8 +112,8 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
-                        Ammo.stack -= AmmoStackCount;
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                         CurrentAmmo = AmmoStackCount;
                     }
                     break;

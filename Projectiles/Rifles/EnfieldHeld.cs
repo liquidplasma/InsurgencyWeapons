@@ -2,14 +2,8 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Rifles;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Rifles
 {
@@ -26,8 +20,6 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 MagazineTracking.EnfieldMagazine = value;
             }
         }
-
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/enfield/shoot")
         {
@@ -70,7 +62,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
         {
             Projectile.width = 18;
             Projectile.height = 80;
-            MaxAmmo = 10;
+            ClipSize = 10;
             AmmoType = ModContent.ItemType<Bullet303>();
             base.SetDefaults();
         }
@@ -96,7 +88,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             OffsetFromPlayerCenter = 6f;
             SpecificWeaponFix = new Vector2(0, 0);
 
-            if (AllowedToFire && !UnderAlternateFireCoolDown && BoltActionTimer == 0)
+            if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && BoltActionTimer == 0)
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
@@ -137,13 +129,13 @@ namespace InsurgencyWeapons.Projectiles.Rifles
 
                 case 80:
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
-                    if (CurrentAmmo < MaxAmmo)
+                    if (CurrentAmmo < ClipSize)
                     {
                         if (CurrentAmmo <= 5 && CanReload(5))
                         {
                             SoundEngine.PlaySound(MagIn, Projectile.Center);
                             AmmoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 5);
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo += AmmoStackCount;
                             DropMagazine(ModContent.ProjectileType<EnfieldBlock>());
                             ReloadTimer = 150;
@@ -152,7 +144,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                         {
                             SoundEngine.PlaySound(Insert, Projectile.Center);
                             AmmoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 1);
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo += AmmoStackCount;
                             ReloadTimer = 120;
                         }

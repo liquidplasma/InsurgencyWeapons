@@ -1,11 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Other
 {

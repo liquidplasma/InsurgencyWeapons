@@ -1,6 +1,4 @@
-﻿using Terraria;
-
-namespace InsurgencyWeapons.Projectiles.WeaponMagazines.SubMachineGuns
+﻿namespace InsurgencyWeapons.Projectiles.WeaponMagazines.SubMachineGuns
 {
     internal class PPSH41Drum : MagazineBase
     {

@@ -1,16 +1,18 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
-using static InsurgencyWeapons.Helpers.ExtensionMethods;
+﻿using InsurgencyWeapons.Helpers;
+using Terraria.Utilities;
 
 namespace InsurgencyWeapons.Items
 {
     internal abstract class AmmoItem : ModItem
     {
+        /// <summary>
+        /// How much money it costs
+        /// </summary>
         public int MoneyCost { get; set; }
+
+        /// <summary>
+        /// How much to get when crafting
+        /// </summary>
         public int CraftStack { get; set; }
 
         public override void SetDefaults()
@@ -72,16 +74,9 @@ namespace InsurgencyWeapons.Items
             base.HoldItem(player);
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            return false;
-        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) => false;
 
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeWeapon(MoneyCost);
-            base.AddRecipes();
-        }
+        public override void AddRecipes() => this.RegisterINS2RecipeWeapon(MoneyCost);
     }
 
     internal abstract class AssaultRifle : WeaponUtils
@@ -119,10 +114,94 @@ namespace InsurgencyWeapons.Items
 
     internal abstract class Grenade : WeaponUtils
     {
+        public int GrenadeType { get; set; }
+
+        public SoundStyle
+            Cook,
+            Spoon,
+            Throw;
+
+        public bool Fired;
+        public int Timer;
+
         public override void SetDefaults()
         {
+            if (GrenadeType == 0)
+                throw new ArgumentException("GrenadeType can't be 0");
+
             WeaponHeldProjectile = 0;
+            Item.knockBack = 8f;
+            Item.channel = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useAnimation = Item.useTime = 120;
+            Item.width = 10;
+            Item.height = 32;
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.shootSpeed = 6f;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.value = Item.sellPrice(0, 0, 1, 5);
+            Item.rare = ItemRarityID.LightRed;
+            Item.maxStack = Item.CommonMaxStack;
+            Item.DamageType = DamageClass.Ranged;
             base.SetDefaults();
         }
+
+        public override bool? PrefixChance(int pre, UnifiedRandom rand)
+        {
+            if (pre == -3 || pre == -1)
+                return false;
+            return base.PrefixChance(pre, rand);
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (Item.stack <= 0)
+                Item.TurnToAir();
+
+            if (player.channel && !Fired)
+                Fired = true;
+
+            if (Fired)
+            {
+                if (player.whoAmI == Main.myPlayer)
+                {
+                    int mouseDirection = player.DirectionTo(Main.MouseWorld).X > 0f ? 1 : -1;
+                    player.ChangeDir(mouseDirection);
+                }
+                Timer++;
+                switch (Timer)
+                {
+                    case 10:
+                        SoundEngine.PlaySound(Cook, player.Center);
+                        break;
+
+                    case 50:
+                        SoundEngine.PlaySound(Spoon, player.Center);
+                        Item.useStyle = ItemUseStyleID.Swing;
+                        break;
+
+                    case 90:
+                        SoundEngine.PlaySound(Throw, player.Center);
+                        Item.stack--;
+                        Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed * 3.5f;
+                        int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
+                        float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
+                        BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, GrenadeType, damage, knockback, player.whoAmI);
+                        break;
+                }
+            }
+            if (!player.channel && Fired && Timer > Item.useTime)
+            {
+                Timer = 0;
+                Fired = false;
+                Item.useStyle = ItemUseStyleID.Shoot;
+            }
+            base.HoldItem(player);
+        }
+
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) => false;
+
+        public override void AddRecipes() => this.RegisterINS2RecipeAmmo(MoneyCost);
     }
 }

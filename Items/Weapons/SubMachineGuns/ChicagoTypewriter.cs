@@ -1,8 +1,4 @@
-﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Projectiles.SubMachineGuns;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using InsurgencyWeapons.Projectiles.SubMachineGuns;
 
 namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
 {

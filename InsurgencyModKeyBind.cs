@@ -1,6 +1,4 @@
-﻿using Terraria.ModLoader;
-
-namespace InsurgencyWeapons
+﻿namespace InsurgencyWeapons
 {
     internal class InsurgencyModKeyBind : ModSystem
     {

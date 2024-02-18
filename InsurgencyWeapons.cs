@@ -1,10 +1,7 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Other;
-using Terraria;
 using Terraria.GameContent.UI;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons
 {

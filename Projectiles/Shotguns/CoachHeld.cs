@@ -2,14 +2,8 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Shotguns;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Shotguns
 {
@@ -32,8 +26,6 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             Ready,
             Open
         }
-
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/coach/shoot")
         {
@@ -67,7 +59,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         {
             Projectile.width = 14;
             Projectile.height = 72;
-            MaxAmmo = 2;
+            ClipSize = 2;
             AmmoType = ModContent.ItemType<ShellBuck_Ball>();
             base.SetDefaults();
         }
@@ -97,7 +89,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 SemiAuto = false;
 
             bool CanFireBothBarrels = MouseRightPressed && CanFire && CurrentAmmo == 2 && ReloadTimer == 0;
-            if ((AllowedToFire || CanFireBothBarrels) && !UnderAlternateFireCoolDown && !SemiAuto)
+            if ((AllowedToFire(CurrentAmmo) || CanFireBothBarrels) && !UnderAlternateFireCoolDown && !SemiAuto)
             {
                 SemiAuto = true;
                 ShotDelay = 0;
@@ -160,7 +152,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-                        Ammo.stack -= AmmoStackCount;
+                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                         CurrentAmmo += AmmoStackCount;
                     }
                     break;
@@ -170,7 +162,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-                        Ammo.stack -= AmmoStackCount;
+                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                         CurrentAmmo += AmmoStackCount;
                     }
                     break;

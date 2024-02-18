@@ -1,6 +1,4 @@
-﻿using Terraria;
-
-namespace InsurgencyWeapons.Projectiles.Grenades
+﻿namespace InsurgencyWeapons.Projectiles.Grenades
 {
     internal class M24StExplosive : GrenadeBase
     {

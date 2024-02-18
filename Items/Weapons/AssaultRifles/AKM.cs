@@ -1,8 +1,4 @@
-﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Projectiles.AssaultRifles;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using InsurgencyWeapons.Projectiles.AssaultRifles;
 
 namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {

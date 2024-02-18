@@ -2,14 +2,8 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Rifles;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Rifles
 {
@@ -26,8 +20,6 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 MagazineTracking.GarandMagazine = value;
             }
         }
-
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/garand/shoot")
         {
@@ -58,7 +50,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
         {
             Projectile.width = 16;
             Projectile.height = 68;
-            MaxAmmo = 8;
+            ClipSize = 8;
             AmmoType = ModContent.ItemType<Bullet3006>();
             base.SetDefaults();
         }
@@ -90,7 +82,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 AutoAttack = HeldItem.useTime * 2;
             }
 
-            if (AllowedToFire && !UnderAlternateFireCoolDown && !SemiAuto)
+            if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && !SemiAuto)
             {
                 SemiAuto = true;
                 ShotDelay = 0;
@@ -137,8 +129,8 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
-                        Ammo.stack -= AmmoStackCount;
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                         CurrentAmmo = AmmoStackCount;
                     }
                     break;

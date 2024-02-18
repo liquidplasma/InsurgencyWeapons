@@ -1,8 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace InsurgencyWeapons
@@ -29,7 +26,7 @@ namespace InsurgencyWeapons
         {
             AmmoDisplayUI?.Update(gameTime);
             base.UpdateUI(gameTime);
-        }      
+        }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {

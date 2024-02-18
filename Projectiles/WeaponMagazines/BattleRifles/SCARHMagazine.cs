@@ -1,6 +1,4 @@
-﻿using Terraria;
-
-namespace InsurgencyWeapons.Projectiles.WeaponMagazines.BattleRifles
+﻿namespace InsurgencyWeapons.Projectiles.WeaponMagazines.BattleRifles
 {
     internal class SCARHMagazine : MagazineBase
     {

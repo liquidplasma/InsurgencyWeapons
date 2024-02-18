@@ -1,12 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria.Chat;
-using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Helpers
 {
@@ -105,6 +99,30 @@ namespace InsurgencyWeapons.Helpers
                 }
             }
             return amount;
+        }
+
+        /// <summary>
+        /// Finds said item type in the player inventory.
+        /// Returns null if not found
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Item FindItemInInventory(this Player player, int type, int minStack)
+        {
+            Item Item = null;
+            for (int i = 0; i < player.inventory.Length; i++)
+            {
+                Item p = player.inventory[i];
+                if (p.stack < minStack)
+                    continue;
+
+                if (p != null && !p.IsAir && p.active && p.type == type)
+                {
+                    Item = p;
+                }
+            }
+            return Item;
         }
 
         /// <summary>

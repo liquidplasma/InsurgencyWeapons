@@ -1,9 +1,4 @@
 ﻿using InsurgencyWeapons.Helpers;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.WeaponExtras
 {
@@ -53,7 +48,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
         public override void AI()
         {
             Projectile.FaceForward();
-            if (Projectile.timeLeft < 3)
+            if (Projectile.timeLeft < 6)
             {
                 Projectile.Resize(384, 384);
                 Projectile.velocity *= 0f;
@@ -76,7 +71,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
             }
             if (State == (int)Exploding.Ready && !Exploded)
             {
-                Projectile.timeLeft = 3;
+                Projectile.timeLeft = 6;
                 Exploded = true;
             }
         }
@@ -96,7 +91,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
                 {
                     Dodgeable = true,
                     HitDirection = Projectile.Center.DirectionTo(Player.Center).X > 0f ? 1 : -1,
-                    Damage = (int)(Projectile.damage * 0.45f),
+                    Damage = (int)(Projectile.damage * 0.9f),
                     DamageSource = PlayerDeathReason.ByProjectile(Player.whoAmI, Projectile.identity),
                     Knockback = 6f
                 };

@@ -1,13 +1,7 @@
 ﻿using InsurgencyWeapons.Gores.Casing;
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
-using Microsoft.Xna.Framework;
 using System.IO;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
-using static InsurgencyWeapons.Helpers.ExtensionMethods;
 
 namespace InsurgencyWeapons.Projectiles
 {
@@ -39,9 +33,9 @@ namespace InsurgencyWeapons.Projectiles
         public Item AmmoGL { get; set; }
 
         /// <summary>
-        /// Max amount of ammo per reload, should be assigned in set defaults
+        /// Max amount of ammo per reload
         /// </summary>
-        public int MaxAmmo { get; set; }
+        public int ClipSize { get; set; }
 
         /// <summary>
         /// Used for weapon spread
@@ -94,9 +88,11 @@ namespace InsurgencyWeapons.Projectiles
         public bool ManualReload { get; set; }
         public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
 
-        public bool CanManualReload(int CurrentAmmo) => CurrentAmmo != 0 && CurrentAmmo != MaxAmmo + 1;
+        public bool CanManualReload(int CurrentAmmo) => CurrentAmmo != 0 && CurrentAmmo != ClipSize + 1;
 
-        public bool CanReload(int minAmmo = 0) => Ammo != null && Ammo.stack > minAmmo;
+        public bool AllowedToFire(int CurrentAmmo) => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
+
+        public bool CanReload(int minAmmo = 0) => Player.HasItem(Ammo.type) && Player.CountItem(Ammo.type) > minAmmo;
 
         private bool underAlternateFireCoolDown;
 
@@ -295,6 +291,9 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void SetDefaults()
         {
+            if (ClipSize == 0)
+                throw new ArgumentException("ClipSize property can't be 0");
+
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 300;
@@ -343,8 +342,8 @@ namespace InsurgencyWeapons.Projectiles
             }
 
             //Muzzleflash light
-            if (ShotDelay == 1)            
-                Lighting.AddLight(Player.Center, Color.Gold.ToVector3());            
+            if (ShotDelay == 1)
+                Lighting.AddLight(Player.Center, Color.Gold.ToVector3());
 
             //Resetting fields
             #region
@@ -441,7 +440,7 @@ namespace InsurgencyWeapons.Projectiles
                     Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
 
                 Projectile.frame = 0;
-            }
+            }            
             #endregion
         }
 

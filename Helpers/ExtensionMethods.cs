@@ -1,18 +1,26 @@
 ﻿using InsurgencyWeapons.VendingMachines.Tiles;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Helpers
 {
     internal static class ExtensionMethods
     {
+        public static void ConsumeMultiple(this Player player, int amountToConsume, int type)
+        {
+            if (amountToConsume == 1)
+            {
+                player.ConsumeItem(type);
+                return;
+            }
+            for (int i = 0; i < amountToConsume; i++)
+            {
+                player.ConsumeItem(type);
+            }
+        }
+
         public static CombatText CreateCombatText(Player sourcePlayer, Color color, string text) => Main.combatText[CombatText.NewText(sourcePlayer.getRect(), color, text)];
+
         public static CombatText CreateCombatText(NPC sourceNPC, Color color, string text) => Main.combatText[CombatText.NewText(sourceNPC.getRect(), color, text)];
 
         /// <summary>

@@ -1,7 +1,4 @@
-﻿using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.ModLoader;
+﻿using Terraria.GameContent;
 
 namespace InsurgencyWeapons.Gores.Casing
 {

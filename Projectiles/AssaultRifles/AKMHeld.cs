@@ -3,15 +3,8 @@ using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.AssaultRifles;
 using InsurgencyWeapons.Projectiles.WeaponExtras;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.AssaultRifles;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.AssaultRifles
 {
@@ -30,7 +23,6 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         }
 
         public int VOGDamage = 0;
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/akm/shoot")
         {
@@ -60,7 +52,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         {
             Projectile.width = 24;
             Projectile.height = 74;
-            MaxAmmo = 30;
+            ClipSize = 30;
             AmmoType = ModContent.ItemType<Bullet762>();
             GrenadeLauncherAmmoType = ModContent.ItemType<VOG_25P>();
             HasUnderBarrelGrenadeLauncer = true;
@@ -84,12 +76,11 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         }
 
         public override void AI()
-        {           
-
+        {
             ShowAmmoCounter(CurrentAmmo, AmmoType, true, " VOG-25P: ", GrenadeLauncherAmmoType);
             OffsetFromPlayerCenter = 12f;
             SpecificWeaponFix = new Vector2(0, 2f);
-            if (AllowedToFire && !UnderAlternateFireCoolDown)
+            if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown)
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
@@ -156,16 +147,16 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MaxAmmo);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo = AmmoStackCount;
                         }
                         else
                         {
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo = AmmoStackCount;
                         }
                     }

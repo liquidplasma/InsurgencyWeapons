@@ -1,8 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
-using System;
-using Terraria;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons
 {
@@ -110,6 +107,7 @@ namespace InsurgencyWeapons
             AKMMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet762>()), 0, 30);
             STGMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet792>()), 0, 30);
             AN94Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet545>()), 0, 30);
+            ASValMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet939>()), 0, 20);
 
             //Battle rifles
             SCARHMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76251>()), 0, 20);

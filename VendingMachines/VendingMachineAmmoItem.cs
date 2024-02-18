@@ -1,10 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.VendingMachines.Tiles;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.VendingMachines
 {

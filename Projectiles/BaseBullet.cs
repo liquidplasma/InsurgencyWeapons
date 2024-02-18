@@ -1,11 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.DataStructures;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles
 {

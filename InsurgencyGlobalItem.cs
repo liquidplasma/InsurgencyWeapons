@@ -1,10 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons
 {
@@ -35,10 +30,9 @@ namespace InsurgencyWeapons
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
-            if (InsurgencyModConfig.Instance.DamageScaling && Insurgency.AllWeapons.Contains(item.type))
-            {
+            if (InsurgencyModConfig.Instance.DamageScaling && (Insurgency.AllWeapons.Contains(item.type) || Insurgency.Grenades.Contains(item.type)))
                 damage *= Insurgency.WeaponScaling();
-            }
+
             base.ModifyWeaponDamage(item, player, ref damage);
         }
 
@@ -53,9 +47,7 @@ namespace InsurgencyWeapons
                 }
 
                 if (Insurgency.AllWeapons.Contains(item.type))
-                {
                     SoundEngine.PlaySound(GetWeapon, Main.LocalPlayer.Center);
-                }
             }
         }
     }

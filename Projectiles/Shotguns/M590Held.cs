@@ -2,14 +2,8 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Shotguns;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.Shotguns
 {
@@ -26,8 +20,6 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 MagazineTracking.M590Tube = value;
             }
         }
-
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m590/shoot")
         {
@@ -68,7 +60,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         {
             Projectile.width = 20;
             Projectile.height = 78;
-            MaxAmmo = 8;
+            ClipSize = 8;
             AmmoType = ModContent.ItemType<TwelveGauge>();
             base.SetDefaults();
         }
@@ -94,7 +86,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             OffsetFromPlayerCenter = 0f;
             SpecificWeaponFix = new Vector2(0, 2f);
 
-            if (AllowedToFire && !UnderAlternateFireCoolDown && PumpActionTimer == 0)
+            if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && PumpActionTimer == 0)
             {
                 CurrentAmmo--;
                 if (CurrentAmmo != 0)
@@ -121,7 +113,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MaxAmmo)
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != ClipSize)
             {
                 ManualReload = true;
                 ReloadStarted = true;
@@ -136,13 +128,13 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     break;
 
                 case 40:
-                    if (CurrentAmmo < MaxAmmo)
+                    if (CurrentAmmo < ClipSize)
                     {
                         if (Ammo.stack > 0)
                         {
                             SoundEngine.PlaySound(Insert, Projectile.Center);
                             AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo += AmmoStackCount;
                             ReloadTimer = 70;
                         }
@@ -156,14 +148,14 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     break;
 
                 case 160:
-                    if (!ManualReload && CurrentAmmo < MaxAmmo)
+                    if (!ManualReload && CurrentAmmo < ClipSize)
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         if (Ammo.stack > 0)
                         {
                             SoundEngine.PlaySound(Insert, Projectile.Center);
                             AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo += AmmoStackCount;
                         }
                     }

@@ -1,11 +1,8 @@
 ﻿using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Weapons.Revolvers;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using Terraria;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons
 {

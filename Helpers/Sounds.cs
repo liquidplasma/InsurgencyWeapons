@@ -1,6 +1,4 @@
-﻿using Terraria.Audio;
-
-namespace InsurgencyWeapons.Helpers
+﻿namespace InsurgencyWeapons.Helpers
 {
     internal static class Sounds
     {

@@ -1,8 +1,6 @@
 ﻿using InsurgencyWeapons.Items.Other;
 using InsurgencyWeapons.Projectiles;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Helpers
 {

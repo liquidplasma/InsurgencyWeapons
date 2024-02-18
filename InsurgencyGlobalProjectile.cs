@@ -1,11 +1,8 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Projectiles.WeaponMagazines;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
-using Terraria;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons
 {

@@ -1,14 +1,8 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.SniperRifles;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.IO;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Projectiles.SniperRifles
 {
@@ -25,8 +19,6 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                 MagazineTracking.MosinBox = value;
             }
         }
-
-        private bool AllowedToFire => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
         private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mosin/shoot")
         {
@@ -66,7 +58,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
         {
             Projectile.width = 22;
             Projectile.height = 80;
-            MaxAmmo = 5;
+            ClipSize = 5;
             AmmoType = ModContent.ItemType<Bullet76254R>();
             base.SetDefaults();
         }
@@ -94,7 +86,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
             if (!Player.channel)
                 SemiAuto = false;
 
-            if (AllowedToFire && !UnderAlternateFireCoolDown && !SemiAuto && BoltActionTimer == 0)
+            if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && !SemiAuto && BoltActionTimer == 0)
             {
                 SemiAuto = true;
                 ShotDelay = 0;
@@ -123,7 +115,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MaxAmmo)
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != ClipSize)
             {
                 ManualReload = true;
                 ReloadStarted = true;
@@ -144,13 +136,13 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
 
                 case 20:
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    if (CurrentAmmo < MaxAmmo)
+                    if (CurrentAmmo < ClipSize)
                     {
                         if (CanReload())
                         {
                             SoundEngine.PlaySound(Insert, Projectile.Center);
                             AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-                            Ammo.stack -= AmmoStackCount;
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo += AmmoStackCount;
                             ReloadTimer = 60;
                         }

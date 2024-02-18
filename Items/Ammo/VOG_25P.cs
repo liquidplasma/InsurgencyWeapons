@@ -1,7 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
 
 namespace InsurgencyWeapons.Items.Ammo
 {
