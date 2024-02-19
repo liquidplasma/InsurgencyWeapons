@@ -1,3 +1,5 @@
+![Logo](https://raw.githubusercontent.com/liquidplasma/InsurgencyWeapons/main/logo.jpeg)
+
 # Insurgency Weapons
 
 This mod adds "realistic" guns with "realistic" mechanics like actual magazine size and reloading. 
