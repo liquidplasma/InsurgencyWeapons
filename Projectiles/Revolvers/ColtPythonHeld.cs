@@ -6,7 +6,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Revolvers
 {
-    internal class ColtPythonHeld : WeaponBase
+    public class ColtPythonHeld : WeaponBase
     {
         public int CurrentAmmo
         {

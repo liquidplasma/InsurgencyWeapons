@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.Revolvers
 {
-    internal class M29 : Revolver
+    public class M29 : Revolver
     {
         public override void SetDefaults()
         {

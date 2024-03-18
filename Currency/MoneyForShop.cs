@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Currency
 {
-    internal class MoneyForShop : CustomCurrencySingleCoin
+    public class MoneyForShop : CustomCurrencySingleCoin
     {
         public MoneyForShop(int coinItemID, long currencyCap, string CurrencyTextKey) : base(coinItemID, currencyCap)
         {

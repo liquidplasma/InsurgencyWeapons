@@ -7,7 +7,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 {
-    internal class ChicagoTypewriterHeld : WeaponBase
+    public class ChicagoTypewriterHeld : WeaponBase
     {
         public int CurrentAmmo
         {

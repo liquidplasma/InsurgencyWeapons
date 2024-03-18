@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.MachineGuns
 {
-    internal class M60 : LightMachineGun
+    public class M60 : LightMachineGun
     {
         public override void SetDefaults()
         {

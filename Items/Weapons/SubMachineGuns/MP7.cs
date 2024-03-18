@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
 {
-    internal class MP7 : SubMachineGun
+    public class MP7 : SubMachineGun
     {
         public override void SetDefaults()
         {

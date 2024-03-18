@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
     /// <summary>
     /// Coach Gun Buck and Ball
     /// </summary>
-    internal class Coach : Shotgun
+    public class Coach : Shotgun
     {
         public override void SetDefaults()
         {

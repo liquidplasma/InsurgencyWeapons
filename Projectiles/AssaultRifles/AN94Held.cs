@@ -7,7 +7,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.AssaultRifles
 {
-    internal class AN94Held : WeaponBase
+    public class AN94Held : WeaponBase
     {
         public int CurrentAmmo
         {
@@ -130,7 +130,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                         if (ManualReload)
                         {
                             AmmoStackCount++;
-                            Player.ConsumeMultiple(AmmoStackCount,Ammo.type);
+                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo = AmmoStackCount;
                         }
                         else
@@ -154,9 +154,8 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     break;
             }
 
-            if (CurrentAmmo > 0 && Player.channel)            
+            if (CurrentAmmo > 0 && Player.channel)
                 Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
-            
 
             if (HeldItem.type != ModContent.ItemType<AN94>())
                 Projectile.Kill();

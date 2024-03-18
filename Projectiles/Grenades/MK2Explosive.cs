@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.Grenades
 {
-    internal class MK2Explosive : GrenadeBase
+    public class MK2Explosive : GrenadeBase
     {
         public override void SetDefaults()
         {

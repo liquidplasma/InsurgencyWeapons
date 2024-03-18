@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.BattleRifles
 {
-    internal class SCARH : BattleRifle
+    public class SCARH : BattleRifle
     {
         public override void SetDefaults()
         {

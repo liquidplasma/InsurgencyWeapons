@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Gores.Casing
 {
-    internal class ShellBuckBallGore : BaseGore
+    public class ShellBuckBallGore : BaseGore
     {
     }
 }

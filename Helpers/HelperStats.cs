@@ -4,7 +4,7 @@ using Terraria.Localization;
 
 namespace InsurgencyWeapons.Helpers
 {
-    internal static class HelperStats
+    public static class HelperStats
     {
         /// <summary>
         /// Explosion Smoke

@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.SniperRifles
 {
-    internal class M40A1 : SniperRifle
+    public class M40A1 : SniperRifle
     {
         public override void SetDefaults()
         {

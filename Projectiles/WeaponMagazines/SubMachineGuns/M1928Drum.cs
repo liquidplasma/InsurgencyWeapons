@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.WeaponMagazines.SubMachineGuns
 {
-    internal class M1928Drum : MagazineBase
+    public class M1928Drum : MagazineBase
     {
         public override void SetDefaults()
         {

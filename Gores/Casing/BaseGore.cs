@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Gores.Casing
 {
-    internal abstract class BaseGore : ModGore
+    public abstract class BaseGore : ModGore
     {
         public override void SetStaticDefaults()
         {

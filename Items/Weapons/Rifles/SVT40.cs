@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
     /// <summary>
     /// SVT-40 7.62x54mmR
     /// </summary>
-    internal class SVT40 : Rifle
+    public class SVT40 : Rifle
     {
         public override void SetDefaults()
         {

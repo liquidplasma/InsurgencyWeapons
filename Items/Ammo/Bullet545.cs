@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// 5.45x39mm Ammo
     /// </summary>
-    internal class Bullet545 : AmmoItem
+    public class Bullet545 : AmmoItem
     {
         public override void SetDefaults()
         {

@@ -1,0 +1,15 @@
+﻿namespace InsurgencyWeapons.Items.Ammo
+{
+    internal class Bullet76233 : AmmoItem
+    {
+        public override void SetDefaults()
+        {
+            MoneyCost = 20;
+            CraftStack = 20;
+            Item.width = 6;
+            Item.height = 21;
+            Item.DefaultsToInsurgencyAmmo(13);
+            base.SetDefaults();
+        }
+    }
+}

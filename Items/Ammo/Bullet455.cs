@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// Webley .455 WMk.II
     /// </summary>
-    internal class Bullet455 : AmmoItem
+    public class Bullet455 : AmmoItem
     {
         public override void SetDefaults()
         {

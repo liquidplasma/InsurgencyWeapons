@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.SniperRifles
 {
-    internal class Mosin : SniperRifle
+    public class Mosin : SniperRifle
     {
         public override void SetDefaults()
         {

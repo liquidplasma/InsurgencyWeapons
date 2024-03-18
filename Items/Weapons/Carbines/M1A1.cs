@@ -1,0 +1,33 @@
+﻿using InsurgencyWeapons.Projectiles.Carbines;
+using InsurgencyWeapons.Projectiles.Rifles;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace InsurgencyWeapons.Items.Weapons.Carbines
+{
+    public class M1A1 : Carbine
+    {
+        public override void SetDefaults()
+        {
+            Item.knockBack = 4f;
+            Item.channel = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useAnimation = Item.useTime = 8;
+            Item.width = 86;
+            Item.height = 18;
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.damage = 17;
+            Item.shootSpeed = 11f;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+            Item.value = Item.sellPrice(0, 4, 0, 0);
+            Item.rare = ItemRarityID.LightRed;
+            Item.DamageType = DamageClass.Ranged;
+            WeaponHeldProjectile = ModContent.ProjectileType<M1A1Held>();
+            MoneyCost = 260;
+        }
+    }
+}

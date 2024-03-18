@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace InsurgencyWeapons
 {
-    internal class InsurgencyGlobalProjectile : GlobalProjectile
+    public class InsurgencyGlobalProjectile : GlobalProjectile
     {
         private static int[] IgnoredDraws = {
             ModContent.ProjectileType<M1GarandEnbloc>(),

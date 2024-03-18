@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.BattleRifles
     /// <summary>
     /// H&amp;K G3A3 7.62x51mm
     /// </summary>
-    internal class G3A3 : BattleRifle
+    public class G3A3 : BattleRifle
     {
         public override void SetDefaults()
         {

@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.MachineGuns
 {
-    internal class RPK : LightMachineGun
+    public class RPK : LightMachineGun
     {
         public override void SetDefaults()
         {

@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// .45ACP
     /// </summary>
-    internal class Bullet45ACP : AmmoItem
+    public class Bullet45ACP : AmmoItem
     {
         public override void SetDefaults()
         {

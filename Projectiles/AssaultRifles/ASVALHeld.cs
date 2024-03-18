@@ -7,7 +7,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.AssaultRifles
 {
-    internal class ASVALHeld : WeaponBase
+    public class ASVALHeld : WeaponBase
     {
         public int CurrentAmmo
         {

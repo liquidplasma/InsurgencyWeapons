@@ -5,7 +5,7 @@ using Terraria.GameInput;
 
 namespace InsurgencyWeapons
 {
-    internal class InsurgencyQuickBuy : ModPlayer
+    public class InsurgencyQuickBuy : ModPlayer
     {
         private bool HoldingInsurgencyWeapon => Player.HoldingInsurgencyWeapon();
         private Item HeldItem => Player.HeldItem;

@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// 12 Gauge Ammo
     /// </summary>
-    internal class TwelveGauge : AmmoItem
+    public class TwelveGauge : AmmoItem
     {
         public override void SetDefaults()
         {

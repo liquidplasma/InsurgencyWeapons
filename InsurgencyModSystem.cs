@@ -4,7 +4,7 @@ using Terraria.UI;
 
 namespace InsurgencyWeapons
 {
-    internal class InsurgencyModSystem : ModSystem
+    public class InsurgencyModSystem : ModSystem
     {
         private InsurgencyAmmoStatsUI UI;
         private UserInterface AmmoDisplayUI;

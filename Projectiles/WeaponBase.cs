@@ -1,11 +1,12 @@
 ﻿using InsurgencyWeapons.Gores.Casing;
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
+using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles
 {
-    internal abstract class WeaponBase : ModProjectile
+    public abstract class WeaponBase : ModProjectile
     {
         /// <summary>
         /// The projectile owner of this weapon
@@ -92,7 +93,7 @@ namespace InsurgencyWeapons.Projectiles
 
         public bool AllowedToFire(int CurrentAmmo) => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
-        public bool CanReload(int minAmmo = 0) => Player.HasItem(Ammo.type) && Player.CountItem(Ammo.type) > minAmmo;
+        public bool CanReload(int minAmmo = 0) => Ammo != null && Player.HasItem(Ammo.type) && Player.CountItem(Ammo.type) > minAmmo;
 
         private bool underAlternateFireCoolDown;
 
@@ -177,7 +178,7 @@ namespace InsurgencyWeapons.Projectiles
                 muzzleDrawPos += muzzleDrawPos.DirectionTo(MouseAim) * (offset - sin);
                 Texture2D muzzleFlash = HelperStats.MuzzleFlash;
                 Rectangle rect = muzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay, 0, 6));
-                ExtensionMethods.BetterEntityDraw(muzzleFlash, muzzleDrawPos, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+                BetterEntityDraw(muzzleFlash, muzzleDrawPos, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             }*/
         }
 
@@ -193,10 +194,12 @@ namespace InsurgencyWeapons.Projectiles
             if (shouldNotIncrease)
                 Degree = 0;
 
-            if (!shouldNotIncrease && Degree < maxDegree && Player.channel && Main.rand.NextBool(5))
+            if (!shouldNotIncrease && Player.channel && Main.rand.NextBool(5))
                 Degree += 1;
 
             Degree = (int)(Degree * multiplier);
+            if (Degree > maxDegree)
+                Degree = maxDegree;
 
             if (shotgun)
                 return Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(6, 10))) * HeldItem.shootSpeed;
@@ -327,7 +330,6 @@ namespace InsurgencyWeapons.Projectiles
         {
             Projectile.CheckPlayerActiveAndNotDead(Player);
 
-            //Check if ammo is 0 or less then remove it if necessary, since I'm directly reducing stack size
             if (Player.HasItem(AmmoType))
             {
                 Ammo = Player.FindItemInInventory(AmmoType);
@@ -440,7 +442,7 @@ namespace InsurgencyWeapons.Projectiles
                     Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
 
                 Projectile.frame = 0;
-            }            
+            }
             #endregion
         }
 

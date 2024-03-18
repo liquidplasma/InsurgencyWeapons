@@ -6,7 +6,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// GP-25 40mm VOG-25P Grenade Ammo
     /// </summary>
-    internal class VOG_25P : AmmoItem
+    public class VOG_25P : AmmoItem
     {
         public override void SetDefaults()
         {

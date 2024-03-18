@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles
 {
-    internal class M1GarandEnbloc : MagazineBase
+    public class M1GarandEnbloc : MagazineBase
     {
         private static SoundStyle Tink => new("InsurgencyWeapons/Sounds/Weapons/Ins2/garand/gclip", 3)
         {

@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
     /// <summary>
     /// Benelli M1014 12 Gauge
     /// </summary>
-    internal class M1014 : Shotgun
+    public class M1014 : Shotgun
     {
         public override void SetDefaults()
         {

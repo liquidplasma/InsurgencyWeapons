@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Ammo
 {
-    internal class Bullet939 : AmmoItem
+    public class Bullet939 : AmmoItem
     {
         public override void SetDefaults()
         {

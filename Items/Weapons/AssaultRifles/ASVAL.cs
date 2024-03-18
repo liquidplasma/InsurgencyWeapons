@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {
-    internal class ASVAL : AssaultRifle
+    public class ASVAL : AssaultRifle
     {
         public override void SetDefaults()
         {

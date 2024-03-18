@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace InsurgencyWeapons.Helpers
 {
-    internal static class Insurgency
+    public static class Insurgency
     {
         public static bool HoldingInsurgencyWeapon(this Player player) => Insurgency.AllWeapons.Contains(player.HeldItem.type);
 
@@ -89,14 +89,14 @@ namespace InsurgencyWeapons.Helpers
             if (Main.hardMode)
             {
                 if (NPC.downedPlantBoss)
-                    modifier += 0.5f;
+                    modifier += 0.6f;
                 else
-                    modifier += 0.15f;
+                    modifier += 0.2f;
             }
             else if (!Main.hardMode)
                 modifier -= 0.1f;
 
-            return modifier;
+            return Main.masterMode ? modifier * 1.08f : modifier;
         }
 
         public enum APCaliber

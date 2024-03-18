@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.WeaponMagazines.SubMachineGuns
 {
-    internal class MP7Magazine : MagazineBase
+    public class MP7Magazine : MagazineBase
     {
         public override void SetDefaults()
         {

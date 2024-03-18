@@ -6,7 +6,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.SniperRifles
 {
-    internal class M40A1Held : WeaponBase
+    public class M40A1Held : WeaponBase
     {
         public int CurrentAmmo
         {

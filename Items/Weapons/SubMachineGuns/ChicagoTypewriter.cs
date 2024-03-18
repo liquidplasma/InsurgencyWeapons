@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
     /// <summary>
     /// Thompson M1928 .45ACP
     /// </summary>
-    internal class ChicagoTypewriter : SubMachineGun
+    public class ChicagoTypewriter : SubMachineGun
     {
         public override void SetDefaults()
         {

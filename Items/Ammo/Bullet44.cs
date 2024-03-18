@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// Model 29 .44 Magnum Ammo
     /// </summary>
-    internal class Bullet44 : AmmoItem
+    public class Bullet44 : AmmoItem
     {
         public override void SetDefaults()
         {

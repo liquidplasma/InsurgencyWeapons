@@ -3,7 +3,7 @@ using InsurgencyWeapons.Items.Ammo;
 
 namespace InsurgencyWeapons
 {
-    internal class InsurgencyMagazineTracking : ModPlayer
+    public class InsurgencyMagazineTracking : ModPlayer
     {
         public bool MouseOverFriendlyNPC { get; set; }
 
@@ -14,12 +14,16 @@ namespace InsurgencyWeapons
         public int
             AKMMagazine,
             AN94Magazine,
-            STGMagazine,
-            ASValMagazine;
+            ASValMagazine,
+            GalilMagazine,
+            GrozaMagazine,
+            STGMagazine;
 
         //Carbines
         public int
-            AKS74UMagazine;
+            AKS74UMagazine,
+            G36CMagazine,
+            M1A1Magazine;
 
         //Battle rifles
         public int
@@ -67,6 +71,7 @@ namespace InsurgencyWeapons
             AmmoTypeGL;
 
         public bool HasGL;
+
         public string GrenadeName;
 
         public void BuildUI(int currentAmmo, int ammoType, bool hasGL, int ammoTypeGL, string grenadeName)
@@ -108,6 +113,8 @@ namespace InsurgencyWeapons
             STGMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet792>()), 0, 30);
             AN94Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet545>()), 0, 30);
             ASValMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet939>()), 0, 20);
+            GalilMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet556>()), 0, 35);
+            GrozaMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet939>()), 0, 20);
 
             //Battle rifles
             SCARHMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76251>()), 0, 20);
@@ -115,6 +122,7 @@ namespace InsurgencyWeapons
 
             //Carbines
             AKS74UMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet545>()), 0, 30);
+            G36CMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet556>()), 0, 30);
 
             //Revolvers
             PythonCylinder = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet357>()), 0, 6);

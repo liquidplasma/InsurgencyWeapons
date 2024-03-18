@@ -7,7 +7,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 {
-    internal class MP7Held : WeaponBase
+    public class MP7Held : WeaponBase
     {
         public int CurrentAmmo
         {

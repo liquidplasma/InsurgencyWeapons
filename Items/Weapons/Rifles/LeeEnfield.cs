@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.Rifles
 {
-    internal class LeeEnfield : Rifle
+    public class LeeEnfield : Rifle
     {
         public override void SetDefaults()
         {

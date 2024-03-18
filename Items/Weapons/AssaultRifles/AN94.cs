@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
     /// <summary>
     /// AN-94N + PK-AS 5.45x39mm
     /// </summary>
-    internal class AN94 : AssaultRifle
+    public class AN94 : AssaultRifle
     {
         public override void SetDefaults()
         {

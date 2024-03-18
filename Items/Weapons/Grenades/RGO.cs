@@ -3,7 +3,7 @@ using InsurgencyWeapons.Projectiles.Grenades;
 
 namespace InsurgencyWeapons.Items.Weapons.Grenades
 {
-    internal class RGO : Grenade
+    public class RGO : Grenade
     {
         public override void SetDefaults()
         {

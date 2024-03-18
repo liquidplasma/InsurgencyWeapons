@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace InsurgencyWeapons
 {
-    internal class InsurgencyTooltipWeaponClass : GlobalItem
+    public class InsurgencyTooltipWeaponClass : GlobalItem
     {
         private static int[] DoubleActionRevolvers => new int[] { ModContent.ItemType<M29>(), ModContent.ItemType<ColtPython>() };
 

@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles
 {
-    internal class EnfieldBlock : MagazineBase
+    public class EnfieldBlock : MagazineBase
     {
         public override void SetDefaults()
         {

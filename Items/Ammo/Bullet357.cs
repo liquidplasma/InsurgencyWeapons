@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// Python .357 Magnum Ammo
     /// </summary>
-    internal class Bullet357 : AmmoItem
+    public class Bullet357 : AmmoItem
     {
         public override void SetDefaults()
         {

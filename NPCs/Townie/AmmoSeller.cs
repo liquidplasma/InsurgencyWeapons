@@ -12,7 +12,7 @@ using Terraria.Utilities;
 
 namespace InsurgencyWeapons.NPCs.Townie
 {
-    internal class AmmoSeller : ModNPC
+    public class AmmoSeller : ModNPC
     {
         private static Profiles.StackedNPCProfile NPCProfile;
         private static float RandomDiscount;

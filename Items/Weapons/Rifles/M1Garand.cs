@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.Rifles
 {
-    internal class M1Garand : Rifle
+    public class M1Garand : Rifle
     {
         public override void SetDefaults()
         {

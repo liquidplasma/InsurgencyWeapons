@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// Coach Gun Buck and Ball Ammo
     /// </summary>
-    internal class ShellBuck_Ball : AmmoItem
+    public class ShellBuck_Ball : AmmoItem
     {
         public override void SetDefaults()
         {

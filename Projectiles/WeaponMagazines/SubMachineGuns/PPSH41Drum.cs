@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.WeaponMagazines.SubMachineGuns
 {
-    internal class PPSH41Drum : MagazineBase
+    public class PPSH41Drum : MagazineBase
     {
         public override void SetDefaults()
         {

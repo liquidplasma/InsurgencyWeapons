@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons
 {
-    internal class InsurgencyModKeyBind : ModSystem
+    public class InsurgencyModKeyBind : ModSystem
     {
         public static ModKeybind ReloadKey { get; private set; }
         public static ModKeybind QuickBuy { get; private set; }

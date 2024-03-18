@@ -3,7 +3,7 @@ using Terraria.Utilities;
 
 namespace InsurgencyWeapons.Items
 {
-    internal abstract class AmmoItem : ModItem
+    public abstract class AmmoItem : ModItem
     {
         /// <summary>
         /// How much money it costs
@@ -42,7 +42,7 @@ namespace InsurgencyWeapons.Items
     /// <summary>
     /// Main class
     /// </summary>
-    internal abstract class WeaponUtils : ModItem
+    public abstract class WeaponUtils : ModItem
     {
         public int WeaponHeldProjectile { get; set; }
         public int MoneyCost { get; set; }
@@ -79,40 +79,40 @@ namespace InsurgencyWeapons.Items
         public override void AddRecipes() => this.RegisterINS2RecipeWeapon(MoneyCost);
     }
 
-    internal abstract class AssaultRifle : WeaponUtils
+    public abstract class AssaultRifle : WeaponUtils
     { }
 
-    internal abstract class BattleRifle : WeaponUtils
+    public abstract class BattleRifle : WeaponUtils
     { }
 
-    internal abstract class Carbine : WeaponUtils
+    public abstract class Carbine : WeaponUtils
     { }
 
-    internal abstract class Rifle : WeaponUtils
+    public abstract class Rifle : WeaponUtils
     { }
 
-    internal abstract class Shotgun : WeaponUtils
+    public abstract class Shotgun : WeaponUtils
     { }
 
-    internal abstract class SniperRifle : WeaponUtils
+    public abstract class SniperRifle : WeaponUtils
     { }
 
-    internal abstract class SubMachineGun : WeaponUtils
+    public abstract class SubMachineGun : WeaponUtils
     { }
 
-    internal abstract class LightMachineGun : WeaponUtils
+    public abstract class LightMachineGun : WeaponUtils
     { }
 
-    internal abstract class Launcher : WeaponUtils
+    public abstract class Launcher : WeaponUtils
     { }
 
-    internal abstract class Pistol : WeaponUtils
+    public abstract class Pistol : WeaponUtils
     { }
 
-    internal abstract class Revolver : WeaponUtils
+    public abstract class Revolver : WeaponUtils
     { }
 
-    internal abstract class Grenade : WeaponUtils
+    public abstract class Grenade : WeaponUtils
     {
         public int GrenadeType { get; set; }
 

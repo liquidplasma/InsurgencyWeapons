@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// M1 Garand 7.62x63mm Ammo
     /// </summary>
-    internal class Bullet3006 : AmmoItem
+    public class Bullet3006 : AmmoItem
     {
         public override void SetDefaults()
         {

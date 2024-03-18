@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace InsurgencyWeapons.Projectiles.Grenades
 {
-    internal abstract class GrenadeBase : ModProjectile
+    public abstract class GrenadeBase : ModProjectile
     {
         public Player Player => Main.player[Projectile.owner];
 

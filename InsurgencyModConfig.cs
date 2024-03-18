@@ -3,7 +3,7 @@ using Terraria.ModLoader.Config;
 
 namespace InsurgencyWeapons
 {
-    internal class InsurgencyModConfig : ModConfig
+    public class InsurgencyModConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ServerSide;
 

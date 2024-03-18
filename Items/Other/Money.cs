@@ -4,7 +4,7 @@ using Terraria.GameContent.ItemDropRules;
 
 namespace InsurgencyWeapons.Items.Other
 {
-    internal class MoneyDrop : GlobalNPC
+    public class MoneyDrop : GlobalNPC
     {
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
@@ -24,7 +24,7 @@ namespace InsurgencyWeapons.Items.Other
         }
     }
 
-    internal class Money : ModItem
+    public class Money : ModItem
     {
         public override void SetStaticDefaults()
         {

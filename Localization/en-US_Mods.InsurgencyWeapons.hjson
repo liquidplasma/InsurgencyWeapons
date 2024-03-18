@@ -289,6 +289,36 @@ Items: {
 		DisplayName: AS VAL 9x39mm
 		Tooltip: ""
 	}
+
+	Bullet556: {
+		DisplayName: 5.56x45mm Ammo
+		Tooltip: ""
+	}
+
+	Galil: {
+		DisplayName: IMI GALIL ARM 5.56x45mm
+		Tooltip: ""
+	}
+
+	Groza: {
+		DisplayName: OTs-14 Groza 4 9x39mm + GP-30 40mm VOG-25
+		Tooltip: ""
+	}
+
+	G36C: {
+		DisplayName: H&K G36C 5.56x45mm
+		Tooltip: ""
+	}
+
+	Bullet76233: {
+		DisplayName: M1A1 Paratrooper 7.62x33mm Ammo
+		Tooltip: ""
+	}
+
+	M1A1: {
+		DisplayName: M1A1 Paratrooper 7.62x33mm
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -340,6 +370,14 @@ Projectiles: {
 	ASVALHeld.DisplayName: ASVAL
 	ASVALMagazine.DisplayName: ASVALMagazine
 	MK2ExplosiveNPC.DisplayName: M K2 Explosive N P C
+	GalilHeld.DisplayName: Galil Held
+	GrozaHeld.DisplayName: Groza Held
+	GalilMagazine.DisplayName: Galil Magazine
+	GrozaMagazine.DisplayName: Groza Magazine
+	G36CHeld.DisplayName: G36 C Held
+	G36CMagazine.DisplayName: G36 C Magazine
+	M1A1Held.DisplayName: M1 A1 Held
+	M1A1Magazine.DisplayName: M1 A1 Magazine
 }
 
 Keybinds: {

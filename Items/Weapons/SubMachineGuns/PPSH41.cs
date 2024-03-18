@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
 {
-    internal class PPSH41 : SubMachineGun
+    public class PPSH41 : SubMachineGun
     {
         public override void SetDefaults()
         {

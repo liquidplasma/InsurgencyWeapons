@@ -5,7 +5,7 @@ using Terraria.UI;
 
 namespace InsurgencyWeapons
 {
-    internal class InsurgencyAmmoStatsUI : UIState
+    public class InsurgencyAmmoStatsUI : UIState
     {
         private UIText AmmoDisplay;
         private UIElement Area;

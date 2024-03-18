@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// MP7 4.6x30mm Ammo
     /// </summary>
-    internal class Bullet4630 : AmmoItem
+    public class Bullet4630 : AmmoItem
     {
         public override void SetDefaults()
         {

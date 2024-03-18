@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.Revolvers
 {
-    internal class ColtPython : Revolver
+    public class ColtPython : Revolver
     {
         public override void SetDefaults()
         {

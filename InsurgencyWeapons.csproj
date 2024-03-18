@@ -17,7 +17,11 @@
     <None Remove="Items\Ammo\Bullet76254R.png" />
     <None Remove="Items\Ammo\Bullet939.png" />
     <None Remove="Items\Weapons\AssaultRifles\ASVAL.png" />
+    <None Remove="Items\Weapons\AssaultRifles\Galil.png" />
+    <None Remove="Items\Weapons\AssaultRifles\Groza.png" />
     <None Remove="Items\Weapons\BattleRifles\G3A3.png" />
+    <None Remove="Items\Weapons\Carbines\G36C.png" />
+    <None Remove="Items\Weapons\Carbines\M1A1.png" />
     <None Remove="Items\Weapons\MachineGuns\M60.png" />
     <None Remove="Items\Weapons\Revolvers\M29.png" />
     <None Remove="Items\Weapons\Revolvers\Webley.png" />
@@ -31,7 +35,11 @@
     <None Remove="NPCs\Townie\AmmoSeller_Shimmer.png" />
     <None Remove="NPCs\Townie\AmmoSeller_Shimmer_Head.png" />
     <None Remove="Projectiles\AssaultRifles\ASVALHeld.png" />
+    <None Remove="Projectiles\AssaultRifles\GalilHeld.png" />
+    <None Remove="Projectiles\AssaultRifles\GrozaHeld.png" />
     <None Remove="Projectiles\BattleRifles\G3A3Held.png" />
+    <None Remove="Projectiles\Carbines\G36CHeld.png" />
+    <None Remove="Projectiles\Carbines\M1A1Held.png" />
     <None Remove="Projectiles\MachineGuns\M60Held.png" />
     <None Remove="Projectiles\Revolvers\M29Held.png" />
     <None Remove="Projectiles\Revolvers\WebleyHold.png" />
@@ -41,6 +49,10 @@
     <None Remove="Projectiles\Shotguns\M1014Held.png" />
     <None Remove="Projectiles\Shotguns\M590Held.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\ASVALMagazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\AssaultRifles\GalilMagazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\AssaultRifles\GrozaMagazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\Carbines\G36CMagazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\Carbines\M1A1Magazine.png" />
     <None Remove="VendingMachines\VendingMachineGunsTile.png" />
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@ global using static InsurgencyWeapons.Helpers.ExtensionMethods;
 
 namespace InsurgencyWeapons.Helpers
 {
-    internal class Usings
+    public class Usings
     {
     }
 }

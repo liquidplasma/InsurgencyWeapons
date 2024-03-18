@@ -4,7 +4,7 @@ using Terraria.Graphics.Shaders;
 
 namespace InsurgencyWeapons.Projectiles
 {
-    internal abstract class BulletBase : ModProjectile
+    public abstract class BulletBase : ModProjectile
     {
         public VertexStrip _vertexStrip = new();
         public int CaliberSize => (int)Projectile.ai[0];
@@ -53,7 +53,7 @@ namespace InsurgencyWeapons.Projectiles
         }
     }
 
-    internal class NormalBullet : BulletBase
+    public class NormalBullet : BulletBase
     {
         public override string Texture => base.Texture;
 
@@ -94,7 +94,7 @@ namespace InsurgencyWeapons.Projectiles
         }
     }
 
-    internal class ShotgunPellet : BulletBase
+    public class ShotgunPellet : BulletBase
     {
         private int countPierce;
         public override string Texture => base.Texture;

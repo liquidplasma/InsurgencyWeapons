@@ -4,7 +4,7 @@ using Terraria.GameContent;
 
 namespace InsurgencyWeapons.Helpers
 {
-    internal static class ExtensionMethods
+    public static class ExtensionMethods
     {
         public static void ConsumeMultiple(this Player player, int amountToConsume, int type)
         {

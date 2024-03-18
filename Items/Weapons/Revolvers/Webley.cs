@@ -16,7 +16,7 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
     /// <summary>
     /// Webley Mk.VI .455 WMk.II
     /// </summary>
-    internal class Webley : Revolver
+    public class Webley : Revolver
     {
         private int WebleyType => ModContent.ProjectileType<M29Held>();
 

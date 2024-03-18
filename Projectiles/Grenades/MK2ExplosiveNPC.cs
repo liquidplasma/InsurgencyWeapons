@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.Grenades
 {
-    internal class MK2ExplosiveNPC : GrenadeBase
+    public class MK2ExplosiveNPC : GrenadeBase
     {
         public override string Texture => "InsurgencyWeapons/Projectiles/Grenades/MK2Explosive";
 

@@ -58,7 +58,5 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		H&K MP7 4.6x30mm
 
 Changelog//
-v0.7
-	- Added an NPC that can spawn randomly and can sell ammo at an discount
-	- Added a keybind to buy ammo for the held weapon anywhere however it costs 20% more money to do so
-[quote=tModLoader]Developed By marviN[/quote]
+v0.7.2
+	- Out of bounds error

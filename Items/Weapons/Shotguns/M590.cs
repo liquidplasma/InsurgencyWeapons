@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
     /// <summary>
     /// Mossberg M590 12 Gauge
     /// </summary>
-    internal class M590 : Shotgun
+    public class M590 : Shotgun
     {
         public override void SetDefaults()
         {

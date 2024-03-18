@@ -7,7 +7,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Shotguns
 {
-    internal class M590Held : WeaponBase
+    public class M590Held : WeaponBase
     {
         public int CurrentAmmo
         {

@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.VendingMachines.Tiles
 {
-    internal class VendingMachineAmmoTile : VendingMachineTile
+    public class VendingMachineAmmoTile : VendingMachineTile
     {
         private float strength;
         private bool increase;

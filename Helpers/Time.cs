@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Helpers
 {
-    internal static class Time
+    public static class Time
     {
         /// <summary>
         /// 6PM in game time

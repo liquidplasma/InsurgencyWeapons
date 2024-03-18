@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.Carbines
 {
-    internal class AKS74U : Carbine
+    public class AKS74U : Carbine
     {
         public override void SetDefaults()
         {

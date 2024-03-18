@@ -2,10 +2,12 @@
 
 namespace InsurgencyWeapons.Projectiles.WeaponMagazines
 {
-    internal abstract class MagazineBase : ModProjectile
+    public abstract class MagazineBase : ModProjectile
     {
         public override void SetDefaults()
         {
+            Projectile.width = Projectile.height = 10;
+            Projectile.penetrate = 5;
             Projectile.alpha = 255;
             Projectile.friendly = true;
             Projectile.aiStyle = -1;

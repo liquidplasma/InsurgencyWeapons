@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.Grenades
 {
-    internal class M24StExplosive : GrenadeBase
+    public class M24StExplosive : GrenadeBase
     {
         public override void SetDefaults()
         {

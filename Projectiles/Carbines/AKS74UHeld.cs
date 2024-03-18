@@ -7,7 +7,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Carbines
 {
-    internal class AKS74UHeld : WeaponBase
+    public class AKS74UHeld : WeaponBase
     {
         public int CurrentAmmo
         {

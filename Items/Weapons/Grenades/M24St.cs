@@ -3,7 +3,7 @@ using InsurgencyWeapons.Projectiles.Grenades;
 
 namespace InsurgencyWeapons.Items.Weapons.Grenades
 {
-    internal class M24St : Grenade
+    public class M24St : Grenade
     {
         public override void SetDefaults()
         {

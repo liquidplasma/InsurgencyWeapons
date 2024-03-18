@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.Grenades
 {
-    internal class RGOExplosive : GrenadeBase
+    public class RGOExplosive : GrenadeBase
     {
         private bool Contact => AITimer >= 45 && TileCollides == 0;
 

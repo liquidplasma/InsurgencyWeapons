@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// Lee-Enfield .303 Ammo
     /// </summary>
-    internal class Bullet303 : AmmoItem
+    public class Bullet303 : AmmoItem
     {
         public override void SetDefaults()
         {

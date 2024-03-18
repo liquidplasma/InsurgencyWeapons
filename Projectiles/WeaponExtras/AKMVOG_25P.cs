@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Projectiles.WeaponExtras
 {
-    internal class AKMVOG_25P : ModProjectile
+    public class AKMVOG_25P : ModProjectile
     {
         private bool Exploded;
         private Player Player => Main.player[Projectile.owner];
@@ -38,6 +38,14 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
             Projectile.aiStyle = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (InsurgencyModConfig.Instance.DamageScaling)
+                modifiers.FinalDamage *= Insurgency.WeaponScaling();
+
+            base.ModifyHitNPC(target, ref modifiers);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

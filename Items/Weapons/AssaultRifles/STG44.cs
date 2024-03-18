@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
     /// <summary>
     /// StG-44 7.92x33mm
     /// </summary>
-    internal class STG44 : AssaultRifle
+    public class STG44 : AssaultRifle
     {
         public override void SetDefaults()
         {

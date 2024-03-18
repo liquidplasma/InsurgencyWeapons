@@ -3,7 +3,7 @@ using Terraria.ObjectData;
 
 namespace InsurgencyWeapons.VendingMachines.Tiles
 {
-    internal abstract class VendingMachineTile : ModTile
+    public abstract class VendingMachineTile : ModTile
     {
         public override void SetStaticDefaults()
         {

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace InsurgencyWeapons.VendingMachines
 {
-    internal class VendingMachineAmmoItem : ModItem
+    public class VendingMachineAmmoItem : ModItem
     {
         public override void SetDefaults()
         {

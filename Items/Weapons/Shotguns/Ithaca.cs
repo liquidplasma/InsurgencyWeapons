@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
     /// <summary>
     /// Ithaca M37 12 Gauge
     /// </summary>
-    internal class Ithaca : Shotgun
+    public class Ithaca : Shotgun
     {
         public override void SetDefaults()
         {

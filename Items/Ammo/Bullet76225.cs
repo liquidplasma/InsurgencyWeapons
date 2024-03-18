@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Ammo
     /// <summary>
     /// PPSh-41 7.62x25mm Ammo
     /// </summary>
-    internal class Bullet76225 : AmmoItem
+    public class Bullet76225 : AmmoItem
     {
         public override void SetDefaults()
         {
