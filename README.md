@@ -17,7 +17,7 @@ Weapons in the pack so far:
 * AS VAL 9x39mm
 * StG-44 7.92x33mm
 * AN-94N + PK-AS 5.45x39mm
-* OTs-14 Groza 4 9x39mm
+* OTs-14 Groza 4 9x39mm + GP-30 40mm VOG-25
 * IMI GALIL ARM 5.56x45mm
 
 -Battle Rifles-
