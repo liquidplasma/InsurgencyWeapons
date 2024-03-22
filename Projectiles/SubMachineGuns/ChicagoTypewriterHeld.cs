@@ -42,7 +42,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
         {
             Projectile.width = 24;
             Projectile.height = 76;
-            ClipSize = 50;
+            MagazineSize = 50;
             AmmoType = ModContent.ItemType<Bullet45ACP>();
             base.SetDefaults();
         }
@@ -72,7 +72,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 2);
+                Shoot(2);
             }
             if (CanReload() && CurrentAmmo == 0 && !ReloadStarted)
             {
@@ -110,7 +110,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;

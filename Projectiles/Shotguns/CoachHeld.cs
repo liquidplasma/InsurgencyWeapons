@@ -24,6 +24,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         private enum CoachState
         {
             Ready,
+
             Open
         }
 
@@ -59,7 +60,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         {
             Projectile.width = 14;
             Projectile.height = 72;
-            ClipSize = 2;
+            MagazineSize = 2;
             AmmoType = ModContent.ItemType<ShellBuck_Ball>();
             base.SetDefaults();
         }
@@ -68,7 +69,12 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            float scale;
+            if (isIdle)
+                scale = 0.75f;
+            else
+                scale = 0.9f;
+            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
             return false;
         }
@@ -112,11 +118,11 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     for (int j = 0; j < 6; j++)
                     {
                         //Buck
-                        Shoot(1, 1, dropCasing: false, shotgun: true);
+                        Shoot(1, dropCasing: false, shotgun: true);
                     }
 
                     //Ball
-                    Shoot(1, 1, dropCasing: false);
+                    Shoot(1, dropCasing: false);
                 }
             }
 

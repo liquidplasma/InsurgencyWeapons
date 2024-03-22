@@ -58,7 +58,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
         {
             Projectile.width = 22;
             Projectile.height = 80;
-            ClipSize = 5;
+            MagazineSize = 5;
             AmmoType = ModContent.ItemType<Bullet76254R>();
             base.SetDefaults();
         }
@@ -95,7 +95,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                     BoltActionTimer = HeldItem.useTime * 2;
 
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 1, dropCasing: false, ai0: (float)Insurgency.APCaliber.c762x54Rmm);
+                Shoot(1, dropCasing: false);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -115,7 +115,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != ClipSize)
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MagazineSize)
             {
                 ManualReload = true;
                 ReloadStarted = true;
@@ -136,7 +136,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
 
                 case 20:
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    if (CurrentAmmo < ClipSize)
+                    if (CurrentAmmo < MagazineSize)
                     {
                         if (CanReload())
                         {

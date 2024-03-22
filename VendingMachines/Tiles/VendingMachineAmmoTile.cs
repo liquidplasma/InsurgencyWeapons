@@ -5,6 +5,7 @@ namespace InsurgencyWeapons.VendingMachines.Tiles
     public class VendingMachineAmmoTile : VendingMachineTile
     {
         private float strength;
+
         private bool increase;
 
         public override void SetStaticDefaults()

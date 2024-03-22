@@ -1,3 +1,18 @@
+SetBonuses.RevolverSet: Increases damage and crit chance with revolvers and pistols by 100% and 25%
+
+PerkSystem: {
+	Level: Current level:
+	LevelUp: level up
+	DamageRequired: Damage required for next level:
+	KillsRequired: Kills required for next level:
+	CurrentBuff: damage bonus with perk weapons
+	CurrentPenBuff: penetration bonus with perk weapons
+	CommandoClass: Commando
+	DemolitionsClass: Demolitions
+	SupportSpecialistClass: Support Specialist
+	SharpshooterClass: Sharpshooter
+}
+
 NPCs: {
 	AmmoSeller: {
 		DescriptionBestiary: Arrives randomly and has good deals on various ammunitions
@@ -20,6 +35,7 @@ WeaponClasses: {
 	Rifle: Rifle
 	Shotgun: Shotgun
 	Sniper: Sniper Rifle
+	Pistol: Pistol
 	SMG: Sub Machine Gun
 	LMG: Light Machine Gun
 }
@@ -64,7 +80,7 @@ Items: {
 
 	Bullet3006: {
 		DisplayName: M1 Garand 7.62x63mm Ammo
-		Tooltip: Ignores 25 enemy defense
+		Tooltip: ""
 	}
 
 	M1Garand: {
@@ -78,7 +94,7 @@ Items: {
 			'''
 			Exchange for items
 			The more HP the enemy has, the more money will drop
-			Maximum obtained this way is 140 per kill
+			Bosses are guaranteed to drop money
 			'''
 	}
 
@@ -177,7 +193,7 @@ Items: {
 
 	Bullet76251: {
 		DisplayName: 7.62x51mm Ammo
-		Tooltip: Ignores 12 enemy defense
+		Tooltip: ""
 	}
 
 	SCARH: {
@@ -212,7 +228,7 @@ Items: {
 
 	Bullet76254R: {
 		DisplayName: 7.62x54mmR
-		Tooltip: Ignores 35 enemy defense
+		Tooltip: ""
 	}
 
 	TwelveGauge: {
@@ -247,7 +263,7 @@ Items: {
 
 	Bullet303: {
 		DisplayName: Lee-Enfield .303
-		Tooltip: Ignores 25 enemy defense
+		Tooltip: ""
 	}
 
 	Bullet44: {
@@ -319,6 +335,51 @@ Items: {
 		DisplayName: M1A1 Paratrooper 7.62x33mm
 		Tooltip: ""
 	}
+
+	M4A1: {
+		DisplayName: Colt M4A1 5.56x45mm
+		Tooltip: ""
+	}
+
+	M1911: {
+		DisplayName: Colt M1911 .45ACP
+		Tooltip: ""
+	}
+
+	Bullet9x19: {
+		DisplayName: 9x19mm Ammo
+		Tooltip: ""
+	}
+
+	MP5K: {
+		DisplayName: H&K MP5K 9x19mm
+		Tooltip: ""
+	}
+
+	MP5SD: {
+		DisplayName: H&K MP5SD 9x19mm
+		Tooltip: ""
+	}
+
+	SKS: {
+		DisplayName: SKS Simonov 7.62x39mm
+		Tooltip: ""
+	}
+
+	UMP45: {
+		DisplayName: H&K UMP-45 .45ACP
+		Tooltip: ""
+	}
+
+	PKM: {
+		DisplayName: PKM 7.62x54mmR
+		Tooltip: ""
+	}
+
+	M249: {
+		DisplayName: FN M249 5.56x45mm
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -369,15 +430,31 @@ Projectiles: {
 	ShotgunPellet.DisplayName: Shotgun Pellet
 	ASVALHeld.DisplayName: ASVAL
 	ASVALMagazine.DisplayName: ASVALMagazine
-	MK2ExplosiveNPC.DisplayName: M K2 Explosive N P C
+	MK2ExplosiveNPC.DisplayName: MK2 Explosive NPC
 	GalilHeld.DisplayName: Galil Held
 	GrozaHeld.DisplayName: Groza Held
 	GalilMagazine.DisplayName: Galil Magazine
 	GrozaMagazine.DisplayName: Groza Magazine
-	G36CHeld.DisplayName: G36 C Held
-	G36CMagazine.DisplayName: G36 C Magazine
-	M1A1Held.DisplayName: M1 A1 Held
-	M1A1Magazine.DisplayName: M1 A1 Magazine
+	G36CHeld.DisplayName: G36C Held
+	G36CMagazine.DisplayName: G36C Magazine
+	M1A1Held.DisplayName: M1A1 Held
+	M1A1Magazine.DisplayName: M1A1 Magazine
+	M4A1Held.DisplayName: M4 A1 Held
+	M4A1Magazine.DisplayName: M4 A1 Magazine
+	M1911Held.DisplayName: M1911 Held
+	M1911Magazine.DisplayName: M1911 Magazine
+	MP5KHeld.DisplayName: M P5 K Held
+	MP5KMagazine.DisplayName: M P5 K Magazine
+	MP5SDHeld.DisplayName: M P5 S D Held
+	MP5SDMagazine.DisplayName: M P5 S D Magazine
+	SKSHeld.DisplayName: S K S Held
+	SKSMagazine.DisplayName: S K S Magazine
+	UMP45Held.DisplayName: U M P45 Held
+	UMP45Magazine.DisplayName: U M P45 Magazine
+	PKMHeld.DisplayName: P K M Held
+	PKMBox.DisplayName: P K M Box
+	M249Held.DisplayName: M249 Held
+	M249Box.DisplayName: M249 Box
 }
 
 Keybinds: {

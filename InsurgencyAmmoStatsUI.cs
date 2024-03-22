@@ -8,7 +8,9 @@ namespace InsurgencyWeapons
     public class InsurgencyAmmoStatsUI : UIState
     {
         private UIText AmmoDisplay;
+
         private UIElement Area;
+
         private Player Player => Main.LocalPlayer;
         private InsurgencyMagazineTracking AmmoTracking => Player.GetModPlayer<InsurgencyMagazineTracking>();
         private bool HoldingInsurgencyWeapon => Player.HoldingInsurgencyWeapon();
@@ -34,7 +36,7 @@ namespace InsurgencyWeapons
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            bool overGrave = Main.tile[Main.MouseWorld.ToTileCoordinates()].TileType == 85;
+            bool overGrave = Main.tile[Main.MouseWorld.ToTileCoordinates()].TileType == TileID.Tombstones;
             if (!HoldingInsurgencyWeapon || !AmmoTracking.isActive || overGrave || Player.mouseInterface || OverFriendlyNPC)
                 return;
             base.Draw(spriteBatch);
@@ -50,7 +52,7 @@ namespace InsurgencyWeapons
 
         public override void Update(GameTime gameTime)
         {
-            bool overGrave = Main.tile[Main.MouseWorld.ToTileCoordinates()].TileType == 85;
+            bool overGrave = Main.tile[Main.MouseWorld.ToTileCoordinates()].TileType == TileID.Tombstones;
             if (!HoldingInsurgencyWeapon || !AmmoTracking.isActive || overGrave || Player.mouseInterface || OverFriendlyNPC)
                 return;
 

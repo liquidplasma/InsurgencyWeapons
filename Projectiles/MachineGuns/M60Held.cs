@@ -47,7 +47,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
         {
             Projectile.width = 28;
             Projectile.height = 80;
-            ClipSize = 100;
+            MagazineSize = 100;
             AmmoType = ModContent.ItemType<Bullet76251>();
             base.SetDefaults();
         }
@@ -56,7 +56,12 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            float scale;
+            if (isIdle)
+                scale = 0.75f;
+            else
+                scale = 0.9f;
+            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
             return false;
         }
@@ -77,7 +82,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 5);
+                Shoot(5);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -123,18 +128,9 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
-                        if (ManualReload)
-                        {
-                            AmmoStackCount++;
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                        else
-                        {
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
+                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
+                        CurrentAmmo = AmmoStackCount;
                     }
                     break;
 

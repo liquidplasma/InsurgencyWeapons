@@ -23,12 +23,18 @@ namespace InsurgencyWeapons
         public int
             AKS74UMagazine,
             G36CMagazine,
-            M1A1Magazine;
+            M1A1Magazine,
+            M4A1Magazine,
+            SKSMagazine;
 
         //Battle rifles
         public int
             SCARHMagazine,
             G3A3Magazine;
+
+        //Handguns
+        public int
+            M1911Magazine;
 
         //Revolvers
         public int
@@ -56,13 +62,18 @@ namespace InsurgencyWeapons
         //Sub machine guns
         public int
             MP7Magazine,
+            MP5KMagazine,
+            MP5SDMagazine,
             M1928Drum,
-            PPShDrum;
+            PPShDrum,
+            UMP45Magazine;
 
         //Light machine guns
         public int
             RPKDrum,
-            M60Box;
+            M60Box,
+            M249Box,
+            PKMBox;
 
         //Ammo display UI
         public int
@@ -123,6 +134,12 @@ namespace InsurgencyWeapons
             //Carbines
             AKS74UMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet545>()), 0, 30);
             G36CMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet556>()), 0, 30);
+            M1A1Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76233>()), 0, 15);
+            M4A1Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet556>()), 0, 30);
+            SKSMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet762>()), 0, 20);
+
+            //Handguns
+            M1911Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet45ACP>()), 0, 7);
 
             //Revolvers
             PythonCylinder = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet357>()), 0, 6);
@@ -144,15 +161,25 @@ namespace InsurgencyWeapons
 
             //Sub machine guns
             MP7Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet4630>()), 0, 40);
+            MP5KMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet9x19>()), 0, 30);
+            MP5SDMagazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet9x19>()), 0, 30);
             M1928Drum = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet45ACP>()), 0, 50);
             PPShDrum = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76225>()), 0, 71);
+            UMP45Magazine = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet45ACP>()), 0, 25);
 
             //Light machine guns
             RPKDrum = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet762>()), 0, 75);
             M60Box = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76251>()), 0, 100);
+            M249Box = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet556>()), 0, 200);
+            PKMBox = Math.Clamp(Player.CountItem(ModContent.ItemType<Bullet76254R>()), 0, 100);
         }
 
         public override void OnEnterWorld()
+        {
+            UpdateMagazines();
+        }
+
+        public override void OnRespawn()
         {
             UpdateMagazines();
         }

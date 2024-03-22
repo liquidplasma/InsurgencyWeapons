@@ -1,15 +1,15 @@
 ﻿using InsurgencyWeapons.Helpers;
 using Terraria.Graphics;
-using Terraria.Graphics.Shaders;
 
 namespace InsurgencyWeapons.Projectiles
 {
     public abstract class BulletBase : ModProjectile
     {
         public VertexStrip _vertexStrip = new();
-        public int CaliberSize => (int)Projectile.ai[0];
+
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
         public Player Player => Main.player[Projectile.owner];
+        public PerkSystem PerkTracking => Player.GetModPlayer<PerkSystem>();
         public Item HeldItem => Player.HeldItem;
 
         public override void SetStaticDefaults()
@@ -27,17 +27,12 @@ namespace InsurgencyWeapons.Projectiles
             Projectile.extraUpdates = 5;
             Projectile.timeLeft = 900;
             Projectile.alpha = 255;
+            Projectile.ArmorPenetration = 500;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
-            miscShaderData.UseSaturation(-2.8f);
-            miscShaderData.UseOpacity(4f);
-            miscShaderData.Apply();
-            _vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, ShaderStuff.WhiteTrail, ShaderStuff.NormalBulletStripWidth, -Main.screenPosition + Projectile.Size / 2f);
-            _vertexStrip.DrawTrail();
-            Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            ShaderStuff.FancyTracer(_vertexStrip, Projectile);
             return base.PreDraw(ref lightColor);
         }
 
@@ -57,28 +52,6 @@ namespace InsurgencyWeapons.Projectiles
     {
         public override string Texture => base.Texture;
 
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-            switch (CaliberSize)
-            {
-                case (int)Insurgency.APCaliber.c762x51mm:
-                    modifiers.ArmorPenetration += 12;
-                    break;
-
-                case (int)Insurgency.APCaliber.c303mm:
-                    modifiers.ArmorPenetration += 25;
-                    break;
-
-                case (int)Insurgency.APCaliber.c762x63mm:
-                    modifiers.ArmorPenetration += 25;
-                    break;
-
-                case (int)Insurgency.APCaliber.c762x54Rmm:
-                    modifiers.ArmorPenetration += 35;
-                    break;
-            }
-        }
-
         public override void OnSpawn(IEntitySource source)
         {
             if (Insurgency.SniperRifles.Contains(HeldItem.type))
@@ -97,14 +70,22 @@ namespace InsurgencyWeapons.Projectiles
     public class ShotgunPellet : BulletBase
     {
         private int countPierce;
+
         public override string Texture => base.Texture;
 
         public override void SetDefaults()
         {
-            Projectile.penetrate = 3;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
             base.SetDefaults();
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            float penBuff = PerkTracking.GetPenetrationBuffSupport();
+            Projectile.maxPenetrate = Projectile.penetrate = (int)Math.Round(3 * penBuff);
+            Projectile.netUpdate = true;
+            base.OnSpawn(source);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -115,7 +96,7 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            float pierceDecrease = 1f - (countPierce * 0.2f);
+            float pierceDecrease = 1f - (countPierce * (0.2f - PerkTracking.GetPenetrationBuffSupport() / 10f));
             modifiers.FinalDamage *= pierceDecrease;
             base.ModifyHitNPC(target, ref modifiers);
         }

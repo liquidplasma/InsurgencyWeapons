@@ -1,9 +1,21 @@
-﻿namespace InsurgencyWeapons.Helpers
+﻿using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
+
+namespace InsurgencyWeapons.Helpers
 {
     public static class ShaderStuff
     {
         #region
-
+        public static void FancyTracer(VertexStrip _vertexStrip ,Projectile projectile)
+        {
+            MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
+            miscShaderData.UseSaturation(-2.8f);
+            miscShaderData.UseOpacity(4f);
+            miscShaderData.Apply();
+            _vertexStrip.PrepareStripWithProceduralPadding(projectile.oldPos, projectile.oldRot, ShaderStuff.WhiteTrail, ShaderStuff.NormalBulletStripWidth, -Main.screenPosition + projectile.Size / 2f);
+            _vertexStrip.DrawTrail();
+            Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+        }
         //Strip Width
         public static float NormalBulletStripWidth(float progressOnStrip)
         {

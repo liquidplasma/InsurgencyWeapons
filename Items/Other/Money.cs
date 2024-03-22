@@ -12,12 +12,12 @@ namespace InsurgencyWeapons.Items.Other
             {
                 if (!npc.boss)
                 {
-                    int amount = Math.Clamp(npc.lifeMax / 20, 1, 20);
+                    int amount = Math.Clamp(npc.lifeMax / 14, 1, 20);
                     npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 2, 1 + amount, 4 + amount));
                 }
                 else
                 {
-                    int amount = Math.Clamp(npc.lifeMax / 250, 1, 70);
+                    int amount = Math.Clamp(npc.lifeMax / 250, 1, 400);
                     npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 1, 20 + amount, 70 + amount));
                 }
             }

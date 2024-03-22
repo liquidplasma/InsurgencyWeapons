@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InsurgencyWeapons.Items.Ammo
+﻿namespace InsurgencyWeapons.Items.Ammo
 {
     public class Bullet556 : AmmoItem
     {

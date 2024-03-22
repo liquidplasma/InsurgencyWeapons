@@ -1,7 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Carbines;
-using InsurgencyWeapons.Items.Weapons.Shotguns;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Carbines;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
@@ -46,7 +45,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
         {
             Projectile.width = 18;
             Projectile.height = 86;
-            ClipSize = 15;
+            MagazineSize = 15;
             AmmoType = ModContent.ItemType<Bullet76233>();
             base.SetDefaults();
         }
@@ -83,13 +82,12 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 CurrentAmmo--;
                 ShotDelay = 0;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1.5f, 4);
+                Shoot(4);
             }
 
             if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
-                Main.NewText(ReloadTimer);
                 ReloadStarted = true;
             }
 
@@ -99,7 +97,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != ClipSize)
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MagazineSize)
             {
                 ManualReload = true;
                 ReloadStarted = true;
@@ -124,7 +122,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                     Projectile.frame = 0;
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;

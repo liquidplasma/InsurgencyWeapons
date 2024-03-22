@@ -1,10 +1,4 @@
 ﻿using InsurgencyWeapons.Projectiles.Carbines;
-using InsurgencyWeapons.Projectiles.Rifles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Items.Weapons.Carbines
 {

@@ -62,7 +62,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
         {
             Projectile.width = 18;
             Projectile.height = 80;
-            ClipSize = 10;
+            MagazineSize = 10;
             AmmoType = ModContent.ItemType<Bullet303>();
             base.SetDefaults();
         }
@@ -94,7 +94,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 CurrentAmmo--;
                 BoltActionTimer = 70;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 2, dropCasing: false, ai0: (float)Insurgency.APCaliber.c303mm);
+                Shoot(2, dropCasing: false);
             }
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
             {
@@ -129,7 +129,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
 
                 case 80:
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
-                    if (CurrentAmmo < ClipSize)
+                    if (CurrentAmmo < MagazineSize)
                     {
                         if (CurrentAmmo <= 5 && CanReload(5))
                         {

@@ -52,7 +52,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         {
             Projectile.width = 24;
             Projectile.height = 74;
-            ClipSize = 30;
+            MagazineSize = 30;
             AmmoType = ModContent.ItemType<Bullet762>();
             GrenadeLauncherAmmoType = ModContent.ItemType<VOG_25P>();
             HasUnderBarrelGrenadeLauncer = true;
@@ -80,7 +80,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             if (Player.HasItem(GrenadeLauncherAmmoType))
                 ShowAmmoCounter(CurrentAmmo, AmmoType, true, " VOG-25P: ", GrenadeLauncherAmmoType);
             else
-                ShowAmmoCounter(CurrentAmmo, AmmoType); 
+                ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
             SpecificWeaponFix = new Vector2(0, 2f);
             if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown)
@@ -88,7 +88,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1.1f, 5);
+                Shoot(5);
             }
             if (MouseRightPressed && Player.CountItem(GrenadeLauncherAmmoType) > 0 && AlternateFireCoolDown == 0 && !(ReloadTimer > 0))
             {
@@ -148,7 +148,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;

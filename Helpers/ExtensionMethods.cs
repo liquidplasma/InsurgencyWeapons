@@ -39,7 +39,6 @@ namespace InsurgencyWeapons.Helpers
             Item.ammo = Item.type;
             Item.shoot = Insurgency.Bullet;
             Item.rare = ItemRarityID.Lime;
-            Item.consumable = false;
             Item.maxStack = Item.CommonMaxStack;
         }
 

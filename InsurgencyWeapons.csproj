@@ -22,6 +22,11 @@
     <None Remove="Items\Weapons\BattleRifles\G3A3.png" />
     <None Remove="Items\Weapons\Carbines\G36C.png" />
     <None Remove="Items\Weapons\Carbines\M1A1.png" />
+    <None Remove="Items\Weapons\Carbines\M4A1.png" />
+    <None Remove="Items\Weapons\Carbines\SKS.png" />
+    <None Remove="Items\Weapons\MachineGuns\M249.png" />
+    <None Remove="Items\Weapons\MachineGuns\PKM.png" />
+    <None Remove="Items\Weapons\Pistols\M1911.png" />
     <None Remove="Items\Weapons\MachineGuns\M60.png" />
     <None Remove="Items\Weapons\Revolvers\M29.png" />
     <None Remove="Items\Weapons\Revolvers\Webley.png" />
@@ -30,6 +35,9 @@
     <None Remove="Items\Weapons\Shotguns\Ithaca.png" />
     <None Remove="Items\Weapons\Shotguns\M1014.png" />
     <None Remove="Items\Weapons\Shotguns\M590.png" />
+    <None Remove="Items\Weapons\SubMachineGuns\MP5K.png" />
+    <None Remove="Items\Weapons\SubMachineGuns\MP5SD.png" />
+    <None Remove="Items\Weapons\SubMachineGuns\UMP45.png" />
     <None Remove="NPCs\Townie\AmmoSeller.png" />
     <None Remove="NPCs\Townie\AmmoSeller_Head.png" />
     <None Remove="NPCs\Townie\AmmoSeller_Shimmer.png" />
@@ -40,6 +48,11 @@
     <None Remove="Projectiles\BattleRifles\G3A3Held.png" />
     <None Remove="Projectiles\Carbines\G36CHeld.png" />
     <None Remove="Projectiles\Carbines\M1A1Held.png" />
+    <None Remove="Projectiles\Carbines\M4A1Held.png" />
+    <None Remove="Projectiles\Carbines\SKSHeld.png" />
+    <None Remove="Projectiles\MachineGuns\M249Held.png" />
+    <None Remove="Projectiles\MachineGuns\PKMHeld.png" />
+    <None Remove="Projectiles\Pistols\M1911Held.png" />
     <None Remove="Projectiles\MachineGuns\M60Held.png" />
     <None Remove="Projectiles\Revolvers\M29Held.png" />
     <None Remove="Projectiles\Revolvers\WebleyHold.png" />
@@ -48,11 +61,22 @@
     <None Remove="Projectiles\Shotguns\IthacaHeld.png" />
     <None Remove="Projectiles\Shotguns\M1014Held.png" />
     <None Remove="Projectiles\Shotguns\M590Held.png" />
+    <None Remove="Projectiles\SubMachineGuns\MP5KHeld.png" />
+    <None Remove="Projectiles\SubMachineGuns\MP5SDHeld.png" />
+    <None Remove="Projectiles\SubMachineGuns\UMP45Held.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\ASVALMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\GalilMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\GrozaMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\Carbines\G36CMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\Carbines\M1A1Magazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\Carbines\M4A1Magazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\Carbines\SKSMagazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\MachineGuns\M249Box.png" />
+    <None Remove="Projectiles\WeaponMagazines\MachineGuns\PKMBox.png" />
+    <None Remove="Projectiles\WeaponMagazines\Pistols\M1911Magazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\SubMachineGuns\MP5KMagazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\SubMachineGuns\MP5SDMagazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\SubMachineGuns\UMP45Magazine.png" />
     <None Remove="VendingMachines\VendingMachineGunsTile.png" />
   </ItemGroup>
   <ItemGroup>

@@ -52,6 +52,10 @@ namespace InsurgencyWeapons
                 //Sniper rifles
                 weaponClass = Language.GetTextValue("Mods.InsurgencyWeapons.WeaponClasses.Shotgun");
 
+            if (item.ModItem is not null and Pistol)
+                //Pistols
+                weaponClass = Language.GetTextValue("Mods.InsurgencyWeapons.WeaponClasses.Pistol");
+
             if (item.ModItem is not null and SubMachineGun)
                 //Sub machine guns
                 weaponClass = Language.GetTextValue("Mods.InsurgencyWeapons.WeaponClasses.SMG");

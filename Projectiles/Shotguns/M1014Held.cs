@@ -57,7 +57,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         {
             Projectile.width = 20;
             Projectile.height = 78;
-            ClipSize = 7;
+            MagazineSize = 7;
             AmmoType = ModContent.ItemType<TwelveGauge>();
             base.SetDefaults();
         }
@@ -82,6 +82,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 8f;
             SpecificWeaponFix = new Vector2(0, 1.5f);
+
             if (!Player.channel || AutoAttack == 0)
             {
                 SemiAuto = false;
@@ -98,7 +99,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 for (int j = 0; j < 8; j++)
                 {
                     //Buck
-                    Shoot(1, 1, dropCasing: false, shotgun: true);
+                    Shoot(1, dropCasing: false, shotgun: true);
                 }
                 DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
             }
@@ -116,7 +117,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != ClipSize)
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MagazineSize)
             {
                 ManualReload = true;
                 ReloadStarted = true;
@@ -131,7 +132,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     break;
 
                 case 40:
-                    if (CurrentAmmo < ClipSize)
+                    if (CurrentAmmo < MagazineSize)
                     {
                         if (Ammo.stack > 0)
                         {
@@ -151,7 +152,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     break;
 
                 case 160:
-                    if (CurrentAmmo < ClipSize)
+                    if (CurrentAmmo < MagazineSize)
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
 

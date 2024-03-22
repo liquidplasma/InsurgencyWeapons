@@ -7,7 +7,9 @@ namespace InsurgencyWeapons
     public class InsurgencyModSystem : ModSystem
     {
         private InsurgencyAmmoStatsUI UI;
+
         private UserInterface AmmoDisplayUI;
+
         private Player Player => Main.LocalPlayer;
         private bool HoldingInsurgencyWeapon => Insurgency.AllWeapons.Contains(Player.HeldItem.type);
 

@@ -14,7 +14,7 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
             Item.width = 78;
             Item.height = 22;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 64;
+            Item.damage = 96;
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;

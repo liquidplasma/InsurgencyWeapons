@@ -60,7 +60,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         {
             Projectile.width = 18;
             Projectile.height = 84;
-            ClipSize = 6;
+            MagazineSize = 6;
             AmmoType = ModContent.ItemType<TwelveGauge>();
             base.SetDefaults();
         }
@@ -96,7 +96,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 for (int j = 0; j < 8; j++)
                 {
                     //Buck
-                    Shoot(1, 1, dropCasing: false, shotgun: true);
+                    Shoot(1, dropCasing: false, shotgun: true);
                 }
             }
 
@@ -113,7 +113,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != ClipSize)
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MagazineSize)
             {
                 ManualReload = true;
                 ReloadStarted = true;
@@ -128,7 +128,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     break;
 
                 case 40:
-                    if (CurrentAmmo < ClipSize)
+                    if (CurrentAmmo < MagazineSize)
                     {
                         if (Ammo.stack > 0)
                         {
@@ -148,7 +148,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     break;
 
                 case 160:
-                    if (!ManualReload && CurrentAmmo < ClipSize)
+                    if (!ManualReload && CurrentAmmo < MagazineSize)
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         if (Ammo.stack > 0)

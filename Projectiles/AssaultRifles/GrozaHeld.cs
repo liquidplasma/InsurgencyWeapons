@@ -52,7 +52,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         {
             Projectile.width = 30;
             Projectile.height = 68;
-            ClipSize = 20;
+            MagazineSize = 20;
             AmmoType = ModContent.ItemType<Bullet939>();
             GrenadeLauncherAmmoType = ModContent.ItemType<VOG_25P>();
             HasUnderBarrelGrenadeLauncer = true;
@@ -88,7 +88,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1.1f, 3);
+                Shoot(3);
             }
             if (MouseRightPressed && Player.CountItem(GrenadeLauncherAmmoType) > 0 && AlternateFireCoolDown == 0 && !(ReloadTimer > 0))
             {
@@ -148,7 +148,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;

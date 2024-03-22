@@ -43,7 +43,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
         {
             Projectile.width = 22;
             Projectile.height = 86;
-            ClipSize = 75;
+            MagazineSize = 75;
             AmmoType = ModContent.ItemType<Bullet762>();
             base.SetDefaults();
         }
@@ -73,7 +73,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(0.66f, 9);
+                Shoot(5);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -112,7 +112,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;

@@ -48,7 +48,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
         {
             Projectile.width = 18;
             Projectile.height = 36;
-            ClipSize = 6;
+            MagazineSize = 6;
             AmmoType = ModContent.ItemType<Bullet357>();
             isPistol = true;
             base.SetDefaults();
@@ -96,7 +96,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 ShotDelay = FireDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 2, dropCasing: false);
+                Shoot(2, dropCasing: false);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -132,19 +132,19 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (CanReload() && !ManualReload)
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                         CurrentAmmo = AmmoStackCount;
                     }
 
-                    if (CurrentAmmo < ClipSize && CanReload() && ManualReload)
+                    if (CurrentAmmo < MagazineSize && CanReload() && ManualReload)
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
                         DropCasingManually();
                         Player.ConsumeMultiple(1, Ammo.type);
                         CurrentAmmo++;
                         ReloadTimer = 170;
-                        if (CurrentAmmo == ClipSize)
+                        if (CurrentAmmo == MagazineSize)
                             ReloadTimer = 120;
                     }
 

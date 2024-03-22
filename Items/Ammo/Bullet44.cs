@@ -10,10 +10,10 @@ namespace InsurgencyWeapons.Items.Ammo
         public override void SetDefaults()
         {
             MoneyCost = 20;
-            CraftStack = 6;
+            CraftStack = 12;
             Item.width = 7;
             Item.height = 19;
-            Item.DefaultsToInsurgencyAmmo(18);
+            Item.DefaultsToInsurgencyAmmo(22);
             base.SetDefaults();
         }
     }

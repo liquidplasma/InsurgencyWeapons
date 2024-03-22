@@ -3,12 +3,7 @@ using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Carbines;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Carbines;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Projectiles.Carbines
 {
@@ -47,7 +42,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
         {
             Projectile.width = 28;
             Projectile.height = 62;
-            ClipSize = 30;
+            MagazineSize = 30;
             AmmoType = ModContent.ItemType<Bullet556>();
             base.SetDefaults();
         }
@@ -77,7 +72,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(0.8f, 3);
+                Shoot(3);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -116,7 +111,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;

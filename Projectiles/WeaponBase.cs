@@ -1,7 +1,6 @@
 ﻿using InsurgencyWeapons.Gores.Casing;
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
-using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles
@@ -36,12 +35,12 @@ namespace InsurgencyWeapons.Projectiles
         /// <summary>
         /// Max amount of ammo per reload
         /// </summary>
-        public int ClipSize { get; set; }
+        public int MagazineSize { get; set; }
 
         /// <summary>
         /// Used for weapon spread
         /// </summary>
-        private int Degree { get; set; }
+        private float Degree { get; set; }
 
         /// <summary>
         /// Ammo item type
@@ -77,11 +76,11 @@ namespace InsurgencyWeapons.Projectiles
         {
             get
             {
-                Ammo ??= ContentSamples.ItemsByType[AmmoType];
+                Item SampleAmmo = ContentSamples.ItemsByType[AmmoType];
                 if (InsurgencyModConfig.Instance.DamageScaling)
-                    return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth() * Insurgency.WeaponScaling());
+                    return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(SampleAmmo.damage)) * Player.GetStealth() * Insurgency.WeaponScaling());
 
-                return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
+                return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(SampleAmmo.damage)) * Player.GetStealth());
             }
         }
 
@@ -89,7 +88,7 @@ namespace InsurgencyWeapons.Projectiles
         public bool ManualReload { get; set; }
         public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
 
-        public bool CanManualReload(int CurrentAmmo) => CurrentAmmo != 0 && CurrentAmmo != ClipSize + 1;
+        public bool CanManualReload(int CurrentAmmo) => CurrentAmmo != 0 && CurrentAmmo != MagazineSize + 1;
 
         public bool AllowedToFire(int CurrentAmmo) => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
@@ -129,7 +128,7 @@ namespace InsurgencyWeapons.Projectiles
         public Vector2 SpecificWeaponFix = new(0, 0);
 
         public bool
-            isPistol, isASmallSprite, isIdle,
+            isPistol, isASmallSprite, BigSpriteSpecificIdlePos, isIdle,
             MouseRightPressed,
             HasUnderBarrelGrenadeLauncer;
 
@@ -188,7 +187,7 @@ namespace InsurgencyWeapons.Projectiles
         /// <param name="multiplier"></param>
         /// <param name="maxDegree"></param>
         /// <returns></returns>
-        public Vector2 WeaponFireSpreadCalc(float multiplier, int maxDegree, bool shotgun = false)
+        public Vector2 WeaponFireSpreadCalc(int maxDegree, bool shotgun = false)
         {
             bool shouldNotIncrease = Player.scope && MouseRightPressed;
             if (shouldNotIncrease)
@@ -197,7 +196,6 @@ namespace InsurgencyWeapons.Projectiles
             if (!shouldNotIncrease && Player.channel && Main.rand.NextBool(5))
                 Degree += 1;
 
-            Degree = (int)(Degree * multiplier);
             if (Degree > maxDegree)
                 Degree = maxDegree;
 
@@ -250,16 +248,16 @@ namespace InsurgencyWeapons.Projectiles
         /// <summary>
         /// Shoot boolet
         /// </summary>
-        /// <param name="multiplier"></param>
         /// <param name="maxDegree"></param>
         /// <param name="dropCasing"></param>
         /// <param name="ai0"></param>
         /// <param name="ai1"></param>
         /// <param name="ai2"></param>
         /// <param name="shotgun"></param>
+        /// 
         ///
         ///
-        public void Shoot(float multiplier, int maxDegree, bool dropCasing = true, float ai0 = 0, float ai1 = 0, float ai2 = 0, bool shotgun = false)
+        public void Shoot(int maxDegree, bool dropCasing = true, float ai0 = 0, float ai1 = 0, float ai2 = 0, bool shotgun = false)
         {
             float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
             if (HeldItem.ModItem is not null and Rifle || HeldItem.ModItem is not null and Shotgun)
@@ -268,17 +266,17 @@ namespace InsurgencyWeapons.Projectiles
             if (HeldItem.ModItem is not null and SniperRifle)
                 knockBack *= 1.33f;
 
-            Vector2 aim = WeaponFireSpreadCalc(multiplier, maxDegree, shotgun);
+            Vector2 aim = WeaponFireSpreadCalc(maxDegree, shotgun);
 
             int type = NormalBullet;
             if (shotgun)
                 type = ShotgunPellet;
 
             //Bullet
-            BetterNewProjectile(
+            Projectile Shot = BetterNewProjectile(
                Player,
                spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-               position: Player.MountedCenter,
+               position: Player.MountedCenter - new Vector2(0f, Projectile.gfxOffY - Player.gfxOffY),
                velocity: aim,
                type: type,
                damage: BulletDamage,
@@ -287,6 +285,7 @@ namespace InsurgencyWeapons.Projectiles
                ai0: ai0,
                ai1: ai1,
                ai2: ai2);
+            Shot.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon = true;
 
             if (dropCasing)
                 DropCasingManually();
@@ -294,7 +293,7 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void SetDefaults()
         {
-            if (ClipSize == 0)
+            if (MagazineSize == 0)
                 throw new ArgumentException("ClipSize property can't be 0");
 
             Projectile.DamageType = DamageClass.Ranged;
@@ -369,7 +368,6 @@ namespace InsurgencyWeapons.Projectiles
 
             if (AutoAttack > 0)
                 AutoAttack--;
-
             #endregion
 
             return base.PreAI();
@@ -396,23 +394,8 @@ namespace InsurgencyWeapons.Projectiles
             //positioning / velocity
             #region
             idlePos = new Vector2(-12, -40);
-            if (isPistol)
-            {
-                int X = Player.direction == -1
-                    ? 2 //true
-                    : -22; //false
 
-                idlePos = new Vector2(X, -10);
-            }
-            if (isASmallSprite)
-            {
-                int X = Player.direction == -1
-                    ? -12 //true
-                    : -16; //false
-
-                idlePos = new Vector2(X, -20);
-            }
-
+            int mouseDirection = Player.DirectionTo(MouseAim).X > 0f ? 1 : -1;
             if (Player.channel
                 || ReloadTimer > 0
                 || UnderAlternateFireCoolDown
@@ -424,7 +407,6 @@ namespace InsurgencyWeapons.Projectiles
                 Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + SpecificWeaponFix;
                 Projectile.Center = Player.MountedCenter + distance - new Vector2(0f, Projectile.gfxOffY - Player.gfxOffY);
                 Projectile.velocity = Vector2.Zero;
-                int mouseDirection = Player.DirectionTo(MouseAim).X > 0f ? 1 : -1;
                 Projectile.rotation = Player.AngleTo(MouseAim) + MathHelper.PiOver2;
                 Player.ChangeDir(mouseDirection);
                 Projectile.spriteDirection = Player.direction;
@@ -435,13 +417,38 @@ namespace InsurgencyWeapons.Projectiles
             else if (ReloadTimer == 0)
             {
                 isIdle = true;
-                Projectile.position = Player.Center + idlePos;
-                Projectile.spriteDirection = Player.direction;
                 Projectile.rotation = Player.direction == -1 ? -MathHelper.PiOver4 : MathHelper.PiOver4;
                 if (isPistol)
-                    Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
+                {
+                    int X = Player.direction == -1
+                        ? 2 //true
+                        : -22; //false
 
-                Projectile.frame = 0;
+                    idlePos = new Vector2(X, -10);
+                    Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
+                }
+                if (isASmallSprite)
+                {
+                    int X = Player.direction == -1
+                        ? -12 //true
+                        : -16; //false
+
+                    idlePos = new Vector2(X, -25);
+                }
+                if (BigSpriteSpecificIdlePos)
+                {
+                    int X = Player.direction == -1
+                       ? -15 //true
+                       : -24; //false
+
+                    idlePos = new Vector2(X, -40);
+                    Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
+                }
+                Projectile.position = Player.Center + idlePos - new Vector2(0f, Projectile.gfxOffY - Player.gfxOffY);
+                Projectile.spriteDirection = Player.direction;
+                if (isPistol)
+
+                    Projectile.frame = 0;
             }
             #endregion
         }

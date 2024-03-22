@@ -15,6 +15,7 @@ namespace InsurgencyWeapons.NPCs.Townie
     public class AmmoSeller : ModNPC
     {
         private static Profiles.StackedNPCProfile NPCProfile;
+
         private static float RandomDiscount;
 
         public override void SetStaticDefaults()
@@ -171,7 +172,7 @@ namespace InsurgencyWeapons.NPCs.Townie
                 !spawnInfo.Player.ZoneCrimson &&
                 spawnInfo.Player.inventory.Any(item => item.type == ModContent.ItemType<Money>());
 
-            return condition ? 0.045f : 0f;
+            return condition ? 0.015f : 0f;
         }
 
         public override string GetChat()

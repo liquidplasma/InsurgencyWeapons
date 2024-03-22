@@ -42,7 +42,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
         {
             Projectile.width = 28;
             Projectile.height = 68;
-            ClipSize = 30;
+            MagazineSize = 30;
             AmmoType = ModContent.ItemType<Bullet545>();
             base.SetDefaults();
         }
@@ -72,7 +72,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(0.8f, 3);
+                Shoot(3);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -111,7 +111,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;

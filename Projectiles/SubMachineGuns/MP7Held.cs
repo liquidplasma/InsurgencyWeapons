@@ -42,7 +42,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
         {
             Projectile.width = 28;
             Projectile.height = 44;
-            ClipSize = 40;
+            MagazineSize = 40;
             AmmoType = ModContent.ItemType<Bullet4630>();
             isASmallSprite = true;
             base.SetDefaults();
@@ -74,7 +74,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 1);
+                Shoot(2);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -113,7 +113,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;
@@ -136,7 +136,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                     CurrentAmmo = 0;
                     if (!ManualReload)
                     {
-                        DropMagazine(ModContent.ProjectileType<M1928Drum>());
+                        DropMagazine(ModContent.ProjectileType<MP7Magazine>());
                     }
                     break;
             }

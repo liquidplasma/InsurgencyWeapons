@@ -5,11 +5,13 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras
     public class AKMVOG_25P : ModProjectile
     {
         private bool Exploded;
+
         private Player Player => Main.player[Projectile.owner];
 
         private enum Exploding
         {
             Not = 0,
+
             Ready = 1,
         }
 

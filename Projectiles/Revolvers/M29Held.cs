@@ -43,7 +43,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
         {
             Projectile.width = 20;
             Projectile.height = 36;
-            ClipSize = 6;
+            MagazineSize = 6;
             AmmoType = ModContent.ItemType<Bullet44>();
             isPistol = true;
             base.SetDefaults();
@@ -76,7 +76,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 0, dropCasing: false);
+                Shoot(0, dropCasing: false);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
@@ -108,7 +108,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     break;
 
                 case 70:
-                    if (CurrentAmmo < ClipSize && CanReload())
+                    if (CurrentAmmo < MagazineSize && CanReload())
                     {
                         if (ManualReload)
                             DropCasingManually();

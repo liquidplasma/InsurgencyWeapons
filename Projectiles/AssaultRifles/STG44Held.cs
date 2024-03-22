@@ -42,7 +42,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         {
             Projectile.width = 28;
             Projectile.height = 74;
-            ClipSize = 30;
+            MagazineSize = 30;
             AmmoType = ModContent.ItemType<Bullet792>();
             base.SetDefaults();
         }
@@ -66,13 +66,13 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 8f;
-            SpecificWeaponFix = new Vector2(0, 1f);
+            SpecificWeaponFix = new Vector2(0, 0.5f);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 2);
+                Shoot(2);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -111,7 +111,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         if (ManualReload)
                         {
                             AmmoStackCount++;

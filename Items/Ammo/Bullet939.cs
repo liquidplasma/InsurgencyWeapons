@@ -10,7 +10,7 @@ namespace InsurgencyWeapons.Items.Ammo
             CraftStack = 20;
             Item.width = 7;
             Item.height = 26;
-            Item.DefaultsToInsurgencyAmmo(10);
+            Item.DefaultsToInsurgencyAmmo(12);
             base.SetDefaults();
         }
     }

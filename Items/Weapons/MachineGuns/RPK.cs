@@ -13,7 +13,7 @@ namespace InsurgencyWeapons.Items.Weapons.MachineGuns
             Item.width = 84;
             Item.height = 22;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 12;
+            Item.damage = 14;
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;

@@ -13,7 +13,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.width = 76;
             Item.height = 22;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 7;
+            Item.damage = 8;
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;

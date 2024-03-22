@@ -20,23 +20,14 @@ namespace InsurgencyWeapons.Items
             if (MoneyCost == 0 || CraftStack == 0)
                 throw new ArgumentException("MoneyCost or CraftStack property can't be 0");
 
-            Item.value = MoneyCost;
+            Item.value = MoneyCost * 20;
         }
 
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 60;
-        }
+        public override void SetStaticDefaults() => Item.ResearchUnlockCount = 60;
 
-        public override bool CanStackInWorld(Item source)
-        {
-            return true;
-        }
+        public override bool CanStackInWorld(Item source) => true;
 
-        public override void AddRecipes()
-        {
-            this.RegisterINS2RecipeAmmo(MoneyCost, CraftStack);
-        }
+        public override void AddRecipes() => this.RegisterINS2RecipeAmmo(MoneyCost, CraftStack);
     }
 
     /// <summary>
@@ -59,7 +50,7 @@ namespace InsurgencyWeapons.Items
             if (MoneyCost == 0 && this is not Grenade)
                 throw new ArgumentException("MoneyCost property can't be 0");
 
-            Item.value = MoneyCost;
+            Item.value = MoneyCost * 40;
             base.SetDefaults();
         }
 
@@ -68,6 +59,24 @@ namespace InsurgencyWeapons.Items
             if (WeaponHeldProjectile != 0 && player.ownedProjectileCounts[WeaponHeldProjectile] < 1)
             {
                 int damage = (int)player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Item.damage);
+                PerkSystem PerkTracking = player.GetModPlayer<PerkSystem>();
+                InsurgencyCustomSetBonusModPlayer SetTracking = player.GetModPlayer<InsurgencyCustomSetBonusModPlayer>();
+
+                if (PerkTracking.CommandoWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Commando] > 0)
+                    damage = (int)(damage * 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Commando));
+
+                if (PerkTracking.SupportSpecialistWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.SupportSpecialist] > 0)
+                    damage = (int)(damage * 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.SupportSpecialist));
+
+                if (PerkTracking.DemolitionsWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Demolitons] > 0)
+                    damage = (int)(damage * 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons));
+
+                if (PerkTracking.SharpshooterWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Sharpshooter] > 0)
+                    damage = (int)(damage * 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Sharpshooter));
+
+                if ((Insurgency.Pistols.Contains(Item.type) || Insurgency.Revolvers.Contains(Item.type)) && SetTracking.revolverSet)
+                    damage *= 2;
+
                 Projectile gun = BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
                 gun.originalDamage = damage;
             }
@@ -122,6 +131,7 @@ namespace InsurgencyWeapons.Items
             Throw;
 
         public bool Fired;
+
         public int Timer;
 
         public override void SetDefaults()
@@ -187,7 +197,7 @@ namespace InsurgencyWeapons.Items
                         Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed * 3.5f;
                         int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
                         float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
-                        BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, GrenadeType, damage, knockback, player.whoAmI);
+                        BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, GrenadeType, damage, knockback, player.whoAmI).GetGlobalProjectile<ProjPerkTracking>().Grenade = true;
                         break;
                 }
             }

@@ -43,7 +43,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
         {
             Projectile.width = 14;
             Projectile.height = 82;
-            ClipSize = 10;
+            MagazineSize = 10;
             AmmoType = ModContent.ItemType<Bullet76254R>();
             base.SetDefaults();
         }
@@ -59,7 +59,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.GarandMagazine;
+            CurrentAmmo = MagazineTracking.SVTMagazine;
             ShotDelay = HeldItem.useTime;
         }
 
@@ -74,7 +74,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1, 2, ai0: (float)Insurgency.APCaliber.c762x54Rmm);
+                Shoot(2);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -112,7 +112,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (CanReload())
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, ClipSize);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
                         Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                         CurrentAmmo = AmmoStackCount;
                     }

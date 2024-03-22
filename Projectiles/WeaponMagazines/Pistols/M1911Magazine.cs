@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols
+{
+    public class M1911Magazine : MagazineBase
+    {
+        public override void SetDefaults()
+        {
+            Projectile.height = Projectile.width = 4;
+            base.SetDefaults();
+        }
+    }
+}

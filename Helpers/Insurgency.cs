@@ -24,52 +24,57 @@ namespace InsurgencyWeapons.Helpers
         public static int Money => ModContent.ItemType<Money>();
 
         /// <summary>
-        /// All of the ammo types goes here
+        /// All of the ammo types go here
         /// </summary>
         public static List<int> AmmoTypes = new();
 
         /// <summary>
-        /// All of the weapons type goes here
+        /// All of the weapons type go here
         /// </summary>
         public static List<int> AllWeapons = new();
 
         /// <summary>
-        /// All of the assault rifles goes here
+        /// All of the assault rifles go here
         /// </summary>
         public static List<int> AssaultRifles = new();
 
         /// <summary>
-        /// All of the battle rifles goes here
+        /// All of the battle rifles go here
         /// </summary>
         public static List<int> BattleRifles = new();
 
         /// <summary>
-        /// All of the carbines goes here
+        /// All of the carbines go here
         /// </summary>
         public static List<int> Carbines = new();
 
         /// <summary>
-        /// All the rifles goes here
+        /// All of the handguns go here
+        /// </summary>
+        public static List<int> Pistols = new();
+
+        /// <summary>
+        /// All the rifles go here
         /// </summary>
         public static List<int> Rifles = new();
 
         /// <summary>
-        /// All shotguns goes here
+        /// All shotguns go here
         /// </summary>
         public static List<int> Shotguns = new();
 
         /// <summary>
-        /// All sniper rifles goes here
+        /// All sniper rifles go here
         /// </summary>
         public static List<int> SniperRifles = new();
 
         /// <summary>
-        /// All of the revolvers goes here
+        /// All of the revolvers go here
         /// </summary>
         public static List<int> Revolvers = new();
 
         /// <summary>
-        /// All of the SMGs goes here
+        /// All of the SMGs go here
         /// </summary>
         public static List<int> SubMachineGuns = new();
 
@@ -79,9 +84,14 @@ namespace InsurgencyWeapons.Helpers
         public static List<int> LightMachineGuns = new();
 
         /// <summary>
-        /// All of the grenades goes here
+        /// All of the grenades go here
         /// </summary>
         public static List<int> Grenades = new();
+
+        /// <summary>
+        /// All of the launchers go here
+        /// </summary>
+        public static List<int> Launchers = new();
 
         public static float WeaponScaling()
         {
@@ -99,31 +109,33 @@ namespace InsurgencyWeapons.Helpers
             return Main.masterMode ? modifier * 1.08f : modifier;
         }
 
-        public enum APCaliber
-        {
-            c762x51mm = 1,
-            c762x63mm,
-            c762x54Rmm,
-            c303mm
-        }
-
         public enum ReloadModifiers
         {
             AssaultRifles = 25,
+
             BattleRifles = 30,
+
             Carbines = 23,
+
             Rifles = 8,
+
             SniperRifles = 4,
+
             Revolvers = 21,
+
             SubMachineGuns = BattleRifles,
+
             LightMachineGuns = 40
         }
 
         public enum MagazineState
         {
             Reloaded,
+
             Fired,
+
             EmptyMagIn,
+
             EmptyMagOut,
         }
     }
