@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<M1GarandHeld>();
             MoneyCost = 255;
+            base.SetDefaults();
         }
     }
 }

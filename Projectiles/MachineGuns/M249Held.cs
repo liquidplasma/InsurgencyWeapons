@@ -109,7 +109,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             switch (ReloadTimer)
             {
                 case 30:
-                    if(!ManualReload)
+                    if (!ManualReload)
                         SoundEngine.PlaySound(Hit, Projectile.Center);
                     ReloadStarted = ManualReload = false;
                     break;
@@ -117,9 +117,9 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 case 100:
                     SoundEngine.PlaySound(Close, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    if(ManualReload)                    
+                    if (ManualReload)
                         ReloadTimer = 31;
-                    
+
                     break;
 
                 case 120:
@@ -145,7 +145,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                         DropMagazine(ModContent.ProjectileType<M249Box>());
 
                     Projectile.frame = 2;
-                    break;              
+                    break;
 
                 case 280:
                     SoundEngine.PlaySound(Open, Projectile.Center);
@@ -158,7 +158,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
                 case 320:
                     SoundEngine.PlaySound(BoltLock, Projectile.Center);
-                    break;             
+                    break;
 
                 case 339:
                     SoundEngine.PlaySound(BoltRetract, Projectile.Center);

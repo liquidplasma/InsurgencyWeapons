@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.Carbines
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<G36CHeld>();
             MoneyCost = 250;
+            base.SetDefaults();
         }
     }
 }

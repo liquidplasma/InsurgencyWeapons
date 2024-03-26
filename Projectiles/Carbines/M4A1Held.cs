@@ -3,12 +3,7 @@ using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Carbines;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Carbines;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Projectiles.Carbines
 {

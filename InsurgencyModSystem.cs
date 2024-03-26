@@ -6,6 +6,9 @@ namespace InsurgencyWeapons
 {
     public class InsurgencyModSystem : ModSystem
     {
+        public static InsurgencyModSystem Instance { get; set; }
+        public int AmmoSellerSpawnDelay;
+
         private InsurgencyAmmoStatsUI UI;
 
         private UserInterface AmmoDisplayUI;
@@ -15,6 +18,7 @@ namespace InsurgencyWeapons
 
         public override void Load()
         {
+            Instance = this;
             if (!Main.dedServ)
             {
                 UI = new InsurgencyAmmoStatsUI();
@@ -22,6 +26,14 @@ namespace InsurgencyWeapons
                 AmmoDisplayUI.SetState(UI);
             }
             base.Load();
+        }
+
+        public override void PostUpdateNPCs()
+        {
+            if (AmmoSellerSpawnDelay > 0)
+                AmmoSellerSpawnDelay--;
+
+            base.PostUpdateNPCs();
         }
 
         public override void UpdateUI(GameTime gameTime)

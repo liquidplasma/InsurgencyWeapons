@@ -12,13 +12,13 @@ namespace InsurgencyWeapons.Items.Other
             {
                 if (!npc.boss)
                 {
-                    int amount = Math.Clamp(npc.lifeMax / 14, 1, 20);
-                    npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 2, 1 + amount, 4 + amount));
+                    int amount = Math.Clamp(npc.lifeMax / 8, 1, 50);
+                    npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 2, 1 + amount, 5 + amount));
                 }
                 else
                 {
-                    int amount = Math.Clamp(npc.lifeMax / 250, 1, 400);
-                    npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 1, 20 + amount, 70 + amount));
+                    int amount = Math.Clamp(npc.lifeMax / 150, 1, 400);
+                    npcLoot.Add(ItemDropRule.Common(Insurgency.Money, 1, 40 + amount, 140 + amount));
                 }
             }
         }
@@ -35,7 +35,7 @@ namespace InsurgencyWeapons.Items.Other
         {
             Item.width = 28;
             Item.height = 22;
-            Item.value = Item.sellPrice(silver: 1);
+            Item.value = Item.buyPrice(silver: 1);
             Item.rare = ItemRarityID.Lime;
             Item.maxStack = Item.CommonMaxStack;
         }

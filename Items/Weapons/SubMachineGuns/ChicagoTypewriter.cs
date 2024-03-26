@@ -25,6 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<ChicagoTypewriterHeld>();
             MoneyCost = 225;
+            base.SetDefaults();
         }
     }
 }

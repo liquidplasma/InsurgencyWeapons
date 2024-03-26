@@ -1,9 +1,4 @@
 ﻿using InsurgencyWeapons.Projectiles.SubMachineGuns;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
 {
@@ -27,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<UMP45Held>();
             MoneyCost = 165;
+            base.SetDefaults();
         }
     }
 }

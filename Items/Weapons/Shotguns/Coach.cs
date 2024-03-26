@@ -25,6 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<CoachHeld>();
             MoneyCost = 295;
+            base.SetDefaults();
         }
     }
 }

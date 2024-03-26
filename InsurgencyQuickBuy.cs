@@ -25,7 +25,7 @@ namespace InsurgencyWeapons
                     if (Player.CountItem(Insurgency.Money) <= resultingCost)
                         return;
 
-                    Player.ConsumeMultiple(resultingCost, Insurgency.Money);                    
+                    Player.ConsumeMultiple(resultingCost, Insurgency.Money);
                     SoundEngine.PlaySound(InsurgencyGlobalItem.AmmoNoise, Player.Center);
                     Player.QuickSpawnItem(Player.GetSource_DropAsItem(), AmmoCost.Type, AmmoCost.CraftStack);
                 }

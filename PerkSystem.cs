@@ -1,5 +1,4 @@
 ﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Items;
 using System.Collections.Generic;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -11,6 +10,8 @@ namespace InsurgencyWeapons
         public bool
             ShotFromInsurgencyWeapon,
             Grenade;
+
+        public int Perk;
 
         public override bool InstancePerEntity => true;
     }
@@ -35,22 +36,6 @@ namespace InsurgencyWeapons
             {(int)Perks.SupportSpecialist, Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.SupportSpecialistClass") },
             {(int)Perks.Sharpshooter, Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.SharpshooterClass") }
         };
-
-        private bool CommandoHeldWeapons =>
-            Player.HeldItem.ModItem is AssaultRifle ||
-            Player.HeldItem.ModItem is SubMachineGun ||
-            Player.HeldItem.ModItem is Carbine ||
-            Player.HeldItem.ModItem is BattleRifle ||
-            Player.HeldItem.ModItem is LightMachineGun;
-
-        private bool SupportSpecialistHeldWeapons => Player.HeldItem.ModItem is Shotgun;
-        private bool DemolitionsHeldWeapons => Player.HeldItem.ModItem is Grenade || Player.HeldItem.ModItem is Launcher;
-
-        private bool SharpshooterHeldWeapons =>
-            Player.HeldItem.ModItem is SniperRifle ||
-            Player.HeldItem.ModItem is Rifle ||
-            Player.HeldItem.ModItem is Pistol ||
-            Player.HeldItem.ModItem is Revolver;
 
         public bool CommandoWeapons(Item item) =>
             Insurgency.AssaultRifles.Contains(item.type) ||
@@ -159,7 +144,10 @@ namespace InsurgencyWeapons
                     return;
 
                 Level[perk] += 1;
-                CreateCombatText(Player, Color.Green, ClassNames[perk] + " " + Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.LevelUp")).lifeTime = 120;
+                CombatText LevelUp = CreateCombatText(Player, Color.Green, ClassNames[perk] + " " + Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.LevelUp"));
+                LevelUp.lifeTime = 240;
+                if (LevelUp.lifeTime == 120)
+                    LevelUp.color = Color.Red;
                 switch (perk)
                 {
                     case (int)Perks.Commando:
@@ -181,40 +169,47 @@ namespace InsurgencyWeapons
             }
         }
 
+        private static ProjPerkTracking GlobalPerk(Projectile proj)
+        {
+            return proj.GetGlobalProjectile<ProjPerkTracking>();
+        }
+
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (proj.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon)
+            if (GlobalPerk(proj).ShotFromInsurgencyWeapon)
             {
                 if (target.type == NPCID.TargetDummy)
                     return;
 
-                if (CommandoHeldWeapons)
+                switch (proj.ai[0])
                 {
-                    CommandoDamage += hit.Damage;
-                    if (target.life <= 0)
-                        CommandoKills++;
-                    UpdateLevels(CommandoDamage, CommandoKills, (int)Perks.Commando);
-                }
-                if (SupportSpecialistHeldWeapons)
-                {
-                    SupportSpecialistDamage += hit.Damage;
-                    if (target.life <= 0)
-                        SupportSpecialistKills++;
-                    UpdateLevels(SupportSpecialistDamage, SupportSpecialistKills, (int)Perks.SupportSpecialist);
-                }
-                if (DemolitionsHeldWeapons)
-                {
-                    DemolitionsDamage += hit.Damage;
-                    if (target.life <= 0)
-                        DemolitionsKills++;
-                    UpdateLevels(DemolitionsDamage, DemolitionsKills, (int)Perks.Demolitons);
-                }
-                if (SharpshooterHeldWeapons)
-                {
-                    SharpShooterDamage += hit.Damage;
-                    if (target.life <= 0)
-                        SharpShooterKills++;
-                    UpdateLevels(SharpShooterDamage, SharpShooterKills, (int)Perks.Sharpshooter);
+                    case (int)Perks.Commando:
+                        CommandoDamage += hit.Damage;
+                        if (target.life <= 0)
+                            CommandoKills++;
+                        UpdateLevels(CommandoDamage, CommandoKills, (int)Perks.Commando);
+                        break;
+
+                    case (int)Perks.SupportSpecialist:
+                        SupportSpecialistDamage += hit.Damage;
+                        if (target.life <= 0)
+                            SupportSpecialistKills++;
+                        UpdateLevels(SupportSpecialistDamage, SupportSpecialistKills, (int)Perks.SupportSpecialist);
+                        break;
+
+                    case (int)Perks.Demolitons:
+                        DemolitionsDamage += hit.Damage;
+                        if (target.life <= 0)
+                            DemolitionsKills++;
+                        UpdateLevels(DemolitionsDamage, DemolitionsKills, (int)Perks.Demolitons);
+                        break;
+
+                    case (int)Perks.Sharpshooter:
+                        SharpShooterDamage += hit.Damage;
+                        if (target.life <= 0)
+                            SharpShooterKills++;
+                        UpdateLevels(SharpShooterDamage, SharpShooterKills, (int)Perks.Sharpshooter);
+                        break;
                 }
             }
 

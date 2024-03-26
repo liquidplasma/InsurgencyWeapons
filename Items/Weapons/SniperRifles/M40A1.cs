@@ -23,6 +23,7 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<M40A1Held>();
             MoneyCost = 305;
+            base.SetDefaults();
         }
     }
 }

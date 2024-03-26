@@ -13,7 +13,7 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
             Item.width = 34;
             Item.height = 18;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 19;
+            Item.damage = 25;
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<ColtPythonHeld>();
             MoneyCost = 180;
+            base.SetDefaults();
         }
     }
 }

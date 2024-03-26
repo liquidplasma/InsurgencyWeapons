@@ -6,7 +6,8 @@ namespace InsurgencyWeapons.Helpers
     public static class ShaderStuff
     {
         #region
-        public static void FancyTracer(VertexStrip _vertexStrip ,Projectile projectile)
+
+        public static void FancyTracer(VertexStrip _vertexStrip, Projectile projectile)
         {
             MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
             miscShaderData.UseSaturation(-2.8f);
@@ -16,6 +17,7 @@ namespace InsurgencyWeapons.Helpers
             _vertexStrip.DrawTrail();
             Main.pixelShader.CurrentTechnique.Passes[0].Apply();
         }
+
         //Strip Width
         public static float NormalBulletStripWidth(float progressOnStrip)
         {

@@ -25,6 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<SVT40Held>();
             MoneyCost = 290;
+            base.SetDefaults();
         }
     }
 }

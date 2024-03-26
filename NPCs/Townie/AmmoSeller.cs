@@ -80,6 +80,7 @@ namespace InsurgencyWeapons.NPCs.Townie
 
         public override void OnSpawn(IEntitySource source)
         {
+            InsurgencyModSystem.Instance.AmmoSellerSpawnDelay = (int)(Main.dayLength * 3);
             RandomDiscount = Utils.SelectRandom(Main.rand, 0.667f, 0.7f, 0.85f);
             base.OnSpawn(source);
         }
@@ -164,6 +165,7 @@ namespace InsurgencyWeapons.NPCs.Townie
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             bool condition =
+                InsurgencyModSystem.Instance.AmmoSellerSpawnDelay == 0 &&
                 NPC.downedBoss1 &&
                 Main.dayTime &&
                 !NPC.AnyNPCs(Type) &&
@@ -203,6 +205,7 @@ namespace InsurgencyWeapons.NPCs.Townie
         public override void AddShops()
         {
             NPCShop AmmoShop = new(Type);
+            AmmoShop.Add(new Item(Insurgency.Money));
             foreach (int AmmoType in Insurgency.AmmoTypes)
             {
                 Item AmmoItem = ContentSamples.ItemsByType[AmmoType];

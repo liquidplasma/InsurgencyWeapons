@@ -443,16 +443,16 @@ Projectiles: {
 	M4A1Magazine.DisplayName: M4 A1 Magazine
 	M1911Held.DisplayName: M1911 Held
 	M1911Magazine.DisplayName: M1911 Magazine
-	MP5KHeld.DisplayName: M P5 K Held
-	MP5KMagazine.DisplayName: M P5 K Magazine
-	MP5SDHeld.DisplayName: M P5 S D Held
-	MP5SDMagazine.DisplayName: M P5 S D Magazine
-	SKSHeld.DisplayName: S K S Held
-	SKSMagazine.DisplayName: S K S Magazine
-	UMP45Held.DisplayName: U M P45 Held
-	UMP45Magazine.DisplayName: U M P45 Magazine
-	PKMHeld.DisplayName: P K M Held
-	PKMBox.DisplayName: P K M Box
+	MP5KHeld.DisplayName: MP5K Held
+	MP5KMagazine.DisplayName: MP5K Magazine
+	MP5SDHeld.DisplayName: MP5SD Held
+	MP5SDMagazine.DisplayName: MP5SD Magazine
+	SKSHeld.DisplayName: SKS Held
+	SKSMagazine.DisplayName: SKS Magazine
+	UMP45Held.DisplayName: UMP45 Held
+	UMP45Magazine.DisplayName: UMP45 Magazine
+	PKMHeld.DisplayName: PKM Held
+	PKMBox.DisplayName: PKM Box
 	M249Held.DisplayName: M249 Held
 	M249Box.DisplayName: M249 Box
 }

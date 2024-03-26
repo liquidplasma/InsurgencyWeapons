@@ -25,6 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<AN94Held>();
             MoneyCost = 300;
+            base.SetDefaults();
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols
+﻿namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols
 {
     public class M1911Magazine : MagazineBase
     {

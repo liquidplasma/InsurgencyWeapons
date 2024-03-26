@@ -56,10 +56,10 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
         {
             Texture2D myTexture = Projectile.MyTexture();
             float scale;
-            if(isIdle)            
+            if (isIdle)
                 scale = 0.75f;
-            else 
-                scale = 0.9f;            
+            else
+                scale = 0.9f;
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
             ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
@@ -82,7 +82,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(4);
+                Shoot(3);
             }
 
             if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -154,7 +154,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 case 260:
                     SoundEngine.PlaySound(LidUp, Projectile.Center);
                     Projectile.frame = 5;
-                    if(CurrentAmmo != 0)
+                    if (CurrentAmmo != 0)
                         Projectile.frame = 6;
 
                     break;

@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<MP5SDHeld>();
             MoneyCost = 190;
+            base.SetDefaults();
         }
     }
 }

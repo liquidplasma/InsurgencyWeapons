@@ -13,7 +13,7 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
             Item.width = 34;
             Item.height = 20;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 27;
+            Item.damage = 30;
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<M29Held>();
             MoneyCost = 190;
+            base.SetDefaults();
         }
     }
 }

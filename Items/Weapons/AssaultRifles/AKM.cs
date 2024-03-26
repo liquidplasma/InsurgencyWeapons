@@ -25,6 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<AKMHeld>();
             MoneyCost = 350;
+            base.SetDefaults();
         }
     }
 }

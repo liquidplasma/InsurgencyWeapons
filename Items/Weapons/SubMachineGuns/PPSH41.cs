@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<PPSH41Held>();
             MoneyCost = 235;
+            base.SetDefaults();
         }
     }
 }

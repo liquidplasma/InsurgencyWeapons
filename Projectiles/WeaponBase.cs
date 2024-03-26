@@ -254,7 +254,7 @@ namespace InsurgencyWeapons.Projectiles
         /// <param name="ai1"></param>
         /// <param name="ai2"></param>
         /// <param name="shotgun"></param>
-        /// 
+        ///
         ///
         ///
         public void Shoot(int maxDegree, bool dropCasing = true, float ai0 = 0, float ai1 = 0, float ai2 = 0, bool shotgun = false)
@@ -276,13 +276,13 @@ namespace InsurgencyWeapons.Projectiles
             Projectile Shot = BetterNewProjectile(
                Player,
                spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-               position: Player.MountedCenter - new Vector2(0f, Projectile.gfxOffY - Player.gfxOffY),
+               position: Player.MountedCenter,
                velocity: aim,
                type: type,
                damage: BulletDamage,
                knockback: knockBack,
                owner: Player.whoAmI,
-               ai0: ai0,
+               ai0: Projectile.GetGlobalProjectile<ProjPerkTracking>().Perk,
                ai1: ai1,
                ai2: ai2);
             Shot.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon = true;
@@ -405,7 +405,8 @@ namespace InsurgencyWeapons.Projectiles
                 isIdle = false;
                 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
                 Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + SpecificWeaponFix;
-                Projectile.Center = Player.MountedCenter + distance - new Vector2(0f, Projectile.gfxOffY - Player.gfxOffY);
+                Projectile.Center = Player.MountedCenter + distance;
+                Projectile.position.Y += Player.gfxOffY;
                 Projectile.velocity = Vector2.Zero;
                 Projectile.rotation = Player.AngleTo(MouseAim) + MathHelper.PiOver2;
                 Player.ChangeDir(mouseDirection);
@@ -444,7 +445,8 @@ namespace InsurgencyWeapons.Projectiles
                     idlePos = new Vector2(X, -40);
                     Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
                 }
-                Projectile.position = Player.Center + idlePos - new Vector2(0f, Projectile.gfxOffY - Player.gfxOffY);
+                Projectile.position = Player.Center + idlePos;
+                Projectile.position.Y += Player.gfxOffY;
                 Projectile.spriteDirection = Player.direction;
                 if (isPistol)
 

@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.BattleRifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<SCARHHeld>();
             MoneyCost = 350;
+            base.SetDefaults();
         }
     }
 }

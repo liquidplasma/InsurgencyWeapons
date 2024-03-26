@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<GalilHeld>();
             MoneyCost = 260;
+            base.SetDefaults();
         }
     }
 }

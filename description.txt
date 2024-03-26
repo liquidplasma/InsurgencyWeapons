@@ -1,4 +1,5 @@
-This mod adds "realistic" guns with "realistic" mechanics like actual magazine size and reloading. 
+This mod adds "realistic" guns with "realistic" mechanics like actual magazine size and reloading.
+Weapons are divided in classes and levelling up said class will increase damage of all weapons in the class.
 All of the guns are held projectiles so if you use some mod that changes how projectiles work you might have some unwanted bugs.
 
 All enemies now drop "money" at a fixed 50% chance, with money you can craft the vending machines for weapons and ammo.
@@ -12,78 +13,65 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 [h1]Weapons in the pack so far:[/h1]
 
 	[b]-Assault rifles-[/b]
-		AKM 7.62x39mm + GP-25 40mm VOG-25P
-		AS VAL 9x39mm
-		StG-44 7.92x33mm
-		AN-94N + PK-AS 5.45x39mm
-		IMI GALIL ARM 5.56x45mm
-		OTs-14 Groza 4 9x39mm + GP-30 40mm VOG-25
+		* AKM 7.62x39mm + GP-25 40mm VOG-25P
+		* AS VAL 9x39mm
+		* StG-44 7.92x33mm
+		* AN-94N + PK-AS 5.45x39mm
+		* IMI GALIL ARM 5.56x45mm
+		* OTs-14 Groza 4 9x39mm + GP-30 40mm VOG-25
 
 	[b]-Battle Rifles-[/b]
-		FN SCAR-H 7.62x51mm
-		H&K G3A3 7.62x51mm
+		* FN SCAR-H 7.62x51mm
+		* H&K G3A3 7.62x51mm
 
 	[b]-Carbines-[/b]
-		AKS-74U 5.45x39mm
-		M1A1 Paratrooper 7.62x33mm
-		SKS Simonov 7.62x39mm
-		Colt M4A1 5.56x45mm
+		* AKS-74U 5.45x39mm
+		* M1A1 Paratrooper 7.62x33mm
+		* SKS Simonov 7.62x39mm
+		* Colt M4A1 5.56x45mm
 
 	[b]-Grenades-[/b]
-		Stielhandgranate M24
-		Mk. 2 Pineapple Grenade
-		RGO Grenade
+		* Stielhandgranate M24
+		* Mk. 2 Pineapple Grenade
+		* RGO Grenade
 
 	[b]-Machine guns-[/b]
-		RPK 7.62x39mm
-		M60 7.62x51mm
-		PKM 7.62x54mmR
-		FN M249 5.56x45mm
+		* RPK 7.62x39mm
+		* M60 7.62x51mm
+		* PKM 7.62x54mmR
+		* FN M249 5.56x45mm
 
 	[b]-Revolvers-[/b]
-		Colt Python .357 Magnum
-		S&W Model 29 .44 Magnum
+		* Colt Python .357 Magnum
+		* S&W Model 29 .44 Magnum
 
 	[b]-Pistols-[/b]
-		Colt M1911 .45ACP
+		* Colt M1911 .45ACP
 
 	[b]-Rifles-[/b]
-		M1 Garand 7.62x63mm
-		Lee-Enfield No.IV Mk.I .303
-		SVT-40 7.62x54mmR
+		* M1 Garand 7.62x63mm
+		* Lee-Enfield No.IV Mk.I .303
+		* SVT-40 7.62x54mmR
 
 	[b]-Shotguns-[/b]
-		Coach Gun Buck & Ball
-		Mossberg M590 12 Gauge
-		Ithaca M37 12 Gauge
-		Benelli M1014 12 Gauge
+		* Coach Gun Buck & Ball
+		* Mossberg M590 12 Gauge
+		* Ithaca M37 12 Gauge
+		* Benelli M1014 12 Gauge
 
 	[b]-Sniper rifles-[/b]
-		M40A1 7.62x51mm + Leupold Scope
-		Mosin Nagant M91/30 7.62x54mmR + PU Scope
+		* M40A1 7.62x51mm + Leupold Scope
+		* Mosin Nagant M91/30 7.62x54mmR + PU Scope
 
 	[b]-Sub machine guns-[/b]
-		Thompson M1928 .45ACP
-		PPSh-41 7.62x25mm
-		H&K MP7 4.6x30mm
-		H&K MP5K 9x19mm
-		H&K MP5SD 9x19mm
-		H&K UMP-45 .45ACP
+		* Thompson M1928 .45ACP
+		* PPSh-41 7.62x25mm
+		* H&K MP7 4.6x30mm
+		* H&K MP5K 9x19mm
+		* H&K MP5SD 9x19mm
+		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.8
-	- Buffed snipers a bit
-	- Added 12 new weapons
-		- IMI GALIL ARM 5.56x45mm
-		- OTs-14 Groza 4 9x39mm + GP-30 40mm VOG-25
-		- H&K G36C 5.56x45mm
-		- M1A1 Paratrooper 7.62x33mm
-		- SKS Simonov 7.62x39mm
-		- Colt M4A1 5.56x45mm
-		- Colt M1911 .45ACP
-		- H&K MP5K 9x19mm
-		- H&K MP5SD 9x19mm		
-		- H&K UMP-45 .45ACP
-		- PKM 7.62x54mmR
-		- FN M249 5.56x45mm
-	- Added a perk system, weapons are now divided in classes, they will get buffs and damage the higher the level on the perk
+v0.8.1
+	- Better tracking for perks
+	- Buffed revolvers

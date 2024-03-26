@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.MachineGuns
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<PKMHeld>();
             MoneyCost = 950;
+            base.SetDefaults();
         }
     }
 }

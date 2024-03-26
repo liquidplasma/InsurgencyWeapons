@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.Carbines
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<M1A1Held>();
             MoneyCost = 260;
+            base.SetDefaults();
         }
     }
 }

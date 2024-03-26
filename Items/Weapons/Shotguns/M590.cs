@@ -25,6 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<M590Held>();
             MoneyCost = 285;
+            base.SetDefaults();
         }
     }
 }

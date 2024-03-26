@@ -1,9 +1,7 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Pistols;
-using InsurgencyWeapons.Items.Weapons.Rifles;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
@@ -120,7 +118,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
             switch (ReloadTimer)
             {
                 case 15:
-                    if(!ManualReload)
+                    if (!ManualReload)
                         SoundEngine.PlaySound(SlideRel, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     ReloadStarted = ManualReload = false;
@@ -154,7 +152,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                         DropMagazine(ModContent.ProjectileType<M1911Magazine>());
                         Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     }
-                    break;               
+                    break;
             }
             if (CurrentAmmo != 0 && ReloadTimer == 0)
             {

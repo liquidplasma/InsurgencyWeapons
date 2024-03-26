@@ -37,6 +37,7 @@ namespace InsurgencyWeapons.Items
     {
         public int WeaponHeldProjectile { get; set; }
         public int MoneyCost { get; set; }
+        public int WeaponPerk { get; set; } = -1;
 
         public override void SetStaticDefaults()
         {
@@ -49,6 +50,9 @@ namespace InsurgencyWeapons.Items
         {
             if (MoneyCost == 0 && this is not Grenade)
                 throw new ArgumentException("MoneyCost property can't be 0");
+
+            if (WeaponPerk == -1 && this is not Grenade)
+                throw new ArgumentException("Must assign a perk to a weapon");
 
             Item.value = MoneyCost * 40;
             base.SetDefaults();
@@ -79,6 +83,7 @@ namespace InsurgencyWeapons.Items
 
                 Projectile gun = BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
                 gun.originalDamage = damage;
+                gun.GetGlobalProjectile<ProjPerkTracking>().Perk = WeaponPerk;
             }
             base.HoldItem(player);
         }
@@ -89,37 +94,103 @@ namespace InsurgencyWeapons.Items
     }
 
     public abstract class AssaultRifle : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.Commando;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class BattleRifle : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.Commando;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class Carbine : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.Commando;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class Rifle : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.Sharpshooter;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class Shotgun : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.SupportSpecialist;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class SniperRifle : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.Sharpshooter;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class SubMachineGun : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.Commando;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class LightMachineGun : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.Commando;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class Launcher : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.Demolitons;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class Pistol : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.Sharpshooter;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class Revolver : WeaponUtils
-    { }
+    {
+        public override void SetDefaults()
+        {
+            WeaponPerk = (int)PerkSystem.Perks.Sharpshooter;
+            base.SetDefaults();
+        }
+    }
 
     public abstract class Grenade : WeaponUtils
     {
@@ -166,6 +237,7 @@ namespace InsurgencyWeapons.Items
 
         public override void HoldItem(Player player)
         {
+            PerkSystem PerkTracking = player.GetModPlayer<PerkSystem>();
             if (Item.stack <= 0)
                 Item.TurnToAir();
 
@@ -196,6 +268,8 @@ namespace InsurgencyWeapons.Items
                         Item.stack--;
                         Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed * 3.5f;
                         int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
+                        if (PerkTracking.DemolitionsWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Demolitons] > 0)
+                            damage = (int)(damage * 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons));
                         float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
                         BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, GrenadeType, damage, knockback, player.whoAmI).GetGlobalProjectile<ProjPerkTracking>().Grenade = true;
                         break;

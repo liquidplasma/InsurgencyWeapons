@@ -25,6 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<STG44Held>();
             MoneyCost = 290;
+            base.SetDefaults();
         }
     }
 }

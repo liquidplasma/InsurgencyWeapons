@@ -25,6 +25,7 @@ namespace InsurgencyWeapons.Items.Weapons.BattleRifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<G3A3Held>();
             MoneyCost = 335;
+            base.SetDefaults();
         }
     }
 }

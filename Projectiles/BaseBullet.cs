@@ -52,6 +52,11 @@ namespace InsurgencyWeapons.Projectiles
     {
         public override string Texture => base.Texture;
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             if (Insurgency.SniperRifles.Contains(HeldItem.type))

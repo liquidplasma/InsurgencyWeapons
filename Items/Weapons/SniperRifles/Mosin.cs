@@ -23,6 +23,7 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<MosinHeld>();
             MoneyCost = 320;
+            base.SetDefaults();
         }
     }
 }

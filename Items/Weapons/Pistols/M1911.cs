@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.Pistols
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<M1911Held>();
             MoneyCost = 110;
+            base.SetDefaults();
         }
     }
 }

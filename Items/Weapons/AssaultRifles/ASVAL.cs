@@ -21,7 +21,8 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<ASVALHeld>();
-            MoneyCost = 230;
+            MoneyCost = 230; 
+            base.SetDefaults();
         }
     }
 }

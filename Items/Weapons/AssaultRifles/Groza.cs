@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<GrozaHeld>();
             MoneyCost = 320;
+            base.SetDefaults();
         }
     }
 }

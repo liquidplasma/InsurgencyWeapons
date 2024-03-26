@@ -22,6 +22,7 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<EnfieldHeld>();
             MoneyCost = 270;
+            base.SetDefaults();
         }
     }
 }
