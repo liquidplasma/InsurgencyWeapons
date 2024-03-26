@@ -2,7 +2,8 @@
 
 # Insurgency Weapons
 
-This mod adds "realistic" guns with "realistic" mechanics like actual magazine size and reloading. 
+This mod adds "realistic" guns with "realistic" mechanics like actual magazine size and reloading.
+Weapons are divided in classes and levelling up said class will increase damage of all weapons in the class.
 All of the guns are held projectiles so if you use some mod that changes how projectiles work you might have some unwanted bugs.
 
 All enemies now drop "money" at a fixed 50% chance, with money you can craft the vending machines for weapons and ammo.
@@ -26,8 +27,9 @@ Weapons in the pack so far:
 
 -Carbines-
 * AKS-74U 5.45x39mm
-* H&K G36C 5.56x45mm
 * M1A1 Paratrooper 7.62x33mm
+* SKS Simonov 7.62x39mm
+* Colt M4A1 5.56x45mm
 
 -Grenades-
 * Stielhandgranate M24
@@ -37,6 +39,11 @@ Weapons in the pack so far:
 -Machine guns-
 * RPK 7.62x39mm
 * M60 7.62x51mm
+* PKM 7.62x54mmR
+* FN M249 5.56x45mm
+
+-Pistols-
+* Colt M1911 .45ACP
 
 -Revolvers-
 * Colt Python .357 Magnum
@@ -61,5 +68,8 @@ Weapons in the pack so far:
 * Thompson M1928 .45ACP
 * PPSh-41 7.62x25mm
 * H&K MP7 4.6x30mm
+* H&K MP5K 9x19mm
+* H&K MP5SD 9x19mm
+* H&K UMP-45 .45ACP
 
 #### The code in this repository is open source.
