@@ -1,6 +1,7 @@
 ﻿using InsurgencyWeapons.Gores.Casing;
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
+using InsurgencyWeapons.Projectiles.MachineGuns;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles
@@ -88,7 +89,10 @@ namespace InsurgencyWeapons.Projectiles
         public bool ManualReload { get; set; }
         public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
 
-        public bool CanManualReload(int CurrentAmmo) => CurrentAmmo != 0 && CurrentAmmo != MagazineSize + 1;
+        public bool CanManualReload(int CurrentAmmo) 
+        { 
+           return CurrentAmmo != 0 && CurrentAmmo != MagazineSize + 1; 
+        }
 
         public bool AllowedToFire(int CurrentAmmo) => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
@@ -294,7 +298,7 @@ namespace InsurgencyWeapons.Projectiles
         public override void SetDefaults()
         {
             if (MagazineSize == 0)
-                throw new ArgumentException("ClipSize property can't be 0");
+                throw new ArgumentException("MagazineSize property can't be 0");
 
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.tileCollide = false;

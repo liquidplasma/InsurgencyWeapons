@@ -72,6 +72,5 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.8.1
-	- Better tracking for perks
-	- Buffed revolvers
+v0.8.2
+	- Fix glitch in shotguns

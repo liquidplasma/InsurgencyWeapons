@@ -29,6 +29,41 @@ namespace InsurgencyWeapons
             Sharpshooter
         }
 
+        private enum Bosses
+        {
+            NoBoss,
+
+            Skeletron,
+
+            WallOfFlesh,
+
+            AllMechs,
+
+            Plantera,
+
+            Cultist,
+
+            Moonlord
+        }
+
+        private int BossDowned()
+        {
+            int x = 0;
+            if (NPC.downedBoss3)
+                x++;
+            if (Main.hardMode)
+                x++;
+            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                x++;
+            if (NPC.downedPlantBoss)
+                x++;
+            if (NPC.downedAncientCultist)
+                x++;
+            if (NPC.downedMoonlord)
+                x++;
+            return x;
+        }
+
         public Dictionary<int, string> ClassNames = new()
         {
             {(int)Perks.Commando, Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.CommandoClass") },
@@ -76,21 +111,48 @@ namespace InsurgencyWeapons
 
         public int[] Level = new int[4];
 
-        public int[] DamageRequired = { 1000, 4500, 10000, 60000, 120000, 500000 };
+        public int[] DamageRequired = { 1000, 4000, 16000, 64000, 384000, 3072000 };
 
-        public int[] KillsRequired = { 10, 15, 45, 75, 225, 500 };
+        public int[] KillsRequired = { 10, 30, 90, 270, 540, 1080 };
 
         public float GetDamageMultPerLevel(int perk)
         {
             if (Level[perk] == 0)
-                return 0;
-            return Level[perk] * (5 / 60f);
+                return 2 / 60f;
+
+            switch (BossDowned())
+            {
+                case (int)Bosses.NoBoss:
+                    return Level[perk] * (4 / 60f);
+
+                case (int)Bosses.Skeletron:
+                    return Level[perk] * (6 / 60f);
+
+                case (int)Bosses.WallOfFlesh:
+                    return Level[perk] * (8 / 60f);
+
+                case (int)Bosses.AllMechs:
+                    return Level[perk] * (10 / 60f);
+
+                case (int)Bosses.Plantera:
+                    return Level[perk] * (14 / 60f);
+
+                case (int)Bosses.Cultist:
+                    return Level[perk] * (16 / 60f);
+
+                case (int)Bosses.Moonlord:
+                    return Level[perk] * (30 / 60f);
+
+                default:
+                    break;
+            }
+            return 0;
         }
 
         public float GetPenetrationBuffSupport()
         {
             if (Level[(int)Perks.SupportSpecialist] == 0)
-                return 0;
+                return 1f;
             return 1f + Level[(int)Perks.SupportSpecialist] * (9 / 60f);
         }
 
@@ -142,12 +204,13 @@ namespace InsurgencyWeapons
             {
                 if (Level[perk] >= 6)
                     return;
-
                 Level[perk] += 1;
+
                 CombatText LevelUp = CreateCombatText(Player, Color.Green, ClassNames[perk] + " " + Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.LevelUp"));
                 LevelUp.lifeTime = 240;
                 if (LevelUp.lifeTime == 120)
                     LevelUp.color = Color.Red;
+
                 switch (perk)
                 {
                     case (int)Perks.Commando:
@@ -176,7 +239,7 @@ namespace InsurgencyWeapons
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (GlobalPerk(proj).ShotFromInsurgencyWeapon)
+            if (GlobalPerk(proj).ShotFromInsurgencyWeapon && proj.owner == Player.whoAmI)
             {
                 if (target.type == NPCID.TargetDummy)
                     return;
@@ -213,7 +276,7 @@ namespace InsurgencyWeapons
                 }
             }
 
-            if (proj.GetGlobalProjectile<ProjPerkTracking>().Grenade)
+            if (GlobalPerk(proj).Grenade && proj.owner == Player.whoAmI)
             {
                 if (target.type == NPCID.TargetDummy)
                     return;

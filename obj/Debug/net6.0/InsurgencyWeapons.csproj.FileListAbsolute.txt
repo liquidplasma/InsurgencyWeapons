@@ -6,7 +6,6 @@ C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\Insurge
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\bin\Debug\net6.0\FNA.dll
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\bin\Debug\net6.0\Hjson.dll
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\bin\Debug\net6.0\Humanizer.dll
-C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\bin\Debug\net6.0\Ionic.Zip.Reduced.dll
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\bin\Debug\net6.0\log4net.dll
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\bin\Debug\net6.0\Microsoft.Build.Locator.dll
@@ -128,8 +127,10 @@ C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\Insurge
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\obj\Debug\net6.0\InsurgencyWeapons.AssemblyInfoInputs.cache
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\obj\Debug\net6.0\InsurgencyWeapons.AssemblyInfo.cs
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\obj\Debug\net6.0\InsurgencyWeapons.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\obj\Debug\net6.0\InsurgencyWeapons.csproj.CopyComplete
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\obj\Debug\net6.0\InsurgencyWeapons.dll
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\obj\Debug\net6.0\refint\InsurgencyWeapons.dll
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\obj\Debug\net6.0\InsurgencyWeapons.pdb
 C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\obj\Debug\net6.0\ref\InsurgencyWeapons.dll
+C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\bin\Debug\net6.0\DotNetZip.dll
+C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\obj\Debug\net6.0\InsurgencyWeapons.sourcelink.json
+C:\Users\Administrator\Documents\My Games\Terraria\tModLoader\ModSources\InsurgencyWeapons\obj\Debug\net6.0\Insurgen.EB818CC1.Up2Date

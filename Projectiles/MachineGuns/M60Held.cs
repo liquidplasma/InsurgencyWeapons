@@ -26,6 +26,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             MaxInstances = 0,
             Volume = 0.4f
         };
+        private bool CanManualReload() => CurrentAmmo != 0 && CurrentAmmo != MagazineSize;
 
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m60/empty");
         private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m60/magin");
@@ -97,7 +98,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload())
             {
                 ManualReload = true;
                 ReloadStarted = true;

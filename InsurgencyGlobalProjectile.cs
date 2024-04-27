@@ -15,14 +15,14 @@ namespace InsurgencyWeapons
 
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
-            if (projectile.ModProjectile is not null and MagazineBase)
+            if (projectile.ModProjectile is MagazineBase)
             {
                 if (IgnoredDraws.Contains(projectile.type))
                     return base.PreDraw(projectile, ref lightColor);
 
                 Texture2D texture = projectile.MyTexture();
                 Rectangle rect = texture.Bounds;
-                ExtensionMethods.BetterEntityDraw(texture, projectile.Center, rect, lightColor, projectile.rotation, rect.Size() / 2, projectile.scale, SpriteEffects.None);
+                BetterEntityDraw(texture, projectile.Center, rect, lightColor, projectile.rotation, rect.Size() / 2, projectile.scale, SpriteEffects.None);
                 return false;
             }
             return base.PreDraw(projectile, ref lightColor);

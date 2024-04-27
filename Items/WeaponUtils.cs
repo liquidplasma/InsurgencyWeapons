@@ -67,20 +67,22 @@ namespace InsurgencyWeapons.Items
                 InsurgencyCustomSetBonusModPlayer SetTracking = player.GetModPlayer<InsurgencyCustomSetBonusModPlayer>();
 
                 if (PerkTracking.CommandoWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Commando] > 0)
-                    damage = (int)(damage * 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Commando));
+                    damage = (int)(damage * PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Commando));
 
                 if (PerkTracking.SupportSpecialistWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.SupportSpecialist] > 0)
-                    damage = (int)(damage * 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.SupportSpecialist));
+                    damage = (int)(damage * PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.SupportSpecialist));
 
                 if (PerkTracking.DemolitionsWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Demolitons] > 0)
-                    damage = (int)(damage * 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons));
+                    damage = (int)(damage * PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons));
 
                 if (PerkTracking.SharpshooterWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Sharpshooter] > 0)
-                    damage = (int)(damage * 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Sharpshooter));
+                    damage = (int)(damage * PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Sharpshooter));
 
                 if ((Insurgency.Pistols.Contains(Item.type) || Insurgency.Revolvers.Contains(Item.type)) && SetTracking.revolverSet)
                     damage *= 2;
 
+                if (InsurgencyModConfig.Instance.DamageScaling)
+                    damage = (int)(damage * Insurgency.WeaponScaling());
                 Projectile gun = BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
                 gun.originalDamage = damage;
                 gun.GetGlobalProjectile<ProjPerkTracking>().Perk = WeaponPerk;
@@ -269,7 +271,7 @@ namespace InsurgencyWeapons.Items
                         Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed * 3.5f;
                         int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
                         if (PerkTracking.DemolitionsWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Demolitons] > 0)
-                            damage = (int)(damage * 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons));
+                            damage = (int)(damage * (1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons)));
                         float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
                         BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, GrenadeType, damage, knockback, player.whoAmI).GetGlobalProjectile<ProjPerkTracking>().Grenade = true;
                         break;
