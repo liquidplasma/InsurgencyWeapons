@@ -391,17 +391,24 @@ namespace InsurgencyWeapons
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
-            if (PerkTracking.CommandoWeapons(item) && PerkTracking.Level[(int)PerkSystem.Perks.Commando] > 0)
-                damage *= 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Commando);
+            if (Insurgency.AllWeapons.Contains(item.type))
+            {
+                if (PerkTracking.CommandoWeapons(item) && PerkTracking.Level[(int)PerkSystem.Perks.Commando] > 0)
+                    damage *= 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Commando);
 
-            if (PerkTracking.SupportSpecialistWeapons(item) && PerkTracking.Level[(int)PerkSystem.Perks.SupportSpecialist] > 0)
-                damage *= 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.SupportSpecialist);
+                if (PerkTracking.SupportSpecialistWeapons(item) && PerkTracking.Level[(int)PerkSystem.Perks.SupportSpecialist] > 0)
+                    damage *= 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.SupportSpecialist);
 
-            if (PerkTracking.DemolitionsWeapons(item) && PerkTracking.Level[(int)PerkSystem.Perks.Demolitons] > 0)
-                damage *= 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons);
+                if (PerkTracking.DemolitionsWeapons(item) && PerkTracking.Level[(int)PerkSystem.Perks.Demolitons] > 0)
+                    damage *= 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons);
 
-            if (PerkTracking.SharpshooterWeapons(item) && PerkTracking.Level[(int)PerkSystem.Perks.Sharpshooter] > 0)
-                damage *= 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Sharpshooter);
+                if (PerkTracking.SharpshooterWeapons(item) && PerkTracking.Level[(int)PerkSystem.Perks.Sharpshooter] > 0)
+                    damage *= 1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Sharpshooter);
+
+                if (InsurgencyModConfig.Instance.DamageScaling && (Insurgency.AllWeapons.Contains(item.type) || Insurgency.Grenades.Contains(item.type)))
+                    damage *= Insurgency.WeaponScaling();
+                damage *= 1.25f;
+            }
         }
     }
 }

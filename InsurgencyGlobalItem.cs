@@ -28,14 +28,6 @@ namespace InsurgencyWeapons
             return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
         }
 
-        public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
-        {
-            if (InsurgencyModConfig.Instance.DamageScaling && (Insurgency.AllWeapons.Contains(item.type) || Insurgency.Grenades.Contains(item.type)))
-                damage *= Insurgency.WeaponScaling();
-
-            base.ModifyWeaponDamage(item, player, ref damage);
-        }
-
         public override void OnCreated(Item item, ItemCreationContext context)
         {
             if (context is RecipeItemCreationContext)

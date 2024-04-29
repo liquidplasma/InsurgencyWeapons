@@ -1,7 +1,6 @@
 ﻿using InsurgencyWeapons.Gores.Casing;
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
-using InsurgencyWeapons.Projectiles.MachineGuns;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles
@@ -79,9 +78,9 @@ namespace InsurgencyWeapons.Projectiles
             {
                 Item SampleAmmo = ContentSamples.ItemsByType[AmmoType];
                 if (InsurgencyModConfig.Instance.DamageScaling)
-                    return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(SampleAmmo.damage)) * Player.GetStealth() * Insurgency.WeaponScaling());
+                    return (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(SampleAmmo.damage)) * Player.GetStealth() * Insurgency.WeaponScaling());
 
-                return (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(SampleAmmo.damage)) * Player.GetStealth());
+                return (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(SampleAmmo.damage)) * Player.GetStealth());
             }
         }
 
@@ -89,9 +88,9 @@ namespace InsurgencyWeapons.Projectiles
         public bool ManualReload { get; set; }
         public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
 
-        public bool CanManualReload(int CurrentAmmo) 
-        { 
-           return CurrentAmmo != 0 && CurrentAmmo != MagazineSize + 1; 
+        public bool CanManualReload(int CurrentAmmo)
+        {
+            return CurrentAmmo != 0 && CurrentAmmo != MagazineSize + 1;
         }
 
         public bool AllowedToFire(int CurrentAmmo) => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;

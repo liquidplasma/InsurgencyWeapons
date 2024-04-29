@@ -27,6 +27,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             MaxInstances = 0,
             Volume = 0.4f
         };
+
         private bool CanManualReload() => CurrentAmmo != 0 && CurrentAmmo != MagazineSize;
 
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/pkm/empty");

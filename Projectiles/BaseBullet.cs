@@ -27,13 +27,39 @@ namespace InsurgencyWeapons.Projectiles
             Projectile.extraUpdates = 5;
             Projectile.timeLeft = 900;
             Projectile.alpha = 255;
-            Projectile.ArmorPenetration = 500;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             ShaderStuff.FancyTracer(_vertexStrip, Projectile);
             return base.PreDraw(ref lightColor);
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            float mult = 1f;
+            PerkSystem PerkTracking = Player.GetModPlayer<PerkSystem>();
+            InsurgencyCustomSetBonusModPlayer SetTracking = Player.GetModPlayer<InsurgencyCustomSetBonusModPlayer>();
+            if (PerkTracking.CommandoWeapons(HeldItem) && PerkTracking.Level[(int)PerkSystem.Perks.Commando] > 0)
+                mult += PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Commando);
+
+            if (PerkTracking.SupportSpecialistWeapons(HeldItem) && PerkTracking.Level[(int)PerkSystem.Perks.SupportSpecialist] > 0)
+                mult += PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.SupportSpecialist);
+
+            if (PerkTracking.DemolitionsWeapons(HeldItem) && PerkTracking.Level[(int)PerkSystem.Perks.Demolitons] > 0)
+                mult += PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons);
+
+            if (PerkTracking.SharpshooterWeapons(HeldItem) && PerkTracking.Level[(int)PerkSystem.Perks.Sharpshooter] > 0)
+                mult += PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Sharpshooter);
+
+            if ((Insurgency.Pistols.Contains(HeldItem.type) || Insurgency.Revolvers.Contains(HeldItem.type)) && SetTracking.revolverSet)
+                mult *= 2;
+
+            if (InsurgencyModConfig.Instance.DamageScaling)
+                mult *= Insurgency.WeaponScaling();
+
+            modifiers.FinalDamage *= mult;
+            base.ModifyHitNPC(target, ref modifiers);
         }
 
         public override void AI()

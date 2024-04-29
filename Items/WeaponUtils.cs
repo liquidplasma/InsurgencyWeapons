@@ -1,4 +1,6 @@
-﻿using InsurgencyWeapons.Helpers;
+﻿using Humanizer;
+using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Projectiles;
 using Terraria.Utilities;
 
 namespace InsurgencyWeapons.Items
@@ -62,30 +64,8 @@ namespace InsurgencyWeapons.Items
         {
             if (WeaponHeldProjectile != 0 && player.ownedProjectileCounts[WeaponHeldProjectile] < 1)
             {
-                int damage = (int)player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Item.damage);
-                PerkSystem PerkTracking = player.GetModPlayer<PerkSystem>();
-                InsurgencyCustomSetBonusModPlayer SetTracking = player.GetModPlayer<InsurgencyCustomSetBonusModPlayer>();
-
-                if (PerkTracking.CommandoWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Commando] > 0)
-                    damage = (int)(damage * PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Commando));
-
-                if (PerkTracking.SupportSpecialistWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.SupportSpecialist] > 0)
-                    damage = (int)(damage * PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.SupportSpecialist));
-
-                if (PerkTracking.DemolitionsWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Demolitons] > 0)
-                    damage = (int)(damage * PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons));
-
-                if (PerkTracking.SharpshooterWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Sharpshooter] > 0)
-                    damage = (int)(damage * PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Sharpshooter));
-
-                if ((Insurgency.Pistols.Contains(Item.type) || Insurgency.Revolvers.Contains(Item.type)) && SetTracking.revolverSet)
-                    damage *= 2;
-
-                if (InsurgencyModConfig.Instance.DamageScaling)
-                    damage = (int)(damage * Insurgency.WeaponScaling());
-                Projectile gun = BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
-                gun.originalDamage = damage;
-                gun.GetGlobalProjectile<ProjPerkTracking>().Perk = WeaponPerk;
+                Projectile Gun = BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
+                Gun.GetGlobalProjectile<ProjPerkTracking>().Perk = WeaponPerk;
             }
             base.HoldItem(player);
         }

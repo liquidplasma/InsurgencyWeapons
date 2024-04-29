@@ -29,6 +29,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
         };
 
         private bool CanManualReload() => CurrentAmmo != 0 && CurrentAmmo != MagazineSize;
+
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m249/empty");
         private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m249/magin");
         private SoundStyle Throw => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m249/throw");

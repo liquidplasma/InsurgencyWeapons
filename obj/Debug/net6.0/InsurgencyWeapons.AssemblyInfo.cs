@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InsurgencyWeapons")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c60ed7cce5a699ab53b1d7c1de47732562e6d8bc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c19531eae6bb8239ce4457aaebdf1607501321b0")]
 [assembly: System.Reflection.AssemblyProductAttribute("InsurgencyWeapons")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InsurgencyWeapons")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
