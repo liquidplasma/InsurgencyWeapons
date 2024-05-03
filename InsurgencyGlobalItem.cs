@@ -22,7 +22,7 @@ namespace InsurgencyWeapons
                 Texture2D texture = item.MyTexture();
                 Rectangle rect = texture.Bounds;
                 scale = 0.25f;
-                ExtensionMethods.BetterEntityDraw(texture, item.Bottom + new Vector2(0, -4f), rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
+                BetterEntityDraw(texture, item.Bottom + new Vector2(0, -4f), rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
                 return false;
             }
             return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);

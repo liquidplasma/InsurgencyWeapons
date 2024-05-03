@@ -10,6 +10,12 @@ namespace InsurgencyWeapons
         public static InsurgencyModConfig Instance => ModContent.GetInstance<InsurgencyModConfig>();
 
         [Header("$Mods.InsurgencyWeapons.Configs.Config")]
+
+        [DefaultValue(false)]
+        [LabelKey("$Mods.InsurgencyWeapons.Configs.LiteModeDesc")]
+        [TooltipKey("$Mods.InsurgencyWeapons.Configs.LiteModeLabel")]
+        public bool LiteMode { get; set; }
+
         [DefaultValue(true)]
         [LabelKey("$Mods.InsurgencyWeapons.Configs.DropCasingLabel")]
         [TooltipKey("$Mods.InsurgencyWeapons.Configs.DropCasingDesc")]

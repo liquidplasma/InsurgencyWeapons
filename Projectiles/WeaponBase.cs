@@ -1,12 +1,18 @@
 ﻿using InsurgencyWeapons.Gores.Casing;
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
+using InsurgencyWeapons.Items.Weapons.MachineGuns;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles
 {
     public abstract class WeaponBase : ModProjectile
     {
+        /// <summary>
+        /// In lite mode, weapons reload almost instantly
+        /// </summary>
+        public bool LiteMode => InsurgencyModConfig.Instance.LiteMode;
+
         /// <summary>
         /// The projectile owner of this weapon
         /// </summary>
@@ -90,11 +96,24 @@ namespace InsurgencyWeapons.Projectiles
 
         public bool CanManualReload(int CurrentAmmo)
         {
+            if (Insurgency.LightMachineGuns.Contains(HeldItem.type) && !(HeldItem.type == ModContent.ItemType<RPK>()))
+                return CurrentAmmo != 0 && CurrentAmmo != MagazineSize;
+
             return CurrentAmmo != 0 && CurrentAmmo != MagazineSize + 1;
         }
 
+        /// <summary>
+        /// Player.channel and CurrentAmmo > 0 and ReloadTimer == 0 and CanFire;
+        /// </summary>
+        /// <param name="CurrentAmmo"></param>
+        /// <returns></returns>
         public bool AllowedToFire(int CurrentAmmo) => Player.channel && CurrentAmmo > 0 && ReloadTimer == 0 && CanFire;
 
+        /// <summary>
+        /// Ammo != null and Player.HasItem(Ammo.type) and Player.CountItem(Ammo.type) > minAmmo;
+        /// </summary>
+        /// <param name="minAmmo"></param>
+        /// <returns></returns>
         public bool CanReload(int minAmmo = 0) => Ammo != null && Player.HasItem(Ammo.type) && Player.CountItem(Ammo.type) > minAmmo;
 
         private bool underAlternateFireCoolDown;
@@ -478,6 +497,46 @@ namespace InsurgencyWeapons.Projectiles
             AlternateFireCoolDown = reader.ReadInt32();
             BoltActionTimer = reader.ReadInt32();
             PumpActionTimer = reader.ReadInt32();
+        }
+
+        public int ReloadShotgun(int tube, int setReload)
+        {
+            AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
+            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
+            tube += AmmoStackCount;
+            ReloadTimer = setReload;
+            return tube;
+        }
+
+        public int ReloadMagazine(bool noChamber = false)
+        {
+            int CurrentAmmo;
+            AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
+            if (ManualReload)
+            {
+                if (!noChamber)
+                    AmmoStackCount++;
+                Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
+                CurrentAmmo = AmmoStackCount;
+            }
+            else
+            {
+                Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
+                CurrentAmmo = AmmoStackCount;
+            }
+            return CurrentAmmo;
+        }
+
+        /// <summary>
+        /// Returns ammo in the chamber to the stack
+        /// </summary>
+        /// <param name="CurrentAmmo"></param>
+        public void ReturnAmmo(int CurrentAmmo)
+        {
+            if (CurrentAmmo == 0)
+                return;
+            AmmoStackCount = CurrentAmmo;
+            Ammo.stack += AmmoStackCount;
         }
     }
 }

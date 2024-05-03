@@ -57,7 +57,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
             else
                 scale = 0.9f;
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.LightYellow, 36f, 1f, new Vector2(0, -8f));
             return false;
         }
@@ -72,7 +72,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
-            SpecificWeaponFix = new Vector2(0, 2.5f);
+            SpecificWeaponFix = new Vector2(0, 4f);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
@@ -81,7 +81,13 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 Shoot(2);
             }
 
-            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            {
+                ReloadStarted = true;
+                ReloadTimer = 14;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.SubMachineGuns;
                 ReloadStarted = true;
@@ -98,15 +104,27 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 ManualReload = true;
                 ReloadStarted = true;
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.SubMachineGuns;
+                if (LiteMode)
+                    ReloadTimer = 14;
             }
 
             switch (ReloadTimer)
             {
+                case 6:
+                    if (LiteMode)
+                    {
+                        SoundEngine.PlaySound(BoltLock, Projectile.Center);
+                        ReturnAmmo(CurrentAmmo);
+                        if (CanReload())
+                            CurrentAmmo = ReloadMagazine();
+                    }
+                    ReloadStarted = ManualReload = false;
+                    break;
+
                 case 15:
                     if (!ManualReload)
                         SoundEngine.PlaySound(BoltLock, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 40:
@@ -114,41 +132,22 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-
-                    if (CanReload())
-                    {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
-                        if (ManualReload)
-                        {
-                            AmmoStackCount++;
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                        else
-                        {
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                    }
+                    if (CanReload())                    
+                        CurrentAmmo = ReloadMagazine();                    
                     break;
 
                 case 80:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    AmmoStackCount = CurrentAmmo;
-                    Ammo.stack += AmmoStackCount;
+                    ReturnAmmo(CurrentAmmo);
                     CurrentAmmo = 0;
-                    if (!ManualReload)
-                    {
-                        DropMagazine(ModContent.ProjectileType<MP5KMagazine>());
-                    }
+                    if (!ManualReload)                    
+                        DropMagazine(ModContent.ProjectileType<MP5KMagazine>());                    
                     break;
             }
-
-            if (CurrentAmmo > 0 && Player.channel)
-            {
-                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
-            }
+            
+            if (CurrentAmmo > 0 && Player.channel)            
+                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);            
 
             if (HeldItem.type != ModContent.ItemType<MP5K>())
                 Projectile.Kill();

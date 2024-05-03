@@ -65,7 +65,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 scale = 0.75f;
             else
                 scale = 0.8f;
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
             return false;
         }
@@ -89,9 +89,15 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 Shoot(3);
             }
 
-            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = 370;
+                ReloadStarted = true;
+                ReloadTimer = 14;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            {
+                ReloadTimer = 310;
                 ReloadStarted = true;
             }
 
@@ -101,19 +107,31 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload())
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
             {
                 ManualReload = true;
                 ReloadStarted = true;
                 ReloadTimer = 290;
+                if (LiteMode)
+                    ReloadTimer = 14;
             }
 
             switch (ReloadTimer)
             {
+                case 6:
+                    if (LiteMode)
+                    {
+                        SoundEngine.PlaySound(BoltLock, Projectile.Center);
+                        ReturnAmmo(CurrentAmmo);
+                        if (CanReload())
+                            CurrentAmmo = ReloadMagazine(true);
+                    }
+                    ReloadStarted = ManualReload = false;
+                    break;
+
                 case 30:
                     if (!ManualReload)
                         SoundEngine.PlaySound(Hit, Projectile.Center);
-                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 100:
@@ -126,49 +144,23 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
                 case 120:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
-                    if (CanReload())
-                    {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
-                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                        CurrentAmmo = AmmoStackCount;
-                    }
+                    if (CanReload())                    
+                       CurrentAmmo = ReloadMagazine(true);                    
                     Projectile.frame = 1;
                     break;
 
                 case 160:
                     SoundEngine.PlaySound(Throw, Projectile.Center);
-                    if (ManualReload)
-                    {
-                        AmmoStackCount = CurrentAmmo;
-                        Ammo.stack += AmmoStackCount;
-                        CurrentAmmo = 0;
-                    }
-                    else
+                    if (!ManualReload)
                         DropMagazine(ModContent.ProjectileType<M249Box>());
-
+                    ReturnAmmo(CurrentAmmo);
                     Projectile.frame = 2;
                     break;
 
                 case 280:
                     SoundEngine.PlaySound(Open, Projectile.Center);
                     Projectile.frame = 1;
-                    break;
-
-                case 300:
-                    SoundEngine.PlaySound(MagEMP, Projectile.Center);
-                    break;
-
-                case 320:
-                    SoundEngine.PlaySound(BoltLock, Projectile.Center);
-                    break;
-
-                case 339:
-                    SoundEngine.PlaySound(BoltRetract, Projectile.Center);
-                    break;
-
-                case 360:
-                    SoundEngine.PlaySound(BoltBack, Projectile.Center);
-                    break;
+                    break;                
             }
 
             if (HeldItem.type != ModContent.ItemType<M249>())

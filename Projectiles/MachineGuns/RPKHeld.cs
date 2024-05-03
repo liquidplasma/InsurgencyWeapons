@@ -52,7 +52,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
             return false;
         }
@@ -76,7 +76,13 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 Shoot(3);
             }
 
-            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            {
+                ReloadStarted = true;
+                ReloadTimer = 14;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.LightMachineGuns;
                 ReloadStarted = true;
@@ -93,10 +99,23 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 ManualReload = true;
                 ReloadStarted = true;
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.LightMachineGuns;
+                if (LiteMode)
+                    ReloadTimer = 14;
             }
 
             switch (ReloadTimer)
             {
+                case 6:
+                    if (LiteMode)
+                    {
+                        SoundEngine.PlaySound(BoltLock, Projectile.Center);
+                        ReturnAmmo(CurrentAmmo);
+                        if (CanReload())
+                            CurrentAmmo = ReloadMagazine();
+                    }
+                    ReloadStarted = ManualReload = false;
+                    break;
+
                 case 30:
                     if (!ManualReload)
                         SoundEngine.PlaySound(BoltLock, Projectile.Center);
@@ -109,34 +128,18 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-
-                    if (CanReload())
-                    {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
-                        if (ManualReload)
-                        {
-                            AmmoStackCount++;
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                        else
-                        {
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                    }
+                    if (CanReload())                    
+                        CurrentAmmo = ReloadMagazine();                    
                     break;
 
                 case 150:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    AmmoStackCount = CurrentAmmo;
-                    Ammo.stack += AmmoStackCount;
+                    ReturnAmmo(CurrentAmmo);
                     CurrentAmmo = 0;
-                    if (!ManualReload)
-                    {
+                    if (!ManualReload)                    
                         DropMagazine(ModContent.ProjectileType<RPKDrum>());
-                    }
+                    
                     break;
 
                 case 180:
@@ -144,10 +147,8 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     break;
             }
 
-            if (CurrentAmmo > 0 && Player.channel)
-            {
-                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
-            }
+            if (CurrentAmmo > 0 && Player.channel)            
+               Projectile.frame = Math.Clamp(ShotDelay, 0, 2);            
 
             if (HeldItem.type != ModContent.ItemType<RPK>())
                 Projectile.Kill();

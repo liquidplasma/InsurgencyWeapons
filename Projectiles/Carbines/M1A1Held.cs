@@ -85,7 +85,13 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 Shoot(4);
             }
 
-            if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            {
+                ReloadStarted = true;
+                ReloadTimer = 15;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
                 ReloadStarted = true;
@@ -97,19 +103,31 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MagazineSize)
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
             {
                 ManualReload = true;
                 ReloadStarted = true;
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
+                if (LiteMode)
+                    ReloadTimer = 15;
             }
 
             switch (ReloadTimer)
             {
+                case 6:
+                    if (LiteMode)
+                    {
+                        SoundEngine.PlaySound(BoltRel, Projectile.Center);
+                        ReturnAmmo(CurrentAmmo);
+                        if (CanReload())
+                            CurrentAmmo = ReloadMagazine();
+                    }
+                    ReloadStarted = ManualReload = false;
+                    break;
+
                 case 20:
                     if (!ManualReload)
                         SoundEngine.PlaySound(BoltRel, Projectile.Center);
-                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 40:
@@ -120,33 +138,17 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 case 80:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = 0;
-                    if (CanReload())
-                    {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
-                        if (ManualReload)
-                        {
-                            AmmoStackCount++;
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                        else
-                        {
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                    }
+                    if (CanReload())                    
+                        CurrentAmmo = ReloadMagazine();                    
                     break;
 
                 case 140:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = 1;
-                    AmmoStackCount = CurrentAmmo;
-                    Ammo.stack += AmmoStackCount;
+                    ReturnAmmo(CurrentAmmo);
                     CurrentAmmo = 0;
-                    if (!ManualReload)
-                    {
-                        DropMagazine(ModContent.ProjectileType<M1A1Magazine>());
-                    }
+                    if (!ManualReload)                    
+                       DropMagazine(ModContent.ProjectileType<M1A1Magazine>());                    
                     break;
             }
 

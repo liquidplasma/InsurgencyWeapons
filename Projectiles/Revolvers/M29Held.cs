@@ -53,7 +53,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 1f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 1f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
             return false;
         }
@@ -79,7 +79,13 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 Shoot(0, dropCasing: false);
             }
 
-            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            {
+                ReloadStarted = true;
+                ReloadTimer = 14;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = 180;
                 Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
@@ -97,14 +103,26 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 ManualReload = true;
                 ReloadStarted = true;
                 ReloadTimer = 180;
+                if (LiteMode)
+                    ReloadTimer = 14;
             }
 
             switch (ReloadTimer)
             {
+                case 6:
+                    if (LiteMode)
+                    {
+                        SoundEngine.PlaySound(Close, Projectile.Center);
+                        ReturnAmmo(CurrentAmmo);
+                        if (CanReload())
+                            CurrentAmmo = ReloadMagazine();
+                    }
+                    ReloadStarted = ManualReload = false;
+                    break;
+
                 case 35:
                     SoundEngine.PlaySound(Close, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = false;
                     break;
 
                 case 70:
@@ -136,6 +154,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     break;
             }
+
             switch (BoltActionTimer)
             {
                 case 5:
@@ -151,6 +170,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     break;
             }
+
             if (HeldItem.type != ModContent.ItemType<M29>())
                 Projectile.Kill();
 

@@ -74,7 +74,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 scale = 0.75f;
             else
                 scale = 0.9f;
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
             return false;
         }

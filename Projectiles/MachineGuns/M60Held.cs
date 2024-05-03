@@ -63,7 +63,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 scale = 0.75f;
             else
                 scale = 0.9f;
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
             return false;
         }
@@ -87,9 +87,15 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 Shoot(3);
             }
 
-            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = HeldItem.useTime * 2 * (int)Insurgency.ReloadModifiers.LightMachineGuns;
+                ReloadStarted = true;
+                ReloadTimer = 14;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            {
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.LightMachineGuns;
                 ReloadStarted = true;
             }
 
@@ -99,18 +105,30 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload())
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
             {
                 ManualReload = true;
                 ReloadStarted = true;
-                ReloadTimer = HeldItem.useTime * 2 * (int)Insurgency.ReloadModifiers.LightMachineGuns;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.LightMachineGuns;
+                if (LiteMode)
+                    ReloadTimer = 14;
             }
 
             switch (ReloadTimer)
             {
+                case 6:
+                    if (LiteMode)
+                    {
+                        SoundEngine.PlaySound(Throw, Projectile.Center);
+                        ReturnAmmo(CurrentAmmo);
+                        if (CanReload())
+                            CurrentAmmo = ReloadMagazine(true);
+                    }
+                    ReloadStarted = ManualReload = false;
+                    break;
+
                 case 30:
                     SoundEngine.PlaySound(Hit, Projectile.Center);
-                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 100:
@@ -127,22 +145,12 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-
-                    if (CanReload())
-                    {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
-                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                        CurrentAmmo = AmmoStackCount;
-                    }
+                    if (CanReload())                    
+                        CurrentAmmo = ReloadMagazine(true);                    
                     break;
 
                 case 210:
-                    if (ManualReload)
-                    {
-                        AmmoStackCount = CurrentAmmo;
-                        Ammo.stack += AmmoStackCount;
-                        CurrentAmmo = 0;
-                    }
+                    ReturnAmmo(CurrentAmmo);
                     break;
 
                 case 280:

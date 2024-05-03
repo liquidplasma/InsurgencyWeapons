@@ -41,6 +41,8 @@ WeaponClasses: {
 }
 
 Configs: {
+	LiteModeDesc: Lite Mode
+	LiteModeLabel: In lite mode, weapons reload almost instantly
 	DropCasingDesc: Wheter to drop a casing when shooting or not
 	DropCasingLabel: Drop Casing
 	DropMagazineDesc: Wheter to drop a magazine when reloading or not

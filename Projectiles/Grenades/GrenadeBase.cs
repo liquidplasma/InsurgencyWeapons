@@ -54,7 +54,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
         {
             Texture2D texture = Projectile.MyTexture();
             Rectangle rect = texture.Bounds;
-            ExtensionMethods.BetterEntityDraw(texture, Projectile.Center, rect, lightColor, Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None);
+            BetterEntityDraw(texture, Projectile.Center, rect, lightColor, Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None);
             return false;
         }
 

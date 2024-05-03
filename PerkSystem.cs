@@ -407,7 +407,6 @@ namespace InsurgencyWeapons
 
                 if (InsurgencyModConfig.Instance.DamageScaling && (Insurgency.AllWeapons.Contains(item.type) || Insurgency.Grenades.Contains(item.type)))
                     damage *= Insurgency.WeaponScaling();
-                damage *= 1.25f;
             }
         }
     }

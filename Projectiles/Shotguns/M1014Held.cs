@@ -66,7 +66,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.8f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.8f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
             return false;
         }
@@ -104,7 +104,13 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
             }
 
-            if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted && PumpActionTimer == 0)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted && PumpActionTimer == 0)
+            {
+                ReloadStarted = true;
+                ReloadTimer = 13;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted && PumpActionTimer == 0)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
                 ReloadTimer = (int)(ReloadTimer * 1.2f);
@@ -121,27 +127,36 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             {
                 ManualReload = true;
                 ReloadStarted = true;
-                ReloadTimer = 120;
+                ReloadTimer = 70;
+                if (LiteMode)
+                    ReloadTimer = 13;
             }
 
             switch (ReloadTimer)
             {
-                case 15:
-                    Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                case 1:
+                    if (LiteMode)
+                    {
+                        if (CurrentAmmo < MagazineSize && CanReload())
+                        {
+                            SoundEngine.PlaySound(Insert, Projectile.Center);
+                            CurrentAmmo = ReloadShotgun(CurrentAmmo, 13);
+                        }
+                    }
                     ReloadStarted = ManualReload = false;
                     break;
 
+                case 15:
+                    Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                    break;
+
                 case 40:
-                    if (CurrentAmmo < MagazineSize)
+                    if (CurrentAmmo < MagazineSize && CanReload())
                     {
-                        if (Ammo.stack > 0)
-                        {
-                            SoundEngine.PlaySound(Insert, Projectile.Center);
-                            AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo += AmmoStackCount;
-                            ReloadTimer = 70;
-                        }
+                        
+                         SoundEngine.PlaySound(Insert, Projectile.Center);
+                         CurrentAmmo = ReloadShotgun(CurrentAmmo, 70);
+                        
                     }
                     break;
 
@@ -152,17 +167,14 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     break;
 
                 case 160:
-                    if (CurrentAmmo < MagazineSize)
+                    if (CurrentAmmo < MagazineSize && CanReload())
                     {
-                        SoundEngine.PlaySound(Insert, Projectile.Center);
-
-                        if (Ammo.stack > 0)
-                        {
-                            SoundEngine.PlaySound(InsertFirst, Projectile.Center);
-                            AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo += AmmoStackCount;
-                        }
+                        SoundEngine.PlaySound(Insert, Projectile.Center);                        
+                        SoundEngine.PlaySound(InsertFirst, Projectile.Center);
+                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
+                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
+                        CurrentAmmo += AmmoStackCount;
+                        
                     }
                     break;
 

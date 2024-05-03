@@ -1,4 +1,4 @@
-This mod adds "realistic" guns with "realistic" mechanics like actual magazine size and reloading.
+This mod adds "realistic" guns with "realistic" mechanics like actual magazine size and reloading. Optional "lite mode", when lite mode is active, weapons reload almost instantly.
 Weapons are divided in classes and levelling up said class will increase damage of all weapons in the class.
 All of the guns are held projectiles so if you use some mod that changes how projectiles work you might have some unwanted bugs.
 
@@ -72,5 +72,5 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.8.3
-	- Potential bug on damage calculation fixed
+v0.8.4
+	- Lite mode released

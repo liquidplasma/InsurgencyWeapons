@@ -1,4 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Ammo;
 
 namespace InsurgencyWeapons

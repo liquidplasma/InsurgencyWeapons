@@ -53,7 +53,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
             return false;
         }
@@ -90,7 +90,13 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 Shoot(3);
             }
 
-            if (CanReload() && CurrentAmmo == 0 && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            {
+                ReloadStarted = true;
+                ReloadTimer = 14;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
                 ReloadStarted = true;
@@ -107,15 +113,26 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ManualReload = true;
                 ReloadStarted = true;
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
+                if (LiteMode)
+                    ReloadTimer = 14;
             }
 
             switch (ReloadTimer)
             {
+                case 6:
+                    if (LiteMode)
+                    {
+                        SoundEngine.PlaySound(BoltLock, Projectile.Center);
+                        ReturnAmmo(CurrentAmmo);
+                        if (CanReload())
+                            CurrentAmmo = ReloadMagazine();
+                    }
+                    ReloadStarted = ManualReload = false;
+                    break;
                 case 30:
                     if (!ManualReload)
                         SoundEngine.PlaySound(BoltLock, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 70:
@@ -123,34 +140,17 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-
-                    if (CanReload())
-                    {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
-                        if (ManualReload)
-                        {
-                            AmmoStackCount++;
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                        else
-                        {
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                    }
+                    if (CanReload())                    
+                        CurrentAmmo = ReloadMagazine();                    
                     break;
 
                 case 110:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    AmmoStackCount = CurrentAmmo;
-                    Ammo.stack += AmmoStackCount;
+                    ReturnAmmo(CurrentAmmo);
                     CurrentAmmo = 0;
                     if (!ManualReload)
-                    {
-                        DropMagazine(ModContent.ProjectileType<AN94Magazine>());
-                    }
+                    DropMagazine(ModContent.ProjectileType<AN94Magazine>());
                     break;
             }
 

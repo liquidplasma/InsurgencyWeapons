@@ -85,36 +85,52 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 Shoot(4);
             }
 
-            if (CurrentAmmo == 0 && Player.CountItem(AmmoType) > 0 && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            {
+                ReloadStarted = true;
+                ReloadTimer = 14;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
-                Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                 ReloadStarted = true;
             }
 
-            if (Player.channel && CurrentAmmo == 0 && CanFire && Projectile.soundDelay == 0)
+            if (Player.channel && CanFire && Projectile.soundDelay == 0)
             {
                 SoundEngine.PlaySound(Empty, Projectile.Center);
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MagazineSize)
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
             {
                 ManualReload = true;
                 ReloadStarted = true;
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
-                ReloadTimer -= 40;
+                if (LiteMode)
+                    ReloadTimer = 14;
             }
 
             switch (ReloadTimer)
             {
+                case 6:
+                    if (LiteMode)
+                    {
+                        SoundEngine.PlaySound(BoltRel, Projectile.Center);
+                        ReturnAmmo(CurrentAmmo);
+                        if (CanReload())
+                            CurrentAmmo = ReloadMagazine();
+                    }
+                    ReloadStarted = ManualReload = false;
+                    break;
+
                 case 20:
                     if (!ManualReload)
                     {
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                         SoundEngine.PlaySound(BoltRel, Projectile.Center);
                     }
-                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 40:
@@ -127,23 +143,9 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                         Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     else
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     if (CanReload())
-                    {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
-                        if (ManualReload)
-                        {
-                            AmmoStackCount++;
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                        else
-                        {
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                    }
+                        CurrentAmmo = ReloadMagazine();
                     break;
 
                 case 140:
@@ -157,15 +159,13 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                     Ammo.stack += AmmoStackCount;
                     CurrentAmmo = 0;
                     if (!ManualReload)
-                    {
                         DropMagazine(ModContent.ProjectileType<SKSMagazine>());
-                    }
                     break;
             }
 
             if (CurrentAmmo != 0 && ReloadTimer == 0)
             {
-                if (ShotDelay <= 3)
+                if (ShotDelay <= 2)
                     Projectile.frame = ShotDelay;
                 else
                     Projectile.frame = 0;

@@ -67,7 +67,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
             return false;
         }
@@ -98,7 +98,13 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                 Shoot(1, dropCasing: false);
             }
 
-            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
+            {
+                ReloadStarted = true;
+                ReloadTimer = 13;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.SniperRifles;
                 ReloadStarted = true;
@@ -115,23 +121,40 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MagazineSize)
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MagazineSize && BoltActionTimer == 0)
             {
                 ManualReload = true;
                 ReloadStarted = true;
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.SniperRifles;
+                if (LiteMode)
+                    ReloadTimer = 13;
             }
 
             switch (ReloadTimer)
             {
-                case 5:
-                    SoundEngine.PlaySound(BoltForward, Projectile.Center);
-                    Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                case 1:
+                    if (LiteMode)
+                    {
+                        if (CurrentAmmo < MagazineSize && CanReload())
+                        {
+                            SoundEngine.PlaySound(Insert, Projectile.Center);
+                            CurrentAmmo = ReloadShotgun(CurrentAmmo, 13);
+                        }
+                    }
                     ReloadStarted = ManualReload = false;
                     break;
 
+                case 5:
+                    if (!LiteMode)
+                    {
+                        SoundEngine.PlaySound(BoltForward, Projectile.Center);
+                        Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                    }
+                    break;
+
                 case 10:
-                    SoundEngine.PlaySound(BoltRelease, Projectile.Center);
+                    if (!LiteMode)
+                        SoundEngine.PlaySound(BoltRelease, Projectile.Center);
                     break;
 
                 case 20:
@@ -144,7 +167,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                             AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
                             Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
                             CurrentAmmo += AmmoStackCount;
-                            ReloadTimer = 60;
+                            ReloadTimer = 50;
                         }
                     }
                     break;

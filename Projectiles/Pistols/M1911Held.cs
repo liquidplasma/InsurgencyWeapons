@@ -92,7 +92,13 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                 Shoot(2);
             }
 
-            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            {
+                ReloadStarted = true;
+                ReloadTimer = 14;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
                 ReloadTimer += 90;
@@ -113,15 +119,27 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                 ReloadStarted = true;
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
                 ReloadTimer += 45;
+                if (LiteMode)
+                    ReloadTimer = 14;
             }
 
             switch (ReloadTimer)
             {
+                case 6:
+                    if (LiteMode)
+                    {
+                        SoundEngine.PlaySound(SlideRel, Projectile.Center);
+                        ReturnAmmo(CurrentAmmo);
+                        if (CanReload())
+                            CurrentAmmo = ReloadMagazine();
+                    }
+                    ReloadStarted = ManualReload = false;
+                    break;
+
                 case 15:
                     if (!ManualReload)
                         SoundEngine.PlaySound(SlideRel, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 60:
@@ -129,24 +147,12 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                     if (!ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (CanReload())
-                    {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
-                        if (ManualReload)
-                        {
-                            AmmoStackCount++;
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                        else
-                        {
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo = AmmoStackCount;
-                        }
-                    }
+                        CurrentAmmo = ReloadMagazine();
                     break;
 
                 case 120:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
+                    ReturnAmmo(CurrentAmmo);
                     if (!ManualReload)
                     {
                         DropMagazine(ModContent.ProjectileType<M1911Magazine>());

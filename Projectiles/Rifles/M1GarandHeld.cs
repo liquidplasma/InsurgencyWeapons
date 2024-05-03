@@ -59,7 +59,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            ExtensionMethods.BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
             return false;
         }
@@ -92,7 +92,15 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 Shoot(2);
             }
 
-            if (CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            {
+                SoundEngine.PlaySound(GarandPing, Projectile.Center);
+                DropMagazine(ModContent.ProjectileType<M1GarandEnbloc>());
+                ReloadStarted = true;
+                ReloadTimer = 15;
+            }
+
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
                 ReloadTimer += 100;
@@ -114,32 +122,39 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                 ReloadStarted = true;
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
                 ReloadTimer += 100;
+                if (LiteMode)
+                    ReloadTimer = 15;
             }
 
             switch (ReloadTimer)
             {
+                case 6:
+                    if (LiteMode)
+                    {
+                        SoundEngine.PlaySound(BoltLock, Projectile.Center);
+                        ReturnAmmo(CurrentAmmo);
+                        if (CanReload())
+                            CurrentAmmo = ReloadMagazine();
+                    }
+                    ReloadStarted = ManualReload = false;
+                    break;
+
                 case 25:
                     SoundEngine.PlaySound(BoltLock, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    ReloadStarted = ManualReload = false;
                     break;
 
                 case 80:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (CanReload())
-                    {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
-                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                        CurrentAmmo = AmmoStackCount;
-                    }
+                        CurrentAmmo = ReloadMagazine(true);
                     break;
 
                 case 150:
                     if (ManualReload)
                     {
-                        AmmoStackCount = CurrentAmmo;
-                        Ammo.stack += AmmoStackCount;
+                        ReturnAmmo(CurrentAmmo);
                         CurrentAmmo = 0;
                         SoundEngine.PlaySound(MagOut, Projectile.Center);
                         DropMagazine(ModContent.ProjectileType<M1GarandEnbloc>());

@@ -22,7 +22,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles
         {
             Texture2D texture = Projectile.MyTexture();
             Rectangle rect = texture.Bounds;
-            ExtensionMethods.BetterEntityDraw(texture, Projectile.Center, rect, lightColor, Projectile.rotation, texture.Size() / 2, 0.75f, SpriteEffects.None);
+            BetterEntityDraw(texture, Projectile.Center, rect, lightColor, Projectile.rotation, texture.Size() / 2, 0.75f, SpriteEffects.None);
             return false;
         }
 

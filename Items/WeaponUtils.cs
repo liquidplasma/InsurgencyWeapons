@@ -23,7 +23,7 @@ namespace InsurgencyWeapons.Items
                 throw new ArgumentException("MoneyCost or CraftStack property can't be 0");
 
             Item.value = MoneyCost * 20;
-        }
+        }       
 
         public override void SetStaticDefaults() => Item.ResearchUnlockCount = 60;
 

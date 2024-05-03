@@ -19,7 +19,7 @@ namespace InsurgencyWeapons.VendingMachines
             scale = 0.5f;
             Texture2D texture = Item.MyTexture();
             Rectangle rect = texture.Bounds;
-            ExtensionMethods.BetterEntityDraw(texture, Item.Top + new Vector2(0, -4f), rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
+            BetterEntityDraw(texture, Item.Top + new Vector2(0, -4f), rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
             return false;
         }
 
