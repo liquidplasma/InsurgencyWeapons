@@ -51,23 +51,10 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             Projectile.width = 40;
             Projectile.height = 84;
             MagazineSize = 200;
+            drawScale = 0.8f;
             AmmoType = ModContent.ItemType<Bullet556>();
             BigSpriteSpecificIdlePos = true;
             base.SetDefaults();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            float scale;
-            if (isIdle)
-                scale = 0.75f;
-            else
-                scale = 0.8f;
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
-            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -78,6 +65,10 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
         public override void AI()
         {
+            if (isIdle)
+                drawScale = 0.75f;
+            else
+                drawScale = 0.8f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
             SpecificWeaponFix = new Vector2(0, -8f);
@@ -144,8 +135,8 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
                 case 120:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
-                    if (CanReload())                    
-                       CurrentAmmo = ReloadMagazine(true);                    
+                    if (CanReload())
+                        CurrentAmmo = ReloadMagazine(true);
                     Projectile.frame = 1;
                     break;
 
@@ -160,7 +151,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 case 280:
                     SoundEngine.PlaySound(Open, Projectile.Center);
                     Projectile.frame = 1;
-                    break;                
+                    break;
             }
 
             if (HeldItem.type != ModContent.ItemType<M249>())

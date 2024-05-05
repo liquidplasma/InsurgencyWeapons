@@ -61,6 +61,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             Projectile.width = 14;
             Projectile.height = 72;
             MagazineSize = 2;
+            drawScale = 0.9f;
             AmmoType = ModContent.ItemType<ShellBuck_Ball>();
             base.SetDefaults();
         }
@@ -75,7 +76,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             else
                 scale = 0.9f;
             BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
+
             return false;
         }
 
@@ -88,6 +89,10 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
         public override void AI()
         {
+            if (isIdle)
+                drawScale = 0.75f;
+            else
+                drawScale = 0.9f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
             SpecificWeaponFix = new Vector2(0, 4f);
@@ -138,7 +143,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 
-            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CanManualReload(CurrentAmmo))
+            if (Ammo != null && Ammo.stack > 0 && !ReloadStarted && InsurgencyModKeyBind.ReloadKey.JustPressed && CanReload() && CurrentAmmo != 0 && CurrentAmmo != MagazineSize)
             {
                 ManualReload = true;
                 ReloadStarted = true;
@@ -157,9 +162,9 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     if (CanReload())
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                        CurrentAmmo += AmmoStackCount;
+                        ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
+                        Player.ConsumeMultiple(ammoStackCount, Ammo.type);
+                        CurrentAmmo += ammoStackCount;
                     }
                     break;
 
@@ -167,9 +172,9 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     if (!ManualReload && CanReload())
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                        CurrentAmmo += AmmoStackCount;
+                        ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
+                        Player.ConsumeMultiple(ammoStackCount, Ammo.type);
+                        CurrentAmmo += ammoStackCount;
                     }
                     break;
 

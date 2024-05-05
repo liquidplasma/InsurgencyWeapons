@@ -43,19 +43,10 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
             Projectile.width = 26;
             Projectile.height = 58;
             MagazineSize = 30;
+            drawScale = 0.8f;
             AmmoType = ModContent.ItemType<Bullet9x19>();
             isASmallSprite = true;
             base.SetDefaults();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            //Vector2 muzzlePos = GetWeaponBarrelEndPosition(Type, myTexture);
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.8f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.LightYellow, 36f, 1f, new Vector2(0, -8f));
-            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -128,8 +119,8 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 case 70:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
-                    if (CanReload())                    
-                        CurrentAmmo = ReloadMagazine();                    
+                    if (CanReload())
+                        CurrentAmmo = ReloadMagazine();
                     break;
 
                 case 110:
@@ -137,14 +128,14 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     ReturnAmmo(CurrentAmmo);
                     CurrentAmmo = 0;
-                    if (!ManualReload)                                            
-                        DropMagazine(ModContent.ProjectileType<MP5SDMagazine>());                    
+                    if (!ManualReload)
+                        DropMagazine(ModContent.ProjectileType<MP5SDMagazine>());
                     break;
             }
 
-            if (CurrentAmmo > 0 && Player.channel)            
+            if (CurrentAmmo > 0 && Player.channel)
                 Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
-            
+
             if (HeldItem.type != ModContent.ItemType<MP5SD>())
                 Projectile.Kill();
 

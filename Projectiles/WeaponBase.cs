@@ -2,6 +2,7 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Weapons.MachineGuns;
+using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles
@@ -12,6 +13,11 @@ namespace InsurgencyWeapons.Projectiles
         /// In lite mode, weapons reload almost instantly
         /// </summary>
         public bool LiteMode => InsurgencyModConfig.Instance.LiteMode;
+
+        /// <summary>
+        /// Weapon will be invisible when not in use
+        /// </summary>
+        public bool HideWhenNotInUse => InsurgencyModConfig.Instance.HideWhenNotInUse;
 
         /// <summary>
         /// The projectile owner of this weapon
@@ -154,7 +160,9 @@ namespace InsurgencyWeapons.Projectiles
             MouseRightPressed,
             HasUnderBarrelGrenadeLauncer;
 
-        public int AmmoStackCount;
+        public int ammoStackCount;
+
+        public float drawScale;
 
         /// <summary>
         /// Time in ticks
@@ -315,6 +323,7 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void SetDefaults()
         {
+            drawScale = 0.9f;
             if (MagazineSize == 0)
                 throw new ArgumentException("MagazineSize property can't be 0");
 
@@ -337,9 +346,23 @@ namespace InsurgencyWeapons.Projectiles
             return false;
         }
 
+        private void DrawWeapon(Color lightColor)
+        {
+            Texture2D myTexture = Projectile.MyTexture();
+            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
+            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, drawScale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
-            return base.PreDraw(ref lightColor);
+            if (HideWhenNotInUse && !isIdle)
+            {
+                DrawWeapon(lightColor);
+                return false;
+            }
+            else if (!HideWhenNotInUse)
+                DrawWeapon(lightColor);
+            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -350,7 +373,6 @@ namespace InsurgencyWeapons.Projectiles
         public override bool PreAI()
         {
             Projectile.CheckPlayerActiveAndNotDead(Player);
-
             if (Player.HasItem(AmmoType))
             {
                 Ammo = Player.FindItemInInventory(AmmoType);
@@ -471,7 +493,6 @@ namespace InsurgencyWeapons.Projectiles
                 Projectile.position.Y += Player.gfxOffY;
                 Projectile.spriteDirection = Player.direction;
                 if (isPistol)
-
                     Projectile.frame = 0;
             }
             #endregion
@@ -501,9 +522,9 @@ namespace InsurgencyWeapons.Projectiles
 
         public int ReloadShotgun(int tube, int setReload)
         {
-            AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-            tube += AmmoStackCount;
+            ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
+            Player.ConsumeMultiple(ammoStackCount, Ammo.type);
+            tube += ammoStackCount;
             ReloadTimer = setReload;
             return tube;
         }
@@ -511,18 +532,18 @@ namespace InsurgencyWeapons.Projectiles
         public int ReloadMagazine(bool noChamber = false)
         {
             int CurrentAmmo;
-            AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
+            ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
             if (ManualReload)
             {
                 if (!noChamber)
-                    AmmoStackCount++;
-                Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                CurrentAmmo = AmmoStackCount;
+                    ammoStackCount++;
+                Player.ConsumeMultiple(ammoStackCount, Ammo.type);
+                CurrentAmmo = ammoStackCount;
             }
             else
             {
-                Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                CurrentAmmo = AmmoStackCount;
+                Player.ConsumeMultiple(ammoStackCount, Ammo.type);
+                CurrentAmmo = ammoStackCount;
             }
             return CurrentAmmo;
         }
@@ -535,8 +556,8 @@ namespace InsurgencyWeapons.Projectiles
         {
             if (CurrentAmmo == 0)
                 return;
-            AmmoStackCount = CurrentAmmo;
-            Ammo.stack += AmmoStackCount;
+            ammoStackCount = CurrentAmmo;
+            Ammo.stack += ammoStackCount;
         }
     }
 }

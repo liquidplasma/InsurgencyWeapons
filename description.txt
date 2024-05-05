@@ -72,5 +72,5 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.8.4
-	- Lite mode released
+v0.8.5
+	- Option to hide weapon when not inn use and revolver fixes

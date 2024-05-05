@@ -2,7 +2,6 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Carbines;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Carbines;
-using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Carbines
@@ -46,17 +45,9 @@ namespace InsurgencyWeapons.Projectiles.Carbines
             Projectile.width = 18;
             Projectile.height = 86;
             MagazineSize = 15;
+            drawScale = 0.8f;
             AmmoType = ModContent.ItemType<Bullet76233>();
             base.SetDefaults();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.8f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
-            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -69,7 +60,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 14f;
-            SpecificWeaponFix = new Vector2(0, -0.5f);
+            SpecificWeaponFix = new Vector2(0, 1f);
             if (!Player.channel || AutoAttack == 0)
             {
                 SemiAuto = false;
@@ -138,8 +129,8 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 case 80:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = 0;
-                    if (CanReload())                    
-                        CurrentAmmo = ReloadMagazine();                    
+                    if (CanReload())
+                        CurrentAmmo = ReloadMagazine();
                     break;
 
                 case 140:
@@ -147,8 +138,8 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                     Projectile.frame = 1;
                     ReturnAmmo(CurrentAmmo);
                     CurrentAmmo = 0;
-                    if (!ManualReload)                    
-                       DropMagazine(ModContent.ProjectileType<M1A1Magazine>());                    
+                    if (!ManualReload)
+                        DropMagazine(ModContent.ProjectileType<M1A1Magazine>());
                     break;
             }
 

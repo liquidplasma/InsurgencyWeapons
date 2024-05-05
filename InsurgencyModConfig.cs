@@ -10,11 +10,16 @@ namespace InsurgencyWeapons
         public static InsurgencyModConfig Instance => ModContent.GetInstance<InsurgencyModConfig>();
 
         [Header("$Mods.InsurgencyWeapons.Configs.Config")]
-
         [DefaultValue(false)]
         [LabelKey("$Mods.InsurgencyWeapons.Configs.LiteModeDesc")]
         [TooltipKey("$Mods.InsurgencyWeapons.Configs.LiteModeLabel")]
         public bool LiteMode { get; set; }
+
+        [Header("$Mods.InsurgencyWeapons.Configs.Gameplay")]
+        [DefaultValue(false)]
+        [LabelKey("$Mods.InsurgencyWeapons.Configs.HideWhenNotInUseDesc")]
+        [TooltipKey("$Mods.InsurgencyWeapons.Configs.HideWhenNotInUseLabel")]
+        public bool HideWhenNotInUse { get; set; }
 
         [DefaultValue(true)]
         [LabelKey("$Mods.InsurgencyWeapons.Configs.DropCasingLabel")]
@@ -33,6 +38,7 @@ namespace InsurgencyWeapons
         [TooltipKey("$Mods.InsurgencyWeapons.Configs.CasingLifeTimeDesc")]
         public int CasingLifeTime { get; set; }
 
+        [Header("$Mods.InsurgencyWeapons.Configs.Misc")]
         [DefaultValue(true)]
         [LabelKey("$Mods.InsurgencyWeapons.Configs.DamageScalingLabel")]
         [TooltipKey("$Mods.InsurgencyWeapons.Configs.DamageScalingDesc")]

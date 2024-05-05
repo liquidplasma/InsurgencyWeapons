@@ -43,6 +43,8 @@ WeaponClasses: {
 Configs: {
 	LiteModeDesc: Lite Mode
 	LiteModeLabel: In lite mode, weapons reload almost instantly
+	HideWhenNotInUseDesc: Hide weapon when not in use
+	HideWhenNotInUseLabel: Weapon will be invisible when not in use
 	DropCasingDesc: Wheter to drop a casing when shooting or not
 	DropCasingLabel: Drop Casing
 	DropMagazineDesc: Wheter to drop a magazine when reloading or not
@@ -52,6 +54,8 @@ Configs: {
 	DamageScalingDesc: Should weapons get extra damage upon entering hardmode and defeating Plantera?
 	DamageScalingLabel: Damage Scaling
 	Config: Configuration
+	Gameplay: Gameplay
+	Misc: Misc
 
 	InsurgencyModConfig: {
 		DisplayName: Insurgency Mod Config

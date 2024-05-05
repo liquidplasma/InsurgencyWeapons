@@ -47,22 +47,9 @@ namespace InsurgencyWeapons.Projectiles.Pistols
             Projectile.height = 34;
             MagazineSize = 7;
             AmmoType = ModContent.ItemType<Bullet45ACP>();
+            drawScale = 1f;
             isPistol = true;
             base.SetDefaults();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            float scale;
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            if (isIdle)
-                scale = 0.75f;
-            else
-                scale = 1f;
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.Yellow, 45f, 1f, new Vector2(0, -7f));
-            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -73,6 +60,10 @@ namespace InsurgencyWeapons.Projectiles.Pistols
 
         public override void AI()
         {
+            if (isIdle)
+                drawScale = 0.75f;
+            else
+                drawScale = 1f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 4f;
             SpecificWeaponFix = new Vector2(0, 0);

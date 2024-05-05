@@ -49,23 +49,10 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
             Projectile.width = 18;
             Projectile.height = 36;
             MagazineSize = 6;
+            drawScale = 1f;
             AmmoType = ModContent.ItemType<Bullet357>();
             isPistol = true;
             base.SetDefaults();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            float scale;
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            if (isIdle)
-                scale = 0.75f;
-            else
-                scale = 1f;
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.Yellow, 45f, 1f, new Vector2(0, -7f));
-            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -76,6 +63,10 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
 
         public override void AI()
         {
+            if (isIdle)
+                drawScale = 0.75f;
+            else
+                drawScale = 1f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 10f;
             if (!Player.channel)
@@ -134,7 +125,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                         SoundEngine.PlaySound(Close, Projectile.Center);
                         ReturnAmmo(CurrentAmmo);
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine();
+                            CurrentAmmo = ReloadMagazine(true);
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -150,9 +141,9 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (CanReload() && !ManualReload)
                     {
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
-                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                        CurrentAmmo = AmmoStackCount;
+                        ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
+                        Player.ConsumeMultiple(ammoStackCount, Ammo.type);
+                        CurrentAmmo = ammoStackCount;
                     }
 
                     if (CurrentAmmo < MagazineSize && CanReload() && ManualReload)

@@ -43,18 +43,10 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
             Projectile.width = 26;
             Projectile.height = 58;
             MagazineSize = 25;
+            drawScale = 0.8f;
             AmmoType = ModContent.ItemType<Bullet45ACP>();
             isASmallSprite = true;
             base.SetDefaults();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.8f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.LightYellow, 36f, 1f, new Vector2(0, -8f));
-            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -129,8 +121,8 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    if (CanReload())                    
-                        CurrentAmmo = ReloadMagazine();                    
+                    if (CanReload())
+                        CurrentAmmo = ReloadMagazine();
                     break;
 
                 case 80:
@@ -138,13 +130,13 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     ReturnAmmo(CurrentAmmo);
                     CurrentAmmo = 0;
-                    if (!ManualReload)                    
-                        DropMagazine(ModContent.ProjectileType<UMP45Magazine>());                    
+                    if (!ManualReload)
+                        DropMagazine(ModContent.ProjectileType<UMP45Magazine>());
                     break;
             }
 
-            if (CurrentAmmo > 0 && Player.channel)            
-                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);           
+            if (CurrentAmmo > 0 && Player.channel)
+                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
 
             if (HeldItem.type != ModContent.ItemType<UMP45>())
                 Projectile.Kill();

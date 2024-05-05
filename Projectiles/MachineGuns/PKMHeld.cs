@@ -49,23 +49,10 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             Projectile.width = 36;
             Projectile.height = 78;
             MagazineSize = 100;
+            drawScale = 0.9f;
             AmmoType = ModContent.ItemType<Bullet76254R>();
             BigSpriteSpecificIdlePos = true;
             base.SetDefaults();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            float scale;
-            if (isIdle)
-                scale = 0.75f;
-            else
-                scale = 0.9f;
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
-            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -76,6 +63,10 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
         public override void AI()
         {
+            if (isIdle)
+                drawScale = 0.75f;
+            else
+                drawScale = 0.9f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 15f;
             SpecificWeaponFix = new Vector2(0, -6);
@@ -140,8 +131,8 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 case 140:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = 5;
-                    if (CanReload())                    
-                        CurrentAmmo = ReloadMagazine(true);                    
+                    if (CanReload())
+                        CurrentAmmo = ReloadMagazine(true);
                     break;
 
                 case 200:
@@ -149,8 +140,8 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     Projectile.frame = 4;
                     ReturnAmmo(CurrentAmmo);
                     CurrentAmmo = 0;
-                    if (!ManualReload)                    
-                        DropMagazine(ModContent.ProjectileType<PKMBox>());                    
+                    if (!ManualReload)
+                        DropMagazine(ModContent.ProjectileType<PKMBox>());
                     break;
 
                 case 230:
@@ -174,9 +165,9 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     break;
             }
 
-            if (CurrentAmmo > 0 && Player.channel)            
+            if (CurrentAmmo > 0 && Player.channel)
                 Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
-            
+
             if (HeldItem.type != ModContent.ItemType<PKM>())
                 Projectile.Kill();
 

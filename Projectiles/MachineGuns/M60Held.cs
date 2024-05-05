@@ -50,22 +50,9 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             Projectile.width = 28;
             Projectile.height = 80;
             MagazineSize = 100;
+            drawScale = 0.9f;
             AmmoType = ModContent.ItemType<Bullet76251>();
             base.SetDefaults();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            float scale;
-            if (isIdle)
-                scale = 0.75f;
-            else
-                scale = 0.9f;
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
-            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -76,6 +63,10 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
         public override void AI()
         {
+            if (isIdle)
+                drawScale = 0.75f;
+            else
+                drawScale = 0.9f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 18f;
             SpecificWeaponFix = new Vector2(0, -3.5f);
@@ -145,8 +136,8 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    if (CanReload())                    
-                        CurrentAmmo = ReloadMagazine(true);                    
+                    if (CanReload())
+                        CurrentAmmo = ReloadMagazine(true);
                     break;
 
                 case 210:

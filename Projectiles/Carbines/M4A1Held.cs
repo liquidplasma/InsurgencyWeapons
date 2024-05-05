@@ -47,15 +47,6 @@ namespace InsurgencyWeapons.Projectiles.Carbines
             base.SetDefaults();
         }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.8f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.LightYellow, 48f, 1f, new Vector2(0, -3f));
-            return false;
-        }
-
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.M4A1Magazine;
@@ -128,17 +119,17 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
 
                     if (CanReload())
-                    CurrentAmmo = ReloadMagazine();
+                        CurrentAmmo = ReloadMagazine();
                     break;
 
                 case 80:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    AmmoStackCount = CurrentAmmo;
-                    Ammo.stack += AmmoStackCount;
+                    ammoStackCount = CurrentAmmo;
+                    Ammo.stack += ammoStackCount;
                     CurrentAmmo = 0;
-                    if (!ManualReload)                    
-                        DropMagazine(ModContent.ProjectileType<M4A1Magazine>());                    
+                    if (!ManualReload)
+                        DropMagazine(ModContent.ProjectileType<M4A1Magazine>());
                     break;
             }
 

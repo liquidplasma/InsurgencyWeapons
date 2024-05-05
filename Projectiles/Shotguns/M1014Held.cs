@@ -58,17 +58,9 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             Projectile.width = 20;
             Projectile.height = 78;
             MagazineSize = 7;
+            drawScale = 0.8f;
             AmmoType = ModContent.ItemType<TwelveGauge>();
             base.SetDefaults();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.8f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
-            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -135,13 +127,10 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             switch (ReloadTimer)
             {
                 case 1:
-                    if (LiteMode)
+                    if (LiteMode && CurrentAmmo < MagazineSize && CanReload())
                     {
-                        if (CurrentAmmo < MagazineSize && CanReload())
-                        {
-                            SoundEngine.PlaySound(Insert, Projectile.Center);
-                            CurrentAmmo = ReloadShotgun(CurrentAmmo, 13);
-                        }
+                        SoundEngine.PlaySound(Insert, Projectile.Center);
+                        CurrentAmmo = ReloadShotgun(CurrentAmmo, 13);
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -153,10 +142,8 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 case 40:
                     if (CurrentAmmo < MagazineSize && CanReload())
                     {
-                        
-                         SoundEngine.PlaySound(Insert, Projectile.Center);
-                         CurrentAmmo = ReloadShotgun(CurrentAmmo, 70);
-                        
+                        SoundEngine.PlaySound(Insert, Projectile.Center);
+                        CurrentAmmo = ReloadShotgun(CurrentAmmo, 70);
                     }
                     break;
 
@@ -169,12 +156,11 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 case 160:
                     if (CurrentAmmo < MagazineSize && CanReload())
                     {
-                        SoundEngine.PlaySound(Insert, Projectile.Center);                        
+                        SoundEngine.PlaySound(Insert, Projectile.Center);
                         SoundEngine.PlaySound(InsertFirst, Projectile.Center);
-                        AmmoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
-                        Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                        CurrentAmmo += AmmoStackCount;
-                        
+                        ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
+                        Player.ConsumeMultiple(ammoStackCount, Ammo.type);
+                        CurrentAmmo += ammoStackCount;
                     }
                     break;
 

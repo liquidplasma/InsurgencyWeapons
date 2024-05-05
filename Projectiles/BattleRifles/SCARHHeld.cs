@@ -47,15 +47,6 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
             base.SetDefaults();
         }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.LightYellow, 56f, 1f, new Vector2(0, -3f));
-            return false;
-        }
-
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.SCARHMagazine;
@@ -126,8 +117,8 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    if (CanReload())                    
-                        CurrentAmmo = ReloadMagazine();                    
+                    if (CanReload())
+                        CurrentAmmo = ReloadMagazine();
                     break;
 
                 case 120:
@@ -135,13 +126,13 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     ReturnAmmo(CurrentAmmo);
                     CurrentAmmo = 0;
-                    if (!ManualReload)                    
-                        DropMagazine(ModContent.ProjectileType<AKMMagazine>());                    
+                    if (!ManualReload)
+                        DropMagazine(ModContent.ProjectileType<AKMMagazine>());
                     break;
             }
 
-            if (CurrentAmmo > 0 && Player.channel)            
-                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);            
+            if (CurrentAmmo > 0 && Player.channel)
+                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
 
             if (HeldItem.type != ModContent.ItemType<SCARH>())
                 Projectile.Kill();

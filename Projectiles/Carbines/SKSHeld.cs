@@ -46,17 +46,9 @@ namespace InsurgencyWeapons.Projectiles.Carbines
             Projectile.width = 18;
             Projectile.height = 78;
             MagazineSize = 20;
+            drawScale = 0.8f;
             AmmoType = ModContent.ItemType<Bullet762>();
             base.SetDefaults();
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.8f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
-            return false;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -155,8 +147,8 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                         Projectile.frame = 4;
 
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
-                    AmmoStackCount = CurrentAmmo;
-                    Ammo.stack += AmmoStackCount;
+                    ammoStackCount = CurrentAmmo;
+                    Ammo.stack += ammoStackCount;
                     CurrentAmmo = 0;
                     if (!ManualReload)
                         DropMagazine(ModContent.ProjectileType<SKSMagazine>());

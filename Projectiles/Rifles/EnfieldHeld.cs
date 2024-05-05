@@ -67,15 +67,6 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             base.SetDefaults();
         }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.Yellow, 44f, 1f, new Vector2(0, -4f));
-            return false;
-        }
-
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.EnfieldMagazine;
@@ -153,18 +144,18 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                         if (CurrentAmmo <= 5 && CanReload(5))
                         {
                             SoundEngine.PlaySound(MagIn, Projectile.Center);
-                            AmmoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 5);
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo += AmmoStackCount;
+                            ammoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 5);
+                            Player.ConsumeMultiple(ammoStackCount, Ammo.type);
+                            CurrentAmmo += ammoStackCount;
                             DropMagazine(ModContent.ProjectileType<EnfieldBlock>());
                             ReloadTimer = 140;
                         }
                         else if (CanReload())
                         {
                             SoundEngine.PlaySound(Insert, Projectile.Center);
-                            AmmoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 1);
-                            Player.ConsumeMultiple(AmmoStackCount, Ammo.type);
-                            CurrentAmmo += AmmoStackCount;
+                            ammoStackCount = Math.Clamp(Player.CountItem(AmmoType), 0, 1);
+                            Player.ConsumeMultiple(ammoStackCount, Ammo.type);
+                            CurrentAmmo += ammoStackCount;
                             ReloadTimer = 110;
                         }
                     }

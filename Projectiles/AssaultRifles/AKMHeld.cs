@@ -59,15 +59,6 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             base.SetDefaults();
         }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D myTexture = Projectile.MyTexture();
-            Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, 0.9f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            DrawMuzzleFlash(Color.Yellow, 48f, 1f, new Vector2(0, -4.25f));
-            return false;
-        }
-
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.AKMMagazine;
@@ -163,8 +154,8 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    if (CanReload())                    
-                        CurrentAmmo = ReloadMagazine();                    
+                    if (CanReload())
+                        CurrentAmmo = ReloadMagazine();
                     break;
 
                 case 110:
@@ -177,18 +168,19 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     break;
             }
 
-            if (CurrentAmmo > 0 && Player.channel)            
-                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);            
+            if (CurrentAmmo > 0 && Player.channel)
+                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
 
             if (HeldItem.type != ModContent.ItemType<AKM>())
                 Projectile.Kill();
 
             base.AI();
         }
-        void ReloadRifle()
-        {
 
+        private void ReloadRifle()
+        {
         }
+
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(CurrentAmmo);
