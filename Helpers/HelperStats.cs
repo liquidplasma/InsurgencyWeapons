@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.Chat;
+﻿using Terraria.Chat;
 using Terraria.Localization;
 
 namespace InsurgencyWeapons.Helpers

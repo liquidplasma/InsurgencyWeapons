@@ -2,7 +2,6 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.SubMachineGuns;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.SubMachineGuns;
-using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.SubMachineGuns
@@ -105,7 +104,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                         SoundEngine.PlaySound(BoltRelease, Projectile.Center);
                         ReturnAmmo();
                         if (CanReload())
-    ReloadMagazine();
+                            ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -120,7 +119,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (CanReload())
-ReloadMagazine();
+                        ReloadMagazine();
                     break;
 
                 case 110:

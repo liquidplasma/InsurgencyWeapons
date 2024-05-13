@@ -100,7 +100,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                         SoundEngine.PlaySound(BoltLock, Projectile.Center);
                         ReturnAmmo();
                         if (CanReload())
-    ReloadMagazine();
+                            ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -117,7 +117,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     if (CanReload())
-ReloadMagazine();
+                        ReloadMagazine();
                     break;
 
                 case 80:

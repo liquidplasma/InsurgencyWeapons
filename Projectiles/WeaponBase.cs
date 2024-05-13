@@ -104,17 +104,19 @@ namespace InsurgencyWeapons.Projectiles
         public bool ReloadStarted { get; set; }
         public bool ManualReload { get; set; }
         public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
+
         private bool ManualReloadCheck()
         {
-            return 
+            return
                 Insurgency.Revolvers.Contains(HeldItem.type) ||
                 Insurgency.LightMachineGuns.Contains(HeldItem.type) ||
                 Insurgency.Rifles.Contains(HeldItem.type);
         }
+
         public bool CanManualReload(int CurrentAmmo)
         {
             if (ManualReloadCheck() && !(HeldItem.type == ModContent.ItemType<RPK>()))
-                    return CurrentAmmo != 0 && CurrentAmmo != MagazineSize;
+                return CurrentAmmo != 0 && CurrentAmmo != MagazineSize;
 
             return CurrentAmmo != 0 && CurrentAmmo != MagazineSize + 1;
         }

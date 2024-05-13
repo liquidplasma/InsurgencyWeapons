@@ -2,7 +2,6 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.BattleRifles;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.BattleRifles;
-using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.BattleRifles
@@ -101,7 +100,7 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
                         SoundEngine.PlaySound(BoltLock, Projectile.Center);
                         ReturnAmmo();
                         if (CanReload())
-    ReloadMagazine();
+                            ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -118,7 +117,7 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     if (CanReload())
-ReloadMagazine();
+                        ReloadMagazine();
                     break;
 
                 case 150:

@@ -1,7 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.SniperRifles;
-using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.SniperRifles
@@ -129,7 +128,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                         if (CurrentAmmo < MagazineSize && CanReload())
                         {
                             SoundEngine.PlaySound(Insert, Projectile.Center);
-    ReloadShotgun(13);
+                            ReloadShotgun(13);
                         }
                     }
                     ReloadStarted = ManualReload = false;

@@ -2,7 +2,6 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Carbines;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Carbines;
-using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Carbines
@@ -112,7 +111,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                         SoundEngine.PlaySound(BoltRel, Projectile.Center);
                         ReturnAmmo();
                         if (CanReload())
-    ReloadMagazine();
+                            ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -137,7 +136,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     if (CanReload())
-ReloadMagazine();
+                        ReloadMagazine();
                     break;
 
                 case 140:

@@ -111,7 +111,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                         SoundEngine.PlaySound(BoltRel, Projectile.Center);
                         ReturnAmmo();
                         if (CanReload())
-    ReloadMagazine();
+                            ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -130,7 +130,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = 0;
                     if (CanReload())
-ReloadMagazine();
+                        ReloadMagazine();
                     break;
 
                 case 140:
