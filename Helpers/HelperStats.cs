@@ -165,10 +165,5 @@ namespace InsurgencyWeapons.Helpers
             }
             return proj;
         }
-
-        /// <summary>
-        /// Muzzleflash effect, has 6 frames
-        /// </summary>
-        public static Texture2D MuzzleFlash => ModContent.Request<Texture2D>("InsurgencyWeapons/Assets/Muzzleflash").Value;
     }
 }

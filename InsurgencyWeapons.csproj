@@ -80,7 +80,6 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\" />
     <Folder Include="Sounds\Weapons\Ins2\" />
   </ItemGroup>
 </Project>

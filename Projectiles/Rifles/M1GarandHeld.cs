@@ -9,7 +9,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
 {
     public class M1GarandHeld : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -123,9 +123,9 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     if (LiteMode)
                     {
                         SoundEngine.PlaySound(BoltLock, Projectile.Center);
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine();
+    ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -139,13 +139,13 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     if (CanReload())
-                        CurrentAmmo = ReloadMagazine(true);
+                        ReloadMagazine(true);
                     break;
 
                 case 150:
                     if (ManualReload)
                     {
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         CurrentAmmo = 0;
                         SoundEngine.PlaySound(MagOut, Projectile.Center);
                         DropMagazine(ModContent.ProjectileType<M1GarandEnbloc>());

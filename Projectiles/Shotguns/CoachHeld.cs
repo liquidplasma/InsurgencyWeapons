@@ -9,7 +9,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 {
     public class CoachHeld : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {

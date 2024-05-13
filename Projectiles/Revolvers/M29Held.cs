@@ -8,7 +8,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
 {
     public class M29Held : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -60,7 +60,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 9f;
-            SpecificWeaponFix = new Vector2(0, 0);
+            SpecificWeaponFix = new Vector2(0, 2f);
 
             if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && BoltActionTimer == 0)
             {
@@ -71,16 +71,15 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 Shoot(0, dropCasing: false);
             }
 
-            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
             {
                 ReloadStarted = true;
                 ReloadTimer = 14;
             }
 
-            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
             {
                 ReloadTimer = 180;
-                Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
             }
 
@@ -105,9 +104,9 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     if (LiteMode)
                     {
                         SoundEngine.PlaySound(Close, Projectile.Center);
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine(true);
+                            ReloadMagazine(true);
                     }
                     ReloadStarted = ManualReload = false;
                     break;

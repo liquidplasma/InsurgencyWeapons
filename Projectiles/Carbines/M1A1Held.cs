@@ -8,7 +8,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
 {
     public class M1A1Held : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -109,9 +109,9 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                     if (LiteMode)
                     {
                         SoundEngine.PlaySound(BoltRel, Projectile.Center);
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine();
+    ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -130,13 +130,13 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = 0;
                     if (CanReload())
-                        CurrentAmmo = ReloadMagazine();
+ReloadMagazine();
                     break;
 
                 case 140:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = 1;
-                    ReturnAmmo(CurrentAmmo);
+                    ReturnAmmo();
                     CurrentAmmo = 0;
                     if (!ManualReload)
                         DropMagazine(ModContent.ProjectileType<M1A1Magazine>());

@@ -9,7 +9,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
 {
     public class M4A1Held : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -99,9 +99,9 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                     if (LiteMode)
                     {
                         SoundEngine.PlaySound(BoltLock, Projectile.Center);
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine();
+    ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -119,7 +119,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
 
                     if (CanReload())
-                        CurrentAmmo = ReloadMagazine();
+ReloadMagazine();
                     break;
 
                 case 80:

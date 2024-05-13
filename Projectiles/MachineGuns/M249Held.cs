@@ -9,7 +9,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 {
     public class M249Held : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -113,9 +113,9 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     if (LiteMode)
                     {
                         SoundEngine.PlaySound(BoltLock, Projectile.Center);
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine(true);
+                            ReloadMagazine(true);
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -136,7 +136,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 case 120:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     if (CanReload())
-                        CurrentAmmo = ReloadMagazine(true);
+                        ReloadMagazine(true);
                     Projectile.frame = 1;
                     break;
 
@@ -144,7 +144,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     SoundEngine.PlaySound(Throw, Projectile.Center);
                     if (!ManualReload)
                         DropMagazine(ModContent.ProjectileType<M249Box>());
-                    ReturnAmmo(CurrentAmmo);
+                    ReturnAmmo();
                     Projectile.frame = 2;
                     break;
 

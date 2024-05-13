@@ -9,7 +9,7 @@ namespace InsurgencyWeapons.Gores.Casing
             ChildSafety.SafeGore[Type] = true;
         }
 
-        public override void OnSpawn(Terraria.Gore gore, IEntitySource source)
+        public override void OnSpawn(Gore gore, IEntitySource source)
         {
             gore.timeLeft = InsurgencyModConfig.Instance.CasingLifeTime * 60;
             gore.behindTiles = true;

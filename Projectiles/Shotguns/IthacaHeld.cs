@@ -9,7 +9,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 {
     public class IthacaHeld : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -125,7 +125,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     if (LiteMode && CanReload() && CurrentAmmo < MagazineSize)
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
-                        CurrentAmmo = ReloadShotgun(CurrentAmmo, 13);
+                        ReloadShotgun(13);
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -138,7 +138,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     if (CurrentAmmo < MagazineSize && CanReload())
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
-                        CurrentAmmo = ReloadShotgun(CurrentAmmo, 70);
+                        ReloadShotgun(70);
                     }
 
                     break;

@@ -9,7 +9,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 {
     public class MP7Held : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -100,9 +100,9 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                     if (LiteMode)
                     {
                         SoundEngine.PlaySound(BoltLock, Projectile.Center);
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine();
+    ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -119,13 +119,13 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     if (CanReload())
-                        CurrentAmmo = ReloadMagazine();
+ReloadMagazine();
                     break;
 
                 case 80:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    ReturnAmmo(CurrentAmmo);
+                    ReturnAmmo();
                     CurrentAmmo = 0;
                     if (!ManualReload)
                         DropMagazine(ModContent.ProjectileType<MP7Magazine>());

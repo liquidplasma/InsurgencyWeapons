@@ -8,7 +8,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 {
     public class M60Held : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -111,9 +111,9 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     if (LiteMode)
                     {
                         SoundEngine.PlaySound(Throw, Projectile.Center);
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine(true);
+                            ReloadMagazine(true);
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -137,11 +137,11 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     if (ManualReload)
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     if (CanReload())
-                        CurrentAmmo = ReloadMagazine(true);
+                        ReloadMagazine(true);
                     break;
 
                 case 210:
-                    ReturnAmmo(CurrentAmmo);
+                    ReturnAmmo();
                     break;
 
                 case 280:

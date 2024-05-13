@@ -8,7 +8,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
 {
     public class ColtPythonHeld : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -123,9 +123,9 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     if (LiteMode)
                     {
                         SoundEngine.PlaySound(Close, Projectile.Center);
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine(true);
+                            ReloadMagazine(true);
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -152,9 +152,9 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                         DropCasingManually();
                         Player.ConsumeMultiple(1, Ammo.type);
                         CurrentAmmo++;
-                        ReloadTimer = 170;
+                        ReloadTimer = 150;
                         if (CurrentAmmo == MagazineSize)
-                            ReloadTimer = 120;
+                            ReloadTimer = 75;
                     }
 
                     if (!ManualReload)

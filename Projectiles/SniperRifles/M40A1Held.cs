@@ -8,7 +8,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
 {
     public class M40A1Held : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -129,7 +129,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                         if (CurrentAmmo < MagazineSize && CanReload())
                         {
                             SoundEngine.PlaySound(Insert, Projectile.Center);
-                            CurrentAmmo = ReloadShotgun(CurrentAmmo, 13);
+    ReloadShotgun(13);
                         }
                     }
                     ReloadStarted = ManualReload = false;

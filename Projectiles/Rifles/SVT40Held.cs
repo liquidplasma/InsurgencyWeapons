@@ -8,7 +8,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
 {
     public class SVT40Held : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -104,9 +104,9 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     if (LiteMode)
                     {
                         SoundEngine.PlaySound(BoltLock, Projectile.Center);
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine();
+                            ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -120,14 +120,14 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (CanReload())
-                        CurrentAmmo = ReloadMagazine(true);
+                        ReloadMagazine(true);
                     break;
 
                 case 80:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     if (ManualReload)
                     {
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         CurrentAmmo = 0;
                     }
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
@@ -139,6 +139,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
 
                 case 130:
                     SoundEngine.PlaySound(BoltBack, Projectile.Center);
+                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     break;
             }
             if (CurrentAmmo != 0 && ReloadTimer == 0)

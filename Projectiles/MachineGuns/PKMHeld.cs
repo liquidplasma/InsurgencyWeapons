@@ -9,7 +9,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 {
     public class PKMHeld : WeaponBase
     {
-        public int CurrentAmmo
+        public override int CurrentAmmo
         {
             get
             {
@@ -111,9 +111,9 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     if (LiteMode)
                     {
                         SoundEngine.PlaySound(LidDown, Projectile.Center);
-                        ReturnAmmo(CurrentAmmo);
+                        ReturnAmmo();
                         if (CanReload())
-                            CurrentAmmo = ReloadMagazine(true);
+                            ReloadMagazine(true);
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -132,13 +132,13 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
                     Projectile.frame = 5;
                     if (CanReload())
-                        CurrentAmmo = ReloadMagazine(true);
+                        ReloadMagazine(true);
                     break;
 
                 case 200:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = 4;
-                    ReturnAmmo(CurrentAmmo);
+                    ReturnAmmo();
                     CurrentAmmo = 0;
                     if (!ManualReload)
                         DropMagazine(ModContent.ProjectileType<PKMBox>());

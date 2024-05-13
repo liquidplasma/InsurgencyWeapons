@@ -10,6 +10,11 @@ namespace InsurgencyWeapons.Projectiles
     public abstract class WeaponBase : ModProjectile
     {
         /// <summary>
+        /// Current ammo in magazine
+        /// </summary>
+        public virtual int CurrentAmmo { get; set; }
+
+        /// <summary>
         /// In lite mode, weapons reload almost instantly
         /// </summary>
         public bool LiteMode => InsurgencyModConfig.Instance.LiteMode;
@@ -99,11 +104,17 @@ namespace InsurgencyWeapons.Projectiles
         public bool ReloadStarted { get; set; }
         public bool ManualReload { get; set; }
         public bool CanFire => ShotDelay >= HeldItem.useTime && !Player.noItems && !Player.CCed;
-
+        private bool ManualReloadCheck()
+        {
+            return 
+                Insurgency.Revolvers.Contains(HeldItem.type) ||
+                Insurgency.LightMachineGuns.Contains(HeldItem.type) ||
+                Insurgency.Rifles.Contains(HeldItem.type);
+        }
         public bool CanManualReload(int CurrentAmmo)
         {
-            if (Insurgency.LightMachineGuns.Contains(HeldItem.type) && !(HeldItem.type == ModContent.ItemType<RPK>()))
-                return CurrentAmmo != 0 && CurrentAmmo != MagazineSize;
+            if (ManualReloadCheck() && !(HeldItem.type == ModContent.ItemType<RPK>()))
+                    return CurrentAmmo != 0 && CurrentAmmo != MagazineSize;
 
             return CurrentAmmo != 0 && CurrentAmmo != MagazineSize + 1;
         }
@@ -189,26 +200,6 @@ namespace InsurgencyWeapons.Projectiles
         {
             get => (int)Projectile.ai[2];
             set => Projectile.ai[2] = value;
-        }
-
-        /// <summary>
-        /// Draws muzzleflash (Cancelled until I can position it better)
-        /// </summary>
-        /// <param name="color">The color of the muzzleflash</param>
-        /// <param name="offset">The offset</param>
-        /// <param name="scale">The scale</param>
-        public void DrawMuzzleFlash(Color color, float offset, float scale, Vector2 jankFix)
-        {
-            /*if (ShotDelay <= HeldItem.useTime && Player.channel && !UnderAlternateFireCoolDown)
-            {
-                Vector2 position = Player.MountedCenter + jankFix;
-                Vector2 muzzleDrawPos = position - recoil + recoilVertical;
-                float sin = (float)Math.Sin(muzzleDrawPos.AngleTo(MouseAim));
-                muzzleDrawPos += muzzleDrawPos.DirectionTo(MouseAim) * (offset - sin);
-                Texture2D muzzleFlash = HelperStats.MuzzleFlash;
-                Rectangle rect = muzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay, 0, 6));
-                BetterEntityDraw(muzzleFlash, muzzleDrawPos, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-            }*/
         }
 
         /// <summary>
@@ -350,6 +341,7 @@ namespace InsurgencyWeapons.Projectiles
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
+            Vector2 height = new(rect.Height);
             BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, drawScale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
         }
 
@@ -520,18 +512,16 @@ namespace InsurgencyWeapons.Projectiles
             PumpActionTimer = reader.ReadInt32();
         }
 
-        public int ReloadShotgun(int tube, int setReload)
+        public void ReloadShotgun(int setReload)
         {
             ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
             Player.ConsumeMultiple(ammoStackCount, Ammo.type);
-            tube += ammoStackCount;
+            CurrentAmmo += ammoStackCount;
             ReloadTimer = setReload;
-            return tube;
         }
 
         public int ReloadMagazine(bool noChamber = false)
         {
-            int CurrentAmmo;
             ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, MagazineSize);
             if (ManualReload)
             {
@@ -552,7 +542,7 @@ namespace InsurgencyWeapons.Projectiles
         /// Returns ammo in the chamber to the stack
         /// </summary>
         /// <param name="CurrentAmmo"></param>
-        public void ReturnAmmo(int CurrentAmmo)
+        public void ReturnAmmo()
         {
             if (CurrentAmmo == 0)
                 return;
