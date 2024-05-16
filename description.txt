@@ -72,5 +72,5 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.8.6
-	- Fixed some bugs with some weapons (issues on github)
+v0.8.7
+	- Grenades now release dangerous fast moving shrapnel

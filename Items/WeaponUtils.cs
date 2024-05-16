@@ -246,7 +246,7 @@ namespace InsurgencyWeapons.Items
                     case 90:
                         SoundEngine.PlaySound(Throw, player.Center);
                         Item.stack--;
-                        Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed * 3.5f;
+                        Vector2 aim = player.Center.DirectionTo(Main.MouseWorld) * Item.shootSpeed * 1.75f;
                         int damage = (int)player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage);
                         if (PerkTracking.DemolitionsWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Demolitons] > 0)
                             damage = (int)(damage * (1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons)));

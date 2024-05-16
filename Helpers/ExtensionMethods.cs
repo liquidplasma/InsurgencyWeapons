@@ -174,6 +174,6 @@ namespace InsurgencyWeapons.Helpers
                 proj.Kill();
             if (!owner.dead || owner.active)
                 proj.timeLeft = 2;
-        }
+        }        
     }
 }

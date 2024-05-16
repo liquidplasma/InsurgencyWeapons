@@ -78,17 +78,20 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             }
             else
             {
-                for (int i = 0; i < 72; i++)
+                if (!target.active)
                 {
-                    Vector2 dustPos = target.position + (target.Hitbox.Size() * Main.rand.NextFloat());
-                    Dust effect = Dust.NewDustDirect(target.position, target.width, target.height, HelperStats.SmokeyDust);
-                    effect.velocity =
-                        Main.rand.NextBool()
-                        ? dustPos.DirectionFrom(target.Center) * 8f //true
-                        : Utils.RandomVector2(Main.rand, -8f, 8f); //false
+                    for (int i = 0; i < 72; i++)
+                    {
+                        Vector2 dustPos = target.position + (target.Hitbox.Size() * Main.rand.NextFloat());
+                        Dust effect = Dust.NewDustDirect(target.position, target.width, target.height, HelperStats.SmokeyDust);
+                        effect.velocity =
+                            Main.rand.NextBool()
+                            ? dustPos.DirectionFrom(target.Center) * 8f //true
+                            : Utils.RandomVector2(Main.rand, -8f, 8f); //false
 
-                    effect.scale = 3f * Main.rand.NextFloat();
-                    effect.noGravity = Main.rand.NextBool();
+                        effect.scale = 3f * Main.rand.NextFloat();
+                        effect.noGravity = Main.rand.NextBool();
+                    }
                 }
             }
         }
@@ -123,7 +126,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
                 Projectile.usesLocalNPCImmunity = true;
                 Projectile.localNPCHitCooldown = -1;
                 Projectile.netUpdate = true;
-                HelperStats.SmokeGore(Projectile.GetSource_Death(), Projectile.Center, 35, 4);
+                HelperStats.SmokeGore(Projectile.GetSource_Death(), Projectile.Center, 9, 4);
             }
         }
 
@@ -152,6 +155,12 @@ namespace InsurgencyWeapons.Projectiles.Grenades
                     Knockback = 6f
                 };
                 Player.Hurt(grenadeSelfDamage);
+            }
+            for (int i = 0; i < Main.rand.Next(30, 60); i++)
+            {
+                Vector2 random = Utils.NextVector2Circular(Main.rand, 4, 4);
+                Projectile shrapnel = BetterNewProjectile(Player, Projectile.GetSource_Death(), Projectile.Center, random, ModContent.ProjectileType<Shrapnel>(), (int)(Projectile.damage * 0.1f), 1f);
+                shrapnel.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon = true;
             }
             base.OnKill(timeLeft);
         }

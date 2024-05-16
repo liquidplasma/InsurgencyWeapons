@@ -461,6 +461,7 @@ Projectiles: {
 	PKMBox.DisplayName: PKM Box
 	M249Held.DisplayName: M249 Held
 	M249Box.DisplayName: M249 Box
+	Shrapnel.DisplayName: Shrapnel
 }
 
 Keybinds: {

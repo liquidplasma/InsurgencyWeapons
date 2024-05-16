@@ -1,4 +1,5 @@
-﻿using Terraria.GameContent;
+﻿using InsurgencyWeapons.Helpers;
+using Terraria.GameContent;
 
 namespace InsurgencyWeapons.Gores.Casing
 {
@@ -20,10 +21,18 @@ namespace InsurgencyWeapons.Gores.Casing
 
         public override bool Update(Gore gore)
         {
+            int dustTime = (int)(InsurgencyModConfig.Instance.CasingLifeTime * 60 * 0.9f);
             gore.alpha -= 16;
             gore.velocity.X *= 0.96f;
+            gore.rotation += gore.velocity.Y * 0.1f;
             if (gore.timeLeft == 0)
                 gore.active = false;
+            if (Main.rand.NextBool(10) && gore.timeLeft > dustTime)
+            {
+                Dust trail = Dust.NewDustDirect(gore.position, 2, 2, DustID.Smoke);
+                trail.velocity *= 0f;
+                trail.scale = 0.5f;
+            }
             return base.Update(gore);
         }
     }
