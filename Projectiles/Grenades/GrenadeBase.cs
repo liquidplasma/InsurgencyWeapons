@@ -159,8 +159,11 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             for (int i = 0; i < Main.rand.Next(30, 60); i++)
             {
                 Vector2 random = Utils.NextVector2Circular(Main.rand, 4, 4);
-                Projectile shrapnel = BetterNewProjectile(Player, Projectile.GetSource_Death(), Projectile.Center, random, ModContent.ProjectileType<Shrapnel>(), (int)(Projectile.damage * 0.1f), 1f);
-                shrapnel.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon = true;
+                if (Player.whoAmI == Main.myPlayer)
+                {
+                    Projectile shrapnel = Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, random, ModContent.ProjectileType<Shrapnel>(), (int)(Projectile.damage * 0.1f), 1f);
+                    shrapnel.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon = true;
+                }
             }
             base.OnKill(timeLeft);
         }

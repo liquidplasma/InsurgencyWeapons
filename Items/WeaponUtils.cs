@@ -60,9 +60,9 @@ namespace InsurgencyWeapons.Items
 
         public override void HoldItem(Player player)
         {
-            if (WeaponHeldProjectile != 0 && player.ownedProjectileCounts[WeaponHeldProjectile] < 1)
+            if (player.whoAmI == Main.myPlayer && WeaponHeldProjectile != 0 && player.ownedProjectileCounts[WeaponHeldProjectile] < 1)
             {
-                Projectile Gun = BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
+                Projectile Gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
                 Gun.GetGlobalProjectile<ProjPerkTracking>().Perk = WeaponPerk;
             }
             base.HoldItem(player);
@@ -251,7 +251,8 @@ namespace InsurgencyWeapons.Items
                         if (PerkTracking.DemolitionsWeapons(Item) && PerkTracking.Level[(int)PerkSystem.Perks.Demolitons] > 0)
                             damage = (int)(damage * (1f + PerkTracking.GetDamageMultPerLevel((int)PerkSystem.Perks.Demolitons)));
                         float knockback = (int)player.GetTotalKnockback(Item.DamageType).ApplyTo(Item.knockBack);
-                        BetterNewProjectile(player, player.GetSource_ItemUse(Item), player.Center, aim, GrenadeType, damage, knockback, player.whoAmI).GetGlobalProjectile<ProjPerkTracking>().Grenade = true;
+                        if (player.whoAmI == Main.myPlayer)
+                            Projectile.NewProjectileDirect(player.GetSource_ItemUse(Item), player.Center, aim, GrenadeType, damage, knockback, player.whoAmI).GetGlobalProjectile<ProjPerkTracking>().Grenade = true;
                         break;
                 }
             }

@@ -91,15 +91,17 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
 
                 //VOG-25
-                ExtensionMethods.BetterNewProjectile(
-                    Player,
-                    spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                    position: Player.MountedCenter,
-                    velocity: aim,
-                    type: ModContent.ProjectileType<AKMVOG_25P>(),
-                    damage: VOGDamage,
-                    knockback: knockBack * 1.5f,
-                    owner: Player.whoAmI);
+                if (Player.whoAmI == Main.myPlayer)
+                {
+                    Projectile.NewProjectileDirect(
+                        spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                        position: Player.MountedCenter,
+                        velocity: aim,
+                        type: ModContent.ProjectileType<AKMVOG_25P>(),
+                        damage: VOGDamage,
+                        knockback: knockBack * 1.5f,
+                        owner: Player.whoAmI);
+                }
             }
 
             if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)

@@ -246,15 +246,15 @@ namespace InsurgencyWeapons.Projectiles
             if (!InsurgencyModConfig.Instance.DropMagazine)
                 return;
 
-            BetterNewProjectile(
-                Player,
-                Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                Projectile.Center,
-                new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), -Main.rand.NextFloat(1f, 1.5f)).RotatedByRandom(MathHelper.PiOver4),
-                type,
-                0,
-                0f,
-                Player.whoAmI);
+            if (Player.whoAmI == Main.myPlayer)
+                Projectile.NewProjectileDirect(
+                    Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                    Projectile.Center,
+                    new Vector2(Main.rand.NextFloat(-1.5f, 1.5f), -Main.rand.NextFloat(1f, 1.5f)).RotatedByRandom(MathHelper.PiOver4),
+                    type,
+                    0,
+                    0f,
+                    Player.whoAmI);
         }
 
         public void DropCasingManually(int type = 0)
@@ -296,20 +296,21 @@ namespace InsurgencyWeapons.Projectiles
                 type = ShotgunPellet;
 
             //Bullet
-            Projectile Shot = BetterNewProjectile(
-               Player,
-               spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-               position: Player.MountedCenter,
-               velocity: aim,
-               type: type,
-               damage: BulletDamage,
-               knockback: knockBack,
-               owner: Player.whoAmI,
-               ai0: Projectile.GetGlobalProjectile<ProjPerkTracking>().Perk,
-               ai1: ai1,
-               ai2: ai2);
-            Shot.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon = true;
-
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                Projectile Shot = Projectile.NewProjectileDirect(
+                   spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                   position: Player.MountedCenter,
+                   velocity: aim,
+                   type: type,
+                   damage: BulletDamage,
+                   knockback: knockBack,
+                   owner: Player.whoAmI,
+                   ai0: Projectile.GetGlobalProjectile<ProjPerkTracking>().Perk,
+                   ai1: ai1,
+                   ai2: ai2);
+                Shot.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon = true;
+            }
             if (dropCasing)
                 DropCasingManually();
         }
