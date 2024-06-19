@@ -8,12 +8,14 @@
   <ItemGroup>
     <None Remove="Gores\Casing\CasingGore.png" />
     <None Remove="Gores\Casing\ShellBuckShotGore.png" />
+    <None Remove="Gores\Casing\ShellSlugGore.png" />
     <None Remove="Items\Ammo\Bullet303.png" />
     <None Remove="Items\Ammo\Bullet44.png" />
     <None Remove="Items\Ammo\Bullet455.png" />
     <None Remove="Items\Ammo\Bullet76251.png" />
     <None Remove="Items\Ammo\Bullet76254R.png" />
     <None Remove="Items\Ammo\Bullet939.png" />
+    <None Remove="Items\Ammo\TwelveGaugeSlug.png" />
     <None Remove="Items\Weapons\AssaultRifles\ASVAL.png" />
     <None Remove="Items\Weapons\AssaultRifles\Galil.png" />
     <None Remove="Items\Weapons\AssaultRifles\Groza.png" />

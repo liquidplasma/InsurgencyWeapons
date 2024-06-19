@@ -386,6 +386,11 @@ Items: {
 		DisplayName: FN M249 5.56x45mm
 		Tooltip: ""
 	}
+
+	TwelveGaugeSlug: {
+		DisplayName: Twelve Gauge Slug
+		Tooltip: ""
+	}
 }
 
 Projectiles: {

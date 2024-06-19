@@ -9,12 +9,11 @@ namespace InsurgencyWeapons.Gores.Casing
         {
             ChildSafety.SafeGore[Type] = true;
         }
-
+       
         public override void OnSpawn(Gore gore, IEntitySource source)
         {
             gore.timeLeft = InsurgencyModConfig.Instance.CasingLifeTime * 60;
             gore.behindTiles = true;
-            gore.alpha = 255;
             //UpdateType = 277;
             base.OnSpawn(gore, source);
         }
@@ -22,9 +21,8 @@ namespace InsurgencyWeapons.Gores.Casing
         public override bool Update(Gore gore)
         {
             int dustTime = (int)(InsurgencyModConfig.Instance.CasingLifeTime * 60 * 0.9f);
-            gore.alpha -= 16;
             gore.velocity.X *= 0.96f;
-            gore.rotation += gore.velocity.Y * 0.1f;
+            gore.rotation += gore.velocity.X * 0.1f;
             if (gore.timeLeft == 0)
                 gore.active = false;
             if (Main.rand.NextBool(10) && gore.timeLeft > dustTime)

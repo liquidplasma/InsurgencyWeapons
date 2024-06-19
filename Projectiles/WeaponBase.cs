@@ -1,6 +1,7 @@
 ﻿using InsurgencyWeapons.Gores.Casing;
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
+using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.MachineGuns;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
@@ -173,7 +174,10 @@ namespace InsurgencyWeapons.Projectiles
             MouseRightPressed,
             HasUnderBarrelGrenadeLauncer;
 
-        public int ammoStackCount;
+        public int
+            ammoStackCount,
+            shotgunSwitchDelay,
+            shotgunIdentifier;
 
         public float drawScale;
 
@@ -273,14 +277,14 @@ namespace InsurgencyWeapons.Projectiles
         /// </summary>
         /// <param name="maxDegree"></param>
         /// <param name="dropCasing"></param>
-        /// <param name="ai0"></param>
         /// <param name="ai1"></param>
         /// <param name="ai2"></param>
         /// <param name="shotgun"></param>
+        /// 
         ///
         ///
         ///
-        public void Shoot(int maxDegree, bool dropCasing = true, float ai0 = 0, float ai1 = 0, float ai2 = 0, bool shotgun = false)
+        public void Shoot(int maxDegree, bool dropCasing = true, float ai1 = 0, float ai2 = 0, bool shotgun = false, bool slug = false)
         {
             float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
             if (HeldItem.ModItem is not null and Rifle || HeldItem.ModItem is not null and Shotgun)
@@ -292,7 +296,7 @@ namespace InsurgencyWeapons.Projectiles
             Vector2 aim = WeaponFireSpreadCalc(maxDegree, shotgun);
 
             int type = NormalBullet;
-            if (shotgun)
+            if (shotgun || slug)
                 type = ShotgunPellet;
 
             //Bullet
@@ -407,6 +411,9 @@ namespace InsurgencyWeapons.Projectiles
 
             if (AutoAttack > 0)
                 AutoAttack--;
+
+            if (shotgunSwitchDelay > 0)
+                shotgunSwitchDelay--;
             #endregion
 
             return base.PreAI();
@@ -414,21 +421,27 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void AI()
         {
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                MouseAim = Main.MouseWorld;
+                if (!Player.mouseInterface && !MagazineTracking.MouseOverFriendlyNPC)
+                    MouseRightPressed = Main.mouseRight;
+
+                Projectile.netUpdate = true;
+            }
+
+            if (Insurgency.Shotguns.Contains(HeldItem.type) && MouseRightPressed && shotgunSwitchDelay == 0)
+            {
+                shotgunSwitchDelay = 90;
+                SwitchAmmoShotgun();
+            }
+
             //Give scope to player if he is holding sniper rifles
             if (Insurgency.SniperRifles.Contains(HeldItem.type))
                 Player.scope = true;
 
             if (Projectile.active)
                 MagazineTracking.isActive = true;
-
-            if (Player.whoAmI == Main.myPlayer)
-            {
-                MouseAim = Main.MouseWorld;
-                if (!Player.mouseInterface)
-                    MouseRightPressed = Main.mouseRight;
-
-                Projectile.netUpdate = true;
-            }
 
             //positioning / velocity
             #region
@@ -442,7 +455,7 @@ namespace InsurgencyWeapons.Projectiles
                 || PumpActionTimer > 0)
             {
                 isIdle = false;
-                recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
+                recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);                
                 Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + SpecificWeaponFix;
                 Projectile.Center = Player.MountedCenter + distance;
                 Projectile.position.Y += Player.gfxOffY;
@@ -491,6 +504,7 @@ namespace InsurgencyWeapons.Projectiles
                     Projectile.frame = 0;
             }
             #endregion
+            
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -515,6 +529,10 @@ namespace InsurgencyWeapons.Projectiles
             PumpActionTimer = reader.ReadInt32();
         }
 
+        /// <summary>
+        /// Inserts a single shell
+        /// </summary>
+        /// <param name="setReload">Tick delay to set ReloadTimer to</param>
         public void ReloadShotgun(int setReload)
         {
             ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
@@ -551,6 +569,36 @@ namespace InsurgencyWeapons.Projectiles
                 return;
             ammoStackCount = CurrentAmmo;
             Ammo.stack += ammoStackCount;
+        }
+
+        public void SwitchAmmoShotgun()
+        {
+            bool slug = false;
+            ReturnAmmo();
+            CurrentAmmo = 0;
+            if (AmmoType == ModContent.ItemType<TwelveGauge>())
+            {
+                AmmoType = ModContent.ItemType<TwelveGaugeSlug>();
+                slug = true;
+            }
+            else if (AmmoType == ModContent.ItemType<TwelveGaugeSlug>())
+            {
+                AmmoType = ModContent.ItemType<TwelveGauge>();
+                slug = false;
+            }
+            Main.NewText($"slug bool set to: {slug}");
+            MagazineTracking.SlugOrBuck[shotgunIdentifier] = slug;
+            Main.NewText($"slug in MagazineTracking: {MagazineTracking.SlugOrBuck[shotgunIdentifier]}");
+        }
+
+        public int GetShotgunAmmoType()
+        {
+            if (Player.TryGetModPlayer<InsurgencyMagazineTracking>(out var choice))
+            {
+                Main.NewText($"slug in setdefaults: {choice.SlugOrBuck[shotgunIdentifier]}");
+                return choice.SlugOrBuck[shotgunIdentifier] ? ModContent.ItemType<TwelveGaugeSlug>() : ModContent.ItemType<TwelveGauge>();
+            }
+            return 0;
         }
     }
 }

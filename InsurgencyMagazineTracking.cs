@@ -1,10 +1,22 @@
 ﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Items.Ammo;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria.ModLoader.IO;
 
 namespace InsurgencyWeapons
 {
     public class InsurgencyMagazineTracking : ModPlayer
     {
+        public enum SlugShotguns
+        {
+            Ithaca,
+
+            M590,
+
+            M1014
+        }
+
         public bool MouseOverFriendlyNPC { get; set; }
 
         public bool
@@ -59,6 +71,8 @@ namespace InsurgencyWeapons
             M590Tube,
             M1014Tube;
 
+        public bool[] SlugOrBuck = new bool[Enum.GetValues(typeof(SlugShotguns)).Length];
+
         //Sub machine guns
         public int
             MP7Magazine,
@@ -101,10 +115,9 @@ namespace InsurgencyWeapons
 
         private bool OverFriendlyNPC()
         {
-            for (int i = 0; i < Main.maxNPCs; i++)
+            foreach (NPC target in Main.ActiveNPCs) 
             {
-                NPC target = Main.npc[i];
-                if (target.active && target.friendly && target.Hitbox.Contains(Main.MouseWorld.ToPoint()))
+                if (target.friendly && target.Hitbox.Contains(Main.MouseWorld.ToPoint()))
                     return true;
             }
             return false;

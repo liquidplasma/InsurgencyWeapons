@@ -3,6 +3,7 @@ using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Shotguns;
 using System.IO;
+using static InsurgencyWeapons.InsurgencyMagazineTracking;
 
 namespace InsurgencyWeapons.Projectiles.Shotguns
 {
@@ -61,7 +62,8 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             Projectile.height = 84;
             MagazineSize = 6;
             drawScale = 0.8f;
-            AmmoType = ModContent.ItemType<TwelveGauge>();
+            shotgunIdentifier = (int)SlugShotguns.Ithaca;
+            AmmoType = GetShotgunAmmoType();
             base.SetDefaults();
         }
 
@@ -74,20 +76,26 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 0f;
+            OffsetFromPlayerCenter = 4f;
             SpecificWeaponFix = new Vector2(0, 3.5f);
 
             if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && PumpActionTimer == 0)
             {
                 CurrentAmmo--;
+                bool slug = AmmoType == ModContent.ItemType<TwelveGaugeSlug>();
                 if (CurrentAmmo != 0 || LiteMode)
                     PumpActionTimer = 50;
                 ShotDelay = 0;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                for (int j = 0; j < 8; j++)
+                if (slug)
+                    Shoot(0, false, slug: slug);
+                else
                 {
-                    //Buck
-                    Shoot(1, dropCasing: false, shotgun: true);
+                    for (int j = 0; j < 8; j++)
+                    {
+                        //Buck
+                        Shoot(1, dropCasing: false, shotgun: true);
+                    }
                 }
             }
 
@@ -165,7 +173,10 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 case 200:
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     SoundEngine.PlaySound(PumpBack, Projectile.Center);
-                    DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                    if (AmmoType == ModContent.ItemType<TwelveGauge>())
+                        DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                    else
+                        DropCasingManually(ModContent.GoreType<ShellSlugGore>());
                     break;
             }
 
@@ -183,13 +194,15 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 case 28:
                     SoundEngine.PlaySound(PumpBack, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
-                    DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                    if (AmmoType == ModContent.ItemType<TwelveGauge>())
+                        DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                    else
+                        DropCasingManually(ModContent.GoreType<ShellSlugGore>());
                     break;
             }
 
             if (HeldItem.type != ModContent.ItemType<Ithaca>())
                 Projectile.Kill();
-
             base.AI();
         }
 
