@@ -71,7 +71,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 8f;
+            OffsetFromPlayerCenter = 14f;
             SpecificWeaponFix = new Vector2(0, 1.5f);
 
             if (!Player.channel || AutoAttack == 0)
@@ -87,12 +87,21 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 PumpActionTimer = HeldItem.useTime;
                 ShotDelay = 0;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                for (int j = 0; j < 8; j++)
+                bool slug = AmmoType == ModContent.ItemType<TwelveGaugeSlug>();
+                if (slug)
+                    Shoot(0, false, slug: slug);
+                else
                 {
-                    //Buck
-                    Shoot(1, dropCasing: false, shotgun: true);
+                    for (int j = 0; j < 8; j++)
+                    {
+                        //Buck
+                        Shoot(1, dropCasing: false, shotgun: true);
+                    }
                 }
-                DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                if (AmmoType == ModContent.ItemType<TwelveGauge>())
+                    DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                else
+                    DropCasingManually(ModContent.GoreType<ShellSlugGore>());
             }
 
             if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted && PumpActionTimer == 0)
@@ -166,6 +175,10 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 case 200:
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     SoundEngine.PlaySound(BoltBack, Projectile.Center);
+                    if (AmmoType == ModContent.ItemType<TwelveGauge>())
+                        DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                    else
+                        DropCasingManually(ModContent.GoreType<ShellSlugGore>());
                     break;
             }
 

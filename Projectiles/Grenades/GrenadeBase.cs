@@ -52,9 +52,12 @@ namespace InsurgencyWeapons.Projectiles.Grenades
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = Projectile.MyTexture();
-            Rectangle rect = texture.Bounds;
-            BetterEntityDraw(texture, Projectile.Center, rect, lightColor, Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None);
+            if (Projectile.timeLeft > 6)
+            {
+                Texture2D texture = Projectile.MyTexture();
+                Rectangle rect = texture.Bounds;
+                BetterEntityDraw(texture, Projectile.Center, rect, lightColor, Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None);
+            }
             return false;
         }
 

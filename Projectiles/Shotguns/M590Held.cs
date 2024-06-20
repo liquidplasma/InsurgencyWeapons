@@ -74,7 +74,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 0f;
+            OffsetFromPlayerCenter = 12f;
             SpecificWeaponFix = new Vector2(0, 1.5f);
 
             if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && PumpActionTimer == 0)
@@ -84,10 +84,16 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     PumpActionTimer = 50;
                 ShotDelay = 0;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                for (int j = 0; j < 8; j++)
+                bool slug = AmmoType == ModContent.ItemType<TwelveGaugeSlug>();
+                if (slug)
+                    Shoot(0, false, slug: slug);
+                else
                 {
-                    //Buck
-                    Shoot(1, dropCasing: false, shotgun: true);
+                    for (int j = 0; j < 8; j++)
+                    {
+                        //Buck
+                        Shoot(1, dropCasing: false, shotgun: true);
+                    }
                 }
             }
 
@@ -163,7 +169,10 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 case 200:
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     SoundEngine.PlaySound(PumpBack, Projectile.Center);
-                    DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                    if (AmmoType == ModContent.ItemType<TwelveGauge>())
+                        DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                    else
+                        DropCasingManually(ModContent.GoreType<ShellSlugGore>());
                     break;
             }
 
@@ -181,7 +190,10 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 case 28:
                     SoundEngine.PlaySound(PumpBack, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
-                    DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                    if (AmmoType == ModContent.ItemType<TwelveGauge>())
+                        DropCasingManually(ModContent.GoreType<ShellBuckShotGore>());
+                    else
+                        DropCasingManually(ModContent.GoreType<ShellSlugGore>());
                     break;
             }
 

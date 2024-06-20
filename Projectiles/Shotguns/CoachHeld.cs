@@ -115,6 +115,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 {
                     AlternateFireCoolDown = 180;
                     both = 2;
+                    Player.velocity += Player.Center.DirectionFrom(MouseAim) * 2f;
                 }
 
                 for (int i = 0; i < both; i++)

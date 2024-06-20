@@ -1,4 +1,9 @@
 ﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Items.Weapons.Shotguns;
+using InsurgencyWeapons.Projectiles;
+using InsurgencyWeapons.VendingMachines.Tiles;
+using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
 namespace InsurgencyWeapons.Items
@@ -111,10 +116,54 @@ namespace InsurgencyWeapons.Items
 
     public abstract class Shotgun : WeaponUtils
     {
+        private Projectile Gun;
+
+        private int
+            shotGunSwitchTimer;
+
+        private int choice = ModContent.ItemType<TwelveGauge>();
+
         public override void SetDefaults()
         {
             WeaponPerk = (int)PerkSystem.Perks.SupportSpecialist;
             base.SetDefaults();
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (shotGunSwitchTimer > 0)
+                shotGunSwitchTimer--;
+
+            if (player.whoAmI == Main.myPlayer && WeaponHeldProjectile != 0 && player.ownedProjectileCounts[WeaponHeldProjectile] < 1)
+            {
+                Gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
+                Gun.GetGlobalProjectile<ProjPerkTracking>().Perk = WeaponPerk;
+                if (Gun.active && Gun.ModProjectile is WeaponBase changeSlug)
+                    changeSlug.AmmoType = choice;
+            }
+
+            if (Gun != null && Gun.active && Gun.ModProjectile is WeaponBase shotgun && !shotgun.ReloadStarted && shotgun.MouseRightPressed && shotGunSwitchTimer == 0)
+            {
+                shotGunSwitchTimer = 90;
+                shotgun.ReturnAmmo();
+                shotgun.CurrentAmmo = 0;
+                choice =
+                    choice == ModContent.ItemType<TwelveGauge>()
+                    ? choice = ModContent.ItemType<TwelveGaugeSlug>()
+                    : choice = ModContent.ItemType<TwelveGauge>();
+                Gun.Kill();
+            }
+        }
+
+        public override void SaveData(TagCompound tag)
+        {
+            tag[$"{Item.ModItem?.Name}"] = choice;
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            if (tag.ContainsKey($"{Item.ModItem?.Name}"))
+                choice = tag.GetInt($"{Item.ModItem?.Name}");
         }
     }
 

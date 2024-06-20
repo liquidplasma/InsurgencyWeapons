@@ -3,7 +3,6 @@ using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Shotguns;
 using System.IO;
-using static InsurgencyWeapons.InsurgencyMagazineTracking;
 
 namespace InsurgencyWeapons.Projectiles.Shotguns
 {
@@ -62,8 +61,6 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             Projectile.height = 84;
             MagazineSize = 6;
             drawScale = 0.8f;
-            shotgunIdentifier = (int)SlugShotguns.Ithaca;
-            AmmoType = GetShotgunAmmoType();
             base.SetDefaults();
         }
 
@@ -76,17 +73,17 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 4f;
+            OffsetFromPlayerCenter = 18f;
             SpecificWeaponFix = new Vector2(0, 3.5f);
 
             if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && PumpActionTimer == 0)
             {
                 CurrentAmmo--;
-                bool slug = AmmoType == ModContent.ItemType<TwelveGaugeSlug>();
                 if (CurrentAmmo != 0 || LiteMode)
                     PumpActionTimer = 50;
                 ShotDelay = 0;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
+                bool slug = AmmoType == ModContent.ItemType<TwelveGaugeSlug>();
                 if (slug)
                     Shoot(0, false, slug: slug);
                 else
@@ -98,7 +95,6 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     }
                 }
             }
-
             if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted && PumpActionTimer == 0)
             {
                 ReloadStarted = true;

@@ -8,15 +8,6 @@ namespace InsurgencyWeapons
 {
     public class InsurgencyMagazineTracking : ModPlayer
     {
-        public enum SlugShotguns
-        {
-            Ithaca,
-
-            M590,
-
-            M1014
-        }
-
         public bool MouseOverFriendlyNPC { get; set; }
 
         public bool
@@ -71,8 +62,6 @@ namespace InsurgencyWeapons
             M590Tube,
             M1014Tube;
 
-        public bool[] SlugOrBuck = new bool[Enum.GetValues(typeof(SlugShotguns)).Length];
-
         //Sub machine guns
         public int
             MP7Magazine,
@@ -115,7 +104,7 @@ namespace InsurgencyWeapons
 
         private bool OverFriendlyNPC()
         {
-            foreach (NPC target in Main.ActiveNPCs) 
+            foreach (NPC target in Main.ActiveNPCs)
             {
                 if (target.friendly && target.Hitbox.Contains(Main.MouseWorld.ToPoint()))
                     return true;

@@ -1,9 +1,17 @@
 ﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
+using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
+using Terraria;
 
 namespace InsurgencyWeapons.Projectiles.WeaponMagazines
 {
     public abstract class MagazineBase : ModProjectile
     {
+        private static int[] IgnoredDraws = {
+            ModContent.ProjectileType<M1GarandEnbloc>(),
+            ModContent.ProjectileType<EnfieldBlock>(),
+        };
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 10;
@@ -21,6 +29,21 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             return false;
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (Projectile.ModProjectile is MagazineBase)
+            {
+                if (IgnoredDraws.Contains(Projectile.type))
+                    return base.PreDraw(ref lightColor);
+
+                Texture2D texture = Projectile.MyTexture();
+                Rectangle rect = texture.Bounds;
+                BetterEntityDraw(texture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, Projectile.scale, SpriteEffects.None);
+                return false;
+            }
+            return base.PreDraw(ref lightColor);
+        }
+       
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             return false;

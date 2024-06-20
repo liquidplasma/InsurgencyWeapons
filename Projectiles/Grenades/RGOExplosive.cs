@@ -2,7 +2,7 @@
 {
     public class RGOExplosive : GrenadeBase
     {
-        private bool Contact => AITimer >= 45 && TileCollides == 0;
+        private bool Contact => AITimer >= 60 && TileCollides == 0;
 
         public override void SetDefaults()
         {

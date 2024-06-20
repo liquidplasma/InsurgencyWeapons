@@ -41,6 +41,11 @@ namespace InsurgencyWeapons.Projectiles
         public InsurgencyMagazineTracking MagazineTracking => Player.GetModPlayer<InsurgencyMagazineTracking>();
 
         /// <summary>
+        /// Tracking global projectile
+        /// </summary>
+        public InsurgencyGlobalProjectile GlobalProjectileTracking => Projectile.GetGlobalProjectile<InsurgencyGlobalProjectile>();
+
+        /// <summary>
         /// The ammo
         /// </summary>
         public Item Ammo { get; set; }
@@ -176,8 +181,7 @@ namespace InsurgencyWeapons.Projectiles
 
         public int
             ammoStackCount,
-            shotgunSwitchDelay,
-            shotgunIdentifier;
+            shotgunSwitchDelay;
 
         public float drawScale;
 
@@ -280,7 +284,7 @@ namespace InsurgencyWeapons.Projectiles
         /// <param name="ai1"></param>
         /// <param name="ai2"></param>
         /// <param name="shotgun"></param>
-        /// 
+        ///
         ///
         ///
         ///
@@ -430,12 +434,6 @@ namespace InsurgencyWeapons.Projectiles
                 Projectile.netUpdate = true;
             }
 
-            if (Insurgency.Shotguns.Contains(HeldItem.type) && MouseRightPressed && shotgunSwitchDelay == 0)
-            {
-                shotgunSwitchDelay = 90;
-                SwitchAmmoShotgun();
-            }
-
             //Give scope to player if he is holding sniper rifles
             if (Insurgency.SniperRifles.Contains(HeldItem.type))
                 Player.scope = true;
@@ -455,7 +453,9 @@ namespace InsurgencyWeapons.Projectiles
                 || PumpActionTimer > 0)
             {
                 isIdle = false;
-                recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);                
+                recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
+                if (Insurgency.Shotguns.Contains(HeldItem.type))
+                    recoil = Player.MountedCenter.DirectionFrom(MouseAim) * -(Math.Clamp((ShotDelay - 12) /  -3f, 0, 100));
                 Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + SpecificWeaponFix;
                 Projectile.Center = Player.MountedCenter + distance;
                 Projectile.position.Y += Player.gfxOffY;
@@ -504,7 +504,6 @@ namespace InsurgencyWeapons.Projectiles
                     Projectile.frame = 0;
             }
             #endregion
-            
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -569,36 +568,6 @@ namespace InsurgencyWeapons.Projectiles
                 return;
             ammoStackCount = CurrentAmmo;
             Ammo.stack += ammoStackCount;
-        }
-
-        public void SwitchAmmoShotgun()
-        {
-            bool slug = false;
-            ReturnAmmo();
-            CurrentAmmo = 0;
-            if (AmmoType == ModContent.ItemType<TwelveGauge>())
-            {
-                AmmoType = ModContent.ItemType<TwelveGaugeSlug>();
-                slug = true;
-            }
-            else if (AmmoType == ModContent.ItemType<TwelveGaugeSlug>())
-            {
-                AmmoType = ModContent.ItemType<TwelveGauge>();
-                slug = false;
-            }
-            Main.NewText($"slug bool set to: {slug}");
-            MagazineTracking.SlugOrBuck[shotgunIdentifier] = slug;
-            Main.NewText($"slug in MagazineTracking: {MagazineTracking.SlugOrBuck[shotgunIdentifier]}");
-        }
-
-        public int GetShotgunAmmoType()
-        {
-            if (Player.TryGetModPlayer<InsurgencyMagazineTracking>(out var choice))
-            {
-                Main.NewText($"slug in setdefaults: {choice.SlugOrBuck[shotgunIdentifier]}");
-                return choice.SlugOrBuck[shotgunIdentifier] ? ModContent.ItemType<TwelveGaugeSlug>() : ModContent.ItemType<TwelveGauge>();
-            }
-            return 0;
         }
     }
 }

@@ -134,7 +134,7 @@ Items: {
 		Tooltip:
 			'''
 			Explodes on contact
-			Will not explode if contact is made too close
+			Will explode on contact, but only after 1 second has passed
 			'''
 	}
 
