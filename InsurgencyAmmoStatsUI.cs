@@ -57,19 +57,19 @@ namespace InsurgencyWeapons
                 return;
 
             string IconAmmo;
-            Item Ammo = ContentSamples.ItemsByType[AmmoTracking.AmmoType];
-            if (Ammo != null && AmmoTracking.HasGL && AmmoTracking.AmmoTypeGL != -1)
+            if (ContentSamples.ItemsByType.TryGetValue(AmmoTracking.AmmoType, out Item Ammo))
             {
-                Item AmmoGL = ContentSamples.ItemsByType[AmmoTracking.AmmoTypeGL];
-                IconAmmo = $"[i:InsurgencyWeapons/{Ammo.ModItem?.Name}]";
-                string IconGrenade;
-                IconGrenade = $"[i:InsurgencyWeapons/{AmmoGL.ModItem?.Name}]";
-                AmmoDisplay.SetText(AmmoTracking.CurrentAmmo + " / " + Player.CountItem(AmmoTracking.AmmoType) + IconAmmo + AmmoTracking.GrenadeName + Player.CountItem(AmmoTracking.AmmoTypeGL) + IconGrenade);
-            }
-            else if (Ammo != null)
-            {
-                IconAmmo = $"[i:InsurgencyWeapons/{Ammo.ModItem?.Name}]";
-                AmmoDisplay.SetText(AmmoTracking.CurrentAmmo + " / " + Player.CountItem(AmmoTracking.AmmoType) + IconAmmo);
+                if (Ammo != null && AmmoTracking.HasGL && AmmoTracking.AmmoTypeGL != -1 && ContentSamples.ItemsByType.TryGetValue(AmmoTracking.AmmoTypeGL, out Item AmmoGL))
+                {
+                    IconAmmo = $"[i:InsurgencyWeapons/{Ammo.ModItem?.Name}]";
+                    string IconGrenade = $"[i:InsurgencyWeapons/{AmmoGL.ModItem?.Name}]";
+                    AmmoDisplay.SetText(AmmoTracking.CurrentAmmo + " / " + Player.CountItem(AmmoTracking.AmmoType) + IconAmmo + AmmoTracking.GrenadeName + Player.CountItem(AmmoTracking.AmmoTypeGL) + IconGrenade);
+                }
+                else if (Ammo != null)
+                {
+                    IconAmmo = $"[i:InsurgencyWeapons/{Ammo.ModItem?.Name}]";
+                    AmmoDisplay.SetText(AmmoTracking.CurrentAmmo + " / " + Player.CountItem(AmmoTracking.AmmoType) + IconAmmo);
+                }
             }
             base.Update(gameTime);
         }

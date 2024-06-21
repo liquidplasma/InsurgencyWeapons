@@ -72,5 +72,5 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.8.8
-	- Multiplayer sync issues
+v0.8.9.1
+	- The given key 'xx' was not present in the dictionary fixed when grabbing shotguns

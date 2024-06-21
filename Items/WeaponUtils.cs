@@ -1,8 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.Shotguns;
 using InsurgencyWeapons.Projectiles;
-using InsurgencyWeapons.VendingMachines.Tiles;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
@@ -121,7 +119,7 @@ namespace InsurgencyWeapons.Items
         private int
             shotGunSwitchTimer;
 
-        private int choice = ModContent.ItemType<TwelveGauge>();
+        private bool useSlug = false;
 
         public override void SetDefaults()
         {
@@ -139,7 +137,12 @@ namespace InsurgencyWeapons.Items
                 Gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
                 Gun.GetGlobalProjectile<ProjPerkTracking>().Perk = WeaponPerk;
                 if (Gun.active && Gun.ModProjectile is WeaponBase changeSlug)
-                    changeSlug.AmmoType = choice;
+                {
+                    if (useSlug)
+                        changeSlug.AmmoType = ModContent.ItemType<TwelveGaugeSlug>();
+                    else
+                        changeSlug.AmmoType = ModContent.ItemType<TwelveGauge>();
+                }
             }
 
             if (Gun != null && Gun.active && Gun.ModProjectile is WeaponBase shotgun && !shotgun.ReloadStarted && shotgun.MouseRightPressed && shotGunSwitchTimer == 0)
@@ -147,23 +150,20 @@ namespace InsurgencyWeapons.Items
                 shotGunSwitchTimer = 90;
                 shotgun.ReturnAmmo();
                 shotgun.CurrentAmmo = 0;
-                choice =
-                    choice == ModContent.ItemType<TwelveGauge>()
-                    ? choice = ModContent.ItemType<TwelveGaugeSlug>()
-                    : choice = ModContent.ItemType<TwelveGauge>();
+                useSlug = useSlug != true;
                 Gun.Kill();
             }
         }
 
         public override void SaveData(TagCompound tag)
         {
-            tag[$"{Item.ModItem?.Name}"] = choice;
+            tag[$"InsurgenyWeaponsSlugChoice{Item.ModItem?.Name}"] = useSlug;
         }
 
         public override void LoadData(TagCompound tag)
         {
-            if (tag.ContainsKey($"{Item.ModItem?.Name}"))
-                choice = tag.GetInt($"{Item.ModItem?.Name}");
+            if (tag.ContainsKey($"InsurgenyWeaponsSlugChoice{Item.ModItem?.Name}"))
+                useSlug = tag.GetBool($"InsurgenyWeaponsSlugChoice{Item.ModItem?.Name}");
         }
     }
 
