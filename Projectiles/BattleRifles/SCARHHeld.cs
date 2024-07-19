@@ -45,7 +45,11 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
             AmmoType = ModContent.ItemType<Bullet76251>();
             base.SetDefaults();
         }
-
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 30);
+            return base.PreDraw(ref lightColor);
+        }
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.SCARHMagazine;
@@ -55,8 +59,8 @@ namespace InsurgencyWeapons.Projectiles.BattleRifles
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 15f;
-            SpecificWeaponFix = new Vector2(0, 0);
+            OffsetFromPlayerCenter = 10f;
+            //SpecificWeaponFix = new Vector2(0, 0);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;

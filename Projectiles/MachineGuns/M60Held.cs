@@ -1,6 +1,7 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.MachineGuns;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.MachineGuns;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.MachineGuns
@@ -54,6 +55,12 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1.25f, Projectile.height - 24);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.M60Box;
@@ -68,7 +75,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 drawScale = 0.9f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 18f;
-            SpecificWeaponFix = new Vector2(0, -3.5f);
+            //SpecificWeaponFix = new Vector2(0, -3.5f);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
@@ -85,7 +92,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
             if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.LightMachineGuns;
+                ReloadTimer = 380;
                 ReloadStarted = true;
             }
 
@@ -99,7 +106,8 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             {
                 ManualReload = true;
                 ReloadStarted = true;
-                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.LightMachineGuns;
+                ReloadTimer = 380;
+                Main.NewText(ReloadTimer);
                 if (LiteMode)
                     ReloadTimer = 14;
             }
@@ -132,15 +140,14 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
                 case 160:
                     SoundEngine.PlaySound(Throw, Projectile.Center);
-                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
-                    if (ManualReload)
-                        Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                    DropMagazine(ModContent.ProjectileType<M249Box>());
                     if (CanReload())
                         ReloadMagazine(true);
                     break;
 
                 case 210:
                     ReturnAmmo();
+                    CurrentAmmo = 0;
                     break;
 
                 case 280:

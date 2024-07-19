@@ -46,7 +46,11 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             AmmoType = ModContent.ItemType<Bullet762>();
             base.SetDefaults();
         }
-
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1.25f, Projectile.height - 30);
+            return base.PreDraw(ref lightColor);
+        }
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.RPKDrum;
@@ -57,7 +61,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 18f;
-            SpecificWeaponFix = new Vector2(0, -0.5f);
+            //SpecificWeaponFix = new Vector2(0, -0.5f);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;

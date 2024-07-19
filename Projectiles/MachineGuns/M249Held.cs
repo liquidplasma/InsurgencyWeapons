@@ -56,6 +56,12 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1.25f, Projectile.height - 30);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.M249Box;
@@ -70,7 +76,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 drawScale = 0.8f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
-            SpecificWeaponFix = new Vector2(0, -8f);
+            //SpecificWeaponFix = new Vector2(0, -8f);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;

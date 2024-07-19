@@ -45,7 +45,11 @@ namespace InsurgencyWeapons.Projectiles.Carbines
             AmmoType = ModContent.ItemType<Bullet556>();
             base.SetDefaults();
         }
-
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 20);
+            return base.PreDraw(ref lightColor);
+        }
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.G36CMagazine;
@@ -56,7 +60,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 8f;
-            SpecificWeaponFix = new Vector2(0, 1f);
+            //SpecificWeaponFix = new Vector2(0, 1f);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;

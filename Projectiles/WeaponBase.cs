@@ -1,7 +1,6 @@
 ﻿using InsurgencyWeapons.Gores.Casing;
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
-using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.MachineGuns;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
@@ -95,6 +94,8 @@ namespace InsurgencyWeapons.Projectiles
         /// </summary>
         public static int ShotgunPellet => Insurgency.Pellet;
 
+        private Texture2D MuzzleFlash => ModContent.Request<Texture2D>("InsurgencyWeapons/Textures/Muzzleflash").Value;
+
         public int BulletDamage
         {
             get
@@ -166,7 +167,7 @@ namespace InsurgencyWeapons.Projectiles
 
         public Vector2
            recoilVertical, recoil,
-           MouseAim,
+           MouseAim, muzzlePos,
            idlePos;
 
         /// <summary>
@@ -175,7 +176,7 @@ namespace InsurgencyWeapons.Projectiles
         public Vector2 SpecificWeaponFix = new(0, 0);
 
         public bool
-            isPistol, isASmallSprite, BigSpriteSpecificIdlePos, isIdle,
+            isPistol, isShotgun, isASmallSprite, BigSpriteSpecificIdlePos, isIdle,
             MouseRightPressed,
             HasUnderBarrelGrenadeLauncer;
 
@@ -279,29 +280,22 @@ namespace InsurgencyWeapons.Projectiles
         /// <summary>
         /// Shoot boolet
         /// </summary>
-        /// <param name="maxDegree"></param>
+        /// <param name="maxDegree">Maximus degree in which the spread of the gun can achieve</param>
         /// <param name="dropCasing"></param>
         /// <param name="ai1"></param>
         /// <param name="ai2"></param>
-        /// <param name="shotgun"></param>
-        ///
-        ///
-        ///
-        ///
-        public void Shoot(int maxDegree, bool dropCasing = true, float ai1 = 0, float ai2 = 0, bool shotgun = false, bool slug = false)
+        public void Shoot(int maxDegree, bool dropCasing = true, float ai1 = 0, float ai2 = 0)
         {
             float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
-            if (HeldItem.ModItem is not null and Rifle || HeldItem.ModItem is not null and Shotgun)
+            if (HeldItem.ModItem is Rifle || HeldItem.ModItem is Shotgun)
                 knockBack *= 1.175f;
 
-            if (HeldItem.ModItem is not null and SniperRifle)
+            if (HeldItem.ModItem is SniperRifle)
                 knockBack *= 1.33f;
 
-            Vector2 aim = WeaponFireSpreadCalc(maxDegree, shotgun);
+            Vector2 aim = WeaponFireSpreadCalc(maxDegree, isShotgun);
 
-            int type = NormalBullet;
-            if (shotgun || slug)
-                type = ShotgunPellet;
+            int type = isShotgun ? ShotgunPellet : NormalBullet;
 
             //Bullet
             if (Player.whoAmI == Main.myPlayer)
@@ -338,6 +332,11 @@ namespace InsurgencyWeapons.Projectiles
             Projectile.scale = 1;
         }
 
+        public override bool ShouldUpdatePosition()
+        {
+            return false;
+        }
+
         public override bool? CanCutTiles()
         {
             return false;
@@ -352,8 +351,24 @@ namespace InsurgencyWeapons.Projectiles
         {
             Texture2D myTexture = Projectile.MyTexture();
             Rectangle rect = myTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-            Vector2 height = new(rect.Height);
             BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, drawScale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+        }
+
+        /// <summary>
+        /// Draws muzzleflash
+        /// </summary>
+        /// <param name="color">The color of the muzzleflash</param>
+        /// <param name="offset">The offset</param>
+        /// <param name="scale">The scale</param>
+        public void DrawMuzzleFlash(Color color, float scale, float distance)
+        {
+            if (ShotDelay <= HeldItem.useTime && Player.channel && !UnderAlternateFireCoolDown)
+            {
+                Texture2D muzzleFlash = MuzzleFlash;
+                Rectangle rect = muzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay, 0, 6));
+                Vector2 offset = Player.MountedCenter.DirectionTo(MouseAim) * distance;
+                BetterEntityDraw(muzzleFlash, muzzlePos + offset, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -387,10 +402,8 @@ namespace InsurgencyWeapons.Projectiles
                 AmmoGL = Player.FindItemInInventory(GrenadeLauncherAmmoType);
                 if (AmmoGL != null && AmmoGL.stack <= 0)
                     AmmoGL.TurnToAir(true);
-            }
-
-            //Muzzleflash light
-            if (ShotDelay == 1)
+            }           
+            if (ShotDelay == 0)
                 Lighting.AddLight(Player.Center, Color.Gold.ToVector3());
 
             //Resetting fields
@@ -455,11 +468,10 @@ namespace InsurgencyWeapons.Projectiles
                 isIdle = false;
                 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
                 if (Insurgency.Shotguns.Contains(HeldItem.type))
-                    recoil = Player.MountedCenter.DirectionFrom(MouseAim) * -(Math.Clamp((ShotDelay - 12) /  -3f, 0, 100));
+                    recoil = Player.MountedCenter.DirectionFrom(MouseAim) * -Math.Clamp((ShotDelay - 12) / -3f, 0, 100);
                 Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + SpecificWeaponFix;
-                Projectile.Center = Player.MountedCenter + distance;
+                muzzlePos = Projectile.Center = Player.MountedCenter + distance;
                 Projectile.position.Y += Player.gfxOffY;
-                Projectile.velocity = Vector2.Zero;
                 Projectile.rotation = Player.AngleTo(MouseAim) + MathHelper.PiOver2;
                 Player.ChangeDir(mouseDirection);
                 Projectile.spriteDirection = Player.direction;

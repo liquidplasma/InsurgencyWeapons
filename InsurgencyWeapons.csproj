@@ -77,6 +77,7 @@
     <None Remove="Projectiles\WeaponMagazines\SubMachineGuns\MP5KMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\SubMachineGuns\MP5SDMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\SubMachineGuns\UMP45Magazine.png" />
+    <None Remove="Textures\Muzzleflash.png" />
     <None Remove="VendingMachines\VendingMachineGunsTile.png" />
   </ItemGroup>
   <ItemGroup>

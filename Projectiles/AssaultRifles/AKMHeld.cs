@@ -58,6 +58,12 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 24);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.AKMMagazine;
@@ -72,7 +78,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             else
                 ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
-            SpecificWeaponFix = new Vector2(0, 2f);
+            //SpecificWeaponFix = new Vector2(0, 2f);
             if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown)
             {
                 ShotDelay = 0;

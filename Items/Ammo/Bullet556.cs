@@ -8,7 +8,7 @@
             CraftStack = 30;
             Item.width = 7;
             Item.height = 27;
-            Item.DefaultsToInsurgencyAmmo(5);
+            Item.DefaultsToInsurgencyAmmo(7);
             base.SetDefaults();
         }
     }

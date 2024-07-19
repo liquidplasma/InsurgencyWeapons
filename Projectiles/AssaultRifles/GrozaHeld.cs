@@ -57,7 +57,11 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             HasUnderBarrelGrenadeLauncer = true;
             base.SetDefaults();
         }
-
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 20);
+            return base.PreDraw(ref lightColor);
+        }
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.GrozaMagazine;
@@ -71,8 +75,8 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 ShowAmmoCounter(CurrentAmmo, AmmoType, true, " VOG-25P: ", GrenadeLauncherAmmoType);
             else
                 ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 6f;
-            SpecificWeaponFix = new Vector2(0, 0);
+            OffsetFromPlayerCenter = 0f;
+            //SpecificWeaponFix = new Vector2(0, -4f);
             if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown)
             {
                 ShotDelay = 0;

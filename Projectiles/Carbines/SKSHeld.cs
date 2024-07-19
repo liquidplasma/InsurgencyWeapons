@@ -49,7 +49,11 @@ namespace InsurgencyWeapons.Projectiles.Carbines
             AmmoType = ModContent.ItemType<Bullet762>();
             base.SetDefaults();
         }
-
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 24);
+            return base.PreDraw(ref lightColor);
+        }
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.SKSMagazine;
@@ -60,7 +64,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 14f;
-            SpecificWeaponFix = new Vector2(0, -0.5f);
+            //SpecificWeaponFix = new Vector2(0, -0.5f);
             if (!Player.channel || AutoAttack == 0)
             {
                 SemiAuto = false;
@@ -88,7 +92,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
                 ReloadStarted = true;
             }
 
-            if (Player.channel && CanFire && Projectile.soundDelay == 0)
+            if (CurrentAmmo == 0 && Player.channel && CanFire && Projectile.soundDelay == 0)
             {
                 SoundEngine.PlaySound(Empty, Projectile.Center);
                 Projectile.soundDelay = HeldItem.useTime * 2;

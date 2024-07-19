@@ -54,6 +54,12 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1.25f, Projectile.height - 22);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.PKMBox;
@@ -68,7 +74,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                 drawScale = 0.9f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 15f;
-            SpecificWeaponFix = new Vector2(0, -6);
+            //SpecificWeaponFix = new Vector2(0, -6);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
@@ -92,6 +98,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             if (Player.channel && CanFire && Projectile.soundDelay == 0)
             {
                 SoundEngine.PlaySound(Empty, Projectile.Center);
+                Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 Projectile.soundDelay = HeldItem.useTime * 2;
             }
 

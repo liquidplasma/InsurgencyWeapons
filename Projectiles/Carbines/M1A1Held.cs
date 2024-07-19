@@ -49,7 +49,11 @@ namespace InsurgencyWeapons.Projectiles.Carbines
             AmmoType = ModContent.ItemType<Bullet76233>();
             base.SetDefaults();
         }
-
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 30);
+            return base.PreDraw(ref lightColor);
+        }
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.M1A1Magazine;
@@ -60,7 +64,7 @@ namespace InsurgencyWeapons.Projectiles.Carbines
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 14f;
-            SpecificWeaponFix = new Vector2(0, 1f);
+            //SpecificWeaponFix = new Vector2(0, 1f);
             if (!Player.channel || AutoAttack == 0)
             {
                 SemiAuto = false;

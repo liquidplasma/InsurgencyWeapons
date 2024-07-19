@@ -1,6 +1,7 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Other;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.UI;
 
 namespace InsurgencyWeapons
@@ -8,6 +9,9 @@ namespace InsurgencyWeapons
     public class InsurgencyWeapons : Mod
     {
         public static Mod Instance => ModContent.GetInstance<InsurgencyWeapons>();
+
+
+
         public static int MoneyCurrency;
 
         public override void PostSetupContent()

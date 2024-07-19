@@ -62,6 +62,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             Projectile.height = 72;
             MagazineSize = 2;
             drawScale = 0.9f;
+            isShotgun = true;
             AmmoType = ModContent.ItemType<ShellBuck_Ball>();
             base.SetDefaults();
         }
@@ -124,7 +125,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     for (int j = 0; j < 6; j++)
                     {
                         //Buck
-                        Shoot(1, dropCasing: false, shotgun: true);
+                        Shoot(1, dropCasing: false);
                     }
 
                     //Ball

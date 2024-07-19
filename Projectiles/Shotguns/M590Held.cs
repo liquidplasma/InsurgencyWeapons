@@ -61,6 +61,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             Projectile.height = 78;
             MagazineSize = 8;
             drawScale = 0.8f;
+            isShotgun = true;
             AmmoType = ModContent.ItemType<TwelveGauge>();
             base.SetDefaults();
         }
@@ -86,13 +87,13 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 bool slug = AmmoType == ModContent.ItemType<TwelveGaugeSlug>();
                 if (slug)
-                    Shoot(0, false, slug: slug);
+                    Shoot(0, false);
                 else
                 {
                     for (int j = 0; j < 8; j++)
                     {
                         //Buck
-                        Shoot(1, dropCasing: false, shotgun: true);
+                        Shoot(1, dropCasing: false);
                     }
                 }
             }

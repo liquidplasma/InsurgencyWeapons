@@ -45,7 +45,11 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             AmmoType = ModContent.ItemType<Bullet556>();
             base.SetDefaults();
         }
-
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 24);
+            return base.PreDraw(ref lightColor);
+        }
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.GalilMagazine;
