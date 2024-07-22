@@ -54,20 +54,28 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 2);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.PythonCylinder;
             ShotDelay = HeldItem.useTime;
         }
 
+        public override bool PreAI()
+        {
+            return base.PreAI();
+        }
+
         public override void AI()
         {
-            if (isIdle)
-                drawScale = 0.75f;
-            else
-                drawScale = 1f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 10f;
+            SpecificWeaponFix = new(0, -4);
             if (!Player.channel)
                 SemiAuto = false;
 
@@ -89,13 +97,13 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 Shoot(2, dropCasing: false);
             }
 
-            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
             {
                 ReloadStarted = true;
                 ReloadTimer = 14;
             }
 
-            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
+            if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted && BoltActionTimer == 0)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Revolvers;
                 ReloadStarted = true;
@@ -165,13 +173,9 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                     }
                     break;
 
-                case 162:
-                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
-                    break;
-
                 case 180:
                     SoundEngine.PlaySound(Dump, Projectile.Center);
-                    Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     break;
             }
 

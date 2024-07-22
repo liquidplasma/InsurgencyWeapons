@@ -58,7 +58,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
 
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1.25f, Projectile.height - 30);
+            DrawMuzzleFlash(Color.Gold, 1.25f, Projectile.height - 30);
             return base.PreDraw(ref lightColor);
         }
 
@@ -68,12 +68,17 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
             ShotDelay = HeldItem.useTime;
         }
 
-        public override void AI()
+        public override bool PreAI()
         {
             if (isIdle)
                 drawScale = 0.75f;
             else
                 drawScale = 0.8f;
+            return base.PreAI();
+        }
+
+        public override void AI()
+        {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
             //SpecificWeaponFix = new Vector2(0, -8f);

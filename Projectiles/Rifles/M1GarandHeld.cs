@@ -51,7 +51,14 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             Projectile.height = 68;
             MagazineSize = 8;
             AmmoType = ModContent.ItemType<Bullet3006>();
+            drawScale = 1f;
             base.SetDefaults();
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 18);
+            return base.PreDraw(ref lightColor);
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -64,7 +71,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 9f;
-            SpecificWeaponFix = new Vector2(0, 0);
+            SpecificWeaponFix = new Vector2(0, -1);
 
             if (!Player.channel || AutoAttack == 0)
             {

@@ -1,4 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Items;
 using Terraria.Graphics;
 
 namespace InsurgencyWeapons.Projectiles
@@ -55,9 +56,19 @@ namespace InsurgencyWeapons.Projectiles
             if ((Insurgency.Pistols.Contains(HeldItem.type) || Insurgency.Revolvers.Contains(HeldItem.type)) && SetTracking.revolverSet)
                 mult *= 2;
 
+            if ((Insurgency.Carbines.Contains(HeldItem.type) || Insurgency.AssaultRifles.Contains(HeldItem.type)) && SetTracking.swatHelmet)
+                mult *= 1.33f;
+
+            if (HeldItem.ModItem is WeaponUtils sharpShooter && SetTracking.sniperScope)
+            {
+                if (sharpShooter.WeaponPerk == ((int)PerkSystem.Perks.Sharpshooter))
+                {
+                    mult *= 1.4f;
+                }
+            }
+
             if (InsurgencyModConfig.Instance.DamageScaling)
                 mult *= Insurgency.WeaponScaling();
-
             modifiers.FinalDamage *= mult;
             base.ModifyHitNPC(target, ref modifiers);
         }

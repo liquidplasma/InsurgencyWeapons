@@ -1,4 +1,8 @@
-SetBonuses.RevolverSet: Increases damage and crit chance with revolvers and pistols by 100% and 25%
+SetBonuses: {
+	RevolverSet: Increases damage and crit chance with revolvers and pistols by 100% and 25%
+	SwatHelmet: Increases damage and crit chance with assault rifles and carbines by 33% and 15%
+	SniperScope: Increases damage and crit chance with sharpshooter weapons by 40% and 20%
+}
 
 PerkSystem: {
 	Level: Current level:
@@ -11,11 +15,12 @@ PerkSystem: {
 	DemolitionsClass: Demolitions
 	SupportSpecialistClass: Support Specialist
 	SharpshooterClass: Sharpshooter
+	PenPowerAmount: Penetrates {0} enemies
 }
 
 NPCs: {
 	AmmoSeller: {
-		DescriptionBestiary: Arrives randomly and has good deals on various ammunitions
+		DescriptionBestiary: Arrives randomly and has good deals on various ammo types
 		StandardDialogue1: I've got good things on sale stranger
 		StandardDialogue2: Good ammo for cheap
 		StandardDialogue3: Grab it while it's hot
@@ -467,6 +472,7 @@ Projectiles: {
 	M249Held.DisplayName: M249 Held
 	M249Box.DisplayName: M249 Box
 	Shrapnel.DisplayName: Shrapnel
+	SVTMagazine.DisplayName: S V T Magazine
 }
 
 Keybinds: {

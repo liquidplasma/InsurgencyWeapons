@@ -1,7 +1,10 @@
 ﻿using InsurgencyWeapons.Gores.Casing;
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
+using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.MachineGuns;
+using InsurgencyWeapons.Projectiles.AssaultRifles;
+using InsurgencyWeapons.Projectiles.SubMachineGuns;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 
@@ -38,6 +41,8 @@ namespace InsurgencyWeapons.Projectiles
         /// Tracking magazine sizes
         /// </summary>
         public InsurgencyMagazineTracking MagazineTracking => Player.GetModPlayer<InsurgencyMagazineTracking>();
+
+        public InsurgencyCustomSetBonusModPlayer SetBonusTracking => Player.GetModPlayer<InsurgencyCustomSetBonusModPlayer>();
 
         /// <summary>
         /// Tracking global projectile
@@ -94,7 +99,10 @@ namespace InsurgencyWeapons.Projectiles
         /// </summary>
         public static int ShotgunPellet => Insurgency.Pellet;
 
-        private Texture2D MuzzleFlash => ModContent.Request<Texture2D>("InsurgencyWeapons/Textures/Muzzleflash").Value;
+        /// <summary>
+        /// Muzzleflash texture
+        /// </summary>
+        public Texture2D MuzzleFlash => ModContent.Request<Texture2D>("InsurgencyWeapons/Textures/Muzzleflash").Value;
 
         public int BulletDamage
         {
@@ -167,7 +175,7 @@ namespace InsurgencyWeapons.Projectiles
 
         public Vector2
            recoilVertical, recoil,
-           MouseAim, muzzlePos,
+           MouseAim, muzzlePos, bulletPos,
            idlePos;
 
         /// <summary>
@@ -184,7 +192,7 @@ namespace InsurgencyWeapons.Projectiles
             ammoStackCount,
             shotgunSwitchDelay;
 
-        public float drawScale;
+        public float drawScale = 0.8f;
 
         /// <summary>
         /// Time in ticks
@@ -294,7 +302,8 @@ namespace InsurgencyWeapons.Projectiles
                 knockBack *= 1.33f;
 
             Vector2 aim = WeaponFireSpreadCalc(maxDegree, isShotgun);
-
+            if (AmmoType == ModContent.ItemType<TwelveGaugeSlug>())
+                aim = WeaponFireSpreadCalc(0, false);
             int type = isShotgun ? ShotgunPellet : NormalBullet;
 
             //Bullet
@@ -302,7 +311,7 @@ namespace InsurgencyWeapons.Projectiles
             {
                 Projectile Shot = Projectile.NewProjectileDirect(
                    spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
-                   position: Player.MountedCenter,
+                   position: bulletPos,
                    velocity: aim,
                    type: type,
                    damage: BulletDamage,
@@ -319,7 +328,6 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void SetDefaults()
         {
-            drawScale = 0.9f;
             if (MagazineSize == 0)
                 throw new ArgumentException("MagazineSize property can't be 0");
 
@@ -360,14 +368,14 @@ namespace InsurgencyWeapons.Projectiles
         /// <param name="color">The color of the muzzleflash</param>
         /// <param name="offset">The offset</param>
         /// <param name="scale">The scale</param>
-        public void DrawMuzzleFlash(Color color, float scale, float distance)
+        public virtual void DrawMuzzleFlash(Color color, float scale, float distance)
         {
+            Vector2 offset = Player.MountedCenter.DirectionTo(MouseAim) * distance;
+            bulletPos = muzzlePos;
             if (ShotDelay <= HeldItem.useTime && Player.channel && !UnderAlternateFireCoolDown)
             {
-                Texture2D muzzleFlash = MuzzleFlash;
-                Rectangle rect = muzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay, 0, 6));
-                Vector2 offset = Player.MountedCenter.DirectionTo(MouseAim) * distance;
-                BetterEntityDraw(muzzleFlash, muzzlePos + offset, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+                Rectangle rect = MuzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay, 0, 6));
+                BetterEntityDraw(MuzzleFlash, muzzlePos + offset, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             }
         }
 
@@ -402,9 +410,14 @@ namespace InsurgencyWeapons.Projectiles
                 AmmoGL = Player.FindItemInInventory(GrenadeLauncherAmmoType);
                 if (AmmoGL != null && AmmoGL.stack <= 0)
                     AmmoGL.TurnToAir(true);
-            }           
+            }
             if (ShotDelay == 0)
-                Lighting.AddLight(Player.Center, Color.Gold.ToVector3());
+            {
+                float mult = 1f;
+                if (this is ASVALHeld || this is MP5SDHeld)
+                    mult = 0.75f;
+                Lighting.AddLight(Player.Center, Color.Gold.ToVector3() * mult);
+            }
 
             //Resetting fields
             #region
@@ -438,6 +451,9 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void AI()
         {
+            if (Insurgency.AssaultRifles.Contains(HeldItem.type) || Insurgency.Carbines.Contains(HeldItem.type))
+                SpecificWeaponFix = new(0, -2);
+
             if (Player.whoAmI == Main.myPlayer)
             {
                 MouseAim = Main.MouseWorld;
@@ -451,13 +467,21 @@ namespace InsurgencyWeapons.Projectiles
             if (Insurgency.SniperRifles.Contains(HeldItem.type))
                 Player.scope = true;
 
+            if (SetBonusTracking.sniperScope && HeldItem.ModItem is WeaponUtils weapon)
+                if (weapon.WeaponPerk == ((int)PerkSystem.Perks.Sharpshooter))
+                    Player.scope = true;
+
             if (Projectile.active)
                 MagazineTracking.isActive = true;
 
             //positioning / velocity
             #region
             idlePos = new Vector2(-12, -40);
-
+            recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
+            if (Insurgency.Shotguns.Contains(HeldItem.type) || Insurgency.SniperRifles.Contains(HeldItem.type))
+                recoil = Player.MountedCenter.DirectionFrom(MouseAim) * -Math.Clamp((ShotDelay - 12) / -3f, 0, 100);
+            Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil;
+            muzzlePos = Player.MountedCenter + SpecificWeaponFix + distance;
             int mouseDirection = Player.DirectionTo(MouseAim).X > 0f ? 1 : -1;
             if (Player.channel
                 || ReloadTimer > 0
@@ -466,11 +490,7 @@ namespace InsurgencyWeapons.Projectiles
                 || PumpActionTimer > 0)
             {
                 isIdle = false;
-                recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
-                if (Insurgency.Shotguns.Contains(HeldItem.type))
-                    recoil = Player.MountedCenter.DirectionFrom(MouseAim) * -Math.Clamp((ShotDelay - 12) / -3f, 0, 100);
-                Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil + SpecificWeaponFix;
-                muzzlePos = Projectile.Center = Player.MountedCenter + distance;
+                Projectile.Center = muzzlePos;
                 Projectile.position.Y += Player.gfxOffY;
                 Projectile.rotation = Player.AngleTo(MouseAim) + MathHelper.PiOver2;
                 Player.ChangeDir(mouseDirection);

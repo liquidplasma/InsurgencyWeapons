@@ -1,5 +1,4 @@
-﻿using InsurgencyWeapons.Helpers;
-using Terraria.GameContent;
+﻿using Terraria.GameContent;
 
 namespace InsurgencyWeapons.Gores.Casing
 {
@@ -9,7 +8,7 @@ namespace InsurgencyWeapons.Gores.Casing
         {
             ChildSafety.SafeGore[Type] = true;
         }
-       
+
         public override void OnSpawn(Gore gore, IEntitySource source)
         {
             gore.timeLeft = InsurgencyModConfig.Instance.CasingLifeTime * 60;

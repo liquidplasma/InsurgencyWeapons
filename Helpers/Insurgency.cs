@@ -121,7 +121,7 @@ namespace InsurgencyWeapons.Helpers
 
             SniperRifles = 4,
 
-            Revolvers = 21,
+            Revolvers = 23,
 
             SubMachineGuns = BattleRifles,
 

@@ -13,7 +13,7 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
             Item.width = 34;
             Item.height = 18;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 25;
+            Item.damage = 30;
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;

@@ -49,6 +49,12 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height + 4);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.M29Cylinder;
@@ -59,7 +65,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 9f;
-            SpecificWeaponFix = new Vector2(0, 2f);
+            SpecificWeaponFix = new Vector2(-2 * Player.direction, -2f);
 
             if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && BoltActionTimer == 0)
             {

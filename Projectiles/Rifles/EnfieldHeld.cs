@@ -66,6 +66,12 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 32);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.EnfieldMagazine;
@@ -76,7 +82,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 6f;
-            SpecificWeaponFix = new Vector2(0, 1f);
+            SpecificWeaponFix = new Vector2(0, -1);
 
             if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && BoltActionTimer == 0)
             {

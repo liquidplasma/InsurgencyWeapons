@@ -36,11 +36,13 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
         {
             Main.projFrames[Type] = 4;
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 24);
+            DrawMuzzleFlash(Color.Yellow, 0.5f, Projectile.height - 36);
             return base.PreDraw(ref lightColor);
         }
+
         public override void SetDefaults()
         {
             Projectile.width = 22;

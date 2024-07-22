@@ -2,7 +2,6 @@
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
-using Terraria;
 
 namespace InsurgencyWeapons.Projectiles.WeaponMagazines
 {
@@ -12,9 +11,11 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             ModContent.ProjectileType<M1GarandEnbloc>(),
             ModContent.ProjectileType<EnfieldBlock>(),
         };
+
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 10;
+            if (Projectile.width == 0) Projectile.width = 5;
+            if (Projectile.height == 0) Projectile.height = 5;
             Projectile.penetrate = 5;
             Projectile.alpha = 255;
             Projectile.friendly = true;
@@ -43,7 +44,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             }
             return base.PreDraw(ref lightColor);
         }
-       
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             return false;
@@ -77,6 +78,12 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             }
             Projectile.penetrate--;
             return false;
+        }
+
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            fallThrough = false;
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
         }
     }
 }

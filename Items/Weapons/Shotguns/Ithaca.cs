@@ -1,5 +1,4 @@
 ﻿using InsurgencyWeapons.Projectiles.Shotguns;
-using Terraria.ModLoader.IO;
 
 namespace InsurgencyWeapons.Items.Weapons.Shotguns
 {

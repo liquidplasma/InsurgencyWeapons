@@ -50,7 +50,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 24);
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 32);
             return base.PreDraw(ref lightColor);
         }
 

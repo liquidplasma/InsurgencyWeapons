@@ -1,4 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Items.Ammo;
 using System.Collections.Generic;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -325,8 +326,15 @@ namespace InsurgencyWeapons
 
     public class ToolTipShowPerkProgress : GlobalItem
     {
+        private static LocalizedText PenBuff { get; set; }
         private Player Player => Main.LocalPlayer;
         private PerkSystem PerkTracking => Player.GetModPlayer<PerkSystem>();
+
+        public override void SetStaticDefaults()
+        {
+            PenBuff = Language.GetText("Mods.InsurgencyWeapons.PerkSystem.PenPowerAmount");
+            base.SetStaticDefaults();
+        }
 
         private void BuildTooltip(List<TooltipLine> tooltips, int perk, int damage, int kills, Item item = null)
         {
@@ -387,6 +395,14 @@ namespace InsurgencyWeapons
 
             if (PerkTracking.SharpshooterWeapons(item))
                 BuildTooltip(tooltips, (int)PerkSystem.Perks.Sharpshooter, PerkTracking.SharpShooterDamage, PerkTracking.SharpShooterKills);
+
+            if (item.ModItem is TwelveGaugeSlug || item.ModItem is TwelveGauge || item.ModItem is ShellBuck_Ball)
+            {
+                float penBuff = PerkTracking.GetPenetrationBuffSupport();
+                int penValue = (int)Math.Round(3 * penBuff);
+                TooltipLine penAmount = new(Mod, "penPowerAmount", PenBuff.Format(penValue));
+                tooltips.Add(penAmount);
+            }
         }
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)

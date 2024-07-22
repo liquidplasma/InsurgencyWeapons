@@ -5,6 +5,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
     public class Shrapnel : ModProjectile
     {
         public ref float Timer => ref Projectile.ai[0];
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 2;
@@ -17,18 +18,20 @@ namespace InsurgencyWeapons.Projectiles.Grenades
             Projectile.localNPCHitCooldown = -1;
             base.SetDefaults();
         }
+
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.DisableCrit();
             base.ModifyHitNPC(target, ref modifiers);
         }
+
         public override void AI()
         {
             Timer++;
             if (Timer > 60)
             {
                 if (Main.rand.NextBool(40))
-                    Dust.NewDust(Projectile.Center, 2, 2, HelperStats.SmokeyDust);                
+                    Dust.NewDust(Projectile.Center, 2, 2, HelperStats.SmokeyDust);
                 base.AI();
             }
         }

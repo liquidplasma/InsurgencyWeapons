@@ -58,8 +58,15 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
             Projectile.width = 22;
             Projectile.height = 80;
             MagazineSize = 5;
+            drawScale = 1f;
             AmmoType = ModContent.ItemType<Bullet76254R>();
             base.SetDefaults();
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1.33f, Projectile.height - 26);
+            return base.PreDraw(ref lightColor);
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -71,8 +78,8 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 4f;
-            SpecificWeaponFix = new Vector2(0, -2.5f);
+            OffsetFromPlayerCenter = 16f;
+            SpecificWeaponFix = new Vector2(0, -1);
             if (!Player.channel)
                 SemiAuto = false;
 
@@ -82,7 +89,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                 ShotDelay = 0;
                 CurrentAmmo--;
                 if (CurrentAmmo > 0)
-                    BoltActionTimer = HeldItem.useTime * 2;
+                    BoltActionTimer = (int)(HeldItem.useTime * 1.5f);
 
                 SoundEngine.PlaySound(Fire, Projectile.Center);
                 Shoot(1, dropCasing: false);
@@ -157,7 +164,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                             ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
                             Player.ConsumeMultiple(ammoStackCount, Ammo.type);
                             CurrentAmmo += ammoStackCount;
-                            ReloadTimer = 60;
+                            ReloadTimer = 45;
                         }
                     }
                     break;

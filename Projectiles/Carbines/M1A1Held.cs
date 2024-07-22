@@ -49,11 +49,13 @@ namespace InsurgencyWeapons.Projectiles.Carbines
             AmmoType = ModContent.ItemType<Bullet76233>();
             base.SetDefaults();
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 30);
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 34);
             return base.PreDraw(ref lightColor);
         }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.M1A1Magazine;

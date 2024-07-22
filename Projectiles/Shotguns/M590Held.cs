@@ -66,6 +66,12 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1.5f, Projectile.height - 24);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.M590Tube;
@@ -76,7 +82,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
-            SpecificWeaponFix = new Vector2(0, 1.5f);
+            SpecificWeaponFix = new Vector2(0, 0);
 
             if (AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown && PumpActionTimer == 0)
             {

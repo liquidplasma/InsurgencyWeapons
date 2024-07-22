@@ -46,6 +46,12 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 34);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.PPShDrum;
@@ -55,8 +61,8 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 8f;
-            SpecificWeaponFix = new Vector2(0, 2);
+            OffsetFromPlayerCenter = 12f;
+            SpecificWeaponFix = new Vector2(0, -1);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;

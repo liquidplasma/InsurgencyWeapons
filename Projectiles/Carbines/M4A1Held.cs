@@ -45,9 +45,10 @@ namespace InsurgencyWeapons.Projectiles.Carbines
             AmmoType = ModContent.ItemType<Bullet556>();
             base.SetDefaults();
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 24);
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 30);
             return base.PreDraw(ref lightColor);
         }
 

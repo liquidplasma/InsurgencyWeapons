@@ -1,6 +1,7 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Rifles;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Rifles
@@ -47,6 +48,12 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 30);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.SVTMagazine;
@@ -77,7 +84,6 @@ namespace InsurgencyWeapons.Projectiles.Rifles
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
                 ReloadTimer += 30;
-                Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
             }
 
@@ -129,6 +135,8 @@ namespace InsurgencyWeapons.Projectiles.Rifles
                         ReturnAmmo();
                         CurrentAmmo = 0;
                     }
+                    else
+                        DropMagazine(ModContent.ProjectileType<SVTMagazine>());
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     break;
 

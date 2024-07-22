@@ -44,6 +44,18 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
         private bool SemiAuto;
 
+        private int DoubleBarrelMuzzleflash
+        {
+            get
+            {
+                return (int)Projectile.localAI[0];
+            }
+            set
+            {
+                Projectile.localAI[0] = value;
+            }
+        }
+
         private SoundStyle Open => new("InsurgencyWeapons/Sounds/Weapons/Ins2/coach/open");
         private SoundStyle Close => new("InsurgencyWeapons/Sounds/Weapons/Ins2/coach/close");
 
@@ -67,6 +79,22 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             base.SetDefaults();
         }
 
+        public override void DrawMuzzleFlash(Color color, float scale, float distance)
+        {
+            Vector2 offset = Player.MountedCenter.DirectionTo(MouseAim) * distance;
+            bulletPos = muzzlePos;
+            if (ShotDelay <= HeldItem.useTime && Player.channel && !UnderAlternateFireCoolDown)
+            {
+                Rectangle rect = MuzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay, 0, 6));
+                BetterEntityDraw(MuzzleFlash, muzzlePos + offset, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            }
+            if (DoubleBarrelMuzzleflash > 0)
+            {
+                Rectangle rect = MuzzleFlash.Frame(verticalFrames: 6, frameY: 6 - DoubleBarrelMuzzleflash);
+                BetterEntityDraw(MuzzleFlash, muzzlePos + offset, rect, color, Projectile.rotation + MathHelper.PiOver2 * -Player.direction, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
+            }
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D myTexture = Projectile.MyTexture();
@@ -77,7 +105,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             else
                 scale = 0.9f;
             BetterEntityDraw(myTexture, Projectile.Center, rect, lightColor, Projectile.rotation, rect.Size() / 2, scale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
-
+            DrawMuzzleFlash(Color.PaleGoldenrod, 2f, Projectile.height - 8);
             return false;
         }
 
@@ -88,6 +116,13 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             PercentageOfAltFireCoolDown = 180 * 0.85f;
         }
 
+        public override bool PreAI()
+        {
+            if (DoubleBarrelMuzzleflash > 0)
+                DoubleBarrelMuzzleflash--;
+            return base.PreAI();
+        }
+
         public override void AI()
         {
             if (isIdle)
@@ -96,7 +131,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 drawScale = 0.9f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
-            SpecificWeaponFix = new Vector2(0, 4f);
+            SpecificWeaponFix = new Vector2(0, -2);
             if (!Player.channel)
                 SemiAuto = false;
 
@@ -116,7 +151,8 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 {
                     AlternateFireCoolDown = 180;
                     both = 2;
-                    Player.velocity += Player.Center.DirectionFrom(MouseAim) * 2f;
+                    Player.velocity += Player.Center.DirectionFrom(MouseAim) * 3f;
+                    DoubleBarrelMuzzleflash = 6;
                 }
 
                 for (int i = 0; i < both; i++)

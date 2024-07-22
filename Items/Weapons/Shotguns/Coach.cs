@@ -1,5 +1,4 @@
-﻿using InsurgencyWeapons.Projectiles;
-using InsurgencyWeapons.Projectiles.Shotguns;
+﻿using InsurgencyWeapons.Projectiles.Shotguns;
 
 namespace InsurgencyWeapons.Items.Weapons.Shotguns
 {

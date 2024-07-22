@@ -51,6 +51,12 @@ namespace InsurgencyWeapons.Projectiles.Pistols
             base.SetDefaults();
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height);
+            return base.PreDraw(ref lightColor);
+        }
+
         public override void OnSpawn(IEntitySource source)
         {
             CurrentAmmo = MagazineTracking.M1911Magazine;
@@ -65,7 +71,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                 drawScale = 1f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 4f;
-            SpecificWeaponFix = new Vector2(0, 0);
+            SpecificWeaponFix = new Vector2(-2 * Player.direction, -4);
 
             if (!Player.channel || AutoAttack == 0)
             {

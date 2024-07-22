@@ -5,13 +5,20 @@ All of the guns are held projectiles so if you use some mod that changes how pro
 All enemies now drop "money" at a fixed 50% chance, with money you can craft the vending machines for weapons and ammo.
 Bind the key in the config screen if you want the ability to manually reload the guns. You can also buy ammo anywhere but it costs 20% more to do so when compared to buying the ammo at the vending machine.
 
+[h1]Set bonuses and items:[/h1]
+[img]https://i.imgur.com/ho2oPjT.png[/img]
+Obsidian armor now increases damage and crit chance with revolvers and pistols by 100% and 25%
+[img]https://i.imgur.com/EzDkle5.png[/img]
+Swat Helmet increases damage and crit chance with assault rifles and carbines by 33% and 15%
+[img]https://i.imgur.com/lHXdp7g.png[/img]
+Sniper scope increases damage and crit chance with sharpshooter weapons by 40% and 20%
+
 This mod is a port to tModLoader of [url=https://github.com/KernCore91/-SC-Insurgency-Weapons-Project] Insurgency Weapons Project [/url]
 This mod is licensed under [url=https://insurgency-support.newworldinteractive.com/hc/en-us/articles/360046247492-End-User-License-Agreement] New World Interactive End-User License Agreement [/url]
 
 Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub [/url]
 
 [h1]Weapons in the pack so far:[/h1]
-
 	[b]-Assault rifles-[/b]
 		* AKM 7.62x39mm + GP-25 40mm VOG-25P
 		* AS VAL 9x39mm
@@ -72,5 +79,7 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.8.9.1
-	- The given key 'xx' was not present in the dictionary fixed when grabbing shotguns
+v0.9
+	- Muzzleflashes!!
+	- Sped up sniper rifles a bit
+	- Some vanilla items now buff the weapons

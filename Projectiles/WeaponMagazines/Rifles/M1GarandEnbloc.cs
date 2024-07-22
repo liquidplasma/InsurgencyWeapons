@@ -12,8 +12,8 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles
 
         public override void SetDefaults()
         {
-            Projectile.width = 16;
-            Projectile.height = 10;
+            Projectile.width = 8;
+            Projectile.height = 5;
             Projectile.penetrate = 5;
             base.SetDefaults();
         }
@@ -22,7 +22,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles
         {
             Texture2D texture = Projectile.MyTexture();
             Rectangle rect = texture.Bounds;
-            BetterEntityDraw(texture, Projectile.Center, rect, lightColor, Projectile.rotation, texture.Size() / 2, 0.75f, SpriteEffects.None);
+            BetterEntityDraw(texture, Projectile.Center, rect, lightColor, Projectile.rotation, texture.Size() / 2, 0.5f, SpriteEffects.None);
             return false;
         }
 
