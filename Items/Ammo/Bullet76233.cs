@@ -2,6 +2,9 @@
 {
     internal class Bullet76233 : AmmoItem
     {
+        /// <summary>
+        /// M1A1 Paratrooper 7.62x33mm
+        /// </summary>
         public override void SetDefaults()
         {
             MoneyCost = 20;

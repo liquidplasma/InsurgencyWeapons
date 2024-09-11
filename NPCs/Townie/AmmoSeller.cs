@@ -117,11 +117,11 @@ namespace InsurgencyWeapons.NPCs.Townie
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
-            {
+            bestiaryEntry.Info.AddRange(
+            [
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 new FlavorTextBestiaryInfoElement("Mods.InsurgencyWeapons.NPCs.AmmoSeller.DescriptionBestiary")
-            });
+            ]);
             base.SetBestiary(database, bestiaryEntry);
         }
 

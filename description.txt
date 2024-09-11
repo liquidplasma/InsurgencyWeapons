@@ -79,7 +79,6 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.9
-	- Muzzleflashes!!
-	- Sped up sniper rifles a bit
-	- Some vanilla items now buff the weapons
+v0.9.1
+	- Can only change to shotgun slug when you have it in inventory
+	

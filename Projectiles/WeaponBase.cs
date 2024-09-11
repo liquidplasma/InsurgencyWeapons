@@ -67,7 +67,7 @@ namespace InsurgencyWeapons.Projectiles
         /// <summary>
         /// Used for weapon spread
         /// </summary>
-        private float Degree { get; set; }
+        public float Degree { get; set; }
 
         /// <summary>
         /// Ammo item type
@@ -230,14 +230,14 @@ namespace InsurgencyWeapons.Projectiles
         public Vector2 WeaponFireSpreadCalc(int maxDegree, bool shotgun = false)
         {
             bool shouldNotIncrease = Player.scope && MouseRightPressed;
-            if (shouldNotIncrease)
-                Degree = 0;
-
-            if (!shouldNotIncrease && Player.channel && Main.rand.NextBool(5))
+            if (Player.channel && Main.rand.NextBool(5))
                 Degree += 1;
 
             if (Degree > maxDegree)
                 Degree = maxDegree;
+
+            if (shouldNotIncrease || CurrentAmmo == 0)
+                Degree = 0;
 
             if (shotgun)
                 return Player.MountedCenter.DirectionTo(MouseAim).RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(6, 10))) * HeldItem.shootSpeed;

@@ -396,6 +396,21 @@ Items: {
 		DisplayName: Twelve Gauge Slug
 		Tooltip: ""
 	}
+
+	G43: {
+		DisplayName: Gewehr 43 7.92x57mm + ZF4 Scope
+		Tooltip: ""
+	}
+
+	Bullet79257: {
+		DisplayName: Gewehr 43 7.92x57mm Ammo
+		Tooltip: ""
+	}
+
+	AK12: {
+		DisplayName: A K12
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -473,6 +488,10 @@ Projectiles: {
 	M249Box.DisplayName: M249 Box
 	Shrapnel.DisplayName: Shrapnel
 	SVTMagazine.DisplayName: S V T Magazine
+	G43Held.DisplayName: G43 Held
+	G43Magazine.DisplayName: G43 Magazine
+	AK12Held.DisplayName: A K12 Held
+	AK12Magazine.DisplayName: A K12 Magazine
 }
 
 Keybinds: {

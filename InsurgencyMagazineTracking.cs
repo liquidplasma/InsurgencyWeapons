@@ -6,12 +6,14 @@ namespace InsurgencyWeapons
     public class InsurgencyMagazineTracking : ModPlayer
     {
         public bool MouseOverFriendlyNPC { get; set; }
+        public Color OldCursorColor, OldCursorBorderColor;
 
         public bool
             isActive;
 
         //Assault rifles
         public int
+            AK12Magazine,
             AKMMagazine,
             AN94Magazine,
             ASValMagazine,
@@ -50,7 +52,8 @@ namespace InsurgencyWeapons
         //Sniper Rifles
         public int
             M40A1Box,
-            MosinBox;
+            MosinBox,
+            G43Box;
 
         //Shotguns
         public int
@@ -113,7 +116,15 @@ namespace InsurgencyWeapons
         {
             if (Player.HoldingInsurgencyWeapon() && isActive)
                 MouseOverFriendlyNPC = OverFriendlyNPC();
+            Main.MouseBorderColor = OldCursorBorderColor;
             base.PostUpdate();
+        }
+
+        public override void OnEnterWorld()
+        {
+            OldCursorColor = Main.cursorColor;
+            OldCursorBorderColor = Main.MouseBorderColor;
+            base.OnEnterWorld();
         }
 
         public override void SaveData(TagCompound tag)
@@ -152,6 +163,7 @@ namespace InsurgencyWeapons
             //Sniper rifles
             tag[nameof(M40A1Box)] = M40A1Box;
             tag[nameof(MosinBox)] = MosinBox;
+            tag[nameof(G43Box)] = G43Box;
 
             //Shotguns
             tag[nameof(CoachBarrel)] = CoachBarrel;
@@ -208,6 +220,7 @@ namespace InsurgencyWeapons
             //Rifles
             M40A1Box = tag.GetInt(nameof(M40A1Box));
             MosinBox = tag.GetInt(nameof(MosinBox));
+            G43Box = tag.GetInt(nameof(G43Box));
 
             //Shotguns
             CoachBarrel = tag.GetInt(nameof(CoachBarrel));

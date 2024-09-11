@@ -131,7 +131,6 @@ namespace InsurgencyWeapons.Items
         {
             if (shotGunSwitchTimer > 0)
                 shotGunSwitchTimer--;
-
             if (player.whoAmI == Main.myPlayer && WeaponHeldProjectile != 0 && player.ownedProjectileCounts[WeaponHeldProjectile] < 1)
             {
                 Gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
@@ -139,13 +138,17 @@ namespace InsurgencyWeapons.Items
                 if (Gun.active && Gun.ModProjectile is WeaponBase changeSlug)
                 {
                     if (useSlug)
+                    {
                         changeSlug.AmmoType = ModContent.ItemType<TwelveGaugeSlug>();
+                    }
                     else
+                    {
                         changeSlug.AmmoType = ModContent.ItemType<TwelveGauge>();
+                    }
                 }
             }
 
-            if (Gun != null && Gun.active && Gun.ModProjectile is WeaponBase shotgun && !shotgun.ReloadStarted && shotgun.MouseRightPressed && shotGunSwitchTimer == 0)
+            if (player.HasItem(ModContent.ItemType<TwelveGaugeSlug>()) && Gun != null && Gun.active && Gun.ModProjectile is WeaponBase shotgun && !shotgun.ReloadStarted && shotgun.MouseRightPressed && shotGunSwitchTimer == 0)
             {
                 shotGunSwitchTimer = 90;
                 shotgun.ReturnAmmo();

@@ -14,6 +14,9 @@ namespace InsurgencyWeapons
         private UserInterface AmmoDisplayUI;
 
         private Player Player => Main.LocalPlayer;
+        private InsurgencyMagazineTracking AmmoTracking => Player.GetModPlayer<InsurgencyMagazineTracking>();
+        private bool OverFriendlyNPC => AmmoTracking.MouseOverFriendlyNPC;
+
         private bool HoldingInsurgencyWeapon => Insurgency.AllWeapons.Contains(Player.HeldItem.type);
 
         public override void Load()
@@ -27,7 +30,6 @@ namespace InsurgencyWeapons
             }
             base.Load();
         }
-
         public override void PostUpdateNPCs()
         {
             if (AmmoSellerSpawnDelay > 0)
@@ -44,9 +46,12 @@ namespace InsurgencyWeapons
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
+            bool overGrave = Main.tile[Main.MouseWorld.ToTileCoordinates()].TileType == TileID.Tombstones;
+            bool candraw = HoldingInsurgencyWeapon && AmmoTracking.isActive && !overGrave && !Player.mouseInterface && !OverFriendlyNPC;
             int MouseIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Cursor"));
-            if (HoldingInsurgencyWeapon && MouseIndex != -1)
-            {
+            if (candraw && MouseIndex != -1)
+            {                       
+                    
                 layers.Insert(MouseIndex, new LegacyGameInterfaceLayer(
                     "AmmmoDisplay",
                     delegate

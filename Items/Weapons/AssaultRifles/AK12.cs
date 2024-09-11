@@ -1,28 +1,27 @@
-﻿using InsurgencyWeapons.Projectiles.SniperRifles;
+﻿using InsurgencyWeapons.Projectiles.AssaultRifles;
 
-namespace InsurgencyWeapons.Items.Weapons.SniperRifles
+namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {
-    public class M40A1 : SniperRifle
+    public class AK12 : AssaultRifle
     {
         public override void SetDefaults()
         {
-            Item.crit = 17;
             Item.knockBack = 4f;
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.useAnimation = Item.useTime = 40;
-            Item.width = 80;
-            Item.height = 26;
+            Item.useAnimation = Item.useTime = 5;
+            Item.width = 76;
+            Item.height = 24;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 75;
+            Item.damage = 11;
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.value = Item.sellPrice(0, 6, 0, 0);
+            Item.value = Item.sellPrice(0, 4, 0, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
-            WeaponHeldProjectile = ModContent.ProjectileType<M40A1Held>();
-            MoneyCost = 305;
+            WeaponHeldProjectile = ModContent.ProjectileType<AK12Held>();
+            MoneyCost = 275;
             base.SetDefaults();
         }
     }

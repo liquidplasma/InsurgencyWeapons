@@ -14,8 +14,10 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
 
         public override void SetDefaults()
         {
-            if (Projectile.width == 0) Projectile.width = 5;
-            if (Projectile.height == 0) Projectile.height = 5;
+            if (Projectile.width == 0)
+                Projectile.width = 5;
+            if (Projectile.height == 0)
+                Projectile.height = 5;
             Projectile.penetrate = 5;
             Projectile.alpha = 255;
             Projectile.friendly = true;

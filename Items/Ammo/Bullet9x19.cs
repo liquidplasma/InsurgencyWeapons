@@ -1,5 +1,8 @@
 ﻿namespace InsurgencyWeapons.Items.Ammo
 {
+    /// <summary>
+    /// 9x19mm Ammo
+    /// </summary>
     public class Bullet9x19 : AmmoItem
     {
         public override void SetDefaults()

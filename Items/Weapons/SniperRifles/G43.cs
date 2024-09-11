@@ -2,7 +2,10 @@
 
 namespace InsurgencyWeapons.Items.Weapons.SniperRifles
 {
-    public class M40A1 : SniperRifle
+    /// <summary>
+    /// Gewehr 43 7.92x57mm + ZF4 Scope
+    /// </summary>
+    public class G43 : SniperRifle
     {
         public override void SetDefaults()
         {
@@ -10,19 +13,19 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
             Item.knockBack = 4f;
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.useAnimation = Item.useTime = 40;
-            Item.width = 80;
-            Item.height = 26;
+            Item.useAnimation = Item.useTime = 24;
+            Item.width = 108;
+            Item.height = 24;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 75;
+            Item.damage = 55;
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.value = Item.sellPrice(0, 6, 0, 0);
+            Item.value = Item.sellPrice(0, 7, 0, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
-            WeaponHeldProjectile = ModContent.ProjectileType<M40A1Held>();
-            MoneyCost = 305;
+            WeaponHeldProjectile = ModContent.ProjectileType<G43Held>();
+            MoneyCost = 340;
             base.SetDefaults();
         }
     }

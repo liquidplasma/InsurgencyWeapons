@@ -35,6 +35,7 @@
     <None Remove="Items\Weapons\Shotguns\Ithaca.png" />
     <None Remove="Items\Weapons\Shotguns\M1014.png" />
     <None Remove="Items\Weapons\Shotguns\M590.png" />
+    <None Remove="Items\Weapons\SniperRifles\G43.png" />
     <None Remove="Items\Weapons\SubMachineGuns\MP5K.png" />
     <None Remove="Items\Weapons\SubMachineGuns\MP5SD.png" />
     <None Remove="Items\Weapons\SubMachineGuns\UMP45.png" />
@@ -61,9 +62,11 @@
     <None Remove="Projectiles\Shotguns\IthacaHeld.png" />
     <None Remove="Projectiles\Shotguns\M1014Held.png" />
     <None Remove="Projectiles\Shotguns\M590Held.png" />
+    <None Remove="Projectiles\SniperRifles\G43Held.png" />
     <None Remove="Projectiles\SubMachineGuns\MP5KHeld.png" />
     <None Remove="Projectiles\SubMachineGuns\MP5SDHeld.png" />
     <None Remove="Projectiles\SubMachineGuns\UMP45Held.png" />
+    <None Remove="Projectiles\WeaponMagazines\AssaultRifles\AK12Magazine.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\ASVALMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\GalilMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\GrozaMagazine.png" />
@@ -74,6 +77,7 @@
     <None Remove="Projectiles\WeaponMagazines\MachineGuns\M249Box.png" />
     <None Remove="Projectiles\WeaponMagazines\MachineGuns\PKMBox.png" />
     <None Remove="Projectiles\WeaponMagazines\Pistols\M1911Magazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\SniperRifle\G43Magazine.png" />
     <None Remove="Projectiles\WeaponMagazines\SubMachineGuns\MP5KMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\SubMachineGuns\MP5SDMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\SubMachineGuns\UMP45Magazine.png" />
