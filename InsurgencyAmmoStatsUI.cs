@@ -17,7 +17,12 @@ namespace InsurgencyWeapons
         private float CrosshairSpread = 1f;
 
         private Texture2D Crosshair = ModContent.Request<Texture2D>("InsurgencyWeapons/Textures/Crosshair", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
         private Texture2D CrosshairBorder = ModContent.Request<Texture2D>("InsurgencyWeapons/Textures/CrosshairBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+        private Texture2D CrosshairDot = ModContent.Request<Texture2D>("InsurgencyWeapons/Textures/CrosshairDot", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+        private Texture2D CrosshairDotBorder = ModContent.Request<Texture2D>("InsurgencyWeapons/Textures/CrosshairDotBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         private InsurgencyMagazineTracking AmmoTracking => Player.GetModPlayer<InsurgencyMagazineTracking>();
         private bool HoldingInsurgencyWeapon => Player.HoldingInsurgencyWeapon();
@@ -59,7 +64,7 @@ namespace InsurgencyWeapons
                     Main.MouseBorderColor = Color.Transparent;
 
                     float offsetDistance = 15f * CrosshairSpread;
-                    Color crosshairColor = AmmoTracking.OldCursorColor; // Change color if necessary
+                    Color crosshairColor = AmmoTracking.OldCursorColor;
                     Color crosshairBorderColor = AmmoTracking.OldCursorBorderColor;
                     Rectangle crosshairSourceRect = Crosshair.Bounds;
                     Rectangle crosshairBorderTargetRect = CrosshairBorder.Bounds;
@@ -77,7 +82,7 @@ namespace InsurgencyWeapons
                         Vector2 offset = directions[i] * offsetDistance;
                         Vector2 position = new Vector2(Main.mouseX, Main.mouseY) + offset;
                         float rotation = (i < 2) ? 0f : (float)Math.PI / 2;
-                        spriteBatch.Draw(CrosshairBorder, position, crosshairBorderTargetRect, crosshairBorderColor, rotation, crosshairBorderTargetRect.Size() / 2, 1f, SpriteEffects.None, 0);
+                        spriteBatch.Draw(CrosshairBorder, position.Floor(), crosshairBorderTargetRect, crosshairBorderColor, rotation, crosshairBorderTargetRect.Size() / 2, 1f, SpriteEffects.None, 0);
                     }
 
                     for (int i = 0; i < 4; i++)
@@ -85,14 +90,16 @@ namespace InsurgencyWeapons
                         Vector2 offset = directions[i] * offsetDistance;
                         Vector2 position = new Vector2(Main.mouseX, Main.mouseY) + offset;
                         float rotation = (i < 2) ? 0f : (float)Math.PI / 2;
-                        spriteBatch.Draw(Crosshair, position, crosshairSourceRect, crosshairColor, rotation, crosshairSourceRect.Size() / 2, 1f, SpriteEffects.None, 0);
+                        spriteBatch.Draw(Crosshair, position.Floor(), crosshairSourceRect, crosshairColor, rotation, crosshairSourceRect.Size() / 2, 1f, SpriteEffects.None, 0);
                     }
 
-                    if (CrosshairSpread > 1 && Item.ModItem is not Shotgun)                    
+                    spriteBatch.Draw(CrosshairDot, new Vector2(Main.mouseX, Main.mouseY).Floor(), CrosshairDot.Bounds, crosshairColor, 0f, CrosshairDot.Bounds.Size() / 2, 1f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(CrosshairDotBorder, new Vector2(Main.mouseX, Main.mouseY).Floor(), CrosshairDotBorder.Bounds, crosshairBorderColor, 0f, CrosshairDotBorder.Bounds.Size() / 2, 1f, SpriteEffects.None, 0);
+
+                    if (CrosshairSpread > 1 && Item.ModItem is not Shotgun)
                         CrosshairSpread -= 0.1f;
-                    else if (CrosshairSpread > 1 && Item.ModItem is Shotgun && !Player.channel)                    
-                        CrosshairSpread -= 0.1f;                        
-                    
+                    else if (CrosshairSpread > 1 && Item.ModItem is Shotgun && !Player.channel)
+                        CrosshairSpread -= 0.1f;
                 }
             }
             base.Draw(spriteBatch);

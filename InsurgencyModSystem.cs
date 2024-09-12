@@ -30,6 +30,7 @@ namespace InsurgencyWeapons
             }
             base.Load();
         }
+
         public override void PostUpdateNPCs()
         {
             if (AmmoSellerSpawnDelay > 0)
@@ -50,8 +51,7 @@ namespace InsurgencyWeapons
             bool candraw = HoldingInsurgencyWeapon && AmmoTracking.isActive && !overGrave && !Player.mouseInterface && !OverFriendlyNPC;
             int MouseIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Cursor"));
             if (candraw && MouseIndex != -1)
-            {                       
-                    
+            {
                 layers.Insert(MouseIndex, new LegacyGameInterfaceLayer(
                     "AmmmoDisplay",
                     delegate

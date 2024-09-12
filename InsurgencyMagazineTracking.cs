@@ -32,7 +32,8 @@ namespace InsurgencyWeapons
         //Battle rifles
         public int
             SCARHMagazine,
-            G3A3Magazine;
+            G3A3Magazine,
+            FG42Magazine;
 
         //Handguns
         public int
@@ -64,6 +65,7 @@ namespace InsurgencyWeapons
 
         //Sub machine guns
         public int
+            MP40Magazine,
             MP7Magazine,
             MP5KMagazine,
             MP5SDMagazine,
@@ -147,6 +149,7 @@ namespace InsurgencyWeapons
             //Battle rifles
             tag[nameof(SCARHMagazine)] = SCARHMagazine;
             tag[nameof(G3A3Magazine)] = G3A3Magazine;
+            tag[nameof(FG42Magazine)] = FG42Magazine;
 
             //Pistols
             tag[nameof(M1911Magazine)] = M1911Magazine;
@@ -206,6 +209,7 @@ namespace InsurgencyWeapons
             //Battle rifles
             SCARHMagazine = tag.GetInt(nameof(SCARHMagazine));
             G3A3Magazine = tag.GetInt(nameof(G3A3Magazine));
+            FG42Magazine = tag.GetInt(nameof(FG42Magazine));
 
             //Pistols
             M1911Magazine = tag.GetInt(nameof(M1911Magazine));

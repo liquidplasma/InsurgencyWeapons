@@ -1,69 +1,69 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.AssaultRifles;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.AssaultRifles;
+using InsurgencyWeapons.Items.Weapons.BattleRifles;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.BattleRifles;
 using System.IO;
 
-namespace InsurgencyWeapons.Projectiles.AssaultRifles
+namespace InsurgencyWeapons.Projectiles.BattleRifles
 {
-    public class AK12Held : WeaponBase
+    public class FG42Held : WeaponBase
     {
         public override int CurrentAmmo
         {
             get
             {
-                return MagazineTracking.AK12Magazine;
+                return MagazineTracking.FG42Magazine;
             }
             set
             {
-                MagazineTracking.AK12Magazine = value;
+                MagazineTracking.FG42Magazine = value;
             }
         }
 
-        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/ak12/shoot")
+        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/fg42/shoot")
         {
             Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
             MaxInstances = 0,
             Volume = 0.4f
         };
 
-        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/genericempty");
-        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/ak12/magin", 2);
-        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/ak12/magout");
-        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/ak12/bltbk");
-        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/ak12/bltfd");
+        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/fg42/empty");
+        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/fg42/magin");
+        private SoundStyle MagRel => new("InsurgencyWeapons/Sounds/Weapons/Ins2/fg42/magrel");
+        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/fg42/magout");
+        private SoundStyle Hit => new("InsurgencyWeapons/Sounds/Weapons/Ins2/fg42/hit");
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Type] = 4;
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 30);
-            return base.PreDraw(ref lightColor);
+            Main.projFrames[Type] = 3;
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = 36;
-            Projectile.height = 76;
-            MagazineSize = 30;
-            AmmoType = ModContent.ItemType<Bullet545>();
+            Projectile.width = 30;
+            Projectile.height = 78;
+            MagazineSize = 20;
+            AmmoType = ModContent.ItemType<Bullet79257>();
             base.SetDefaults();
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1.15f, Projectile.height - 32);
+            return base.PreDraw(ref lightColor);
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.AK12Magazine;
+            CurrentAmmo = MagazineTracking.FG42Magazine;
             ShotDelay = HeldItem.useTime;
         }
 
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 14f;
-            SpecificWeaponFix = new Vector2(0, 1);
+            OffsetFromPlayerCenter = 10f;
+            SpecificWeaponFix = new Vector2(0, -3);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
@@ -80,8 +80,8 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
 
             if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
-                ReloadTimer += 20;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.BattleRifles;
+                ReloadTimer += 90;
                 ReloadStarted = true;
             }
 
@@ -95,8 +95,8 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             {
                 ManualReload = true;
                 ReloadStarted = true;
-                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
-                Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.BattleRifles;
+                ReloadTimer += 90;
                 if (LiteMode)
                     ReloadTimer = 14;
             }
@@ -106,7 +106,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                 case 6:
                     if (LiteMode)
                     {
-                        SoundEngine.PlaySound(BoltBack, Projectile.Center);
+                        SoundEngine.PlaySound(Hit, Projectile.Center);
                         ReturnAmmo();
                         if (CanReload())
                             ReloadMagazine();
@@ -114,44 +114,47 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
                     ReloadStarted = ManualReload = false;
                     break;
 
-                case 15:
+                case 45:
                     if (!ManualReload)
-                        SoundEngine.PlaySound(BoltForward, Projectile.Center);
+                        SoundEngine.PlaySound(Hit, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    break;
-
-                case 30:
-                    if (!ManualReload)
-                        SoundEngine.PlaySound(BoltBack, Projectile.Center);
-                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     break;
 
                 case 70:
                     SoundEngine.PlaySound(MagIn, Projectile.Center);
-                    Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
+
                     if (ManualReload)
-                    {
-                        Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                        ReloadTimer = 25;
-                    }
+                        ReloadTimer = 24;
+
                     if (CanReload())
                         ReloadMagazine();
                     break;
 
-                case 110:
+                case 150:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
-                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
+                    if (!ManualReload)
+                        Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     ReturnAmmo();
                     CurrentAmmo = 0;
                     if (!ManualReload)
-                        DropMagazine(ModContent.ProjectileType<AK12Magazine>());
+                        DropMagazine(ModContent.ProjectileType<FG42Magazine>());
+                    break;
+
+                case 155:
+                    SoundEngine.PlaySound(MagRel, Projectile.Center);
                     break;
             }
 
             if (CurrentAmmo > 0 && Player.channel)
-                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
+            {
+                if (ShotDelay % 2 == 0)
+                    Projectile.frame++;
+                if (Projectile.frame > 2)
+                    Projectile.frame = 0;
+            }
 
-            if (HeldItem.type != ModContent.ItemType<AK12>())
+            if (HeldItem.type != ModContent.ItemType<FG42>())
                 Projectile.Kill();
 
             base.AI();

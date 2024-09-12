@@ -403,12 +403,22 @@ Items: {
 	}
 
 	Bullet79257: {
-		DisplayName: Gewehr 43 7.92x57mm Ammo
+		DisplayName: 7.92x57mm Ammo
 		Tooltip: ""
 	}
 
 	AK12: {
-		DisplayName: A K12
+		DisplayName: AK-12 5.45x39mm
+		Tooltip: ""
+	}
+
+	FG42: {
+		DisplayName: FG-42 7.92x57mm
+		Tooltip: ""
+	}
+
+	MP40: {
+		DisplayName: MP-40 9x19mm
 		Tooltip: ""
 	}
 }
@@ -492,6 +502,10 @@ Projectiles: {
 	G43Magazine.DisplayName: G43 Magazine
 	AK12Held.DisplayName: A K12 Held
 	AK12Magazine.DisplayName: A K12 Magazine
+	FG42Held.DisplayName: F G42 Held
+	FG42Magazine.DisplayName: F G42 Magazine
+	MP40Held.DisplayName: M P40 Held
+	MP40Magazine.DisplayName: M P40 Magazine
 }
 
 Keybinds: {
