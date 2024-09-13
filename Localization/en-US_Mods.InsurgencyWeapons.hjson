@@ -357,11 +357,6 @@ Items: {
 		Tooltip: ""
 	}
 
-	Bullet9x19: {
-		DisplayName: 9x19mm Ammo
-		Tooltip: ""
-	}
-
 	MP5K: {
 		DisplayName: H&K MP5K 9x19mm
 		Tooltip: ""
@@ -419,6 +414,26 @@ Items: {
 
 	MP40: {
 		DisplayName: MP-40 9x19mm
+		Tooltip: ""
+	}
+
+	C96: {
+		DisplayName: Mauser C96 7.63x25mm
+		Tooltip: ""
+	}
+
+	Bullet76325: {
+		DisplayName: C96 7.63x25mm Ammo
+		Tooltip: ""
+	}
+
+	Bullet919: {
+		DisplayName: 9x19mm Ammo
+		Tooltip: ""
+	}
+
+	C96C: {
+		DisplayName: C96 M1932 Schnellfeuer 7.63x25mm
 		Tooltip: ""
 	}
 }
@@ -506,6 +521,10 @@ Projectiles: {
 	FG42Magazine.DisplayName: F G42 Magazine
 	MP40Held.DisplayName: M P40 Held
 	MP40Magazine.DisplayName: M P40 Magazine
+	C96Held.DisplayName: C96 Held
+	C96Clip.DisplayName: C96 Clip
+	C96CHeld.DisplayName: C96 C Held
+	C96CMagazine.DisplayName: C96 C Magazine
 }
 
 Keybinds: {

@@ -4,6 +4,7 @@ using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.MachineGuns;
 using InsurgencyWeapons.Projectiles.AssaultRifles;
+using InsurgencyWeapons.Projectiles.Pistols;
 using InsurgencyWeapons.Projectiles.SubMachineGuns;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
@@ -125,7 +126,8 @@ namespace InsurgencyWeapons.Projectiles
             return
                 Insurgency.Revolvers.Contains(HeldItem.type) ||
                 Insurgency.LightMachineGuns.Contains(HeldItem.type) ||
-                Insurgency.Rifles.Contains(HeldItem.type);
+                Insurgency.Rifles.Contains(HeldItem.type) ||
+                this is C96Held;
         }
 
         public bool CanManualReload(int CurrentAmmo)

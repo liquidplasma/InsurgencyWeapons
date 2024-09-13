@@ -21,12 +21,14 @@
     <None Remove="Items\Weapons\AssaultRifles\Groza.png" />
     <None Remove="Items\Weapons\BattleRifles\FG42.png" />
     <None Remove="Items\Weapons\BattleRifles\G3A3.png" />
+    <None Remove="Items\Weapons\Carbines\C96C.png" />
     <None Remove="Items\Weapons\Carbines\G36C.png" />
     <None Remove="Items\Weapons\Carbines\M1A1.png" />
     <None Remove="Items\Weapons\Carbines\M4A1.png" />
     <None Remove="Items\Weapons\Carbines\SKS.png" />
     <None Remove="Items\Weapons\MachineGuns\M249.png" />
     <None Remove="Items\Weapons\MachineGuns\PKM.png" />
+    <None Remove="Items\Weapons\Pistols\C96.png" />
     <None Remove="Items\Weapons\Pistols\M1911.png" />
     <None Remove="Items\Weapons\MachineGuns\M60.png" />
     <None Remove="Items\Weapons\Revolvers\M29.png" />
@@ -50,12 +52,14 @@
     <None Remove="Projectiles\AssaultRifles\GrozaHeld.png" />
     <None Remove="Projectiles\BattleRifles\FG42Held.png" />
     <None Remove="Projectiles\BattleRifles\G3A3Held.png" />
+    <None Remove="Projectiles\Carbines\C96CHeld.png" />
     <None Remove="Projectiles\Carbines\G36CHeld.png" />
     <None Remove="Projectiles\Carbines\M1A1Held.png" />
     <None Remove="Projectiles\Carbines\M4A1Held.png" />
     <None Remove="Projectiles\Carbines\SKSHeld.png" />
     <None Remove="Projectiles\MachineGuns\M249Held.png" />
     <None Remove="Projectiles\MachineGuns\PKMHeld.png" />
+    <None Remove="Projectiles\Pistols\C96Held.png" />
     <None Remove="Projectiles\Pistols\M1911Held.png" />
     <None Remove="Projectiles\MachineGuns\M60Held.png" />
     <None Remove="Projectiles\Revolvers\M29Held.png" />
@@ -75,6 +79,7 @@
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\GalilMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\GrozaMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\BattleRifles\FG42Magazine.png" />
+    <None Remove="Projectiles\WeaponMagazines\Carbines\C96CMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\Carbines\G36CMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\Carbines\M1A1Magazine.png" />
     <None Remove="Projectiles\WeaponMagazines\Carbines\M4A1Magazine.png" />

@@ -24,6 +24,7 @@ namespace InsurgencyWeapons
         //Carbines
         public int
             AKS74UMagazine,
+            C96CMagazine,
             G36CMagazine,
             M1A1Magazine,
             M4A1Magazine,
@@ -37,7 +38,8 @@ namespace InsurgencyWeapons
 
         //Handguns
         public int
-            M1911Magazine;
+            M1911Magazine,
+            C96Clip;
 
         //Revolvers
         public int
@@ -141,6 +143,7 @@ namespace InsurgencyWeapons
 
             //Carbines
             tag[nameof(AKS74UMagazine)] = AKS74UMagazine;
+            tag[nameof(C96CMagazine)] = C96CMagazine;
             tag[nameof(G36CMagazine)] = G36CMagazine;
             tag[nameof(M1A1Magazine)] = M1A1Magazine;
             tag[nameof(M4A1Magazine)] = M4A1Magazine;
@@ -153,6 +156,7 @@ namespace InsurgencyWeapons
 
             //Pistols
             tag[nameof(M1911Magazine)] = M1911Magazine;
+            tag[nameof(C96Clip)] = C96Clip;
 
             //Revolvers
             tag[nameof(PythonCylinder)] = PythonCylinder;
@@ -201,6 +205,7 @@ namespace InsurgencyWeapons
 
             //Carbines
             AKS74UMagazine = tag.GetInt(nameof(AKS74UMagazine));
+            C96CMagazine = tag.GetInt(nameof(C96CMagazine));
             G36CMagazine = tag.GetInt(nameof(G36CMagazine));
             M1A1Magazine = tag.GetInt(nameof(M1A1Magazine));
             M4A1Magazine = tag.GetInt(nameof(M4A1Magazine));
@@ -213,6 +218,7 @@ namespace InsurgencyWeapons
 
             //Pistols
             M1911Magazine = tag.GetInt(nameof(M1911Magazine));
+            C96Clip = tag.GetInt(nameof(C96Clip));
 
             //Revolvers
             PythonCylinder = tag.GetInt(nameof(PythonCylinder));

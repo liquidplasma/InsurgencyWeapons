@@ -1,36 +1,36 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.SubMachineGuns;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.SubMachineGuns;
+using InsurgencyWeapons.Items.Weapons.Carbines;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.Carbines;
 using System.IO;
 
-namespace InsurgencyWeapons.Projectiles.SubMachineGuns
+namespace InsurgencyWeapons.Projectiles.Carbines
 {
-    public class MP5KHeld : WeaponBase
+    public class C96CHeld : WeaponBase
     {
         public override int CurrentAmmo
         {
             get
             {
-                return MagazineTracking.MP5KMagazine;
+                return MagazineTracking.C96CMagazine;
             }
             set
             {
-                MagazineTracking.MP5KMagazine = value;
+                MagazineTracking.C96CMagazine = value;
             }
         }
 
-        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mp5k/shoot")
+        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/c96/shoot")
         {
             Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
             MaxInstances = 0,
             Volume = 0.4f
         };
 
-        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/genericempty");
-        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mp5k/magin");
-        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mp5k/magout");
-        private SoundStyle BoltLock => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mp5k/bltrel");
+        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/c96/empty");
+        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/c96/magin");
+        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/c96/magout");
+        private SoundStyle BoltLock => new("InsurgencyWeapons/Sounds/Weapons/Ins2/c96/bltrel");
 
         public override void SetStaticDefaults()
         {
@@ -39,41 +39,36 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 
         public override void SetDefaults()
         {
-            Projectile.width = 26;
-            Projectile.height = 40;
-            MagazineSize = 30;
-            AmmoType = ModContent.ItemType<Bullet919>();
-            isPistol = true;
+            Projectile.width = 34;
+            Projectile.height = 84;
+            MagazineSize = 20;
+            AmmoType = ModContent.ItemType<Bullet76325>();
             base.SetDefaults();
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height);
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 32);
             return base.PreDraw(ref lightColor);
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.MP5KMagazine;
+            CurrentAmmo = MagazineTracking.C96CMagazine;
             ShotDelay = HeldItem.useTime;
         }
 
         public override void AI()
         {
-            if (isIdle)
-                drawScale = 0.75f;
-            else
-                drawScale = 0.9f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 12f;
-            SpecificWeaponFix = new Vector2(0, -1);
+            OffsetFromPlayerCenter = 8f;
+            SpecificWeaponFix = new Vector2(0, 0);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(2);
+                Shoot(3);
             }
 
             if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -84,7 +79,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 
             if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.SubMachineGuns;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
                 ReloadStarted = true;
             }
 
@@ -98,7 +93,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
             {
                 ManualReload = true;
                 ReloadStarted = true;
-                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.SubMachineGuns;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
                 if (LiteMode)
                     ReloadTimer = 14;
             }
@@ -137,14 +132,14 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                     ReturnAmmo();
                     CurrentAmmo = 0;
                     if (!ManualReload)
-                        DropMagazine(ModContent.ProjectileType<MP5KMagazine>());
+                        DropMagazine(ModContent.ProjectileType<C96CMagazine>());
                     break;
             }
 
             if (CurrentAmmo > 0 && Player.channel)
                 Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
 
-            if (HeldItem.type != ModContent.ItemType<MP5K>())
+            if (HeldItem.type != ModContent.ItemType<C96C>())
                 Projectile.Kill();
 
             base.AI();

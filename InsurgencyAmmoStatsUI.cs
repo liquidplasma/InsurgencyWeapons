@@ -24,6 +24,8 @@ namespace InsurgencyWeapons
 
         private Texture2D CrosshairDotBorder = ModContent.Request<Texture2D>("InsurgencyWeapons/Textures/CrosshairDotBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
+        private int TimeToReduceCrosshair;
+
         private InsurgencyMagazineTracking AmmoTracking => Player.GetModPlayer<InsurgencyMagazineTracking>();
         private bool HoldingInsurgencyWeapon => Player.HoldingInsurgencyWeapon();
         private bool OverFriendlyNPC => AmmoTracking.MouseOverFriendlyNPC;
@@ -58,7 +60,7 @@ namespace InsurgencyWeapons
                 Projectile InsurgencyWeaponProj = Main.projectile[HelperStats.FindProjectileIndex(Player, insurgencyWeaponProjType)];
                 if (InsurgencyWeaponProj.active && InsurgencyWeaponProj.ModProjectile is WeaponBase GetStats)
                 {
-                    if (GetStats.Degree != 0 && CrosshairSpread <= 2f)
+                    if (GetStats.ShotDelay == 0 && CrosshairSpread <= 2f)
                         CrosshairSpread += GetStats.Degree * 0.25f;
                     Main.cursorColor = Color.Transparent;
                     Main.MouseBorderColor = Color.Transparent;
@@ -96,10 +98,8 @@ namespace InsurgencyWeapons
                     spriteBatch.Draw(CrosshairDot, new Vector2(Main.mouseX, Main.mouseY).Floor(), CrosshairDot.Bounds, crosshairColor, 0f, CrosshairDot.Bounds.Size() / 2, 1f, SpriteEffects.None, 0);
                     spriteBatch.Draw(CrosshairDotBorder, new Vector2(Main.mouseX, Main.mouseY).Floor(), CrosshairDotBorder.Bounds, crosshairBorderColor, 0f, CrosshairDotBorder.Bounds.Size() / 2, 1f, SpriteEffects.None, 0);
 
-                    if (CrosshairSpread > 1 && Item.ModItem is not Shotgun)
-                        CrosshairSpread -= 0.1f;
-                    else if (CrosshairSpread > 1 && Item.ModItem is Shotgun && !Player.channel)
-                        CrosshairSpread -= 0.1f;
+                    if (CrosshairSpread > 1f)
+                        CrosshairSpread-= 0.067f;
                 }
             }
             base.Draw(spriteBatch);

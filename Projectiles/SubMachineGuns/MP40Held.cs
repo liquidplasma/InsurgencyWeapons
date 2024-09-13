@@ -46,7 +46,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
             Projectile.width = 24;
             Projectile.height = 76;
             MagazineSize = 32;
-            AmmoType = ModContent.ItemType<Bullet9x19>();
+            AmmoType = ModContent.ItemType<Bullet919>();
             base.SetDefaults();
         }
 

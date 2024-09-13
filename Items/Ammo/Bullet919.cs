@@ -3,11 +3,11 @@
     /// <summary>
     /// 9x19mm Ammo
     /// </summary>
-    public class Bullet9x19 : AmmoItem
+    public class Bullet919 : AmmoItem
     {
         public override void SetDefaults()
         {
-            MoneyCost = 20;
+            MoneyCost = 15;
             CraftStack = 30;
             Item.width = 7;
             Item.height = 17;
