@@ -2,7 +2,6 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Pistols;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Pistols

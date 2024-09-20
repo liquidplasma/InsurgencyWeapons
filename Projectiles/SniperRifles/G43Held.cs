@@ -44,6 +44,8 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
             Projectile.width = 32;
             Projectile.height = 108;
             MagazineSize = 10;
+            BigSpriteSpecificIdlePos = true;
+            drawScale = 0.8f;
             AmmoType = ModContent.ItemType<Bullet79257>();
             base.SetDefaults();
         }

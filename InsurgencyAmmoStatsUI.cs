@@ -99,7 +99,7 @@ namespace InsurgencyWeapons
                     spriteBatch.Draw(CrosshairDotBorder, new Vector2(Main.mouseX, Main.mouseY).Floor(), CrosshairDotBorder.Bounds, crosshairBorderColor, 0f, CrosshairDotBorder.Bounds.Size() / 2, 1f, SpriteEffects.None, 0);
 
                     if (CrosshairSpread > 1f)
-                        CrosshairSpread-= 0.067f;
+                        CrosshairSpread -= 0.067f;
                 }
             }
             base.Draw(spriteBatch);

@@ -18,7 +18,6 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.value = Item.sellPrice(0, 6, 0, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<M40A1Held>();

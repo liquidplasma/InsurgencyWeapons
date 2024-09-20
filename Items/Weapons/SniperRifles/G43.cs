@@ -21,7 +21,6 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.value = Item.sellPrice(0, 7, 0, 0);
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<G43Held>();

@@ -21,6 +21,7 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 [h1]Weapons in the pack so far:[/h1]
 	[b]-Assault rifles-[/b]
 		* AKM 7.62x39mm + GP-25 40mm VOG-25P
+		* AK-12 5.45x39mm
 		* AS VAL 9x39mm
 		* StG-44 7.92x33mm
 		* AN-94N + PK-AS 5.45x39mm
@@ -29,11 +30,14 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 
 	[b]-Battle Rifles-[/b]
 		* FN SCAR-H 7.62x51mm
+		* FG-42 7.92x57mm
 		* H&K G3A3 7.62x51mm
 
 	[b]-Carbines-[/b]
 		* AKS-74U 5.45x39mm
+		* C96 M1932 Schnellfeuer 7.63x25mm
 		* M1A1 Paratrooper 7.62x33mm
+		* MP-40 9x19mm
 		* SKS Simonov 7.62x39mm
 		* Colt M4A1 5.56x45mm
 
@@ -54,6 +58,7 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 
 	[b]-Pistols-[/b]
 		* Colt M1911 .45ACP
+		* Mauser C96 7.63x25mm
 
 	[b]-Rifles-[/b]
 		* M1 Garand 7.62x63mm
@@ -69,6 +74,7 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 	[b]-Sniper rifles-[/b]
 		* M40A1 7.62x51mm + Leupold Scope
 		* Mosin Nagant M91/30 7.62x54mmR + PU Scope
+		* Gewehr 43 7.92x57mm + ZF4 Scope
 
 	[b]-Sub machine guns-[/b]
 		* Thompson M1928 .45ACP
@@ -79,6 +85,6 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.9.1
-	- Can only change to shotgun slug when you have it in inventory
+v0.9.3
+	- Fix some weirdness on the M1911 and G43
 	

@@ -71,7 +71,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                 drawScale = 1f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 12f;
-            SpecificWeaponFix = new Vector2(-2 * Player.direction, 4);
+            SpecificWeaponFix = new Vector2(-9 * Player.direction, -4);
 
             if (!Player.channel || AutoAttack == 0)
             {
@@ -149,6 +149,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                 case 120:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     ReturnAmmo();
+                    CurrentAmmo = 1;
                     if (!ManualReload)
                     {
                         DropMagazine(ModContent.ProjectileType<M1911Magazine>());
