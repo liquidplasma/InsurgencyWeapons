@@ -446,6 +446,11 @@ Items: {
 		DisplayName: FN F2000 5.56x45mm
 		Tooltip: Has a scope
 	}
+
+	Glock17: {
+		DisplayName: Glock 17 9x19mm
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -538,6 +543,9 @@ Projectiles: {
 	AK74MHeld.DisplayName: A K74 M Held
 	F2000Held.DisplayName: F2000 Held
 	AK74MMagazine.DisplayName: A K74 M Magazine
+	Glock17Held.DisplayName: Glock17 Held
+	F2000Magazine.DisplayName: F2000 Magazine
+	Glock17Magazine.DisplayName: Glock17 Magazine
 }
 
 Keybinds: {

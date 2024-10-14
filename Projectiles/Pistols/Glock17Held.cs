@@ -3,37 +3,38 @@ using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Pistols;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols;
 using System.IO;
+using Terraria.WorldBuilding;
 
 namespace InsurgencyWeapons.Projectiles.Pistols
 {
-    public class M1911Held : WeaponBase
+    internal class Glock17Held : WeaponBase
     {
         public override int CurrentAmmo
         {
             get
             {
-                return MagazineTracking.M1911Magazine;
+                return MagazineTracking.G17Magazine;
             }
             set
             {
-                MagazineTracking.M1911Magazine = value;
+                MagazineTracking.G17Magazine = value;
             }
         }
 
         private bool SemiAuto;
 
-        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m1911/shoot")
+        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/shoot")
         {
             Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
             MaxInstances = 0,
             Volume = 0.4f
         };
 
-        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m1911/empty");
-        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m1911/magin");
-        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m1911/magout");
-        private SoundStyle SlideRel => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m1911/sldrel");
-        private SoundStyle SlideBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m1911/sldbk");
+        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/empty");
+        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/magin");
+        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/magout");
+        private SoundStyle SlideRel => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/sldrel");
+        private SoundStyle SlideBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/sldbk");
 
         public override void SetStaticDefaults()
         {
@@ -42,11 +43,11 @@ namespace InsurgencyWeapons.Projectiles.Pistols
 
         public override void SetDefaults()
         {
-            Projectile.width = 20;
-            Projectile.height = 34;
-            MagazineSize = 7;
-            AmmoType = ModContent.ItemType<Bullet45ACP>();
-            drawScale = 1f;
+            Projectile.width = 50;
+            Projectile.height = 48;
+            MagazineSize = 17;
+            AmmoType = ModContent.ItemType<Bullet919>();
+            drawScale = 0.67f;
             isPistol = true;
             base.SetDefaults();
         }
@@ -59,19 +60,19 @@ namespace InsurgencyWeapons.Projectiles.Pistols
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.M1911Magazine;
+            CurrentAmmo = MagazineTracking.G17Magazine;
             ShotDelay = HeldItem.useTime;
         }
 
         public override void AI()
         {
             if (isIdle)
-                drawScale = 0.75f;
+                drawScale = 0.5f;
             else
-                drawScale = 1f;
+                drawScale = 0.67f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 12f;
-            SpecificWeaponFix = new Vector2(-9 * Player.direction, -4);
+            OffsetFromPlayerCenter = 6f;
+            SpecificWeaponFix = new Vector2(0, -4);
 
             if (!Player.channel || AutoAttack == 0)
             {
@@ -114,7 +115,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                 ManualReload = true;
                 ReloadStarted = true;
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
-                ReloadTimer += 45;
+                ReloadTimer += 90;
                 if (LiteMode)
                     ReloadTimer = 14;
             }
@@ -152,7 +153,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                     CurrentAmmo = 0;
                     if (!ManualReload)
                     {
-                        DropMagazine(ModContent.ProjectileType<M1911Magazine>());
+                        DropMagazine(ModContent.ProjectileType<Glock17Magazine>());
                         Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     }
                     break;
@@ -163,9 +164,9 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                     Projectile.frame = ShotDelay;
                 else
                     Projectile.frame = 0;
-            }
+            }           
 
-            if (HeldItem.type != ModContent.ItemType<M1911>())
+            if (HeldItem.type != ModContent.ItemType<Glock17>())
                 Projectile.Kill();
 
             base.AI();

@@ -1,5 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using Terraria.ModLoader.IO;
+using UtfUnknown.Core.Analyzers.Chinese;
 
 namespace InsurgencyWeapons
 {
@@ -40,6 +41,7 @@ namespace InsurgencyWeapons
 
         //Handguns
         public int
+            G17Magazine,
             M1911Magazine,
             C96Clip;
 
@@ -159,6 +161,7 @@ namespace InsurgencyWeapons
             tag[nameof(FG42Magazine)] = FG42Magazine;
 
             //Pistols
+            tag[nameof(G17Magazine)] = G17Magazine;
             tag[nameof(M1911Magazine)] = M1911Magazine;
             tag[nameof(C96Clip)] = C96Clip;
 
@@ -223,6 +226,7 @@ namespace InsurgencyWeapons
             FG42Magazine = tag.GetInt(nameof(FG42Magazine));
 
             //Pistols
+            G17Magazine = tag.GetInt(nameof(G17Magazine));
             M1911Magazine = tag.GetInt(nameof(M1911Magazine));
             C96Clip = tag.GetInt(nameof(C96Clip));
 
