@@ -436,6 +436,16 @@ Items: {
 		DisplayName: C96 M1932 Schnellfeuer 7.63x25mm
 		Tooltip: ""
 	}
+
+	AK74M: {
+		DisplayName: AKS-74 + Foregrip 5.45x39mm
+		Tooltip: ""
+	}
+
+	F2000: {
+		DisplayName: FN F2000 5.56x45mm
+		Tooltip: Has a scope
+	}
 }
 
 Projectiles: {
@@ -525,6 +535,9 @@ Projectiles: {
 	C96Clip.DisplayName: C96 Clip
 	C96CHeld.DisplayName: C96 C Held
 	C96CMagazine.DisplayName: C96 C Magazine
+	AK74MHeld.DisplayName: A K74 M Held
+	F2000Held.DisplayName: F2000 Held
+	AK74MMagazine.DisplayName: A K74 M Magazine
 }
 
 Keybinds: {

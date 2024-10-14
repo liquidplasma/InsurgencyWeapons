@@ -14,9 +14,11 @@ namespace InsurgencyWeapons
         //Assault rifles
         public int
             AK12Magazine,
+            AK74MMagazine,
             AKMMagazine,
             AN94Magazine,
             ASValMagazine,
+            F2000Magazine,
             GalilMagazine,
             GrozaMagazine,
             STGMagazine;
@@ -135,8 +137,10 @@ namespace InsurgencyWeapons
         {
             //Assault rifles
             tag[nameof(AKMMagazine)] = AKMMagazine;
+            tag[nameof(AK74MMagazine)] = AK74MMagazine;
             tag[nameof(AN94Magazine)] = AN94Magazine;
             tag[nameof(ASValMagazine)] = ASValMagazine;
+            tag[nameof(F2000Magazine)] = F2000Magazine;
             tag[nameof(GalilMagazine)] = GalilMagazine;
             tag[nameof(GrozaMagazine)] = GrozaMagazine;
             tag[nameof(STGMagazine)] = STGMagazine;
@@ -197,8 +201,10 @@ namespace InsurgencyWeapons
         {
             //Assault rifles
             AKMMagazine = tag.GetInt(nameof(AKMMagazine));
+            AK74MMagazine = tag.GetInt(nameof(AK74MMagazine));
             AN94Magazine = tag.GetInt(nameof(AN94Magazine));
             ASValMagazine = tag.GetInt(nameof(ASValMagazine));
+            F2000Magazine = tag.GetInt(nameof(F2000Magazine));
             GalilMagazine = tag.GetInt(nameof(GalilMagazine));
             GrozaMagazine = tag.GetInt(nameof(GrozaMagazine));
             STGMagazine = tag.GetInt(nameof(STGMagazine));

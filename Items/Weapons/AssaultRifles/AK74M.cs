@@ -1,11 +1,16 @@
 ﻿using InsurgencyWeapons.Projectiles.AssaultRifles;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {
     /// <summary>
-    /// IMI GALIL ARM 5.56x45mm
+    /// AKS-74 + Foregrip 5.45x39mm
     /// </summary>
-    public class Galil : AssaultRifle
+    public class AK74M : AssaultRifle
     {
         public override void SetDefaults()
         {
@@ -13,17 +18,17 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = Item.useTime = 6;
-            Item.width = 76;
+            Item.width = 88;
             Item.height = 24;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 10;
+            Item.damage = 11;
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
-            WeaponHeldProjectile = ModContent.ProjectileType<GalilHeld>();
-            MoneyCost = 260;
+            WeaponHeldProjectile = ModContent.ProjectileType<AK74MHeld>();
+            MoneyCost = 285;
             base.SetDefaults();
         }
     }

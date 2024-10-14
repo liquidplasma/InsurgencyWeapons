@@ -9,8 +9,11 @@ namespace InsurgencyWeapons
     {
         public bool
             revolverSet,
-            swatHelmet,
-            sniperScope;
+            swatHelmet;
+            /// <summary>
+            /// This player has ItemID.SniperScope equipped
+            /// </summary>
+            public bool sniperScope;
 
         public override void ResetEffects()
         {
