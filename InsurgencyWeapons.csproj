@@ -47,6 +47,7 @@
     <None Remove="Items\Weapons\SubMachineGuns\MP5K.png" />
     <None Remove="Items\Weapons\SubMachineGuns\MP5SD.png" />
     <None Remove="Items\Weapons\SubMachineGuns\UMP45.png" />
+    <None Remove="Localization\zh-Hans_Mods.InsurgencyWeapons.hjson" />
     <None Remove="NPCs\Townie\AmmoSeller.png" />
     <None Remove="NPCs\Townie\AmmoSeller_Head.png" />
     <None Remove="NPCs\Townie\AmmoSeller_Shimmer.png" />
