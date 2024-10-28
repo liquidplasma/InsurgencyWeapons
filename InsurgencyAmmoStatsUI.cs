@@ -23,6 +23,7 @@ namespace InsurgencyWeapons
         private Texture2D CrosshairDot = ModContent.Request<Texture2D>("InsurgencyWeapons/Textures/CrosshairDot", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         private Texture2D CrosshairDotBorder = ModContent.Request<Texture2D>("InsurgencyWeapons/Textures/CrosshairDotBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
         private InsurgencyMagazineTracking AmmoTracking => Player.GetModPlayer<InsurgencyMagazineTracking>();
         private bool HoldingInsurgencyWeapon => Player.HoldingInsurgencyWeapon();
         private bool OverFriendlyNPC => AmmoTracking.MouseOverFriendlyNPC;
@@ -58,7 +59,7 @@ namespace InsurgencyWeapons
                 if (InsurgencyWeaponProj.active && InsurgencyWeaponProj.ModProjectile is WeaponBase GetStats)
                 {
                     if (GetStats.ShotDelay == 0 && CrosshairSpread <= 2f)
-                        CrosshairSpread += GetStats.Degree * 0.25f;                   
+                        CrosshairSpread += GetStats.Degree * 0.25f;
 
                     float offsetDistance = 15f * CrosshairSpread;
                     Color crosshairColor = InsurgencyModConfigClient.Instance.CrosshairColor;

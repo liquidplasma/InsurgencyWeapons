@@ -1,5 +1,4 @@
 ﻿using InsurgencyWeapons.Projectiles.AssaultRifles;
-using Microsoft.Build.Framework;
 
 namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {

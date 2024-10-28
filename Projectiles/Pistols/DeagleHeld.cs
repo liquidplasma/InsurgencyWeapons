@@ -2,12 +2,9 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Pistols;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols;
-using System;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Projectiles.Pistols
 {
@@ -34,6 +31,8 @@ namespace InsurgencyWeapons.Projectiles.Pistols
             Volume = 0.4f
         };
 
+        private Texture2D Glow = ModContent.Request<Texture2D>("InsurgencyWeapons/Projectiles/Pistols/DeagleHeld_Glow", AssetRequestMode.ImmediateLoad).Value;
+
         private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/deagle/empty");
         private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/deagle/magin");
         private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/deagle/magout");
@@ -58,6 +57,8 @@ namespace InsurgencyWeapons.Projectiles.Pistols
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Rectangle frame = Glow.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
+            BetterEntityDraw(Glow, Projectile.Center, frame, Color.White, Projectile.rotation, frame.Size() / 2, drawScale, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 25);
             return base.PreDraw(ref lightColor);
         }

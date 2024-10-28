@@ -3,7 +3,6 @@ using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Pistols;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols;
 using System.IO;
-using Terraria.WorldBuilding;
 
 namespace InsurgencyWeapons.Projectiles.Pistols
 {
@@ -164,7 +163,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                     Projectile.frame = ShotDelay;
                 else
                     Projectile.frame = 0;
-            }           
+            }
 
             if (HeldItem.type != ModContent.ItemType<Glock17>())
                 Projectile.Kill();

@@ -281,6 +281,9 @@ namespace InsurgencyWeapons.Projectiles
             if (!InsurgencyModConfig.Instance.DropCasing)
                 return;
 
+            if (this is F2000Held && CurrentAmmo >= 27)
+                return;
+
             if (type == 0)
                 type = ModContent.GoreType<CasingGore>();
 

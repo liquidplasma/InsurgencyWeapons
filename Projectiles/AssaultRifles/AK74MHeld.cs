@@ -51,7 +51,7 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             MagazineSize = 30;
             AmmoType = ModContent.ItemType<Bullet545>();
             BigSpriteSpecificIdlePos = true;
-            drawScale = 0.9f;
+            drawScale = 0.75f;
             base.SetDefaults();
         }
 

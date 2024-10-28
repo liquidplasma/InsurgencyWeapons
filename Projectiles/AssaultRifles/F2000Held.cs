@@ -83,7 +83,6 @@ namespace InsurgencyWeapons.Projectiles.AssaultRifles
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.AssaultRifles;
                 ReloadTimer += 80;
-                Main.NewText(ReloadTimer);
                 ReloadStarted = true;
             }
 

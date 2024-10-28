@@ -1,6 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
 using Terraria.ModLoader.IO;
-using UtfUnknown.Core.Analyzers.Chinese;
 
 namespace InsurgencyWeapons
 {
@@ -129,9 +128,10 @@ namespace InsurgencyWeapons
                 Main.MouseBorderColor = Main.mouseBorderColorSlider.GetColor();
 
             base.PostUpdate();
-        }        
+        }
+
         public override void OnEnterWorld()
-        {           
+        {
             base.OnEnterWorld();
         }
 
