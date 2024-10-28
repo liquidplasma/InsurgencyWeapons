@@ -2,39 +2,43 @@
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Pistols;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using Terraria.WorldBuilding;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Projectiles.Pistols
 {
-    internal class Glock17Held : WeaponBase
+    internal class DeagleHeld : WeaponBase
     {
         public override int CurrentAmmo
         {
             get
             {
-                return MagazineTracking.G17Magazine;
+                return MagazineTracking.DeagleMagazine;
             }
             set
             {
-                MagazineTracking.G17Magazine = value;
+                MagazineTracking.DeagleMagazine = value;
             }
         }
 
         private bool SemiAuto;
 
-        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/shoot")
+        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/deagle/shoot")
         {
             Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
             MaxInstances = 0,
             Volume = 0.4f
         };
 
-        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/empty");
-        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/magin");
-        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/magout");
-        private SoundStyle SlideRel => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/sldrel");
-        private SoundStyle SlideBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/g17/sldbk");
+        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/deagle/empty");
+        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/deagle/magin");
+        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/deagle/magout");
+        private SoundStyle SlideRel => new("InsurgencyWeapons/Sounds/Weapons/Ins2/deagle/sldrel");
+        private SoundStyle SlideBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/deagle/sldbk");
 
         public override void SetStaticDefaults()
         {
@@ -43,10 +47,10 @@ namespace InsurgencyWeapons.Projectiles.Pistols
 
         public override void SetDefaults()
         {
-            Projectile.width = 50;
-            Projectile.height = 48;
-            MagazineSize = 17;
-            AmmoType = ModContent.ItemType<Bullet919>();
+            Projectile.width = 46;
+            Projectile.height = 62;
+            MagazineSize = 7;
+            AmmoType = ModContent.ItemType<Bullet50AE>();
             drawScale = 0.5f;
             isPistol = true;
             base.SetDefaults();
@@ -54,13 +58,13 @@ namespace InsurgencyWeapons.Projectiles.Pistols
 
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 14);
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 25);
             return base.PreDraw(ref lightColor);
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.G17Magazine;
+            CurrentAmmo = MagazineTracking.DeagleMagazine;
             ShotDelay = HeldItem.useTime;
         }
 
@@ -71,8 +75,8 @@ namespace InsurgencyWeapons.Projectiles.Pistols
             else
                 drawScale = 0.67f;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 6f;
-            SpecificWeaponFix = new Vector2(0, -4);
+            OffsetFromPlayerCenter = 5f;
+            SpecificWeaponFix = new Vector2(0, -5);
 
             if (!Player.channel || AutoAttack == 0)
             {
@@ -153,7 +157,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                     CurrentAmmo = 0;
                     if (!ManualReload)
                     {
-                        DropMagazine(ModContent.ProjectileType<Glock17Magazine>());
+                        DropMagazine(ModContent.ProjectileType<DeagleMagazine>());
                         Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     }
                     break;
@@ -164,9 +168,9 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                     Projectile.frame = ShotDelay;
                 else
                     Projectile.frame = 0;
-            }           
+            }
 
-            if (HeldItem.type != ModContent.ItemType<Glock17>())
+            if (HeldItem.type != ModContent.ItemType<Deagle>())
                 Projectile.Kill();
 
             base.AI();

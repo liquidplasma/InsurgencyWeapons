@@ -511,16 +511,15 @@ namespace InsurgencyWeapons.Projectiles
                         ? 2 //true
                         : -22; //false
 
-                    
                     Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
 
                     idlePos = new Vector2(X, -10);
-                    if (this is Glock17Held)
+                    if (this is Glock17Held or DeagleHeld)
                     {
                         X = Player.direction == -1
                         ? -16 //true
                         : -36; //false
-                        idlePos = new Vector2(X, -16);
+                        idlePos = new Vector2(X, -Projectile.height / 2.5f);
                     }
                 }
                 if (isASmallSprite)

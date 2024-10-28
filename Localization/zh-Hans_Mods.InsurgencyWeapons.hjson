@@ -61,10 +61,21 @@ Configs: {
 	Config: 配置
 	Gameplay: 玩法
 	Misc: 杂项
+	InsurgencyModConfig.DisplayName: 叛乱武库配置文件
+	// ConfigClient: Client
 
-	InsurgencyModConfig: {
-		DisplayName: 叛乱武库配置文件
-		CasingVolume.Tooltip: ""
+	InsurgencyModConfigClient: {
+		// DisplayName: Insurgency Client Side
+
+		CrosshairBorderColor: {
+			// Label: Crosshair Border Color
+			// Tooltip: ""
+		}
+
+		CrosshairColor: {
+			// Label: Crosshair Color
+			// Tooltip: ""
+		}
 	}
 }
 
@@ -556,6 +567,31 @@ Items: {
 		DisplayName: 毛瑟 C96 M1932“大肚匣子” 7.63x25mm
 		Tooltip: ""
 	}
+
+	AK74M: {
+		// DisplayName: AKS-74 + Foregrip 5.45x39mm
+		// Tooltip: ""
+	}
+
+	F2000: {
+		// DisplayName: FN F2000 5.56x45mm
+		// Tooltip: Has a scope
+	}
+
+	Glock17: {
+		// DisplayName: Glock 17 9x19mm
+		// Tooltip: ""
+	}
+
+	Bullet50AE: {
+		// DisplayName: Desert Eagle .50AE Ammo
+		// Tooltip: ""
+	}
+
+	Deagle: {
+		// DisplayName: IMI Desert Eagle .50AE
+		// Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -645,6 +681,14 @@ Projectiles: {
 	C96Clip.DisplayName: C96 Clip
 	C96CHeld.DisplayName: C96 C Held
 	C96CMagazine.DisplayName: C96 C Magazine
+	// AK74MHeld.DisplayName: A K74 M Held
+	// F2000Held.DisplayName: F2000 Held
+	// AK74MMagazine.DisplayName: A K74 M Magazine
+	// Glock17Held.DisplayName: Glock17 Held
+	// F2000Magazine.DisplayName: F2000 Magazine
+	// Glock17Magazine.DisplayName: Glock17 Magazine
+	// DeagleHeld.DisplayName: Deagle Held
+	// DeagleMagazine.DisplayName: Deagle Magazine
 }
 
 Keybinds: {

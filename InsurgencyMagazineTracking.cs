@@ -7,7 +7,6 @@ namespace InsurgencyWeapons
     public class InsurgencyMagazineTracking : ModPlayer
     {
         public bool MouseOverFriendlyNPC { get; set; }
-        public Color OldCursorColor, OldCursorBorderColor;
 
         public bool
             isActive;
@@ -42,6 +41,7 @@ namespace InsurgencyWeapons
         //Handguns
         public int
             G17Magazine,
+            DeagleMagazine,
             M1911Magazine,
             C96Clip;
 
@@ -124,14 +124,14 @@ namespace InsurgencyWeapons
         {
             if (Player.HoldingInsurgencyWeapon() && isActive)
                 MouseOverFriendlyNPC = OverFriendlyNPC();
-            Main.MouseBorderColor = OldCursorBorderColor;
-            base.PostUpdate();
-        }
 
+            if (!Player.HoldingInsurgencyWeapon())
+                Main.MouseBorderColor = Main.mouseBorderColorSlider.GetColor();
+
+            base.PostUpdate();
+        }        
         public override void OnEnterWorld()
-        {
-            OldCursorColor = Main.cursorColor;
-            OldCursorBorderColor = Main.MouseBorderColor;
+        {           
             base.OnEnterWorld();
         }
 
@@ -162,6 +162,7 @@ namespace InsurgencyWeapons
 
             //Pistols
             tag[nameof(G17Magazine)] = G17Magazine;
+            tag[nameof(DeagleMagazine)] = DeagleMagazine;
             tag[nameof(M1911Magazine)] = M1911Magazine;
             tag[nameof(C96Clip)] = C96Clip;
 
@@ -227,6 +228,7 @@ namespace InsurgencyWeapons
 
             //Pistols
             G17Magazine = tag.GetInt(nameof(G17Magazine));
+            DeagleMagazine = tag.GetInt(nameof(DeagleMagazine));
             M1911Magazine = tag.GetInt(nameof(M1911Magazine));
             C96Clip = tag.GetInt(nameof(C96Clip));
 

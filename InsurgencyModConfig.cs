@@ -44,4 +44,17 @@ namespace InsurgencyWeapons
         [TooltipKey("$Mods.InsurgencyWeapons.Configs.DamageScalingDesc")]
         public bool DamageScaling { get; set; }
     }
+
+    public class InsurgencyModConfigClient : ModConfig
+    {
+        public override ConfigScope Mode => ConfigScope.ClientSide;
+        public static InsurgencyModConfigClient Instance => ModContent.GetInstance<InsurgencyModConfigClient>();
+
+        [Header("$Mods.InsurgencyWeapons.Configs.ConfigClient")]
+        [DefaultValue(typeof(Color), "0, 128, 0, 255"), SliderColor(0, 128, 0)]
+        public Color CrosshairBorderColor { get; set; }
+
+        [DefaultValue(typeof(Color), "255, 0, 0, 255"), SliderColor(255, 0, 0)]
+        public Color CrosshairColor { get; set; }
+    }
 }

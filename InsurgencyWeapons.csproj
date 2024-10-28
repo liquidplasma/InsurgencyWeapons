@@ -12,6 +12,7 @@
     <None Remove="Items\Ammo\Bullet303.png" />
     <None Remove="Items\Ammo\Bullet44.png" />
     <None Remove="Items\Ammo\Bullet455.png" />
+    <None Remove="Items\Ammo\Bullet50AE.png" />
     <None Remove="Items\Ammo\Bullet76251.png" />
     <None Remove="Items\Ammo\Bullet76254R.png" />
     <None Remove="Items\Ammo\Bullet939.png" />
@@ -28,6 +29,7 @@
     <None Remove="Items\Weapons\Carbines\M1A1.png" />
     <None Remove="Items\Weapons\Carbines\M4A1.png" />
     <None Remove="Items\Weapons\Carbines\SKS.png" />
+    <None Remove="Items\Weapons\Deagle.png" />
     <None Remove="Items\Weapons\MachineGuns\M249.png" />
     <None Remove="Items\Weapons\MachineGuns\PKM.png" />
     <None Remove="Items\Weapons\Pistols\C96.png" />
@@ -67,6 +69,7 @@
     <None Remove="Projectiles\MachineGuns\M249Held.png" />
     <None Remove="Projectiles\MachineGuns\PKMHeld.png" />
     <None Remove="Projectiles\Pistols\C96Held.png" />
+    <None Remove="Projectiles\Pistols\DeagleHeld.png" />
     <None Remove="Projectiles\Pistols\Glock17Held.png" />
     <None Remove="Projectiles\Pistols\M1911Held.png" />
     <None Remove="Projectiles\MachineGuns\M60Held.png" />
@@ -107,8 +110,5 @@
     <None Remove="VendingMachines\VendingMachineGunsTile.png" />
   </ItemGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sounds\Weapons\Ins2\" />
   </ItemGroup>
 </Project>

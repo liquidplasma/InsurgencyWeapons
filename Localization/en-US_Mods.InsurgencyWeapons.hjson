@@ -58,13 +58,24 @@ Configs: {
 	CasingLifeTimeLabel: Casing Lifetime
 	DamageScalingDesc: Should weapons get extra damage upon entering hardmode and defeating Plantera?
 	DamageScalingLabel: Damage Scaling
-	Config: Configuration
+	Config: Server
 	Gameplay: Gameplay
 	Misc: Misc
+	InsurgencyModConfig.DisplayName: Insurgency Server Side
+	ConfigClient: Client
 
-	InsurgencyModConfig: {
-		DisplayName: Insurgency Mod Config
-		CasingVolume.Tooltip: ""
+	InsurgencyModConfigClient: {
+		DisplayName: Insurgency Client Side
+
+		CrosshairBorderColor: {
+			Label: Crosshair Border Color
+			Tooltip: ""
+		}
+
+		CrosshairColor: {
+			Label: Crosshair Color
+			Tooltip: ""
+		}
 	}
 }
 
@@ -451,6 +462,16 @@ Items: {
 		DisplayName: Glock 17 9x19mm
 		Tooltip: ""
 	}
+
+	Bullet50AE: {
+		DisplayName: Desert Eagle .50AE Ammo
+		Tooltip: ""
+	}
+
+	Deagle: {
+		DisplayName: IMI Desert Eagle .50AE
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -546,6 +567,8 @@ Projectiles: {
 	Glock17Held.DisplayName: Glock17 Held
 	F2000Magazine.DisplayName: F2000 Magazine
 	Glock17Magazine.DisplayName: Glock17 Magazine
+	DeagleHeld.DisplayName: Deagle Held
+	DeagleMagazine.DisplayName: Deagle Magazine
 }
 
 Keybinds: {
