@@ -17,7 +17,6 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<F2000Held>();
             MoneyCost = 265;

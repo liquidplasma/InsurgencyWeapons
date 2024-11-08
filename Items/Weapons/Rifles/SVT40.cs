@@ -20,7 +20,6 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<SVT40Held>();
             MoneyCost = 290;

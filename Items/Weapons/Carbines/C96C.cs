@@ -21,7 +21,6 @@ namespace InsurgencyWeapons.Items.Weapons.Carbines
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 3, 0, 0);
-            Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<C96CHeld>();
             MoneyCost = 185;

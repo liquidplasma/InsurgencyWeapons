@@ -47,6 +47,7 @@ namespace InsurgencyWeapons
         //Revolvers
         public int
             PythonCylinder,
+            WebleyCylinder,
             M29Cylinder;
 
         //Rifles
@@ -66,7 +67,8 @@ namespace InsurgencyWeapons
             CoachBarrel,
             IthacaTube,
             M590Tube,
-            M1014Tube;
+            M1014Tube,
+            SaigaMagazine;
 
         //Sub machine guns
         public int
@@ -168,6 +170,7 @@ namespace InsurgencyWeapons
 
             //Revolvers
             tag[nameof(PythonCylinder)] = PythonCylinder;
+            tag[nameof(WebleyCylinder)] = WebleyCylinder;
             tag[nameof(M29Cylinder)] = M29Cylinder;
 
             //Rifles
@@ -185,6 +188,7 @@ namespace InsurgencyWeapons
             tag[nameof(IthacaTube)] = IthacaTube;
             tag[nameof(M590Tube)] = M590Tube;
             tag[nameof(M1014Tube)] = M1014Tube;
+            tag[nameof(SaigaMagazine)] = SaigaMagazine;
 
             //Sub machine guns
             tag[nameof(MP7Magazine)] = MP7Magazine;
@@ -234,12 +238,15 @@ namespace InsurgencyWeapons
 
             //Revolvers
             PythonCylinder = tag.GetInt(nameof(PythonCylinder));
+            WebleyCylinder = tag.GetInt(nameof(WebleyCylinder));
             M29Cylinder = tag.GetInt(nameof(M29Cylinder));
+
+            //Rifles
             GarandMagazine = tag.GetInt(nameof(GarandMagazine));
             EnfieldMagazine = tag.GetInt(nameof(EnfieldMagazine));
             SVTMagazine = tag.GetInt(nameof(SVTMagazine));
 
-            //Rifles
+            //Sniper rifles
             M40A1Box = tag.GetInt(nameof(M40A1Box));
             MosinBox = tag.GetInt(nameof(MosinBox));
             G43Box = tag.GetInt(nameof(G43Box));
@@ -249,6 +256,7 @@ namespace InsurgencyWeapons
             IthacaTube = tag.GetInt(nameof(IthacaTube));
             M590Tube = tag.GetInt(nameof(M590Tube));
             M1014Tube = tag.GetInt(nameof(M1014Tube));
+            SaigaMagazine = tag.GetInt(nameof(SaigaMagazine));
 
             //Sub machine guns
             MP7Magazine = tag.GetInt(nameof(MP7Magazine));

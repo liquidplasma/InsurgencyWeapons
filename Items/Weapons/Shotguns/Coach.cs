@@ -20,7 +20,6 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
             Item.shootSpeed = 11f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.rare = ItemRarityID.LightRed;
             Item.DamageType = DamageClass.Ranged;
             WeaponHeldProjectile = ModContent.ProjectileType<CoachHeld>();
             MoneyCost = 295;

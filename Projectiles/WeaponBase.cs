@@ -5,6 +5,7 @@ using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.MachineGuns;
 using InsurgencyWeapons.Projectiles.AssaultRifles;
 using InsurgencyWeapons.Projectiles.Pistols;
+using InsurgencyWeapons.Projectiles.Revolvers;
 using InsurgencyWeapons.Projectiles.SubMachineGuns;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
@@ -297,7 +298,7 @@ namespace InsurgencyWeapons.Projectiles
         /// <param name="dropCasing"></param>
         /// <param name="ai1"></param>
         /// <param name="ai2"></param>
-        public void Shoot(int maxDegree, bool dropCasing = true, float ai1 = 0, float ai2 = 0)
+        public void Shoot(int maxDegree, bool dropCasing = true, float ai1 = 0, float ai2 = 0, int casingType = 0)
         {
             float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
             if (HeldItem.ModItem is Rifle || HeldItem.ModItem is Shotgun)
@@ -328,7 +329,7 @@ namespace InsurgencyWeapons.Projectiles
                 Shot.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon = true;
             }
             if (dropCasing)
-                DropCasingManually();
+                DropCasingManually(casingType);
         }
 
         public override void SetDefaults()
@@ -517,11 +518,17 @@ namespace InsurgencyWeapons.Projectiles
                     Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
 
                     idlePos = new Vector2(X, -10);
-                    if (this is Glock17Held or DeagleHeld)
+                    if (this is Glock17Held or DeagleHeld or WebleyHeld)
                     {
                         X = Player.direction == -1
                         ? -16 //true
                         : -36; //false
+                        if (this is WebleyHeld)
+                        {
+                            X = Player.direction == -1
+                            ? -24 //true
+                            : -44; //false
+                        }
                         idlePos = new Vector2(X, -Projectile.height / 2.5f);
                     }
                 }

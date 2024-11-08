@@ -254,7 +254,7 @@ namespace InsurgencyWeapons.Items
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 0, 1, 5);
-            Item.rare = ItemRarityID.LightRed;
+
             Item.maxStack = Item.CommonMaxStack;
             Item.DamageType = DamageClass.Ranged;
             base.SetDefaults();

@@ -592,6 +592,11 @@ Items: {
 		// DisplayName: IMI Desert Eagle .50AE
 		// Tooltip: ""
 	}
+
+	Saiga12: {
+		// DisplayName: Saiga 12K 12 Gauge
+		// Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -689,6 +694,9 @@ Projectiles: {
 	// Glock17Magazine.DisplayName: Glock17 Magazine
 	// DeagleHeld.DisplayName: Deagle Held
 	// DeagleMagazine.DisplayName: Deagle Magazine
+	// Saiga12Held.DisplayName: Saiga12 Held
+	// Saiga12Magazine.DisplayName: Saiga12 Magazine
+	// WebleyHeld.DisplayName: Webley Held
 }
 
 Keybinds: {
