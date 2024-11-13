@@ -53,7 +53,6 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             isShotgun = true;
             drawScale = 0.8f;
             BigSpriteSpecificIdlePos = true;
-            AmmoType = ModContent.ItemType<TwelveGauge>();
             base.SetDefaults();
         }
 
@@ -72,10 +71,19 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
-                SoundEngine.PlaySound(Fire, Projectile.Center);
-                for (int i = 0; i < 5; i++)
-                    Shoot(1, dropCasing: false);
-                Shoot(1, casingType: ModContent.GoreType<ShellBuckShotGore>());
+                SoundEngine.PlaySound(Fire, Projectile.Center);                
+                bool slug = AmmoType == ModContent.ItemType<TwelveGaugeSlug>();
+                if (slug)
+                    Shoot(0, casingType: ModContent.GoreType<ShellSlugGore>());
+                else
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        //Buck
+                        Shoot(0, dropCasing: false);
+                    }
+                    Shoot(0, casingType: ModContent.GoreType<ShellBuckShotGore>());
+                }
             }
 
             if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)

@@ -34,6 +34,7 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* FN SCAR-H 7.62x51mm
 		* FG-42 7.92x57mm
 		* H&K G3A3 7.62x51mm
+		* M14 EBR 7.62x51mm + Red Dot Sight
 
 	[b]-Carbines-[/b]
 		* AKS-74U 5.45x39mm
@@ -93,5 +94,7 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
+v0.9.6
+	- Saiga Fix
 v0.9.5
 	- Added: MK18, M14 EBR, USP, Saiga 12k and Webley revolver

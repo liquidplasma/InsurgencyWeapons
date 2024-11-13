@@ -609,7 +609,7 @@ Items: {
 	}
 
 	USP: {
-		// DisplayName: U S P
+		// DisplayName: H&K USP Match .45ACP
 		// Tooltip: ""
 	}
 }
@@ -717,6 +717,7 @@ Projectiles: {
 	// MK18Held.DisplayName: M K18 Held
 	// MK18Magazine.DisplayName: M K18 Magazine
 	// USPHeld.DisplayName: U S P Held
+	// USPMagazine.DisplayName: U S P Magazine
 }
 
 Keybinds: {
