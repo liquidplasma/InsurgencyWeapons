@@ -42,6 +42,7 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* MP-40 9x19mm
 		* SKS Simonov 7.62x39mm
 		* Colt M4A1 5.56x45mm
+		* Mk. 18 MOD 1 5.56x45mm + EOTech Sight
 
 	[b]-Grenades-[/b]
 		* Stielhandgranate M24
@@ -57,12 +58,14 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 	[b]-Revolvers-[/b]
 		* Colt Python .357 Magnum
 		* S&W Model 29 .44 Magnum
+		* Webley Mk.VI .455 WMk.II
 
 	[b]-Pistols-[/b]
 		* Colt M1911 .45ACP
 		* IMI Desert Eagle .50AE
 		* Glock 17 9x19mm
 		* Mauser C96 7.63x25mm
+		* H&K USP Match .45ACP
 
 	[b]-Rifles-[/b]
 		* M1 Garand 7.62x63mm
@@ -71,9 +74,10 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 
 	[b]-Shotguns-[/b]
 		* Coach Gun Buck & Ball
-		* Mossberg M590 12 Gauge
-		* Ithaca M37 12 Gauge
-		* Benelli M1014 12 Gauge
+		* Mossberg M590
+		* Ithaca M37
+		* Benelli M1014 
+		* Saiga 12K
 
 	[b]-Sniper rifles-[/b]
 		* M40A1 7.62x51mm + Leupold Scope
@@ -89,7 +93,5 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.9.4
-	- Added: AKS-74 + Foregrip 5.45x39mm, IMI Desert Eagle .50AE, Glock 17 9x19mm, FN F2000 5.56x45mm, AKS-74 + Foregrip 5.45x39mm
-	- You can now configure the color of the crosshair from the settings menu
-	
+v0.9.5
+	- Added: MK18, M14 EBR, USP, Saiga 12k and Webley revolver
