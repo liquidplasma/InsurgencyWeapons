@@ -29,12 +29,14 @@ namespace InsurgencyWeapons
             G36CMagazine,
             M1A1Magazine,
             M4A1Magazine,
+            MK18Magazine,
             SKSMagazine;
 
         //Battle rifles
         public int
             SCARHMagazine,
             G3A3Magazine,
+            M14EBRMagazine,
             FG42Magazine;
 
         //Handguns
@@ -42,6 +44,7 @@ namespace InsurgencyWeapons
             G17Magazine,
             DeagleMagazine,
             M1911Magazine,
+            USPMagazine,
             C96Clip;
 
         //Revolvers
@@ -126,7 +129,7 @@ namespace InsurgencyWeapons
             if (Player.HoldingInsurgencyWeapon() && isActive)
                 MouseOverFriendlyNPC = OverFriendlyNPC();
 
-            if (!Player.HoldingInsurgencyWeapon())
+            if (!Player.HoldingInsurgencyWeapon() && Main.MouseBorderColor != Main.mouseBorderColorSlider.GetColor())
                 Main.MouseBorderColor = Main.mouseBorderColorSlider.GetColor();
 
             base.PostUpdate();
@@ -155,17 +158,20 @@ namespace InsurgencyWeapons
             tag[nameof(G36CMagazine)] = G36CMagazine;
             tag[nameof(M1A1Magazine)] = M1A1Magazine;
             tag[nameof(M4A1Magazine)] = M4A1Magazine;
+            tag[nameof(MK18Magazine)] = MK18Magazine;
             tag[nameof(SKSMagazine)] = SKSMagazine;
 
             //Battle rifles
             tag[nameof(SCARHMagazine)] = SCARHMagazine;
             tag[nameof(G3A3Magazine)] = G3A3Magazine;
+            tag[nameof(M14EBRMagazine)] = M14EBRMagazine;
             tag[nameof(FG42Magazine)] = FG42Magazine;
 
             //Pistols
             tag[nameof(G17Magazine)] = G17Magazine;
             tag[nameof(DeagleMagazine)] = DeagleMagazine;
             tag[nameof(M1911Magazine)] = M1911Magazine;
+            tag[nameof(USPMagazine)] = USPMagazine;
             tag[nameof(C96Clip)] = C96Clip;
 
             //Revolvers
@@ -223,17 +229,20 @@ namespace InsurgencyWeapons
             G36CMagazine = tag.GetInt(nameof(G36CMagazine));
             M1A1Magazine = tag.GetInt(nameof(M1A1Magazine));
             M4A1Magazine = tag.GetInt(nameof(M4A1Magazine));
+            MK18Magazine = tag.GetInt(nameof(MK18Magazine));
             SKSMagazine = tag.GetInt(nameof(SKSMagazine));
 
             //Battle rifles
             SCARHMagazine = tag.GetInt(nameof(SCARHMagazine));
             G3A3Magazine = tag.GetInt(nameof(G3A3Magazine));
+            M14EBRMagazine = tag.GetInt(nameof(M14EBRMagazine));
             FG42Magazine = tag.GetInt(nameof(FG42Magazine));
 
             //Pistols
             G17Magazine = tag.GetInt(nameof(G17Magazine));
             DeagleMagazine = tag.GetInt(nameof(DeagleMagazine));
             M1911Magazine = tag.GetInt(nameof(M1911Magazine));
+            USPMagazine = tag.GetInt(nameof(USPMagazine));
             C96Clip = tag.GetInt(nameof(C96Clip));
 
             //Revolvers

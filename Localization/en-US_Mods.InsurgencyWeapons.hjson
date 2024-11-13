@@ -477,6 +477,21 @@ Items: {
 		DisplayName: Saiga 12K 12 Gauge
 		Tooltip: ""
 	}
+
+	M14EBR: {
+		DisplayName: M14 EBR 7.62x51mm
+		Tooltip: Has a scope
+	}
+
+	MK18: {
+		DisplayName: Mk. 18 MOD 1 5.56x45mm
+		Tooltip: ""
+	}
+
+	USP: {
+		DisplayName: H&K USP Match .45ACP
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -577,6 +592,11 @@ Projectiles: {
 	Saiga12Held.DisplayName: Saiga12 Held
 	Saiga12Magazine.DisplayName: Saiga12 Magazine
 	WebleyHeld.DisplayName: Webley Held
+	M14EBRHeld.DisplayName: M14 E B R Held
+	M14EBRMagazine.DisplayName: M14 E B R Magazine
+	MK18Held.DisplayName: M K18 Held
+	MK18Magazine.DisplayName: M K18 Magazine
+	USPHeld.DisplayName: U S P Held
 }
 
 Keybinds: {

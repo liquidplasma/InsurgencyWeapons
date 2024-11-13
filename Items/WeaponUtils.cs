@@ -58,7 +58,21 @@ namespace InsurgencyWeapons.Items
                 throw new ArgumentException("Must assign a perk to a weapon");
 
             Item.value = MoneyCost * 40;
+            Item.rare = SetRarity();
             base.SetDefaults();
+        }
+
+        private int SetRarity()
+        {
+            if (HelperStats.TestRange(MoneyCost, 0, 100))
+                return ItemRarityID.Green;
+            if (HelperStats.TestRange(MoneyCost, 100, 200))
+                return ItemRarityID.LightRed;
+            if (HelperStats.TestRange(MoneyCost, 200, 300))
+                return ItemRarityID.LightPurple;
+            if (HelperStats.TestRange(MoneyCost, 300, 500))
+                return ItemRarityID.Yellow;
+            return ItemRarityID.Red;
         }
 
         public override void HoldItem(Player player)

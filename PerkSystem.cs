@@ -112,9 +112,9 @@ namespace InsurgencyWeapons
 
         public int[] Level = new int[4];
 
-        public int[] DamageRequired = { 1000, 4000, 16000, 64000, 384000, 3072000 };
+        public int[] DamageRequired = [1000, 4000, 16000, 64000, 384000, 3072000];
 
-        public int[] KillsRequired = { 10, 30, 90, 270, 540, 1080 };
+        public int[] KillsRequired = [10, 30, 90, 270, 540, 1080];
 
         public float GetDamageMultPerLevel(int perk)
         {

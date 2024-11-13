@@ -1,38 +1,45 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.Revolvers;
+using InsurgencyWeapons.Items.Weapons.Pistols;
+using InsurgencyWeapons.Items;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace InsurgencyWeapons.Projectiles.Revolvers
+namespace InsurgencyWeapons.Projectiles.Pistols
 {
-    internal class WebleyHeld : WeaponBase
+    internal class USPHeld : WeaponBase
     {
         public override int CurrentAmmo
         {
             get
             {
-                return MagazineTracking.WebleyCylinder;
+                return MagazineTracking.USPMagazine;
             }
             set
             {
-                MagazineTracking.WebleyCylinder = value;
+                MagazineTracking.USPMagazine = value;
             }
         }
 
         private bool SemiAuto;
 
-        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/webley/shoot")
+        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/usp/shoot")
         {
             Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
             MaxInstances = 0,
             Volume = 0.4f
         };
 
-        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/webley/empty");
-        private SoundStyle Open => new("InsurgencyWeapons/Sounds/Weapons/Ins2/webley/open");
-        private SoundStyle Close => new("InsurgencyWeapons/Sounds/Weapons/Ins2/webley/close");
-        private SoundStyle Rounds => new("InsurgencyWeapons/Sounds/Weapons/Ins2/webley/rounds");
-        private SoundStyle Speed => new("InsurgencyWeapons/Sounds/Weapons/Ins2/webley/speed");
+        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/usp/empty");
+        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/usp/magin");
+        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/usp/magout");
+        private SoundStyle SlideRel => new("InsurgencyWeapons/Sounds/Weapons/Ins2/usp/sldrel");
+        private SoundStyle SlideBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/usp/sldbk");
 
         public override void SetStaticDefaults()
         {
@@ -41,10 +48,10 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
 
         public override void SetDefaults()
         {
-            Projectile.width = 68;
-            Projectile.height = 56;
-            MagazineSize = 6;
-            AmmoType = ModContent.ItemType<Bullet455>();
+            Projectile.width = 50;
+            Projectile.height = 48;
+            MagazineSize = 12;
+            AmmoType = ModContent.ItemType<Bullet45ACP>();
             drawScale = 0.67f;
             isPistol = true;
             base.SetDefaults();
@@ -52,21 +59,21 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
 
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 18);
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 14);
             return base.PreDraw(ref lightColor);
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.WebleyCylinder;
+            CurrentAmmo = MagazineTracking.USPMagazine;
             ShotDelay = HeldItem.useTime;
         }
 
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 10f;
-            SpecificWeaponFix = new Vector2(0, -4);
+            OffsetFromPlayerCenter = 6f;
+            SpecificWeaponFix = new Vector2(0, -1);
 
             if (!Player.channel || AutoAttack == 0)
             {
@@ -80,7 +87,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(2, dropCasing: false);
+                Shoot(2);
             }
 
             if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -92,7 +99,9 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
             if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
-                ReloadTimer += 60;
+                ReloadTimer += 90;
+                SoundEngine.PlaySound(SlideBack, Projectile.Center);
+                Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                 ReloadStarted = true;
             }
 
@@ -107,7 +116,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 ManualReload = true;
                 ReloadStarted = true;
                 ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Rifles;
-                ReloadTimer += 60;
+                ReloadTimer += 90;
                 if (LiteMode)
                     ReloadTimer = 14;
             }
@@ -117,48 +126,48 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
                 case 6:
                     if (LiteMode)
                     {
-                        SoundEngine.PlaySound(Close, Projectile.Center);
+                        SoundEngine.PlaySound(SlideRel, Projectile.Center);
                         ReturnAmmo();
                         if (CanReload())
-                            ReloadMagazine(noChamber: true);
+                            ReloadMagazine();
                     }
                     ReloadStarted = ManualReload = false;
                     break;
 
                 case 15:
                     if (!ManualReload)
-                        SoundEngine.PlaySound(Close, Projectile.Center);
+                        SoundEngine.PlaySound(SlideRel, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     break;
 
                 case 60:
-                    SoundEngine.PlaySound(Speed, Projectile.Center);
+                    SoundEngine.PlaySound(MagIn, Projectile.Center);
+                    if (!ManualReload)
+                        Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
                     if (CanReload())
-                        ReloadMagazine(noChamber: true);
-                    break;
-
-                case 115:
-                    SoundEngine.PlaySound(Rounds, Projectile.Center);
-                    for (int i = 0; i < 6; i++)
-                        DropCasingManually();
+                        ReloadMagazine();
                     break;
 
                 case 120:
-                    SoundEngine.PlaySound(Open, Projectile.Center);
+                    SoundEngine.PlaySound(MagOut, Projectile.Center);
                     ReturnAmmo();
-                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     CurrentAmmo = 0;
+                    if (!ManualReload)
+                    {
+                        DropMagazine(ModContent.ProjectileType<USPMagazine>());
+                        Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
+                    }
                     break;
             }
             if (CurrentAmmo != 0 && ReloadTimer == 0)
             {
-                if (ShotDelay <= 2)
+                if (ShotDelay <= 3)
                     Projectile.frame = ShotDelay;
                 else
                     Projectile.frame = 0;
             }
 
-            if (HeldItem.type != ModContent.ItemType<Webley>())
+            if (HeldItem.type != ModContent.ItemType<USP>())
                 Projectile.Kill();
 
             base.AI();

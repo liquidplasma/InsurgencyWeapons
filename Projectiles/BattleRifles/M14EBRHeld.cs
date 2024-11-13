@@ -1,81 +1,78 @@
-﻿using InsurgencyWeapons.Gores.Casing;
-using InsurgencyWeapons.Helpers;
+﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.Shotguns;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Shotguns;
+using InsurgencyWeapons.Items.Weapons.BattleRifles;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.BattleRifles;
 using System.IO;
 
-namespace InsurgencyWeapons.Projectiles.Shotguns
+namespace InsurgencyWeapons.Projectiles.BattleRifles
 {
-    public class Saiga12Held : WeaponBase
+    internal class M14EBRHeld : WeaponBase
     {
         public override int CurrentAmmo
         {
             get
             {
-                return MagazineTracking.SaigaMagazine;
+                return MagazineTracking.M14EBRMagazine;
             }
             set
             {
-                MagazineTracking.SaigaMagazine = value;
+                MagazineTracking.M14EBRMagazine = value;
             }
         }
 
-        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/shoot")
+        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m14ebr/shoot")
         {
             Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
             MaxInstances = 0,
-            Volume = 0.35f
+            Volume = 0.4f
         };
 
-        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/empty");
-        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/magin");
-        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/magout");
-        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/bltbk");
-        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/bltrel");
+        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m14ebr/empty");
+        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m14ebr/magin");
+        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m14ebr/magout");
+        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m14ebr/bltrel");
+        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/m14ebr/bltbk");
 
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = 4;
         }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 38);
-            return base.PreDraw(ref lightColor);
-        }
-
         public override void SetDefaults()
         {
-            Projectile.width = 40;
-            Projectile.height = 98;
+            Projectile.width = 32;
+            Projectile.height = 102;
             MagazineSize = 20;
-            isShotgun = true;
-            drawScale = 0.8f;
             BigSpriteSpecificIdlePos = true;
-            AmmoType = ModContent.ItemType<TwelveGauge>();
+            drawScale = 0.8f;
+            AmmoType = ModContent.ItemType<Bullet76251>();
             base.SetDefaults();
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 44);
+            return base.PreDraw(ref lightColor);
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.SaigaMagazine;
+            CurrentAmmo = MagazineTracking.M14EBRMagazine;
             ShotDelay = HeldItem.useTime;
         }
 
         public override void AI()
         {
+            Player.scope = true;
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 14f;
+            OffsetFromPlayerCenter = 20f;
             SpecificWeaponFix = new Vector2(0, -2);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                for (int i = 0; i < 5; i++)
-                    Shoot(1, dropCasing: false);
-                Shoot(1, casingType: ModContent.GoreType<ShellBuckShotGore>());
+                Shoot(4);
             }
 
             if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -86,8 +83,8 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
             if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = HeldItem.useTime * 9;
-                ReloadTimer += 30;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.BattleRifles;
+                ReloadTimer += 60;
                 ReloadStarted = true;
             }
 
@@ -101,8 +98,8 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             {
                 ManualReload = true;
                 ReloadStarted = true;
-                ReloadTimer = HeldItem.useTime * 9;
-                Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.BattleRifles;
+                ReloadTimer += 30;
                 if (LiteMode)
                     ReloadTimer = 14;
             }
@@ -112,7 +109,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                 case 6:
                     if (LiteMode)
                     {
-                        SoundEngine.PlaySound(BoltBack, Projectile.Center);
+                        SoundEngine.PlaySound(BoltForward, Projectile.Center);
                         ReturnAmmo();
                         if (CanReload())
                             ReloadMagazine();
@@ -122,42 +119,48 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
                 case 15:
                     if (!ManualReload)
-                        SoundEngine.PlaySound(BoltForward, Projectile.Center);
-                    Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    break;
-
-                case 30:
-                    if (!ManualReload)
-                        SoundEngine.PlaySound(BoltBack, Projectile.Center);
-                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
-                    break;
-
-                case 70:
-                    SoundEngine.PlaySound(MagIn, Projectile.Center);
-                    Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                    if (ManualReload)
                     {
+                        SoundEngine.PlaySound(BoltForward, Projectile.Center);
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
-                        ReloadTimer = 25;
                     }
+                    break;
+
+                case 45:
+                    if (!ManualReload)
+                    {
+                        SoundEngine.PlaySound(BoltBack, Projectile.Center);
+                        Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
+                    }
+                    break;
+
+                case 90:
+                    SoundEngine.PlaySound(MagIn, Projectile.Center);
+                    Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
+                    if (ManualReload)
+                        Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     if (CanReload())
                         ReloadMagazine();
                     break;
 
-                case 110:
+                case 150:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     ReturnAmmo();
                     CurrentAmmo = 0;
                     if (!ManualReload)
-                        DropMagazine(ModContent.ProjectileType<Saiga12Magazine>());
+                        DropMagazine(ModContent.ProjectileType<M14EBRMagazine>());
                     break;
             }
 
             if (CurrentAmmo > 0 && Player.channel)
-                Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
+            {
+                if (ShotDelay % 2 == 0)
+                    Projectile.frame++;
+                if (Projectile.frame > 2)
+                    Projectile.frame = 0;
+            }
 
-            if (HeldItem.type != ModContent.ItemType<Saiga12>())
+            if (HeldItem.type != ModContent.ItemType<M14EBR>())
                 Projectile.Kill();
 
             base.AI();

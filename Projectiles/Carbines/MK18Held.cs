@@ -1,38 +1,37 @@
-﻿using InsurgencyWeapons.Gores.Casing;
-using InsurgencyWeapons.Helpers;
+﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.Shotguns;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.Shotguns;
+using InsurgencyWeapons.Items.Weapons.Carbines;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.Carbines;
 using System.IO;
 
-namespace InsurgencyWeapons.Projectiles.Shotguns
+namespace InsurgencyWeapons.Projectiles.Carbines
 {
-    public class Saiga12Held : WeaponBase
+    internal class MK18Held : WeaponBase
     {
         public override int CurrentAmmo
         {
             get
             {
-                return MagazineTracking.SaigaMagazine;
+                return MagazineTracking.MK18Magazine;
             }
             set
             {
-                MagazineTracking.SaigaMagazine = value;
+                MagazineTracking.MK18Magazine = value;
             }
         }
 
-        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/shoot")
+        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mk18/shoot")
         {
             Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
             MaxInstances = 0,
-            Volume = 0.35f
+            Volume = 0.4f
         };
 
-        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/empty");
-        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/magin");
-        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/magout");
-        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/bltbk");
-        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/saiga/bltrel");
+        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mk18/empty");
+        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mk18/magin");
+        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mk18/magout");
+        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mk18/bltbk");
+        private SoundStyle BoltForward => new("InsurgencyWeapons/Sounds/Weapons/Ins2/mk18/bltrel");
 
         public override void SetStaticDefaults()
         {
@@ -41,41 +40,37 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 38);
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 18);
             return base.PreDraw(ref lightColor);
         }
 
         public override void SetDefaults()
         {
-            Projectile.width = 40;
-            Projectile.height = 98;
-            MagazineSize = 20;
-            isShotgun = true;
-            drawScale = 0.8f;
-            BigSpriteSpecificIdlePos = true;
-            AmmoType = ModContent.ItemType<TwelveGauge>();
+            Projectile.width = 32;
+            Projectile.height = 58;
+            MagazineSize = 30;
+            AmmoType = ModContent.ItemType<Bullet556>();
+            isASmallSprite = true;
             base.SetDefaults();
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.SaigaMagazine;
+            CurrentAmmo = MagazineTracking.MK18Magazine;
             ShotDelay = HeldItem.useTime;
         }
 
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 14f;
-            SpecificWeaponFix = new Vector2(0, -2);
+            OffsetFromPlayerCenter = 11f;
+            SpecificWeaponFix = new Vector2(0, -2f);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                for (int i = 0; i < 5; i++)
-                    Shoot(1, dropCasing: false);
-                Shoot(1, casingType: ModContent.GoreType<ShellBuckShotGore>());
+                Shoot(2);
             }
 
             if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -86,8 +81,8 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
 
             if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = HeldItem.useTime * 9;
-                ReloadTimer += 30;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
+                ReloadTimer += 60;
                 ReloadStarted = true;
             }
 
@@ -101,7 +96,8 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             {
                 ManualReload = true;
                 ReloadStarted = true;
-                ReloadTimer = HeldItem.useTime * 9;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
+                ReloadTimer += 60;
                 Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                 if (LiteMode)
                     ReloadTimer = 14;
@@ -150,14 +146,14 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     ReturnAmmo();
                     CurrentAmmo = 0;
                     if (!ManualReload)
-                        DropMagazine(ModContent.ProjectileType<Saiga12Magazine>());
+                        DropMagazine(ModContent.ProjectileType<MK18Magazine>());
                     break;
             }
 
             if (CurrentAmmo > 0 && Player.channel)
                 Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
 
-            if (HeldItem.type != ModContent.ItemType<Saiga12>())
+            if (HeldItem.type != ModContent.ItemType<MK18>())
                 Projectile.Kill();
 
             base.AI();

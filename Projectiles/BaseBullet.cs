@@ -15,8 +15,9 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 800;
+            ProjectileID.Sets.TrailCacheLength[Type] = 20;
             ProjectileID.Sets.TrailingMode[Type] = 3;
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 480;
         }
 
         public override void SetDefaults()
@@ -26,7 +27,7 @@ namespace InsurgencyWeapons.Projectiles
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.tileCollide = true;
             Projectile.extraUpdates = 5;
-            Projectile.timeLeft = 900;
+            Projectile.timeLeft = 750;
             Projectile.alpha = 255;
         }
 

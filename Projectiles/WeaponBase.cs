@@ -518,7 +518,7 @@ namespace InsurgencyWeapons.Projectiles
                     Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
 
                     idlePos = new Vector2(X, -10);
-                    if (this is Glock17Held or DeagleHeld or WebleyHeld)
+                    if (this is Glock17Held or DeagleHeld or WebleyHeld or USPHeld)
                     {
                         X = Player.direction == -1
                         ? -16 //true
