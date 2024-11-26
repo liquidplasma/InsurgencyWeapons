@@ -61,12 +61,10 @@ namespace InsurgencyWeapons
                     if (GetStats.ShotDelay == 0 && CrosshairSpread <= 2f)
                         CrosshairSpread += GetStats.Degree * 0.25f;
 
+                    AmmoTracking.DrawingCrosshair = true;
                     float offsetDistance = 15f * CrosshairSpread;
                     Color crosshairColor = InsurgencyModConfigClient.Instance.CrosshairColor;
                     Color crosshairBorderColor = InsurgencyModConfigClient.Instance.CrosshairBorderColor;
-
-                    Main.cursorColor = Color.Transparent;
-                    Main.MouseBorderColor = Color.Transparent;
 
                     Rectangle crosshairSourceRect = Crosshair.Bounds;
                     Rectangle crosshairBorderTargetRect = CrosshairBorder.Bounds;
@@ -96,7 +94,6 @@ namespace InsurgencyWeapons
                     }
                     spriteBatch.Draw(CrosshairDot, new Vector2(Main.mouseX, Main.mouseY - 6).Floor(), CrosshairDot.Bounds, crosshairColor, 0f, CrosshairDot.Bounds.Size() / 2, 1f, SpriteEffects.None, 0);
                     spriteBatch.Draw(CrosshairDotBorder, new Vector2(Main.mouseX, Main.mouseY - 6).Floor(), CrosshairDotBorder.Bounds, crosshairBorderColor, 0f, CrosshairDotBorder.Bounds.Size() / 2, 1f, SpriteEffects.None, 0);
-
                     if (CrosshairSpread > 1f)
                         CrosshairSpread -= 0.067f;
                 }

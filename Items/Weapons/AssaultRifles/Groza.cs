@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {
-    internal class Groza : AssaultRifle
+    public class Groza : AssaultRifle
     {
         public override void SetDefaults()
         {

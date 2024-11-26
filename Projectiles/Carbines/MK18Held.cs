@@ -6,7 +6,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Carbines
 {
-    internal class MK18Held : WeaponBase
+    public class MK18Held : WeaponBase
     {
         public override int CurrentAmmo
         {

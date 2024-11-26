@@ -73,8 +73,26 @@ namespace InsurgencyWeapons
 
         public override void Load()
         {
+            On_Main.DrawCursor += On_Main_DrawCursor;
+            On_Main.DrawThickCursor += On_Main_DrawThickCursor;
             MoneyCurrency = CustomCurrencyManager.RegisterCurrency(new Currency.MoneyForShop(ModContent.ItemType<Money>(), 9999L, "Mods.InsurgencyWeapons.Items.Money.DisplayName"));
             base.Load();
+        }
+
+        private Vector2 On_Main_DrawThickCursor(On_Main.orig_DrawThickCursor orig, bool smart)
+        {
+            if (!Main.LocalPlayer.mouseInterface && Main.LocalPlayer.TryGetModPlayer(out InsurgencyMagazineTracking result) && result.DrawingCrosshair)
+                return Vector2.Zero;
+
+            return orig(smart);
+        }
+
+        private void On_Main_DrawCursor(On_Main.orig_DrawCursor orig, Vector2 bonus, bool smart)
+        {
+            if (!Main.LocalPlayer.mouseInterface && Main.LocalPlayer.TryGetModPlayer(out InsurgencyMagazineTracking result) && result.DrawingCrosshair)
+                return;
+
+            orig(bonus, smart);
         }
 
         public override void Unload()

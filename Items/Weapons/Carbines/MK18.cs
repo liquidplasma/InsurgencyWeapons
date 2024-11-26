@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Items.Weapons.Carbines
 {
-    internal class MK18 : Carbine
+    public class MK18 : Carbine
     {
         public override void SetDefaults()
         {

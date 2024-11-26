@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Projectiles.Pistols
 {
-    internal class USPHeld : WeaponBase
+    public class USPHeld : WeaponBase
     {
         public override int CurrentAmmo
         {

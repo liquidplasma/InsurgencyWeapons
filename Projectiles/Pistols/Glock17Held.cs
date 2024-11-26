@@ -6,7 +6,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Pistols
 {
-    internal class Glock17Held : WeaponBase
+    public class Glock17Held : WeaponBase
     {
         public override int CurrentAmmo
         {

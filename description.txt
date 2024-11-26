@@ -94,7 +94,7 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
+v0.9.6.1
+	- Slight crosshair fix, no longer will wipe cursor border color? Hopefully
 v0.9.6
 	- Saiga Fix
-v0.9.5
-	- Added: MK18, M14 EBR, USP, Saiga 12k and Webley revolver

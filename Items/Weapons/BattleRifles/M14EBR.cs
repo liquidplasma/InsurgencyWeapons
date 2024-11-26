@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.BattleRifles
 {
-    internal class M14EBR : BattleRifle
+    public class M14EBR : BattleRifle
     {
         public override void SetDefaults()
         {

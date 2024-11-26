@@ -3,7 +3,7 @@
     /// <summary>
     /// Desert Eagle .50AE Ammo
     /// </summary>
-    internal class Bullet50AE : AmmoItem
+    public class Bullet50AE : AmmoItem
     {
         public override void SetDefaults()
         {

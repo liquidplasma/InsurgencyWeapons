@@ -6,6 +6,7 @@ namespace InsurgencyWeapons
     public class InsurgencyMagazineTracking : ModPlayer
     {
         public bool MouseOverFriendlyNPC { get; set; }
+        public bool DrawingCrosshair { get; set; }
 
         public bool
             isActive;
@@ -112,6 +113,7 @@ namespace InsurgencyWeapons
         public override void ResetEffects()
         {
             isActive = false;
+            DrawingCrosshair = false;
         }
 
         private bool OverFriendlyNPC()
@@ -128,16 +130,7 @@ namespace InsurgencyWeapons
         {
             if (Player.HoldingInsurgencyWeapon() && isActive)
                 MouseOverFriendlyNPC = OverFriendlyNPC();
-
-            if (!Player.HoldingInsurgencyWeapon() && Main.MouseBorderColor != Main.mouseBorderColorSlider.GetColor())
-                Main.MouseBorderColor = Main.mouseBorderColorSlider.GetColor();
-
             base.PostUpdate();
-        }
-
-        public override void OnEnterWorld()
-        {
-            base.OnEnterWorld();
         }
 
         public override void SaveData(TagCompound tag)

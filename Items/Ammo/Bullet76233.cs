@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Items.Ammo
 {
-    internal class Bullet76233 : AmmoItem
+    public class Bullet76233 : AmmoItem
     {
         /// <summary>
         /// M1A1 Paratrooper 7.62x33mm

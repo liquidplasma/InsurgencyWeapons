@@ -172,7 +172,8 @@ namespace InsurgencyWeapons.NPCs.Townie
                 spawnInfo.Player.ZoneOverworldHeight &&
                 !spawnInfo.Player.ZoneCorrupt &&
                 !spawnInfo.Player.ZoneCrimson &&
-                spawnInfo.Player.inventory.Any(item => item.type == ModContent.ItemType<Money>());
+                spawnInfo.Player.inventory.Any(item => item.type == ModContent.ItemType<Money>()) &&
+                Main.invasionType == 0;
 
             return condition ? 0.015f : 0f;
         }

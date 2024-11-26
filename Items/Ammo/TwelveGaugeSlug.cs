@@ -9,7 +9,7 @@
         {
             MoneyCost = 50;
             CraftStack = 8;
-            Item.DefaultsToInsurgencyAmmo(54);
+            Item.DefaultsToInsurgencyAmmo(81);
             Item.width = 7;
             Item.height = 18;
             base.SetDefaults();

@@ -6,7 +6,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.BattleRifles
 {
-    internal class M14EBRHeld : WeaponBase
+    public class M14EBRHeld : WeaponBase
     {
         public override int CurrentAmmo
         {

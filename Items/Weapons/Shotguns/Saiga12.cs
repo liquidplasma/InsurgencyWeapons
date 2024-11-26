@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
     /// <summary>
     /// Saiga 12K 12 Gauge
     /// </summary>
-    internal class Saiga12 : Shotgun
+    public class Saiga12 : Shotgun
     {
         public override void SetDefaults()
         {

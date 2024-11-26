@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.WeaponMagazines.BattleRifles
 {
-    internal class M14EBRMagazine : MagazineBase
+    public class M14EBRMagazine : MagazineBase
     {
     }
 }

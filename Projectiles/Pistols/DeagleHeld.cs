@@ -8,7 +8,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Pistols
 {
-    internal class DeagleHeld : WeaponBase
+    public class DeagleHeld : WeaponBase
     {
         public override int CurrentAmmo
         {

@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols
 {
-    internal class Glock17Magazine : MagazineBase
+    public class Glock17Magazine : MagazineBase
     {
         public override void SetDefaults()
         {

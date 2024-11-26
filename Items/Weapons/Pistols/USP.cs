@@ -2,7 +2,7 @@
 
 namespace InsurgencyWeapons.Items.Weapons.Pistols
 {    
-    internal class USP : Pistol
+    public class USP : Pistol
     {
         public override void SetDefaults()
         {

@@ -5,7 +5,7 @@ namespace InsurgencyWeapons.Items.Weapons.Pistols
     /// <summary>
     /// Glock 17 9x19mm
     /// </summary>
-    internal class Glock17 : Pistol
+    public class Glock17 : Pistol
     {
         public override void SetDefaults()
         {

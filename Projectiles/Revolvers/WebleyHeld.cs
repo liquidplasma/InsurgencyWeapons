@@ -5,7 +5,7 @@ using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Revolvers
 {
-    internal class WebleyHeld : WeaponBase
+    public class WebleyHeld : WeaponBase
     {
         public override int CurrentAmmo
         {

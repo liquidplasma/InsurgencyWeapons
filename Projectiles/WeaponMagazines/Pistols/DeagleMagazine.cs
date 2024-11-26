@@ -1,6 +1,6 @@
 ﻿namespace InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols
 {
-    internal class DeagleMagazine : MagazineBase
+    public class DeagleMagazine : MagazineBase
     {
     }
 }
