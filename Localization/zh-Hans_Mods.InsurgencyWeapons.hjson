@@ -56,25 +56,25 @@ Configs: {
 	DropMagazineLabel: 丢弃弹匣
 	CasingLifeTimeDesc: 抛出去的弹壳多少秒后消失
 	CasingLifeTimeLabel: 弹壳存留时间
-	DamageScalingDesc: 肉后和花后是否会获得额外枪械伤害
+	DamageScalingDesc: 肉后和花后是否会获得额外枪械伤害？
 	DamageScalingLabel: 伤害调整
-	Config: 配置
+	Config: 服务端
 	Gameplay: 玩法
 	Misc: 杂项
-	InsurgencyModConfig.DisplayName: 叛乱武库配置文件
-	// ConfigClient: Client
+	InsurgencyModConfig.DisplayName: 叛乱武库服务端配置
+	ConfigClient: 客户端
 
 	InsurgencyModConfigClient: {
-		// DisplayName: Insurgency Client Side
+		DisplayName: 叛乱武库客户端配置
 
 		CrosshairBorderColor: {
-			// Label: Crosshair Border Color
-			// Tooltip: ""
+			Label: 准星边缘颜色
+			Tooltip: ""
 		}
 
 		CrosshairColor: {
-			// Label: Crosshair Color
-			// Tooltip: ""
+			Label: 准星颜色
+			Tooltip: ""
 		}
 	}
 }
@@ -162,6 +162,7 @@ Items: {
 			[i:InsurgencyWeapons/AK12]  [c/c29463:AK-12]
 			[i:InsurgencyWeapons/AN94]  [c/c29463:AN-94N + PK-AS瞄具]
 			[i:InsurgencyWeapons/AKS74U]  [c/c29463:AKS-74U]
+			[i:InsurgencyWeapons/AK74M]  [c/c29463:AKS-74 + 前握把]
 			'''
 	}
 
@@ -215,6 +216,7 @@ Items: {
 			[i:InsurgencyWeapons/M1911]  [c/c29463:柯尔特 M1911]
 			[i:InsurgencyWeapons/ChicagoTypewriter]  [c/c29463:汤姆逊冲锋枪 M1928]
 			[i:InsurgencyWeapons/UMP45]  [c/c29463:H&K UMP-45]
+			[i:InsurgencyWeapons/USP]  [c/c29463:H&K USPMatch 比赛手枪]
 			'''
 	}
 
@@ -270,6 +272,7 @@ Items: {
 			[i:InsurgencyWeapons/SCARH]  [c/c29463:FN SCAR-H]
 			[i:InsurgencyWeapons/M60]  [c/c29463:M60]
 			[i:InsurgencyWeapons/M40A1]  [c/c29463:M40A1 7.62x51mm + Leupold瞄准镜]
+			[i:InsurgencyWeapons/M14EBR]  [c/c29463:M14 EBR]
 			'''
 	}
 
@@ -331,6 +334,7 @@ Items: {
 			[i:InsurgencyWeapons/Ithaca]  [c/c29463:伊萨卡M37霰弹枪]
 			[i:InsurgencyWeapons/M1014]  [c/c29463:伯奈利M1014]
 			[i:InsurgencyWeapons/M590]  [c/c29463:莫斯伯格M590]
+			[i:InsurgencyWeapons/Saiga12]  [c/c29463:Saiga-12K半自动霰弹枪]
 			'''
 	}
 
@@ -430,6 +434,8 @@ Items: {
 			[i:InsurgencyWeapons/G36C]  [c/c29463:H&K G36C]
 			[i:InsurgencyWeapons/M4A1]  [c/c29463:柯尔特 M4A1]
 			[i:InsurgencyWeapons/M249]  [c/c29463:FN M249]
+			[i:InsurgencyWeapons/F2000]  [c/c29463:FN F2000]
+			[i:InsurgencyWeapons/MK18]  [c/c29463:Mk. 18 MOD 1]
 			'''
 	}
 
@@ -560,6 +566,7 @@ Items: {
 			[i:InsurgencyWeapons/MP40]  [c/c29463:MP-40]
 			[i:InsurgencyWeapons/MP5K]  [c/c29463:H&K MP5K]
 			[i:InsurgencyWeapons/MP5SD]  [c/c29463:H&K MP5SD]
+			[i:InsurgencyWeapons/Glock17]  [c/c29463:格洛克 17]
 			'''
 	}
 
@@ -569,48 +576,52 @@ Items: {
 	}
 
 	AK74M: {
-		// DisplayName: AKS-74 + Foregrip 5.45x39mm
-		// Tooltip: ""
+		DisplayName: AKS-74 + 前握把 5.45x39mm
+		Tooltip: ""
 	}
 
 	F2000: {
-		// DisplayName: FN F2000 5.56x45mm
-		// Tooltip: Has a scope
+		DisplayName: FN F2000 5.56x45mm
+		Tooltip: 拥有瞄准镜
 	}
 
 	Glock17: {
-		// DisplayName: Glock 17 9x19mm
-		// Tooltip: ""
+		DisplayName: 格洛克 17 9x19mm
+		Tooltip: ""
 	}
 
 	Bullet50AE: {
-		// DisplayName: Desert Eagle .50AE Ammo
-		// Tooltip: ""
+		DisplayName: 沙漠之鹰 .50AE 弹药
+		Tooltip:
+			'''
+			使用此弹药的枪械:
+			[i:InsurgencyWeapons/Deagle]  [c/c29463:IMI 沙漠之鹰]
+			'''
 	}
 
 	Deagle: {
-		// DisplayName: IMI Desert Eagle .50AE
-		// Tooltip: ""
+		DisplayName: IMI 沙漠之鹰 .50AE
+		Tooltip: ""
 	}
 
 	Saiga12: {
-		// DisplayName: Saiga 12K 12 Gauge
-		// Tooltip: ""
+		DisplayName: Saiga-12K半自动霰弹枪 12铅径
+		Tooltip: ""
 	}
 
 	M14EBR: {
-		// DisplayName: M14 EBR 7.62x51mm
-		// Tooltip: Has a scope
+		DisplayName: M14 EBR 7.62x51mm
+		Tooltip: 拥有瞄准镜
 	}
 
 	MK18: {
-		// DisplayName: Mk. 18 MOD 1 5.56x45mm
-		// Tooltip: ""
+		DisplayName: Mk. 18 MOD 1 5.56x45mm
+		Tooltip: ""
 	}
 
 	USP: {
-		// DisplayName: H&K USP Match .45ACP
-		// Tooltip: ""
+		DisplayName: H&K USPMatch 比赛手枪 .45ACP
+		Tooltip: ""
 	}
 }
 
@@ -701,23 +712,23 @@ Projectiles: {
 	C96Clip.DisplayName: C96 Clip
 	C96CHeld.DisplayName: C96 C Held
 	C96CMagazine.DisplayName: C96 C Magazine
-	// AK74MHeld.DisplayName: A K74 M Held
-	// F2000Held.DisplayName: F2000 Held
-	// AK74MMagazine.DisplayName: A K74 M Magazine
-	// Glock17Held.DisplayName: Glock17 Held
-	// F2000Magazine.DisplayName: F2000 Magazine
-	// Glock17Magazine.DisplayName: Glock17 Magazine
-	// DeagleHeld.DisplayName: Deagle Held
-	// DeagleMagazine.DisplayName: Deagle Magazine
-	// Saiga12Held.DisplayName: Saiga12 Held
-	// Saiga12Magazine.DisplayName: Saiga12 Magazine
-	// WebleyHeld.DisplayName: Webley Held
-	// M14EBRHeld.DisplayName: M14 E B R Held
-	// M14EBRMagazine.DisplayName: M14 E B R Magazine
-	// MK18Held.DisplayName: M K18 Held
-	// MK18Magazine.DisplayName: M K18 Magazine
-	// USPHeld.DisplayName: U S P Held
-	// USPMagazine.DisplayName: U S P Magazine
+	AK74MHeld.DisplayName: A K74 M Held
+	F2000Held.DisplayName: F2000 Held
+	AK74MMagazine.DisplayName: A K74 M Magazine
+	Glock17Held.DisplayName: Glock17 Held
+	F2000Magazine.DisplayName: F2000 Magazine
+	Glock17Magazine.DisplayName: Glock17 Magazine
+	DeagleHeld.DisplayName: Deagle Held
+	DeagleMagazine.DisplayName: Deagle Magazine
+	Saiga12Held.DisplayName: Saiga12 Held
+	Saiga12Magazine.DisplayName: Saiga12 Magazine
+	WebleyHeld.DisplayName: Webley Held
+	M14EBRHeld.DisplayName: M14 E B R Held
+	M14EBRMagazine.DisplayName: M14 E B R Magazine
+	MK18Held.DisplayName: M K18 Held
+	MK18Magazine.DisplayName: M K18 Magazine
+	USPHeld.DisplayName: U S P Held
+	USPMagazine.DisplayName: U S P Magazine
 }
 
 Keybinds: {
