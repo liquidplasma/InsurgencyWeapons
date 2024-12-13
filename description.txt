@@ -94,5 +94,5 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.9.6.2
-	- Localization update
+v0.9.6.3
+	- Option to hide crosshair

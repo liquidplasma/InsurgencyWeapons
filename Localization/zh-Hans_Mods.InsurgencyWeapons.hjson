@@ -63,6 +63,7 @@ Configs: {
 	Misc: 杂项
 	InsurgencyModConfig.DisplayName: 叛乱武库服务端配置
 	ConfigClient: 客户端
+	// ShowCrosshair: Draw a custom crosshair when holding weapons
 
 	InsurgencyModConfigClient: {
 		DisplayName: 叛乱武库客户端配置
@@ -75,6 +76,11 @@ Configs: {
 		CrosshairColor: {
 			Label: 准星颜色
 			Tooltip: ""
+		}
+
+		ShowCrosshair: {
+			// Label: Show Crosshair
+			// Tooltip: ""
 		}
 	}
 }

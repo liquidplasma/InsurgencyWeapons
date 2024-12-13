@@ -50,6 +50,10 @@ namespace InsurgencyWeapons
         public override ConfigScope Mode => ConfigScope.ClientSide;
         public static InsurgencyModConfigClient Instance => ModContent.GetInstance<InsurgencyModConfigClient>();
 
+        [Header("$Mods.InsurgencyWeapons.Configs.ShowCrosshair")]
+        [DefaultValue(true)]
+        public bool ShowCrosshair { get; set; }
+
         [Header("$Mods.InsurgencyWeapons.Configs.ConfigClient")]
         [DefaultValue(typeof(Color), "0, 128, 0, 255"), SliderColor(0, 128, 0)]
         public Color CrosshairBorderColor { get; set; }

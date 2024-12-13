@@ -52,7 +52,7 @@ namespace InsurgencyWeapons
             if (!HoldingInsurgencyWeapon || !AmmoTracking.isActive || overGrave || Player.mouseInterface || OverFriendlyNPC)
                 return;
             Item Item = Player.HeldItem;
-            if (Item.ModItem is WeaponUtils GrabProj)
+            if (InsurgencyModConfigClient.Instance.ShowCrosshair && Item.ModItem is WeaponUtils GrabProj)
             {
                 int insurgencyWeaponProjType = GrabProj.WeaponHeldProjectile;
                 Projectile InsurgencyWeaponProj = Main.projectile[HelperStats.FindProjectileIndex(Player, insurgencyWeaponProjType)];

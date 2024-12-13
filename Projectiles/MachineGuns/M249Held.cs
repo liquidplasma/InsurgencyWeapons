@@ -155,6 +155,7 @@ namespace InsurgencyWeapons.Projectiles.MachineGuns
                     if (!ManualReload)
                         DropMagazine(ModContent.ProjectileType<M249Box>());
                     ReturnAmmo();
+                    CurrentAmmo = 0;
                     Projectile.frame = 2;
                     break;
 

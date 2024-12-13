@@ -81,7 +81,7 @@ namespace InsurgencyWeapons
 
         private Vector2 On_Main_DrawThickCursor(On_Main.orig_DrawThickCursor orig, bool smart)
         {
-            if (!Main.LocalPlayer.mouseInterface && Main.LocalPlayer.TryGetModPlayer(out InsurgencyMagazineTracking result) && result.DrawingCrosshair)
+            if (InsurgencyModConfigClient.Instance.ShowCrosshair && !Main.LocalPlayer.mouseInterface && Main.LocalPlayer.TryGetModPlayer(out InsurgencyMagazineTracking result) && result.DrawingCrosshair)
                 return Vector2.Zero;
 
             return orig(smart);
@@ -89,7 +89,7 @@ namespace InsurgencyWeapons
 
         private void On_Main_DrawCursor(On_Main.orig_DrawCursor orig, Vector2 bonus, bool smart)
         {
-            if (!Main.LocalPlayer.mouseInterface && Main.LocalPlayer.TryGetModPlayer(out InsurgencyMagazineTracking result) && result.DrawingCrosshair)
+            if (InsurgencyModConfigClient.Instance.ShowCrosshair && !Main.LocalPlayer.mouseInterface && Main.LocalPlayer.TryGetModPlayer(out InsurgencyMagazineTracking result) && result.DrawingCrosshair)
                 return;
 
             orig(bonus, smart);

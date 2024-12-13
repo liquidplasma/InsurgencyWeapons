@@ -63,6 +63,7 @@ Configs: {
 	Misc: Misc
 	InsurgencyModConfig.DisplayName: Insurgency Server Side
 	ConfigClient: Client
+	ShowCrosshair: Draw a custom crosshair when holding weapons
 
 	InsurgencyModConfigClient: {
 		DisplayName: Insurgency Client Side
@@ -74,6 +75,11 @@ Configs: {
 
 		CrosshairColor: {
 			Label: Crosshair Color
+			Tooltip: ""
+		}
+
+		ShowCrosshair: {
+			Label: Show Crosshair
 			Tooltip: ""
 		}
 	}
@@ -147,11 +153,7 @@ Items: {
 
 	RGO: {
 		DisplayName: RGO Grenade
-		Tooltip:
-			'''
-			Explodes on contact
-			Will explode on contact, but only after 1 second has passed
-			'''
+		Tooltip: Will explode on contact, but only after 1 second has passed
 	}
 
 	Bullet357: {
