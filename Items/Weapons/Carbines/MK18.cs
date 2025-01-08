@@ -1,14 +1,16 @@
-﻿using InsurgencyWeapons.Projectiles.Carbines;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.Carbines;
 
 namespace InsurgencyWeapons.Items.Weapons.Carbines
 {
     public class MK18 : Carbine
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet556>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

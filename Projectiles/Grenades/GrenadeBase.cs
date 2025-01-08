@@ -166,6 +166,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
                 {
                     Projectile shrapnel = Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, random, ModContent.ProjectileType<Shrapnel>(), (int)(Projectile.damage * 0.1f), 1f);
                     shrapnel.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon = true;
+                    shrapnel.ai[0] = (float)PerkSystem.Perks.Demolitons;
                 }
             }
             base.OnKill(timeLeft);

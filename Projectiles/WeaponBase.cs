@@ -2,12 +2,16 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Items.Weapons.AssaultRifles;
+using InsurgencyWeapons.Items.Weapons.Launchers;
 using InsurgencyWeapons.Items.Weapons.MachineGuns;
 using InsurgencyWeapons.Projectiles.AssaultRifles;
+using InsurgencyWeapons.Projectiles.Launchers;
 using InsurgencyWeapons.Projectiles.Pistols;
 using InsurgencyWeapons.Projectiles.Revolvers;
 using InsurgencyWeapons.Projectiles.SubMachineGuns;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles
@@ -160,6 +164,11 @@ namespace InsurgencyWeapons.Projectiles
             get => AlternateFireCoolDown > PercentageOfAltFireCoolDown;
             set => underAlternateFireCoolDown = value;
         }
+
+        /// <summary>
+        /// For launchers
+        /// </summary>
+        public int LauncherDelay { get; set; }
 
         /// <summary>
         /// For bolt action snipers rifles
@@ -332,6 +341,26 @@ namespace InsurgencyWeapons.Projectiles
                 DropCasingManually(casingType);
         }
 
+        public void ShootRocket(int rocketType, float velMult = 1f)
+        {
+            float knockBack = Player.GetTotalKnockback(DamageClass.Ranged).ApplyTo(HeldItem.knockBack);
+            Vector2 aim = Player.MountedCenter.DirectionTo(MouseAim) * HeldItem.shootSpeed * velMult;
+            //Rocket
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                Projectile Shot = Projectile.NewProjectileDirect(
+                   spawnSource: Player.GetSource_ItemUse_WithPotentialAmmo(HeldItem, HeldItem.useAmmo),
+                   position: bulletPos,
+                   velocity: aim,
+                   type: rocketType,
+                   damage: BulletDamage,
+                   knockback: knockBack,
+                   owner: Player.whoAmI,
+                   ai0: Projectile.GetGlobalProjectile<ProjPerkTracking>().Perk);
+                Shot.GetGlobalProjectile<ProjPerkTracking>().ShotFromInsurgencyWeapon = true;
+            }
+        }
+
         public override void SetDefaults()
         {
             if (MagazineSize == 0)
@@ -378,6 +407,10 @@ namespace InsurgencyWeapons.Projectiles
         {
             Vector2 offset = Player.MountedCenter.DirectionTo(MouseAim) * distance;
             bulletPos = muzzlePos;
+
+            if (HeldItem.ModItem is Launcher)
+                return;
+
             if (ShotDelay <= HeldItem.useTime && Player.channel && !UnderAlternateFireCoolDown)
             {
                 Rectangle rect = MuzzleFlash.Frame(verticalFrames: 6, frameY: Math.Clamp(ShotDelay, 0, 6));
@@ -450,6 +483,9 @@ namespace InsurgencyWeapons.Projectiles
 
             if (shotgunSwitchDelay > 0)
                 shotgunSwitchDelay--;
+
+            if (LauncherDelay > 0)
+                LauncherDelay--;
             #endregion
 
             return base.PreAI();
@@ -484,8 +520,13 @@ namespace InsurgencyWeapons.Projectiles
             #region
             idlePos = new Vector2(-12, -40);
             recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
+
             if (Insurgency.Shotguns.Contains(HeldItem.type) || Insurgency.SniperRifles.Contains(HeldItem.type))
                 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * -Math.Clamp((ShotDelay - 12) / -3f, 0, 100);
+
+            if (LauncherCheck())
+                recoil *= 0.5f; // if this is recoiless launcher, lower recoil
+
             Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil;
             muzzlePos = Player.MountedCenter + SpecificWeaponFix + distance;
             int mouseDirection = Player.DirectionTo(MouseAim).X > 0f ? 1 : -1;
@@ -493,7 +534,8 @@ namespace InsurgencyWeapons.Projectiles
                 || ReloadTimer > 0
                 || UnderAlternateFireCoolDown
                 || BoltActionTimer > 0
-                || PumpActionTimer > 0)
+                || PumpActionTimer > 0
+                || LauncherDelay > 0)
             {
                 isIdle = false;
                 Projectile.Center = muzzlePos;
@@ -545,6 +587,13 @@ namespace InsurgencyWeapons.Projectiles
                     int X = Player.direction == -1
                        ? -15 //true
                        : -24; //false
+
+                    if (this is M72LAWHeld)
+                    {
+                        X = Player.direction == -1
+                           ? -12 //true
+                           : -35; //false
+                    }
 
                     idlePos = new Vector2(X, -40);
                     Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
@@ -620,6 +669,15 @@ namespace InsurgencyWeapons.Projectiles
                 return;
             ammoStackCount = CurrentAmmo;
             Ammo.stack += ammoStackCount;
+        }
+
+        /// <summary>
+        /// Check if this launcher has a backport for recoiless firing
+        /// </summary>
+        /// <returns></returns>
+        private bool LauncherCheck()
+        {
+            return HeldItem.ModItem is M72LAW;
         }
     }
 }

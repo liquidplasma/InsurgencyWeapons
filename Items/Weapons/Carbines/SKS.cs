@@ -1,9 +1,16 @@
-﻿using InsurgencyWeapons.Projectiles.Carbines;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.Carbines;
 
 namespace InsurgencyWeapons.Items.Weapons.Carbines
 {
     public class SKS : Carbine
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet762>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

@@ -1,3 +1,5 @@
+AmmoItem.UsedBy: "[c/c29463:Used by:]"
+
 SetBonuses: {
 	RevolverSet: Increases damage and crit chance with revolvers and pistols by 100% and 25%
 	SwatHelmet: Increases damage and crit chance with assault rifles and carbines by 33% and 15%
@@ -494,6 +496,26 @@ Items: {
 		DisplayName: H&K USP Match .45ACP
 		Tooltip: ""
 	}
+
+	M72LAWRocket: {
+		DisplayName: M72 LAW Rocket
+		Tooltip: ""
+	}
+
+	M72LAW: {
+		DisplayName: M72 LAW
+		Tooltip: ""
+	}
+
+	AT4Rocket: {
+		DisplayName: M136 AT4 Rocket
+		Tooltip: ""
+	}
+
+	AT4: {
+		DisplayName: M136 AT4
+		Tooltip: ""
+	}
 }
 
 Projectiles: {
@@ -600,9 +622,17 @@ Projectiles: {
 	MK18Magazine.DisplayName: M K18 Magazine
 	USPHeld.DisplayName: U S P Held
 	USPMagazine.DisplayName: U S P Magazine
+	M72LAWHeld.DisplayName: M72 L A W Held
+	M72Discard.DisplayName: M72 Discard
+	M72LAWRocketProj.DisplayName: M72 L A W Rocket Proj
+	AT4Held.DisplayName: A T4 Held
+	AT4Discard.DisplayName: A T4 Discard
+	AT4Warhead.DisplayName: A T4 Warhead
+	M72LAWWarhead.DisplayName: M72 L A W Warhead
 }
 
 Keybinds: {
 	ReloadKey.DisplayName: Reload Key
 	QuickBuy.DisplayName: Quick Buy
+	OpenSelectioUI.DisplayName: Open Selectio U I
 }

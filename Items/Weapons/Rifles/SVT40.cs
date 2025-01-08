@@ -1,4 +1,5 @@
-﻿using InsurgencyWeapons.Projectiles.Rifles;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.Rifles;
 
 namespace InsurgencyWeapons.Items.Weapons.Rifles
 {
@@ -7,6 +8,12 @@ namespace InsurgencyWeapons.Items.Weapons.Rifles
     /// </summary>
     public class SVT40 : Rifle
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet76254R>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

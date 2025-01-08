@@ -1,9 +1,16 @@
-﻿using InsurgencyWeapons.Projectiles.BattleRifles;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.BattleRifles;
 
 namespace InsurgencyWeapons.Items.Weapons.BattleRifles
 {
     public class SCARH : BattleRifle
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet76251>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

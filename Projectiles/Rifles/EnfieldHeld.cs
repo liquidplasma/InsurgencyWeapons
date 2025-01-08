@@ -10,10 +10,7 @@ namespace InsurgencyWeapons.Projectiles.Rifles
     {
         public override int CurrentAmmo
         {
-            get
-            {
-                return MagazineTracking.EnfieldMagazine;
-            }
+            get => MagazineTracking.EnfieldMagazine;
             set
             {
                 MagazineTracking.EnfieldMagazine = value;

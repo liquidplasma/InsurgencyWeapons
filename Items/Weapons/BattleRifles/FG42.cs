@@ -1,4 +1,5 @@
-﻿using InsurgencyWeapons.Projectiles.BattleRifles;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.BattleRifles;
 
 namespace InsurgencyWeapons.Items.Weapons.BattleRifles
 {
@@ -7,6 +8,12 @@ namespace InsurgencyWeapons.Items.Weapons.BattleRifles
     /// </summary>
     public class FG42 : BattleRifle
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet79257>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

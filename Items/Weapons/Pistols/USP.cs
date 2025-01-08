@@ -1,9 +1,16 @@
-﻿using InsurgencyWeapons.Projectiles.Pistols;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.Pistols;
 
 namespace InsurgencyWeapons.Items.Weapons.Pistols
-{    
+{
     public class USP : Pistol
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet45ACP>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

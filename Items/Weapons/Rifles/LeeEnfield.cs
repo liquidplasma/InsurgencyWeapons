@@ -1,9 +1,16 @@
-﻿using InsurgencyWeapons.Projectiles.Rifles;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.Rifles;
 
 namespace InsurgencyWeapons.Items.Weapons.Rifles
 {
     public class LeeEnfield : Rifle
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet303>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

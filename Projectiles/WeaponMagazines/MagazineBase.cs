@@ -1,4 +1,5 @@
 ﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Projectiles.WeaponExtras.DiscardedLaunchers;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Rifles;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             ModContent.ProjectileType<M1GarandEnbloc>(),
             ModContent.ProjectileType<EnfieldBlock>(),
         };
-
+        bool RotatedDiscarded;
         public override void SetDefaults()
         {
             if (Projectile.width == 0)
@@ -67,7 +68,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponMagazines
             else if (Projectile.penetrate == 1)
             {
                 Projectile.tileCollide = false;
-                Projectile.velocity = Vector2.Zero;
+                Projectile.velocity = Vector2.Zero;                
             }
         }
 

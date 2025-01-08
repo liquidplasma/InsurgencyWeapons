@@ -54,6 +54,12 @@ namespace InsurgencyWeapons
             WebleyCylinder,
             M29Cylinder;
 
+        //Launchers
+        public int
+            M72Law,
+            AT4,
+            Panzerfaust;
+
         //Rifles
         public int
             GarandMagazine,
@@ -172,6 +178,11 @@ namespace InsurgencyWeapons
             tag[nameof(WebleyCylinder)] = WebleyCylinder;
             tag[nameof(M29Cylinder)] = M29Cylinder;
 
+            //Launchers
+            tag[nameof(M72Law)] = M72Law;
+            tag[nameof(AT4)] = AT4;
+            tag[nameof(Panzerfaust)] = Panzerfaust;
+
             //Rifles
             tag[nameof(GarandMagazine)] = GarandMagazine;
             tag[nameof(EnfieldMagazine)] = EnfieldMagazine;
@@ -242,6 +253,11 @@ namespace InsurgencyWeapons
             PythonCylinder = tag.GetInt(nameof(PythonCylinder));
             WebleyCylinder = tag.GetInt(nameof(WebleyCylinder));
             M29Cylinder = tag.GetInt(nameof(M29Cylinder));
+
+            //Launchers
+            M72Law = tag.GetInt(nameof(M72Law));
+            AT4 = tag.GetInt(nameof(AT4));
+            Panzerfaust = tag.GetInt(nameof(Panzerfaust));
 
             //Rifles
             GarandMagazine = tag.GetInt(nameof(GarandMagazine));

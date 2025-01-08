@@ -1,4 +1,5 @@
-﻿using InsurgencyWeapons.Projectiles.Shotguns;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.Shotguns;
 
 namespace InsurgencyWeapons.Items.Weapons.Shotguns
 {
@@ -7,6 +8,13 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
     /// </summary>
     public class Coach : Shotgun
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<TwelveGauge>(), Type);
+            AmmoItem.AddRelationShip(ModContent.ItemType<TwelveGaugeSlug>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 6f;
@@ -24,15 +32,6 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
             WeaponHeldProjectile = ModContent.ProjectileType<CoachHeld>();
             MoneyCost = 295;
             base.SetDefaults();
-        }
-
-        public override void HoldItem(Player player)
-        {
-            if (player.whoAmI == Main.myPlayer && WeaponHeldProjectile != 0 && player.ownedProjectileCounts[WeaponHeldProjectile] < 1)
-            {
-                Projectile Gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
-                Gun.GetGlobalProjectile<ProjPerkTracking>().Perk = WeaponPerk;
-            }
         }
     }
 }

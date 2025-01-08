@@ -1,4 +1,5 @@
-﻿using InsurgencyWeapons.Projectiles.Shotguns;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.Shotguns;
 
 namespace InsurgencyWeapons.Items.Weapons.Shotguns
 {
@@ -7,6 +8,13 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
     /// </summary>
     public class M1014 : Shotgun
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<TwelveGauge>(), Type);
+            AmmoItem.AddRelationShip(ModContent.ItemType<TwelveGaugeSlug>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 6f;

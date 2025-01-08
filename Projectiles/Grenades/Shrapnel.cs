@@ -4,7 +4,7 @@ namespace InsurgencyWeapons.Projectiles.Grenades
 {
     public class Shrapnel : ModProjectile
     {
-        public ref float Timer => ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.ai[2];
 
         public override void SetDefaults()
         {

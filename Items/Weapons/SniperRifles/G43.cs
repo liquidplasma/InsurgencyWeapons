@@ -1,4 +1,5 @@
-﻿using InsurgencyWeapons.Projectiles.SniperRifles;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.SniperRifles;
 
 namespace InsurgencyWeapons.Items.Weapons.SniperRifles
 {
@@ -7,6 +8,12 @@ namespace InsurgencyWeapons.Items.Weapons.SniperRifles
     /// </summary>
     public class G43 : SniperRifle
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet79257>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.crit = 17;

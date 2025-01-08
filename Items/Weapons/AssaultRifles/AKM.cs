@@ -1,4 +1,5 @@
-﻿using InsurgencyWeapons.Projectiles.AssaultRifles;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.AssaultRifles;
 
 namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
 {
@@ -7,6 +8,12 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
     /// </summary>
     public class AKM : AssaultRifle
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet545>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

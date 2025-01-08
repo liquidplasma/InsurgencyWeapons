@@ -1,4 +1,5 @@
-﻿using InsurgencyWeapons.Projectiles.Revolvers;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.Revolvers;
 
 namespace InsurgencyWeapons.Items.Weapons.Revolvers
 {
@@ -7,6 +8,12 @@ namespace InsurgencyWeapons.Items.Weapons.Revolvers
     /// </summary>
     public class Webley : Revolver
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet455>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

@@ -9,9 +9,15 @@ namespace InsurgencyWeapons
         public static InsurgencyModSystem Instance { get; set; }
         public int AmmoSellerSpawnDelay;
 
+        /// <summary>
+        /// Ammunition Counter
+        /// </summary>
+        #region
         private InsurgencyAmmoStatsUI UI;
 
         private UserInterface AmmoDisplayUI;
+
+        #endregion
 
         private Player Player => Main.LocalPlayer;
         private InsurgencyMagazineTracking AmmoTracking => Player.GetModPlayer<InsurgencyMagazineTracking>();

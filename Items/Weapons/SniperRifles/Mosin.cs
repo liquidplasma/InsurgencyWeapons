@@ -1,9 +1,16 @@
-﻿using InsurgencyWeapons.Projectiles.SniperRifles;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.SniperRifles;
 
 namespace InsurgencyWeapons.Items.Weapons.SniperRifles
 {
     public class Mosin : SniperRifle
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet76254R>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.crit = 17;

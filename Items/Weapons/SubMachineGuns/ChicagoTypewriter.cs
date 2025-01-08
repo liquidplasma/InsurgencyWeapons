@@ -1,4 +1,5 @@
-﻿using InsurgencyWeapons.Projectiles.SubMachineGuns;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.SubMachineGuns;
 
 namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
 {
@@ -7,6 +8,12 @@ namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
     /// </summary>
     public class ChicagoTypewriter : SubMachineGun
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet45ACP>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

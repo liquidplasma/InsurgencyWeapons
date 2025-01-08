@@ -1,4 +1,5 @@
-﻿using InsurgencyWeapons.Projectiles.Carbines;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.Carbines;
 
 namespace InsurgencyWeapons.Items.Weapons.Carbines
 {
@@ -7,6 +8,12 @@ namespace InsurgencyWeapons.Items.Weapons.Carbines
     /// </summary>
     public class C96C : Carbine
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet76325>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

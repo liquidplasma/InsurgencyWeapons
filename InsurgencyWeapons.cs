@@ -37,6 +37,10 @@ namespace InsurgencyWeapons
                     //Carbines
                     Insurgency.Carbines.Add(item.type);
 
+                if (item.ModItem is not null and Launcher)
+                    //Launchers
+                    Insurgency.Launchers.Add(item.type);
+
                 if (item.ModItem is not null and Grenade)
                     //Grenades
                     Insurgency.Grenades.Add(item.type);

@@ -1,9 +1,16 @@
-﻿using InsurgencyWeapons.Projectiles.Revolvers;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.Revolvers;
 
 namespace InsurgencyWeapons.Items.Weapons.Revolvers
 {
     public class ColtPython : Revolver
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet357>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

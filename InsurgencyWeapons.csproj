@@ -9,6 +9,7 @@
     <None Remove="Gores\Casing\CasingGore.png" />
     <None Remove="Gores\Casing\ShellBuckShotGore.png" />
     <None Remove="Gores\Casing\ShellSlugGore.png" />
+    <None Remove="Items\Ammo\AT4Rocket.png" />
     <None Remove="Items\Ammo\Bullet303.png" />
     <None Remove="Items\Ammo\Bullet44.png" />
     <None Remove="Items\Ammo\Bullet455.png" />
@@ -16,6 +17,9 @@
     <None Remove="Items\Ammo\Bullet76251.png" />
     <None Remove="Items\Ammo\Bullet76254R.png" />
     <None Remove="Items\Ammo\Bullet939.png" />
+    <None Remove="Items\Ammo\M72LAWRocket.png" />
+    <None Remove="Items\Ammo\PanzerfaustRocket.png" />
+    <None Remove="Items\Ammo\PZFaustRocket.png" />
     <None Remove="Items\Ammo\TwelveGaugeSlug.png" />
     <None Remove="Items\Weapons\AssaultRifles\AK74M.png" />
     <None Remove="Items\Weapons\AssaultRifles\ASVAL.png" />
@@ -32,6 +36,9 @@
     <None Remove="Items\Weapons\Carbines\MK18.png" />
     <None Remove="Items\Weapons\Carbines\SKS.png" />
     <None Remove="Items\Weapons\Deagle.png" />
+    <None Remove="Items\Weapons\Launchers\AT4.png" />
+    <None Remove="Items\Weapons\Launchers\M72LAW.png" />
+    <None Remove="Items\Weapons\Launchers\Panzerfaust.png" />
     <None Remove="Items\Weapons\MachineGuns\M249.png" />
     <None Remove="Items\Weapons\MachineGuns\PKM.png" />
     <None Remove="Items\Weapons\Pistols\C96.png" />
@@ -72,6 +79,9 @@
     <None Remove="Projectiles\Carbines\M4A1Held.png" />
     <None Remove="Projectiles\Carbines\MK18Held.png" />
     <None Remove="Projectiles\Carbines\SKSHeld.png" />
+    <None Remove="Projectiles\Launchers\AT4Held.png" />
+    <None Remove="Projectiles\Launchers\M72LAWHeld.png" />
+    <None Remove="Projectiles\Launchers\PanzerfaustHeld.png" />
     <None Remove="Projectiles\MachineGuns\M249Held.png" />
     <None Remove="Projectiles\MachineGuns\PKMHeld.png" />
     <None Remove="Projectiles\Pistols\C96Held.png" />
@@ -93,6 +103,8 @@
     <None Remove="Projectiles\SubMachineGuns\MP5KHeld.png" />
     <None Remove="Projectiles\SubMachineGuns\MP5SDHeld.png" />
     <None Remove="Projectiles\SubMachineGuns\UMP45Held.png" />
+    <None Remove="Projectiles\WeaponExtras\Warheads\AT4Warhead.png" />
+    <None Remove="Projectiles\WeaponExtras\Warheads\M72LAWWarhead.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\AK12Magazine.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\AK74MMagazine.png" />
     <None Remove="Projectiles\WeaponMagazines\AssaultRifles\ASVALMagazine.png" />

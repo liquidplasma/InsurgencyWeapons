@@ -58,6 +58,14 @@ namespace InsurgencyWeapons.Helpers
                 .Register();
         }
 
+        public static void RegisterINS2RecipeLauncher(this ModItem Item, int money, int amountToCraft = 1)
+        {
+            Item.CreateRecipe(amountToCraft)
+                .AddIngredient(Insurgency.Money, money)
+                .AddTile(ModContent.TileType<VendingMachineGunsTile>())
+                .Register();
+        }
+
         /// <summary>
         /// Associated texture for this item type
         /// </summary>

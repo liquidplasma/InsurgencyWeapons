@@ -1,9 +1,16 @@
-﻿using InsurgencyWeapons.Projectiles.SubMachineGuns;
+﻿using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Projectiles.SubMachineGuns;
 
 namespace InsurgencyWeapons.Items.Weapons.SubMachineGuns
 {
     public class MP40 : SubMachineGun
     {
+        public override void SetStaticDefaults()
+        {
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet919>(), Type);
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             Item.knockBack = 4f;

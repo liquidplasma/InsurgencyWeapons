@@ -1,6 +1,8 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Projectiles;
+using System.Collections.Generic;
+using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
@@ -8,6 +10,25 @@ namespace InsurgencyWeapons.Items
 {
     public abstract class AmmoItem : ModItem
     {
+        private static readonly Dictionary<int, List<int>> AmmoRelationship = [];
+
+        public static void AddRelationShip(int ammoType, int weaponType)
+        {
+            if (!AmmoRelationship.TryGetValue(ammoType, out var weapons))
+            {
+                weapons = [];
+                AmmoRelationship[ammoType] = weapons;
+            }
+
+            if (!weapons.Contains(weaponType))
+                weapons.Add(weaponType);
+        }
+
+        public static List<int> GetWeaponsThatUseThisAmmo(int ammoType)
+        {
+            return AmmoRelationship.TryGetValue(ammoType, out var weapons) ? weapons : [];
+        }
+
         /// <summary>
         /// How much money it costs
         /// </summary>
@@ -18,12 +39,33 @@ namespace InsurgencyWeapons.Items
         /// </summary>
         public int CraftStack { get; set; }
 
+        public List<int> CompatibleWeapons = [];
+
         public override void SetDefaults()
         {
             if (MoneyCost == 0 || CraftStack == 0)
                 throw new ArgumentException("MoneyCost or CraftStack property can't be 0");
 
             Item.value = MoneyCost * 20;
+            base.SetDefaults();
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            CompatibleWeapons = GetWeaponsThatUseThisAmmo(Type);
+            if (CompatibleWeapons.Count > 0)
+            {
+                TooltipLine usedBy = new(Mod, "UsedBy", Language.GetTextValue("Mods.InsurgencyWeapons.AmmoItem.UsedBy"));
+                tooltips.Add(usedBy);
+                int index = 0;
+                foreach (int weaponType in CompatibleWeapons)
+                {
+                    Item weaponItem = ContentSamples.ItemsByType[weaponType];
+                    TooltipLine ammo = new(Mod, "Ammo%" + index, string.Join(" ", $"[i:InsurgencyWeapons/{weaponItem.ModItem?.Name}]", $"[c/c29463:{weaponItem.ModItem?.DisplayName}]"));
+                    tooltips.Add(ammo);
+                }
+            }
+            base.ModifyTooltips(tooltips);
         }
 
         public override void SetStaticDefaults() => Item.ResearchUnlockCount = 60;
@@ -41,6 +83,7 @@ namespace InsurgencyWeapons.Items
         public int WeaponHeldProjectile { get; set; }
         public int MoneyCost { get; set; }
         public int WeaponPerk { get; set; } = -1;
+        private Projectile Gun;
 
         public override void SetStaticDefaults()
         {
@@ -79,7 +122,7 @@ namespace InsurgencyWeapons.Items
         {
             if (player.whoAmI == Main.myPlayer && WeaponHeldProjectile != 0 && player.ownedProjectileCounts[WeaponHeldProjectile] < 1)
             {
-                Projectile Gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
+                Gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
                 Gun.GetGlobalProjectile<ProjPerkTracking>().Perk = WeaponPerk;
             }
             base.HoldItem(player);
@@ -215,6 +258,8 @@ namespace InsurgencyWeapons.Items
     {
         public override void SetDefaults()
         {
+            Item.shootSpeed = 16f;
+            Item.channel = true;
             WeaponPerk = (int)PerkSystem.Perks.Demolitons;
             base.SetDefaults();
         }
