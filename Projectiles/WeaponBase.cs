@@ -2,7 +2,6 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.AssaultRifles;
 using InsurgencyWeapons.Items.Weapons.Launchers;
 using InsurgencyWeapons.Items.Weapons.MachineGuns;
 using InsurgencyWeapons.Projectiles.AssaultRifles;
@@ -525,7 +524,7 @@ namespace InsurgencyWeapons.Projectiles
                 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * -Math.Clamp((ShotDelay - 12) / -3f, 0, 100);
 
             if (LauncherCheck())
-                recoil *= 0.5f; // if this is recoiless launcher, lower recoil
+                recoil *= 0.2f; // if this is recoiless launcher, lower recoil
 
             Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil;
             muzzlePos = Player.MountedCenter + SpecificWeaponFix + distance;
@@ -671,13 +670,22 @@ namespace InsurgencyWeapons.Projectiles
             Ammo.stack += ammoStackCount;
         }
 
+        private static readonly HashSet<Type> validLaunchers =
+        [
+            typeof(M72LAW),
+            typeof(Panzerfaust),
+            typeof(RPG7),
+            typeof(AT4),
+            typeof(Panzerschreck)
+        ];
+
         /// <summary>
         /// Check if this launcher has a backport for recoiless firing
         /// </summary>
         /// <returns></returns>
         private bool LauncherCheck()
         {
-            return HeldItem.ModItem is M72LAW;
+            return HeldItem.ModItem != null && validLaunchers.Contains(HeldItem.ModItem.GetType());
         }
     }
 }

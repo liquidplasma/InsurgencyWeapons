@@ -1,14 +1,8 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Pistols;
-using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Projectiles.WeaponMagazines.Pistols;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsurgencyWeapons.Projectiles.Pistols
 {

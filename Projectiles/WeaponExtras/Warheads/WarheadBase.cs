@@ -1,5 +1,4 @@
 ﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Projectiles.Grenades;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace InsurgencyWeapons.Projectiles.WeaponExtras.Warheads
@@ -41,8 +40,19 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras.Warheads
                 Projectile.extraUpdates = 0;
             base.SetDefaults();
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
+            if (Projectile.Opacity <= 0.2f)
+                return false;
+
+            if (this is PanzerfaustWarhead)
+            {
+                Texture2D texture = Projectile.MyTexture();
+                Rectangle rect = texture.Frame(verticalFrames: 2, frameY: Projectile.frame);
+                BetterEntityDraw(texture, Projectile.Center, rect, lightColor, Projectile.rotation, texture.Size() / 2, Projectile.scale, SpriteEffects.None);
+                return false;
+            }
             if (Projectile.timeLeft > 6)
             {
                 Texture2D texture = Projectile.MyTexture();
@@ -51,6 +61,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras.Warheads
             }
             return false;
         }
+
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Projectile.timeLeft = 6;
@@ -85,7 +96,10 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras.Warheads
             if (Projectile.timeLeft <= 6)
             {
                 State = (int)Exploded.Exploding;
-                Projectile.Resize(360, 360);
+                Vector2 explosionRadius = new(360, 360);
+                if (this is PanzerfaustWarhead)
+                    explosionRadius *= 0.9f;
+                Projectile.Resize((int)explosionRadius.X, (int)explosionRadius.Y);
                 Projectile.alpha = 255;
                 Projectile.velocity = Vector2.Zero;
                 Projectile.tileCollide = false;
@@ -106,12 +120,17 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras.Warheads
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Projectile.timeLeft = 6;            
+            Projectile.timeLeft = 6;
             return false;
         }
+
         public override void OnKill(int timeLeft)
         {
-            SoundEngine.PlaySound(Sounds.RocketDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
+            if (Projectile.wet)
+                SoundEngine.PlaySound(Sounds.WetRocketDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
+            else
+                SoundEngine.PlaySound(Sounds.RocketDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
+
             if (Player.DistanceSQ(Projectile.Center) <= 270 * 270)
             {
                 Player.HurtInfo grenadeSelfDamage = new()

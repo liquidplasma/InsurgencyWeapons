@@ -3,11 +3,11 @@ using InsurgencyWeapons.Projectiles.Launchers;
 
 namespace InsurgencyWeapons.Items.Weapons.Launchers
 {
-    public class Panzerfaust : Launcher
+    public class Panzerschreck : Launcher
     {
         public override void SetStaticDefaults()
         {
-            AmmoItem.AddRelationShip(ModContent.ItemType<PZFaustRocket>(), Type);
+            AmmoItem.AddRelationShip(ModContent.ItemType<PanzerschreckRocket>(), Type);
             base.SetStaticDefaults();
         }
 
@@ -17,16 +17,16 @@ namespace InsurgencyWeapons.Items.Weapons.Launchers
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = Item.useTime = 40;
-            Item.width = 108;
-            Item.height = 26;
+            Item.width = 116;
+            Item.height = 28;
             Item.shoot = ProjectileID.PurificationPowder;
-            Item.damage = 210;
-            Item.shootSpeed = 8f;
+            Item.damage = 300;
+            Item.shootSpeed = 6f;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Ranged;
-            WeaponHeldProjectile = ModContent.ProjectileType<PanzerfaustHeld>();
-            MoneyCost = 400;
+            WeaponHeldProjectile = ModContent.ProjectileType<PanzerschreckHeld>();
+            MoneyCost = 700;
             base.SetDefaults();
         }
     }

@@ -159,6 +159,9 @@ namespace InsurgencyWeapons
 
         public void UpdateLevels(int currentDamage, int currentKills, int perk)
         {
+            if (Level[perk] > 5)
+                return;
+
             if (currentDamage > DamageRequired[Level[perk]])
             {
                 switch (perk)
@@ -203,8 +206,6 @@ namespace InsurgencyWeapons
             }
             if (currentDamage >= DamageRequired[Level[perk]] && currentKills >= KillsRequired[Level[perk]])
             {
-                if (Level[perk] >= 6)
-                    return;
                 Level[perk] += 1;
 
                 CombatText LevelUp = CreateCombatText(Player, Color.Green, ClassNames[perk] + " " + Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.LevelUp"));
@@ -350,19 +351,22 @@ namespace InsurgencyWeapons
             };
             tooltips.Add(Level);
 
-            int maxDamage = PerkTracking.DamageRequired[PerkTracking.Level[perk]];
-            TooltipLine DamageRequired = new(Mod, "DamageRequired", Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.DamageRequired") + " " + damage + "/" + maxDamage)
+            if (PerkTracking.Level[perk] < 6)
             {
-                OverrideColor = Color.YellowGreen,
-            };
-            tooltips.Add(DamageRequired);
+                int maxDamage = PerkTracking.DamageRequired[PerkTracking.Level[perk]];
+                TooltipLine DamageRequired = new(Mod, "DamageRequired", Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.DamageRequired") + " " + damage + "/" + maxDamage)
+                {
+                    OverrideColor = Color.YellowGreen,
+                };
+                tooltips.Add(DamageRequired);
 
-            int maxKills = PerkTracking.KillsRequired[PerkTracking.Level[perk]];
-            TooltipLine KillsRequired = new(Mod, "KillsRequired", Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.KillsRequired") + " " + kills + "/" + maxKills)
-            {
-                OverrideColor = Color.YellowGreen,
-            };
-            tooltips.Add(KillsRequired);
+                int maxKills = PerkTracking.KillsRequired[PerkTracking.Level[perk]];
+                TooltipLine KillsRequired = new(Mod, "KillsRequired", Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.KillsRequired") + " " + kills + "/" + maxKills)
+                {
+                    OverrideColor = Color.YellowGreen,
+                };
+                tooltips.Add(KillsRequired);
+            }
 
             int buff = (int)(PerkTracking.GetDamageMultPerLevel(perk) * 100);
             TooltipLine CurrentBuff = new(Mod, "CurrentBuff", buff + "% " + Language.GetTextValue("Mods.InsurgencyWeapons.PerkSystem.CurrentBuff"))

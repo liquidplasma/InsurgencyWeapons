@@ -71,7 +71,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
-                SoundEngine.PlaySound(Fire, Projectile.Center);                
+                SoundEngine.PlaySound(Fire, Projectile.Center);
                 bool slug = AmmoType == ModContent.ItemType<TwelveGaugeSlug>();
                 if (slug)
                     Shoot(0, casingType: ModContent.GoreType<ShellSlugGore>());

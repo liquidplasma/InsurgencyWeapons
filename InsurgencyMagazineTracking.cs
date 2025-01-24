@@ -58,7 +58,9 @@ namespace InsurgencyWeapons
         public int
             M72Law,
             AT4,
-            Panzerfaust;
+            Panzerfaust,
+            RPG7,
+            Panzerschreck;
 
         //Rifles
         public int
@@ -182,6 +184,8 @@ namespace InsurgencyWeapons
             tag[nameof(M72Law)] = M72Law;
             tag[nameof(AT4)] = AT4;
             tag[nameof(Panzerfaust)] = Panzerfaust;
+            tag[nameof(RPG7)] = RPG7;
+            tag[nameof(Panzerschreck)] = Panzerschreck;
 
             //Rifles
             tag[nameof(GarandMagazine)] = GarandMagazine;
@@ -258,6 +262,8 @@ namespace InsurgencyWeapons
             M72Law = tag.GetInt(nameof(M72Law));
             AT4 = tag.GetInt(nameof(AT4));
             Panzerfaust = tag.GetInt(nameof(Panzerfaust));
+            RPG7 = tag.GetInt(nameof(RPG7));
+            Panzerschreck = tag.GetInt(nameof(Panzerschreck));
 
             //Rifles
             GarandMagazine = tag.GetInt(nameof(GarandMagazine));

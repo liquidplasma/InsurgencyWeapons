@@ -49,7 +49,7 @@ namespace InsurgencyWeapons.Helpers
                 if (type == DustID.Torch)
                 {
                     Dust extraDusty = Dust.NewDustPerfect(position, DustID.SolarFlare);
-                    extraDusty.velocity = (velocity * 0.1f) + Vector2.Zero + Utils.NextVector2Circular(Main.rand, -4, 4) * (Main.rand.NextBool() ? 0.2f : 0.53f);
+                    extraDusty.velocity = (velocity * 0.25f) + Vector2.Zero + Utils.NextVector2Circular(Main.rand, -4, 4) * (Main.rand.NextBool() ? 0.2f : 0.53f);
                 }
                 dusty.fadeIn = 1f;
             }

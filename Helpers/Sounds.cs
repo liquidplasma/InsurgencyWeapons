@@ -7,7 +7,7 @@
         public static SoundStyle GrenadePin => new("InsurgencyWeapons/Sounds/Weapons/Grenades/pin");
 
         public static SoundStyle RocketDetonation => new("InsurgencyWeapons/Sounds/Weapons/RocketDetonations/det", 3);
-
+        public static SoundStyle WetRocketDetonation => new("InsurgencyWeapons/Sounds/Weapons/RocketDetonations/wdet", 3);
         //Stielhandgranate M24
         #region
         public static SoundStyle M24StCap => new("InsurgencyWeapons/Sounds/Weapons/Grenades/cap");

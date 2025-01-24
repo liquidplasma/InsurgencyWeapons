@@ -643,12 +643,42 @@ Items: {
 	}
 
 	AT4Rocket: {
-		// DisplayName: A T4 Rocket
+		// DisplayName: M136 AT4 Rocket
 		// Tooltip: ""
 	}
 
 	AT4: {
-		// DisplayName: A T4
+		// DisplayName: M136 AT4
+		// Tooltip: ""
+	}
+
+	PZFaustRocket: {
+		// DisplayName: Sprengkopf 60
+		// Tooltip: ""
+	}
+
+	Panzerfaust: {
+		// DisplayName: Panzerfaust 60M
+		// Tooltip: ""
+	}
+
+	RPGRocket: {
+		// DisplayName: PG-7V Warhead
+		// Tooltip: ""
+	}
+
+	RPG7: {
+		// DisplayName: RPG-7
+		// Tooltip: ""
+	}
+
+	PanzerschreckRocket: {
+		// DisplayName: RPzB. Gr. 4322
+		// Tooltip: ""
+	}
+
+	Panzerschreck: {
+		// DisplayName: Panzerschreck
 		// Tooltip: ""
 	}
 }
@@ -764,6 +794,13 @@ Projectiles: {
 	// AT4Discard.DisplayName: A T4 Discard
 	// AT4Warhead.DisplayName: A T4 Warhead
 	// M72LAWWarhead.DisplayName: M72 L A W Warhead
+	// PanzerfaustHeld.DisplayName: Panzerfaust Held
+	// PanzerfaustDiscard.DisplayName: Panzerfaust Discard
+	// PanzerfaustWarhead.DisplayName: Panzerfaust Warhead
+	// RPG7Held.DisplayName: R P G7 Held
+	// RPGWarhead.DisplayName: R P G Warhead
+	// PanzerschreckHeld.DisplayName: Panzerschreck Held
+	// PanzerschreckWarhead.DisplayName: Panzerschreck Warhead
 }
 
 Keybinds: {

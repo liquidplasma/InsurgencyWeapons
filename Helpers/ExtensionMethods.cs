@@ -6,6 +6,15 @@ namespace InsurgencyWeapons.Helpers
 {
     public static class ExtensionMethods
     {
+        public static void Animate(this Projectile proj, int tickPerFrame)
+        {
+            if (++proj.frameCounter >= tickPerFrame)
+            {
+                proj.frameCounter = 0;
+                proj.frame = ++proj.frame % Main.projFrames[proj.type];
+            }
+        }
+
         public static void ConsumeMultiple(this Player player, int amountToConsume, int type)
         {
             if (amountToConsume == 1)

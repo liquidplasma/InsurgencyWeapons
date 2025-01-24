@@ -54,7 +54,7 @@ namespace InsurgencyWeapons.Projectiles.Launchers
 
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 30);
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height);
             if (HelperStats.TestRange(ReloadTimer, 130, 160))
                 return false;
             return base.PreDraw(ref lightColor);
@@ -81,7 +81,7 @@ namespace InsurgencyWeapons.Projectiles.Launchers
                 case 1:
                     CurrentAmmo--;
                     SoundEngine.PlaySound(Fire, Projectile.Center);
-                    ShootRocket(ModContent.ProjectileType<M72LAWWarhead>());
+                    ShootRocket(ModContent.ProjectileType<M72LAWWarhead>(), 1.2f);
                     break;
 
                 case 2:
@@ -96,8 +96,6 @@ namespace InsurgencyWeapons.Projectiles.Launchers
             switch (ReloadTimer)
             {
                 case 1:
-                    if (CanReload())
-                        ReloadMagazine();
                     ReloadStarted = false;
                     break;
 
@@ -107,7 +105,6 @@ namespace InsurgencyWeapons.Projectiles.Launchers
 
                 case 40:
                     SoundEngine.PlaySound(Arm, Projectile.Center);
-
                     break;
 
                 case 70:
@@ -120,6 +117,7 @@ namespace InsurgencyWeapons.Projectiles.Launchers
 
                 case 130:
                     SoundEngine.PlaySound(Low, Projectile.Center);
+                    ReloadMagazine();
                     break;
 
                 case 160:

@@ -1,35 +1,34 @@
-﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Items.Ammo;
+﻿using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Launchers;
-using InsurgencyWeapons.Projectiles.WeaponExtras.DiscardedLaunchers;
 using InsurgencyWeapons.Projectiles.WeaponExtras.Warheads;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Launchers
 {
-    public class PanzerfaustHeld : WeaponBase
+    public class PanzerschreckHeld : WeaponBase
     {
         public override int CurrentAmmo
         {
-            get => MagazineTracking.Panzerfaust; set
+            get => MagazineTracking.Panzerschreck; set
             {
-                MagazineTracking.Panzerfaust = value;
+                MagazineTracking.Panzerschreck = value;
             }
         }
 
-        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/faust/shoot")
+        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/schrck/shoot")
         {
             Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
             MaxInstances = 0,
             Volume = 0.4f
         };
 
-        private SoundStyle Pin => new("InsurgencyWeapons/Sounds/Weapons/Ins2/faust/pin");
-        private SoundStyle Sight => new("InsurgencyWeapons/Sounds/Weapons/Ins2/faust/sight");
+        private SoundStyle Load1 => new("InsurgencyWeapons/Sounds/Weapons/Ins2/schrck/load1");
+        private SoundStyle Load2 => new("InsurgencyWeapons/Sounds/Weapons/Ins2/schrck/load2");
+        private SoundStyle Wire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/schrck/wire");
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Type] = 2;
+            Main.projFrames[Type] = 4;
             base.SetStaticDefaults();
         }
 
@@ -38,7 +37,7 @@ namespace InsurgencyWeapons.Projectiles.Launchers
             Projectile.width = 36;
             Projectile.height = 108;
             MagazineSize = 1;
-            AmmoType = ModContent.ItemType<PZFaustRocket>();
+            AmmoType = ModContent.ItemType<PanzerschreckRocket>();
             BigSpriteSpecificIdlePos = true;
             drawScale = 0.75f;
             base.SetDefaults();
@@ -47,22 +46,20 @@ namespace InsurgencyWeapons.Projectiles.Launchers
         public override bool PreDraw(ref Color lightColor)
         {
             DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height);
-            if (HelperStats.TestRange(ReloadTimer, 60, 120))
-                return false;
             return base.PreDraw(ref lightColor);
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.Panzerfaust;
+            CurrentAmmo = MagazineTracking.Panzerschreck;
             ShotDelay = HeldItem.useTime;
         }
 
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = -6;
-            SpecificWeaponFix = new Vector2(0, -1);
+            OffsetFromPlayerCenter = -24;
+            SpecificWeaponFix = new Vector2(0, -6);
             if (LauncherDelay == 0 && AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
@@ -73,39 +70,41 @@ namespace InsurgencyWeapons.Projectiles.Launchers
                 case 1:
                     CurrentAmmo--;
                     SoundEngine.PlaySound(Fire, Projectile.Center);
-                    ShootRocket(ModContent.ProjectileType<PanzerfaustWarhead>(), 1f);
+                    ShootRocket(ModContent.ProjectileType<PanzerschreckWarhead>(), 0.8f);
                     break;
             }
 
-            if (!Player.HasItem(AmmoType) && CurrentAmmo == 0)
-                Projectile.frame = 1;
-
             if (LauncherDelay == 0 && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = 180;
-                Projectile.frame = 1;
+                ReloadTimer = 300;
                 ReloadStarted = true;
             }
             switch (ReloadTimer)
             {
                 case 1:
-                    if (CanReload())
-                        ReloadMagazine();
                     ReloadStarted = false;
-                    SoundEngine.PlaySound(Sight, Projectile.Center);
-                    break;
-
-                case 60:
-                    SoundEngine.PlaySound(Pin, Projectile.Center);
                     Projectile.frame = 0;
                     break;
 
+                case 90:
+                    SoundEngine.PlaySound(Wire, Projectile.Center);
+                    Projectile.frame = 1;
+                    break;
+
                 case 120:
-                    DropMagazine(ModContent.ProjectileType<PanzerfaustDiscard>());
+                    SoundEngine.PlaySound(Load2, Projectile.Center);
+                    Projectile.frame = 2;
+                    if (CanReload())
+                        ReloadMagazine();
+                    break;
+
+                case 180:
+                    SoundEngine.PlaySound(Load1, Projectile.Center);
+                    Projectile.frame = 3;
                     break;
             }
 
-            if (HeldItem.type != ModContent.ItemType<Panzerfaust>())
+            if (HeldItem.type != ModContent.ItemType<Panzerschreck>())
                 Projectile.Kill();
 
             base.AI();

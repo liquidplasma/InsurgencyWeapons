@@ -48,7 +48,7 @@ namespace InsurgencyWeapons.Projectiles.Launchers
 
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 30);
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height);
             if (HelperStats.TestRange(ReloadTimer, 20, 120))
                 return false;
             return base.PreDraw(ref lightColor);
@@ -63,7 +63,7 @@ namespace InsurgencyWeapons.Projectiles.Launchers
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 6f;
+            OffsetFromPlayerCenter = -16;
             SpecificWeaponFix = new Vector2(0, -1);
             if (LauncherDelay == 0 && AllowedToFire(CurrentAmmo))
             {
@@ -80,7 +80,7 @@ namespace InsurgencyWeapons.Projectiles.Launchers
             }
             if (LauncherDelay == 0 && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = 140;
+                ReloadTimer = 200;
                 ReloadStarted = true;
             }
             switch (ReloadTimer)
@@ -102,7 +102,6 @@ namespace InsurgencyWeapons.Projectiles.Launchers
 
             if (HeldItem.type != ModContent.ItemType<AT4>())
                 Projectile.Kill();
-            Main.NewText(Player.ownedProjectileCounts[Type]);
             base.AI();
         }
 

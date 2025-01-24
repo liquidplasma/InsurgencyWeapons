@@ -56,6 +56,13 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* PKM 7.62x54mmR
 		* FN M249 5.56x45mm
 
+	[b]-Launchers-[/b]
+		* RPG-7
+		* Panzerfaust 60M
+		* Panzerschreck
+		* M72 LAW
+		* M136 AT4
+
 	[b]-Revolvers-[/b]
 		* Colt Python .357 Magnum
 		* S&W Model 29 .44 Magnum
@@ -94,5 +101,5 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.9.6.3
-	- Option to hide crosshair
+v0.9.7
+	- Launcher update
