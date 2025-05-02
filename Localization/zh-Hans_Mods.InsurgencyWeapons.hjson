@@ -22,11 +22,11 @@ PerkSystem: {
 
 NPCs: {
 	AmmoSeller: {
-		DescriptionBestiary: 随机出现，提供各种弹药的优惠价格
-		StandardDialogue1: 新来的？瞧瞧这些打折的好东西
-		StandardDialogue2: 我这儿有批不错的便宜弹药
-		StandardDialogue3: 漂亮玩意都在这呐，过午不侯
-		StandardDialogue4: 我可没时间跟你掰扯，说吧
+		DescriptionBestiary: 随机出现，提供各种弹药的优惠价格。
+		StandardDialogue1: 新来的？瞧瞧这些打折的好东西。
+		StandardDialogue2: 我这儿有批不错的便宜弹药。
+		StandardDialogue3: 漂亮玩意都在这呐，过午不侯。
+		StandardDialogue4: 我可没时间跟你掰扯，说吧。
 		Die: ：风紧扯呼！
 		DisplayName: 卖枪子儿的
 	}
@@ -563,70 +563,70 @@ Items: {
 Projectiles: {
 	AKMHeld.DisplayName: AKM
 	NormalBullet.DisplayName: 子弹
-	AKMMagazine.DisplayName: AKM弹匣
+	AKMMagazine.DisplayName: AKM 弹匣
 	RifleCasing.DisplayName: 步枪弹壳
-	AKMVOG_25.DisplayName: AKM VOG_25榴弹
+	AKMVOG_25.DisplayName: AKM VOG-25P榴弹
 	STGMagazine.DisplayName: StG 弹匣
-	STG44Held.DisplayName: StG44
-	M1GarandEnbloc.DisplayName: M1加兰德 弹夹
+	STG44Held.DisplayName: StG-44
+	M1GarandEnbloc.DisplayName: M1加兰德 漏夹
 	M1GarandHeld.DisplayName: M1加兰德
 	AKMVOG_25P.DisplayName: VOG-25P榴弹
 	M24StExplosive.DisplayName: M24型柄式手榴弹
 	MK2Explosive.DisplayName: Mk.2“菠萝”手榴弹
-	AKS74UHeld.DisplayName: AKS74U
-	AKS74UMagazine.DisplayName: AKS74U 弹匣
+	AKS74UHeld.DisplayName: AKS-74U
+	AKS74UMagazine.DisplayName: AKS-74U 弹匣
 	RGOExplosive.DisplayName: RGO手榴弹
-	ColtPythonHeld.DisplayName: Colt 蟒蛇
+	ColtPythonHeld.DisplayName: 柯尔特 蟒蛇左轮
 	Casing.DisplayName: 弹壳
 	MP7Held.DisplayName: MP7
 	MP7Magazine.DisplayName: MP7 弹匣
-	ChicagoTypewriterHeld.DisplayName: 芝加哥打字机 Held
-	M1928Magazine.DisplayName: M1928 弹匣
-	PPSH41Held.DisplayName: PPSH41
-	PPSH41Magazine.DisplayName: PPSH41 弹匣
-	CoachHeld.DisplayName: Coach
-	Shells.DisplayName: Shells
-	AN94Held.DisplayName: AN94
-	AN94Magazine.DisplayName: A N94 Magazine
-	M1928Drum.DisplayName: M1928 Drum
-	PPSH41Drum.DisplayName: PPSH41 Drum
-	SCARHHeld.DisplayName: SCARH
-	SCARHMagazine.DisplayName: SCARH Magazine
+	ChicagoTypewriterHeld.DisplayName: 芝加哥打字机（汤姆逊冲锋枪）
+	M1928Magazine.DisplayName: 汤姆逊冲锋枪 M1928 弹匣
+	PPSH41Held.DisplayName: 波波沙冲锋枪 PPSh-41
+	PPSH41Magazine.DisplayName: 波波沙冲锋枪 PPSh-41 弹匣
+	CoachHeld.DisplayName: 双管霰弹枪
+	Shells.DisplayName: Buck & Ball子弹
+	AN94Held.DisplayName: AN-94N
+	AN94Magazine.DisplayName: AN-94N 弹匣
+	M1928Drum.DisplayName: 汤姆逊冲锋枪 M1928 弹鼓
+	PPSH41Drum.DisplayName: 波波沙冲锋枪 PPSh-41 弹鼓
+	SCARHHeld.DisplayName: FN SCAR-H
+	SCARHMagazine.DisplayName: FN SCAR-H 弹匣
 	RPKHeld.DisplayName: RPK
-	RPKDrum.DisplayName: RPK Drum
+	RPKDrum.DisplayName: RPK 弹鼓
 	M40A1Held.DisplayName: M40A1
-	MosinHeld.DisplayName: Mosin
-	IthacaHeld.DisplayName: Ithaca
-	EnfieldHeld.DisplayName: Enfield
-	G3A3Held.DisplayName: G3A3
-	EnfieldBlock.DisplayName: Enfield Block
-	M29Held.DisplayName: M29
-	SVT40Held.DisplayName: SVT40
-	M590Held.DisplayName: M590
-	M1014Held.DisplayName: M1014
-	M60Held.DisplayName: M60 Held
+	MosinHeld.DisplayName: 莫辛纳甘 M91/30
+	IthacaHeld.DisplayName: 伊萨卡M37霰弹枪
+	EnfieldHeld.DisplayName: 李-恩菲尔德No.4 Mk.I步枪
+	G3A3Held.DisplayName: H&K G3A3
+	EnfieldBlock.DisplayName: 李-恩菲尔德No.4 Mk.I步枪 弹匣阻断器
+	M29Held.DisplayName: 史密斯·韦森M29型左轮手枪
+	SVT40Held.DisplayName: SVT-40
+	M590Held.DisplayName: 莫斯伯格M590
+	M1014Held.DisplayName: 伯奈利M1014
+	M60Held.DisplayName: M60
 	ShotgunPellet.DisplayName: 霰弹
-	ASVALHeld.DisplayName: ASVAL
-	ASVALMagazine.DisplayName: ASVALMagazine
-	MK2ExplosiveNPC.DisplayName: MK2 Explosive NPC
-	GalilHeld.DisplayName: Galil Held
-	GrozaHeld.DisplayName: Groza Held
-	GalilMagazine.DisplayName: Galil Magazine
-	GrozaMagazine.DisplayName: Groza Magazine
-	G36CHeld.DisplayName: G36C Held
-	G36CMagazine.DisplayName: G36C Magazine
-	M1A1Held.DisplayName: M1A1 Held
-	M1A1Magazine.DisplayName: M1A1 Magazine
-	M4A1Held.DisplayName: M4 A1 Held
-	M4A1Magazine.DisplayName: M4 A1 Magazine
-	M1911Held.DisplayName: M1911 Held
-	M1911Magazine.DisplayName: M1911 Magazine
-	MP5KHeld.DisplayName: MP5K Held
-	MP5KMagazine.DisplayName: MP5K Magazine
-	MP5SDHeld.DisplayName: MP5SD Held
-	MP5SDMagazine.DisplayName: MP5SD Magazine
-	SKSHeld.DisplayName: SKS Held
-	SKSMagazine.DisplayName: SKS Magazine
+	ASVALHeld.DisplayName: “巨浪”AS VAL
+	ASVALMagazine.DisplayName: “巨浪”AS VAL 弹匣
+	MK2ExplosiveNPC.DisplayName: Mk.2“菠萝”手榴弹 NPC射弹
+	GalilHeld.DisplayName: IMI 加利尔
+	GrozaHeld.DisplayName: OTs-14 Groza 4
+	GalilMagazine.DisplayName: IMI 加利尔 弹匣
+	GrozaMagazine.DisplayName: OTs-14 Groza 4 弹匣
+	G36CHeld.DisplayName: H&K G36C
+	G36CMagazine.DisplayName: H&K G36C 弹匣
+	M1A1Held.DisplayName: M1A1伞兵卡宾
+	M1A1Magazine.DisplayName: M1A1伞兵卡宾 弹匣
+	M4A1Held.DisplayName: 柯尔特 M4A1
+	M4A1Magazine.DisplayName: 柯尔特 M4A1 弹匣
+	M1911Held.DisplayName: 柯尔特 M1911
+	M1911Magazine.DisplayName: 柯尔特 M1911 弹匣
+	MP5KHeld.DisplayName: H&K MP5K
+	MP5KMagazine.DisplayName: H&K MP5K 弹匣
+	MP5SDHeld.DisplayName: H&K MP5SD
+	MP5SDMagazine.DisplayName: H&K MP5SD 弹匣
+	SKSHeld.DisplayName: SKS西蒙诺夫
+	SKSMagazine.DisplayName: SKS西蒙诺夫 弹匣
 	UMP45Held.DisplayName: UMP45 Held
 	UMP45Magazine.DisplayName: UMP45 Magazine
 	PKMHeld.DisplayName: PKM Held
@@ -635,49 +635,49 @@ Projectiles: {
 	M249Box.DisplayName: M249 Box
 	Shrapnel.DisplayName: 弹片
 	SVTMagazine.DisplayName: SVT弹匣
-	G43Held.DisplayName: G43 Held
-	G43Magazine.DisplayName: G43 Magazine
-	AK12Held.DisplayName: A K12 Held
-	AK12Magazine.DisplayName: A K12 Magazine
-	FG42Held.DisplayName: F G42 Held
-	FG42Magazine.DisplayName: F G42 Magazine
-	MP40Held.DisplayName: M P40 Held
-	MP40Magazine.DisplayName: M P40 Magazine
-	C96Held.DisplayName: C96 Held
-	C96Clip.DisplayName: C96 Clip
-	C96CHeld.DisplayName: C96 C Held
-	C96CMagazine.DisplayName: C96 C Magazine
-	AK74MHeld.DisplayName: A K74 M Held
-	F2000Held.DisplayName: F2000 Held
-	AK74MMagazine.DisplayName: A K74 M Magazine
-	Glock17Held.DisplayName: Glock17 Held
-	F2000Magazine.DisplayName: F2000 Magazine
-	Glock17Magazine.DisplayName: Glock17 Magazine
-	DeagleHeld.DisplayName: Deagle Held
-	DeagleMagazine.DisplayName: Deagle Magazine
-	Saiga12Held.DisplayName: Saiga12 Held
-	Saiga12Magazine.DisplayName: Saiga12 Magazine
-	WebleyHeld.DisplayName: Webley Held
-	M14EBRHeld.DisplayName: M14 E B R Held
-	M14EBRMagazine.DisplayName: M14 E B R Magazine
-	MK18Held.DisplayName: M K18 Held
-	MK18Magazine.DisplayName: M K18 Magazine
-	USPHeld.DisplayName: U S P Held
-	USPMagazine.DisplayName: U S P Magazine
-	M72LAWHeld.DisplayName: M72 L A W Held
-	M72Discard.DisplayName: M72 Discard
-	M72LAWRocketProj.DisplayName: M72 L A W Rocket Proj
-	AT4Held.DisplayName: A T4 Held
-	AT4Discard.DisplayName: A T4 Discard
-	AT4Warhead.DisplayName: A T4 Warhead
-	M72LAWWarhead.DisplayName: M72 L A W Warhead
-	PanzerfaustHeld.DisplayName: Panzerfaust Held
-	PanzerfaustDiscard.DisplayName: Panzerfaust Discard
-	PanzerfaustWarhead.DisplayName: Panzerfaust Warhead
-	RPG7Held.DisplayName: R P G7 Held
-	RPGWarhead.DisplayName: R P G Warhead
-	PanzerschreckHeld.DisplayName: Panzerschreck Held
-	PanzerschreckWarhead.DisplayName: Panzerschreck Warhead
+	G43Held.DisplayName: 格韦尔43步枪(G43)
+	G43Magazine.DisplayName: 格韦尔43步枪(G43) 弹匣
+	AK12Held.DisplayName: AK-12
+	AK12Magazine.DisplayName: AK-12 弹匣
+	FG42Held.DisplayName: FG42伞兵机枪
+	FG42Magazine.DisplayName: FG42伞兵机枪 弹匣
+	MP40Held.DisplayName: MP-40
+	MP40Magazine.DisplayName: MP-40 弹匣
+	C96Held.DisplayName: 毛瑟 C96
+	C96Clip.DisplayName: 毛瑟 C96 弹夹
+	C96CHeld.DisplayName: 毛瑟 C96 M1932“大肚匣子”
+	C96CMagazine.DisplayName: 毛瑟 C96 M1932“大肚匣子” 弹匣
+	AK74MHeld.DisplayName: AKS-74
+	F2000Held.DisplayName: FN F2000
+	AK74MMagazine.DisplayName: AKS-74 弹匣
+	Glock17Held.DisplayName: 格洛克 17
+	F2000Magazine.DisplayName: FN F2000 弹匣
+	Glock17Magazine.DisplayName: 格洛克 17 弹匣
+	DeagleHeld.DisplayName: IMI 沙漠之鹰
+	DeagleMagazine.DisplayName: IMI 沙漠之鹰 弹匣
+	Saiga12Held.DisplayName: Saiga-12K半自动霰弹枪
+	Saiga12Magazine.DisplayName: Saiga-12K半自动霰弹枪 弹匣
+	WebleyHeld.DisplayName: 韦伯利MK.VI转轮手枪
+	M14EBRHeld.DisplayName: M14 EBR
+	M14EBRMagazine.DisplayName: M14 EBR 弹匣
+	MK18Held.DisplayName: Mk. 18 MOD 1
+	MK18Magazine.DisplayName: Mk. 18 MOD 1 弹匣
+	USPHeld.DisplayName: H&K USPMatch 比赛手枪
+	USPMagazine.DisplayName: H&K USPMatch 比赛手枪 弹匣
+	M72LAWHeld.DisplayName: M72 LAW火箭筒
+	M72Discard.DisplayName: M72 LAW火箭筒 报废筒体
+	M72LAWRocketProj.DisplayName: M72 LAW火箭筒 火箭射弹
+	AT4Held.DisplayName: M136 AT4反坦克火箭筒
+	AT4Discard.DisplayName: M136 AT4反坦克火箭筒 报废筒体
+	AT4Warhead.DisplayName: M136 AT4反坦克火箭筒 火箭弹头
+	M72LAWWarhead.DisplayName: M72 LAW火箭筒 火箭弹头
+	PanzerfaustHeld.DisplayName: 铁拳60反坦克火箭筒
+	PanzerfaustDiscard.DisplayName: 铁拳60反坦克火箭筒 报废筒体
+	PanzerfaustWarhead.DisplayName: 铁拳60反坦克火箭筒 火箭弹头
+	RPG7Held.DisplayName: RPG-7火箭筒
+	RPGWarhead.DisplayName: RPG火箭弹
+	PanzerschreckHeld.DisplayName: “坦克杀手”火箭筒
+	PanzerschreckWarhead.DisplayName: “坦克杀手”火箭筒 火箭弹头
 }
 
 Keybinds: {
