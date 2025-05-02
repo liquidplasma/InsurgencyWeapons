@@ -1,4 +1,4 @@
-// AmmoItem.UsedBy: "[c/c29463:Used by:]"
+AmmoItem.UsedBy: "[c/c29463:使用此弹药的枪械:]"
 
 SetBonuses: {
 	RevolverSet: 使用左轮手枪&手枪时，伤害提升100%，暴击率提升25%
@@ -65,7 +65,7 @@ Configs: {
 	Misc: 杂项
 	InsurgencyModConfig.DisplayName: 叛乱武库服务端配置
 	ConfigClient: 客户端
-	// ShowCrosshair: Draw a custom crosshair when holding weapons
+	ShowCrosshair: 手持武器时绘制准星
 
 	InsurgencyModConfigClient: {
 		DisplayName: 叛乱武库客户端配置
@@ -81,8 +81,8 @@ Configs: {
 		}
 
 		ShowCrosshair: {
-			// Label: Show Crosshair
-			// Tooltip: ""
+			Label: 显示准星
+			Tooltip: ""
 		}
 	}
 }
@@ -90,7 +90,7 @@ Configs: {
 Items: {
 	AKM: {
 		DisplayName: AKM 7.62x39mm + GP-25型 40mm VOG-25P榴弹 发射器
-		Tooltip: 此枪可用·VOG-25P[i:InsurgencyWeapons/VOG_25P]·弹药,使用右键或[g:1]射出
+		Tooltip: 此枪可用·VOG-25P[i:InsurgencyWeapons/VOG_25P]·弹药,使用<right>或[g:1]射出
 	}
 
 	STG44: {
@@ -99,32 +99,18 @@ Items: {
 	}
 
 	Bullet792: {
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/STG44]  [c/c29463:STG-44]
-			'''
+		Tooltip: ""
 		DisplayName: 7.92x33mm 弹药
 	}
 
 	Bullet762: {
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/AKM]  [c/c29463:AKM 7.62x39mm + GP-25型 40mm VOG-25P榴弹 发射器]
-			[i:InsurgencyWeapons/SKS]  [c/c29463:SKS西蒙诺夫]
-			[i:InsurgencyWeapons/RPK]  [c/c29463:RPK]
-			'''
+		Tooltip: ""
 		DisplayName: 7.62x39mm 弹药
 	}
 
 	Bullet3006: {
 		DisplayName: 7.62x63mm 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/M1Garand]  [c/c29463:M1加兰德]
-			'''
+		Tooltip: ""
 	}
 
 	M1Garand: {
@@ -144,12 +130,7 @@ Items: {
 
 	VOG_25P: {
 		DisplayName: VOG-25P
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/AKM]  [c/c29463:AKM 7.62x39mm + GP-25型 40mm VOG-25P榴弹 发射器]
-			[i:InsurgencyWeapons/Groza]  [c/c29463:OTs-14 Groza 4 9x39mm + GP-30型 40mm VOG-25P榴弹 发射器]
-			'''
+		Tooltip: ""
 	}
 
 	M24St: {
@@ -164,14 +145,7 @@ Items: {
 
 	Bullet545: {
 		DisplayName: 5.45x39mm 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/AK12]  [c/c29463:AK-12]
-			[i:InsurgencyWeapons/AN94]  [c/c29463:AN-94N + PK-AS瞄具]
-			[i:InsurgencyWeapons/AKS74U]  [c/c29463:AKS-74U]
-			[i:InsurgencyWeapons/AK74M]  [c/c29463:AKS-74 + 前握把]
-			'''
+		Tooltip: ""
 	}
 
 	AKS74U: {
@@ -190,11 +164,7 @@ Items: {
 
 	Bullet357: {
 		DisplayName: .357马格南 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/ColtPython]  [c/c29463:柯尔特 蟒蛇左轮]
-			'''
+		Tooltip: ""
 	}
 
 	ColtPython: {
@@ -204,11 +174,7 @@ Items: {
 
 	Bullet4630: {
 		DisplayName: MP7 4.6x30mm 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/MP7]  [c/c29463:H&K MP7]
-			'''
+		Tooltip: ""
 	}
 
 	MP7: {
@@ -218,14 +184,7 @@ Items: {
 
 	Bullet45ACP: {
 		DisplayName: .45ACP 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/M1911]  [c/c29463:柯尔特 M1911]
-			[i:InsurgencyWeapons/ChicagoTypewriter]  [c/c29463:汤姆逊冲锋枪 M1928]
-			[i:InsurgencyWeapons/UMP45]  [c/c29463:H&K UMP-45]
-			[i:InsurgencyWeapons/USP]  [c/c29463:H&K USPMatch 比赛手枪]
-			'''
+		Tooltip: ""
 	}
 
 	ChicagoTypewriter: {
@@ -235,11 +194,7 @@ Items: {
 
 	Bullet76225: {
 		DisplayName: 7.62x25mm 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/PPSH41]  [c/c29463:波波沙冲锋枪 PPSh-41]
-			'''
+		Tooltip: ""
 	}
 
 	PPSH41: {
@@ -249,17 +204,12 @@ Items: {
 
 	ShellBuck_Ball: {
 		DisplayName: Buck & Ball 弹药
-		Tooltip:
-			'''
-			包含六个铅弹和一个球
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/Coach]  [c/c29463:双管霰弹枪]
-			'''
+		Tooltip: 包含六个铅弹和一个球
 	}
 
 	Coach: {
 		DisplayName: 双管霰弹枪
-		Tooltip: 右键可齐射
+		Tooltip: <right>可齐射
 	}
 
 	AN94: {
@@ -267,21 +217,13 @@ Items: {
 		Tooltip:
 			'''
 			第一枪为二连发
-			右键拖动扩大视野范围
+			<right>拖动扩大视野范围
 			'''
 	}
 
 	Bullet76251: {
 		DisplayName: 7.62x51mm 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/G3A3]  [c/c29463:H&K G3A3]
-			[i:InsurgencyWeapons/SCARH]  [c/c29463:FN SCAR-H]
-			[i:InsurgencyWeapons/M60]  [c/c29463:M60]
-			[i:InsurgencyWeapons/M40A1]  [c/c29463:M40A1 7.62x51mm + Leupold瞄准镜]
-			[i:InsurgencyWeapons/M14EBR]  [c/c29463:M14 EBR]
-			'''
+		Tooltip: ""
 	}
 
 	SCARH: {
@@ -314,36 +256,22 @@ Items: {
 
 	M40A1: {
 		DisplayName: M40A1 7.62x51mm + Leupold瞄准镜
-		Tooltip: 右键拖动扩大视野范围
+		Tooltip: <right>拖动扩大视野范围
 	}
 
 	Mosin: {
 		DisplayName: 莫辛纳甘 M91/30 7.62x54mmR + PU瞄准镜
-		Tooltip: 右键拖动扩大视野范围
+		Tooltip: <right>拖动扩大视野范围
 	}
 
 	Bullet76254R: {
 		DisplayName: 7.62x54mmR 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/PKM]  [c/c29463:PKM]
-			[i:InsurgencyWeapons/SVT40]  [c/c29463:SVT-40]
-			[i:InsurgencyWeapons/Mosin]  [c/c29463:莫辛纳甘 M91/30 7.62x54mmR + PU瞄准镜]
-			'''
+		Tooltip: ""
 	}
 
 	TwelveGauge: {
 		DisplayName: 12铅径霰弹 弹药
-		Tooltip:
-			'''
-			8枚弹丸
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/Ithaca]  [c/c29463:伊萨卡M37霰弹枪]
-			[i:InsurgencyWeapons/M1014]  [c/c29463:伯奈利M1014]
-			[i:InsurgencyWeapons/M590]  [c/c29463:莫斯伯格M590]
-			[i:InsurgencyWeapons/Saiga12]  [c/c29463:Saiga-12K半自动霰弹枪]
-			'''
+		Tooltip: 8枚弹丸
 	}
 
 	Ithaca: {
@@ -373,29 +301,17 @@ Items: {
 
 	Bullet303: {
 		DisplayName: .303 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/LeeEnfield]  [c/c29463:李-恩菲尔德No.4 Mk.I步枪]
-			'''
+		Tooltip: ""
 	}
 
 	Bullet44: {
 		DisplayName: .44马格南 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/M29]  [c/c29463:史密斯·韦森M29型左轮手枪]
-			'''
+		Tooltip: ""
 	}
 
 	Bullet455: {
 		DisplayName: .455韦伯利转轮手枪弹
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/Webley]  [c/c29463:韦伯利MK.VI转轮手枪]
-			'''
+		Tooltip: ""
 	}
 
 	SVT40: {
@@ -420,12 +336,7 @@ Items: {
 
 	Bullet939: {
 		DisplayName: 9x39mm 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/ASVAL]  [c/c29463:“巨浪”AS VAL]
-			[i:InsurgencyWeapons/Groza]  [c/c29463:OTs-14 Groza 4 9x39mm + GP-30型 40mm VOG-25P榴弹 发射器]
-			'''
+		Tooltip: ""
 	}
 
 	ASVAL: {
@@ -435,16 +346,7 @@ Items: {
 
 	Bullet556: {
 		DisplayName: 5.56x45mm 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/Galil]  [c/c29463:IMI 加利尔]
-			[i:InsurgencyWeapons/G36C]  [c/c29463:H&K G36C]
-			[i:InsurgencyWeapons/M4A1]  [c/c29463:柯尔特 M4A1]
-			[i:InsurgencyWeapons/M249]  [c/c29463:FN M249]
-			[i:InsurgencyWeapons/F2000]  [c/c29463:FN F2000]
-			[i:InsurgencyWeapons/MK18]  [c/c29463:Mk. 18 MOD 1]
-			'''
+		Tooltip: ""
 	}
 
 	Galil: {
@@ -454,7 +356,7 @@ Items: {
 
 	Groza: {
 		DisplayName: OTs-14 Groza 4 9x39mm + GP-30型 40mm VOG-25P榴弹 发射器
-		Tooltip: 此枪可用·VOG-25P[i:InsurgencyWeapons/VOG_25P]·弹药,使用右键或[g:1]射出
+		Tooltip: 此枪可用·VOG-25P[i:InsurgencyWeapons/VOG_25P]·弹药,使用<right>或[g:1]射出
 	}
 
 	G36C: {
@@ -464,11 +366,7 @@ Items: {
 
 	Bullet76233: {
 		DisplayName: 7.62x33mm 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/M1A1]  [c/c29463:M1A1伞兵卡宾]
-			'''
+		Tooltip: ""
 	}
 
 	M1A1: {
@@ -528,12 +426,7 @@ Items: {
 
 	Bullet79257: {
 		DisplayName: 7.92x57mm 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/FG42]  [c/c29463:FG42伞兵机枪]
-			[i:InsurgencyWeapons/G43]  [c/c29463:格韦尔43步枪(G43) 7.92x57mm + ZF4瞄准镜]
-			'''
+		Tooltip: ""
 	}
 
 	AK12: {
@@ -558,24 +451,12 @@ Items: {
 
 	Bullet76325: {
 		DisplayName: 毛瑟7.63x25mm手枪弹
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/C96]  [c/c29463:毛瑟 C96]
-			[i:InsurgencyWeapons/C96C]  [c/c29463:毛瑟 C96 M1932“大肚匣子”]
-			'''
+		Tooltip: ""
 	}
 
 	Bullet919: {
 		DisplayName: 9x19mm 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/MP40]  [c/c29463:MP-40]
-			[i:InsurgencyWeapons/MP5K]  [c/c29463:H&K MP5K]
-			[i:InsurgencyWeapons/MP5SD]  [c/c29463:H&K MP5SD]
-			[i:InsurgencyWeapons/Glock17]  [c/c29463:格洛克 17]
-			'''
+		Tooltip: ""
 	}
 
 	C96C: {
@@ -600,11 +481,7 @@ Items: {
 
 	Bullet50AE: {
 		DisplayName: 沙漠之鹰 .50AE 弹药
-		Tooltip:
-			'''
-			使用此弹药的枪械:
-			[i:InsurgencyWeapons/Deagle]  [c/c29463:IMI 沙漠之鹰]
-			'''
+		Tooltip: ""
 	}
 
 	Deagle: {
@@ -633,53 +510,53 @@ Items: {
 	}
 
 	M72LAWRocket: {
-		// DisplayName: M72 LAW Rocket
-		// Tooltip: ""
+		DisplayName: M72 LAW 火箭弹
+		Tooltip: ""
 	}
 
 	M72LAW: {
-		// DisplayName: M72 LAW
-		// Tooltip: ""
+		DisplayName: M72 LAW火箭筒
+		Tooltip: ""
 	}
 
 	AT4Rocket: {
-		// DisplayName: M136 AT4 Rocket
-		// Tooltip: ""
+		DisplayName: M136 AT4 火箭弹
+		Tooltip: ""
 	}
 
 	AT4: {
-		// DisplayName: M136 AT4
-		// Tooltip: ""
+		DisplayName: M136 AT4反坦克火箭筒
+		Tooltip: ""
 	}
 
 	PZFaustRocket: {
-		// DisplayName: Sprengkopf 60
-		// Tooltip: ""
+		DisplayName: 铁拳反坦克火箭弹
+		Tooltip: ""
 	}
 
 	Panzerfaust: {
-		// DisplayName: Panzerfaust 60M
-		// Tooltip: ""
+		DisplayName: 铁拳60反坦克火箭筒
+		Tooltip: ""
 	}
 
 	RPGRocket: {
-		// DisplayName: PG-7V Warhead
-		// Tooltip: ""
+		DisplayName: PG-7V 破甲弹
+		Tooltip: ""
 	}
 
 	RPG7: {
-		// DisplayName: RPG-7
-		// Tooltip: ""
+		DisplayName: RPG-7火箭筒
+		Tooltip: ""
 	}
 
 	PanzerschreckRocket: {
-		// DisplayName: RPzB. Gr. 4322
-		// Tooltip: ""
+		DisplayName: “坦克杀手”4322型 火箭弹
+		Tooltip: ""
 	}
 
 	Panzerschreck: {
-		// DisplayName: Panzerschreck
-		// Tooltip: ""
+		DisplayName: “坦克杀手”火箭筒
+		Tooltip: ""
 	}
 }
 
@@ -787,24 +664,24 @@ Projectiles: {
 	MK18Magazine.DisplayName: M K18 Magazine
 	USPHeld.DisplayName: U S P Held
 	USPMagazine.DisplayName: U S P Magazine
-	// M72LAWHeld.DisplayName: M72 L A W Held
-	// M72Discard.DisplayName: M72 Discard
-	// M72LAWRocketProj.DisplayName: M72 L A W Rocket Proj
-	// AT4Held.DisplayName: A T4 Held
-	// AT4Discard.DisplayName: A T4 Discard
-	// AT4Warhead.DisplayName: A T4 Warhead
-	// M72LAWWarhead.DisplayName: M72 L A W Warhead
-	// PanzerfaustHeld.DisplayName: Panzerfaust Held
-	// PanzerfaustDiscard.DisplayName: Panzerfaust Discard
-	// PanzerfaustWarhead.DisplayName: Panzerfaust Warhead
-	// RPG7Held.DisplayName: R P G7 Held
-	// RPGWarhead.DisplayName: R P G Warhead
-	// PanzerschreckHeld.DisplayName: Panzerschreck Held
-	// PanzerschreckWarhead.DisplayName: Panzerschreck Warhead
+	M72LAWHeld.DisplayName: M72 L A W Held
+	M72Discard.DisplayName: M72 Discard
+	M72LAWRocketProj.DisplayName: M72 L A W Rocket Proj
+	AT4Held.DisplayName: A T4 Held
+	AT4Discard.DisplayName: A T4 Discard
+	AT4Warhead.DisplayName: A T4 Warhead
+	M72LAWWarhead.DisplayName: M72 L A W Warhead
+	PanzerfaustHeld.DisplayName: Panzerfaust Held
+	PanzerfaustDiscard.DisplayName: Panzerfaust Discard
+	PanzerfaustWarhead.DisplayName: Panzerfaust Warhead
+	RPG7Held.DisplayName: R P G7 Held
+	RPGWarhead.DisplayName: R P G Warhead
+	PanzerschreckHeld.DisplayName: Panzerschreck Held
+	PanzerschreckWarhead.DisplayName: Panzerschreck Warhead
 }
 
 Keybinds: {
 	ReloadKey.DisplayName: 换弹
 	QuickBuy.DisplayName: 快速购买
-	// OpenSelectioUI.DisplayName: Open Selectio U I
+	OpenSelectioUI.DisplayName: 打开选择界面
 }
