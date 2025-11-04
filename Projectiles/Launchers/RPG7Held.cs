@@ -1,4 +1,6 @@
-﻿using InsurgencyWeapons.Items.Ammo;
+﻿using InsurgencyWeapons.Helpers;
+using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Items.Weapons.AssaultRifles;
 using InsurgencyWeapons.Items.Weapons.Launchers;
 using InsurgencyWeapons.Projectiles.WeaponExtras.Warheads;
 using System.IO;
@@ -39,7 +41,7 @@ namespace InsurgencyWeapons.Projectiles.Launchers
             MagazineSize = 1;
             AmmoType = ModContent.ItemType<RPGRocket>();
             BigSpriteSpecificIdlePos = true;
-            drawScale = 0.75f;
+            //drawScale = 0.66f;
             base.SetDefaults();
         }
 
@@ -56,10 +58,10 @@ namespace InsurgencyWeapons.Projectiles.Launchers
         }
 
         public override void AI()
-        {
+        {            
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = -8;
-            SpecificWeaponFix = new Vector2(0, -4);
+            SpecificWeaponFix = new Vector2(0, -5);
             if (LauncherDelay == 0 && AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
@@ -71,6 +73,7 @@ namespace InsurgencyWeapons.Projectiles.Launchers
                     CurrentAmmo--;
                     SoundEngine.PlaySound(Fire, Projectile.Center);
                     ShootRocket(ModContent.ProjectileType<RPGWarhead>(), 1f);
+                    Vector2 vel = Player.MountedCenter.DirectionTo(MouseAim) * HeldItem.shootSpeed;
                     break;
             }
 

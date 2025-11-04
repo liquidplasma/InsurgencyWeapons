@@ -38,6 +38,8 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras.Warheads
             Projectile.extraUpdates += 1;
             if (this is AT4Warhead)
                 Projectile.extraUpdates = 0;
+            if (this is Grenade40mmProj)
+                Projectile.scale = 0.33f;
             base.SetDefaults();
         }
 
@@ -99,6 +101,8 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras.Warheads
                 Vector2 explosionRadius = new(360, 360);
                 if (this is PanzerfaustWarhead)
                     explosionRadius *= 0.9f;
+                else if (this is Grenade40mmProj)
+                    explosionRadius *= 0.75f;
                 Projectile.Resize((int)explosionRadius.X, (int)explosionRadius.Y);
                 Projectile.alpha = 255;
                 Projectile.velocity = Vector2.Zero;
@@ -107,7 +111,7 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras.Warheads
                 Projectile.localNPCHitCooldown = -1;
                 Projectile.netUpdate = true;
                 for (int i = 0; i < 6; i++)
-                    HelperStats.SmokeGore(Projectile.GetSource_Death(), Projectile.Center, 9, 9);
+                    HelperStats.SmokeGore(Projectile.GetSource_Death(), Projectile.Center, 2, 7.5f);
             }
             if (Projectile.Opacity <= 1f)
                 Projectile.Opacity += 0.01f;
@@ -126,11 +130,20 @@ namespace InsurgencyWeapons.Projectiles.WeaponExtras.Warheads
 
         public override void OnKill(int timeLeft)
         {
-            if (Projectile.wet)
-                SoundEngine.PlaySound(Sounds.WetRocketDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
+            if (this is Grenade40mmProj)
+            {
+                if (Projectile.wet)
+                    SoundEngine.PlaySound(Sounds.WetGrenadeDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
+                else
+                    SoundEngine.PlaySound(Sounds.GrenadeDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
+            }
             else
-                SoundEngine.PlaySound(Sounds.RocketDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
-
+            {
+                if (Projectile.wet)
+                    SoundEngine.PlaySound(Sounds.WetRocketDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
+                else
+                    SoundEngine.PlaySound(Sounds.RocketDetonation with { Volume = 0.4f, MaxInstances = 0 }, Projectile.Center);
+            }
             if (Player.DistanceSQ(Projectile.Center) <= 270 * 270)
             {
                 Player.HurtInfo grenadeSelfDamage = new()

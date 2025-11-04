@@ -46,6 +46,7 @@ namespace InsurgencyWeapons
             DeagleMagazine,
             M1911Magazine,
             USPMagazine,
+            VP70Magazine,
             C96Clip;
 
         //Revolvers
@@ -60,11 +61,13 @@ namespace InsurgencyWeapons
             AT4,
             Panzerfaust,
             RPG7,
-            Panzerschreck;
+            Panzerschreck,
+            M79;
 
         //Rifles
         public int
             GarandMagazine,
+            Kar98kClip,
             EnfieldMagazine,
             SVTMagazine;
 
@@ -85,8 +88,10 @@ namespace InsurgencyWeapons
         //Sub machine guns
         public int
             MP40Magazine,
+            L2A3Magazine,
             MP7Magazine,
             MP5KMagazine,
+            GreaseGunMagazine,
             MP5SDMagazine,
             M1928Drum,
             PPShDrum,
@@ -173,6 +178,7 @@ namespace InsurgencyWeapons
             tag[nameof(DeagleMagazine)] = DeagleMagazine;
             tag[nameof(M1911Magazine)] = M1911Magazine;
             tag[nameof(USPMagazine)] = USPMagazine;
+            tag[nameof(VP70Magazine)] = VP70Magazine;
             tag[nameof(C96Clip)] = C96Clip;
 
             //Revolvers
@@ -186,9 +192,11 @@ namespace InsurgencyWeapons
             tag[nameof(Panzerfaust)] = Panzerfaust;
             tag[nameof(RPG7)] = RPG7;
             tag[nameof(Panzerschreck)] = Panzerschreck;
+            tag[nameof(M79)] = M79;
 
             //Rifles
             tag[nameof(GarandMagazine)] = GarandMagazine;
+            tag[nameof(Kar98kClip)] = Kar98kClip;
             tag[nameof(EnfieldMagazine)] = EnfieldMagazine;
             tag[nameof(SVTMagazine)] = SVTMagazine;
 
@@ -206,7 +214,9 @@ namespace InsurgencyWeapons
 
             //Sub machine guns
             tag[nameof(MP7Magazine)] = MP7Magazine;
+            tag[nameof(L2A3Magazine)] = L2A3Magazine;
             tag[nameof(MP5KMagazine)] = MP5KMagazine;
+            tag[nameof(GreaseGunMagazine)] = GreaseGunMagazine;
             tag[nameof(MP5SDMagazine)] = MP5SDMagazine;
             tag[nameof(M1928Drum)] = M1928Drum;
             tag[nameof(PPShDrum)] = PPShDrum;
@@ -251,6 +261,7 @@ namespace InsurgencyWeapons
             DeagleMagazine = tag.GetInt(nameof(DeagleMagazine));
             M1911Magazine = tag.GetInt(nameof(M1911Magazine));
             USPMagazine = tag.GetInt(nameof(USPMagazine));
+            VP70Magazine = tag.GetInt(nameof(VP70Magazine));
             C96Clip = tag.GetInt(nameof(C96Clip));
 
             //Revolvers
@@ -264,9 +275,11 @@ namespace InsurgencyWeapons
             Panzerfaust = tag.GetInt(nameof(Panzerfaust));
             RPG7 = tag.GetInt(nameof(RPG7));
             Panzerschreck = tag.GetInt(nameof(Panzerschreck));
+            M79 = tag.GetInt(nameof(M79));
 
             //Rifles
             GarandMagazine = tag.GetInt(nameof(GarandMagazine));
+            Kar98kClip = tag.GetInt(nameof(Kar98kClip));
             EnfieldMagazine = tag.GetInt(nameof(EnfieldMagazine));
             SVTMagazine = tag.GetInt(nameof(SVTMagazine));
 
@@ -284,7 +297,9 @@ namespace InsurgencyWeapons
 
             //Sub machine guns
             MP7Magazine = tag.GetInt(nameof(MP7Magazine));
+            L2A3Magazine = tag.GetInt(nameof(L2A3Magazine));
             MP5KMagazine = tag.GetInt(nameof(MP5KMagazine));
+            GreaseGunMagazine = tag.GetInt(nameof(GreaseGunMagazine));
             MP5SDMagazine = tag.GetInt(nameof(MP5SDMagazine));
             M1928Drum = tag.GetInt(nameof(M1928Drum));
             PPShDrum = tag.GetInt(nameof(PPShDrum));

@@ -44,7 +44,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
             Projectile.height = 36;
             MagazineSize = 6;
             AmmoType = ModContent.ItemType<Bullet44>();
-            isPistol = true;
+            isPistolSized = true;
             drawScale = 1f;
             base.SetDefaults();
         }

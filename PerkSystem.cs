@@ -106,7 +106,7 @@ namespace InsurgencyWeapons
         public int DemolitionsDamage, DemolitionsKills;
 
         /// <summary>
-        /// Snipers, rifles, pistols and revolvers
+        /// Snipers, Rifles, Pistols and Revolvers
         /// </summary>
         public int SharpShooterDamage, SharpShooterKills;
 
@@ -400,7 +400,7 @@ namespace InsurgencyWeapons
             if (PerkTracking.SharpshooterWeapons(item))
                 BuildTooltip(tooltips, (int)PerkSystem.Perks.Sharpshooter, PerkTracking.SharpShooterDamage, PerkTracking.SharpShooterKills);
 
-            if (item.ModItem is TwelveGaugeSlug || item.ModItem is TwelveGauge || item.ModItem is ShellBuck_Ball)
+            if (item.ModItem is TwelveGaugeSlug || item.ModItem is TwelveGauge || item.ModItem is ShellBuck_Ball || item.ModItem is Buckshot40mm)
             {
                 float penBuff = PerkTracking.GetPenetrationBuffSupport();
                 int penValue = (int)Math.Round(3 * penBuff);

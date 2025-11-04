@@ -1,5 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
+using InsurgencyWeapons.Items.Weapons.Shotguns;
 using InsurgencyWeapons.Projectiles;
 using System.Collections.Generic;
 using Terraria.Localization;
@@ -83,7 +84,7 @@ namespace InsurgencyWeapons.Items
         public int WeaponHeldProjectile { get; set; }
         public int MoneyCost { get; set; }
         public int WeaponPerk { get; set; } = -1;
-        private Projectile Gun;
+        public Projectile Gun;
 
         public override void SetStaticDefaults()
         {
@@ -171,8 +172,6 @@ namespace InsurgencyWeapons.Items
 
     public abstract class Shotgun : WeaponUtils
     {
-        private Projectile Gun;
-
         private int
             shotGunSwitchTimer;
 
@@ -186,13 +185,16 @@ namespace InsurgencyWeapons.Items
 
         public override void HoldItem(Player player)
         {
+            // Coach can only use it's specific ammo
+            bool coachGun = this is Coach;
+
             if (shotGunSwitchTimer > 0)
                 shotGunSwitchTimer--;
             if (player.whoAmI == Main.myPlayer && WeaponHeldProjectile != 0 && player.ownedProjectileCounts[WeaponHeldProjectile] < 1)
             {
                 Gun = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(Item, Item.useAmmo), player.Center, Vector2.Zero, WeaponHeldProjectile, Item.damage, Item.knockBack, player.whoAmI);
                 Gun.GetGlobalProjectile<ProjPerkTracking>().Perk = WeaponPerk;
-                if (Gun.active && Gun.ModProjectile is WeaponBase changeSlug)
+                if (!coachGun && Gun.active && Gun.ModProjectile is WeaponBase changeSlug)
                 {
                     if (useSlug)
                     {
@@ -205,7 +207,7 @@ namespace InsurgencyWeapons.Items
                 }
             }
 
-            if (player.HasItem(ModContent.ItemType<TwelveGaugeSlug>()) && Gun != null && Gun.active && Gun.ModProjectile is WeaponBase shotgun && !shotgun.ReloadStarted && shotgun.MouseRightPressed && shotGunSwitchTimer == 0)
+            if (!coachGun && player.HasItem(ModContent.ItemType<TwelveGaugeSlug>()) && Gun != null && Gun.active && Gun.ModProjectile is WeaponBase shotgun && !shotgun.ReloadStarted && shotgun.MouseRightPressed && shotGunSwitchTimer == 0)
             {
                 shotGunSwitchTimer = 90;
                 shotgun.ReturnAmmo();
@@ -217,11 +219,19 @@ namespace InsurgencyWeapons.Items
 
         public override void SaveData(TagCompound tag)
         {
+            if (this is Coach)
+                useSlug = false;
+
             tag[$"InsurgenyWeaponsSlugChoice{Item.ModItem?.Name}"] = useSlug;
         }
 
         public override void LoadData(TagCompound tag)
         {
+            if (this is Coach)
+            {
+                useSlug = false;
+                return;
+            }
             if (tag.ContainsKey($"InsurgenyWeaponsSlugChoice{Item.ModItem?.Name}"))
                 useSlug = tag.GetBool($"InsurgenyWeaponsSlugChoice{Item.ModItem?.Name}");
         }

@@ -1,5 +1,7 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
+using InsurgencyWeapons.Items.Weapons.Launchers;
+using InsurgencyWeapons.Projectiles.Launchers;
 using Terraria.Graphics;
 
 namespace InsurgencyWeapons.Projectiles
@@ -113,7 +115,7 @@ namespace InsurgencyWeapons.Projectiles
     public class ShotgunPellet : BulletBase
     {
         private int countPierce;
-
+        bool fromM79;
         public override string Texture => base.Texture;
 
         public override void SetDefaults()
@@ -125,6 +127,9 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void OnSpawn(IEntitySource source)
         {
+            if (source is IEntitySource_WithStatsFromItem moditem && moditem.Item.ModItem is M79)            
+                fromM79 = true;          
+            
             float penBuff = PerkTracking.GetPenetrationBuffSupport();
             Projectile.maxPenetrate = Projectile.penetrate = (int)Math.Round(3 * penBuff);
             Projectile.netUpdate = true;
@@ -139,6 +144,8 @@ namespace InsurgencyWeapons.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
+            if (fromM79)
+                modifiers.FinalDamage *= 0.125f;
             float pierceDecrease = 1f - (countPierce * (0.2f - PerkTracking.GetPenetrationBuffSupport() / 10f));
             modifiers.FinalDamage *= pierceDecrease;
             base.ModifyHitNPC(target, ref modifiers);

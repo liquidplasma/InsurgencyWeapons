@@ -133,7 +133,7 @@ namespace InsurgencyWeapons.Projectiles.SniperRifles
                         if (CurrentAmmo < MagazineSize && CanReload())
                         {
                             SoundEngine.PlaySound(Insert, Projectile.Center);
-                            ReloadShotgun(13);
+                            ReloadSingle(13);
                         }
                     }
                     ReloadStarted = ManualReload = false;

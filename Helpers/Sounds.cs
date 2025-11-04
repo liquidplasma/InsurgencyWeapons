@@ -3,6 +3,7 @@
     public static class Sounds
     {
         public static SoundStyle GrenadeDetonation => new("InsurgencyWeapons/Sounds/Weapons/Grenades/det", 3);
+        public static SoundStyle WetGrenadeDetonation => new("InsurgencyWeapons/Sounds/Weapons/Grenades/wdet", 3);
         public static SoundStyle GrenadeTink => new("InsurgencyWeapons/Sounds/Weapons/Grenades/hit", 4);
         public static SoundStyle GrenadePin => new("InsurgencyWeapons/Sounds/Weapons/Grenades/pin");
 

@@ -17,12 +17,12 @@ namespace InsurgencyWeapons
 
         public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            if (Insurgency.Launchers.Contains(item.type))
+            if (Insurgency.AllWeapons.Contains(item.type))
             {
                 Texture2D texture = item.MyTexture();
                 Rectangle rect = texture.Bounds;
                 scale = 1f / 3f * 2f;
-                BetterEntityDraw(texture, item.Bottom + new Vector2(0, -4f), rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
+                BetterEntityDraw(texture, item.Bottom, rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
                 return false;
             }
 
@@ -30,8 +30,8 @@ namespace InsurgencyWeapons
             {
                 Texture2D texture = item.MyTexture();
                 Rectangle rect = texture.Bounds;
-                scale = 0.25f;
-                BetterEntityDraw(texture, item.Bottom + new Vector2(0, -4f), rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
+                scale = 0.75f;
+                BetterEntityDraw(texture, item.Bottom + new Vector2(0, -8f), rect, lightColor, rotation, texture.Size() / 2, scale, SpriteEffects.None);
                 return false;
             }
             return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);

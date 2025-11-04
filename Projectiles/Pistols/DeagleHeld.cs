@@ -51,7 +51,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
             MagazineSize = 7;
             AmmoType = ModContent.ItemType<Bullet50AE>();
             drawScale = 0.5f;
-            isPistol = true;
+            isPistolSized = true;
             base.SetDefaults();
         }
 

@@ -1,6 +1,8 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Other;
+using InsurgencyWeapons.Items.Weapons.Launchers;
+using System.Collections.Generic;
 using Terraria.GameContent.UI;
 
 namespace InsurgencyWeapons
@@ -9,7 +11,9 @@ namespace InsurgencyWeapons
     {
         public static Mod Instance => ModContent.GetInstance<InsurgencyWeapons>();
 
-        public static int MoneyCurrency;
+        public static int MoneyCurrency { get => moneyCurrency; set => moneyCurrency = value; }
+
+        private static int moneyCurrency;
 
         public override void PostSetupContent()
         {
@@ -75,6 +79,21 @@ namespace InsurgencyWeapons
             }
         }
 
+        private static readonly HashSet<Type> validLaunchers =
+        [
+            typeof(M72LAW),
+            typeof(Panzerfaust),
+            typeof(RPG7),
+            typeof(AT4),
+            typeof(Panzerschreck),
+            typeof(M79)
+        ];
+
+        public static bool LauncherCheck(Item heldItem)
+        {
+            return heldItem.ModItem != null && validLaunchers.Contains(heldItem.ModItem.GetType());
+        }
+
         public override void Load()
         {
             On_Main.DrawCursor += On_Main_DrawCursor;
@@ -85,7 +104,7 @@ namespace InsurgencyWeapons
 
         private Vector2 On_Main_DrawThickCursor(On_Main.orig_DrawThickCursor orig, bool smart)
         {
-            if (InsurgencyModConfigClient.Instance.ShowCrosshair && !Main.LocalPlayer.mouseInterface && Main.LocalPlayer.TryGetModPlayer(out InsurgencyMagazineTracking result) && result.DrawingCrosshair)
+            if (InsurgencyModConfigClient.Instance.ShowCrosshair && !Main.gameMenu && !Main.LocalPlayer.mouseInterface && Main.LocalPlayer.TryGetModPlayer(out InsurgencyMagazineTracking result) && result.DrawingCrosshair)
                 return Vector2.Zero;
 
             return orig(smart);
@@ -93,7 +112,7 @@ namespace InsurgencyWeapons
 
         private void On_Main_DrawCursor(On_Main.orig_DrawCursor orig, Vector2 bonus, bool smart)
         {
-            if (InsurgencyModConfigClient.Instance.ShowCrosshair && !Main.LocalPlayer.mouseInterface && Main.LocalPlayer.TryGetModPlayer(out InsurgencyMagazineTracking result) && result.DrawingCrosshair)
+            if (InsurgencyModConfigClient.Instance.ShowCrosshair && !Main.gameMenu && !Main.LocalPlayer.mouseInterface && Main.LocalPlayer.TryGetModPlayer(out InsurgencyMagazineTracking result) && result.DrawingCrosshair)
                 return;
 
             orig(bonus, smart);

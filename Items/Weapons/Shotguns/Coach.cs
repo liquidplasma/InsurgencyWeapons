@@ -10,8 +10,7 @@ namespace InsurgencyWeapons.Items.Weapons.Shotguns
     {
         public override void SetStaticDefaults()
         {
-            AmmoItem.AddRelationShip(ModContent.ItemType<TwelveGauge>(), Type);
-            AmmoItem.AddRelationShip(ModContent.ItemType<TwelveGaugeSlug>(), Type);
+            AmmoItem.AddRelationShip(ModContent.ItemType<ShellBuck_Ball>(), Type);
             base.SetStaticDefaults();
         }
 

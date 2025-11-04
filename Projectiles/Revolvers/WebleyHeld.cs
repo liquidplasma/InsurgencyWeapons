@@ -46,7 +46,7 @@ namespace InsurgencyWeapons.Projectiles.Revolvers
             MagazineSize = 6;
             AmmoType = ModContent.ItemType<Bullet455>();
             drawScale = 0.67f;
-            isPistol = true;
+            isPistolSized = true;
             base.SetDefaults();
         }
 

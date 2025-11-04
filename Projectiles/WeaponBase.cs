@@ -2,15 +2,14 @@
 using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items;
 using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.Launchers;
 using InsurgencyWeapons.Items.Weapons.MachineGuns;
 using InsurgencyWeapons.Projectiles.AssaultRifles;
 using InsurgencyWeapons.Projectiles.Launchers;
 using InsurgencyWeapons.Projectiles.Pistols;
 using InsurgencyWeapons.Projectiles.Revolvers;
+using InsurgencyWeapons.Projectiles.Rifles;
 using InsurgencyWeapons.Projectiles.SubMachineGuns;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles
@@ -195,7 +194,7 @@ namespace InsurgencyWeapons.Projectiles
         public Vector2 SpecificWeaponFix = new(0, 0);
 
         public bool
-            isPistol, isShotgun, isASmallSprite, BigSpriteSpecificIdlePos, isIdle,
+            isPistolSized, isShotgun, isASmallSprite, BigSpriteSpecificIdlePos, isIdle,
             MouseRightPressed,
             HasUnderBarrelGrenadeLauncer;
 
@@ -315,9 +314,13 @@ namespace InsurgencyWeapons.Projectiles
             if (HeldItem.ModItem is SniperRifle)
                 knockBack *= 1.33f;
 
+            if (AmmoType == ModContent.ItemType<Buckshot40mm>())
+                isShotgun = true;
+
             Vector2 aim = WeaponFireSpreadCalc(maxDegree, isShotgun);
             if (AmmoType == ModContent.ItemType<TwelveGaugeSlug>())
                 aim = WeaponFireSpreadCalc(0, false);
+
             int type = isShotgun ? ShotgunPellet : NormalBullet;
 
             //Bullet
@@ -490,8 +493,24 @@ namespace InsurgencyWeapons.Projectiles
             return base.PreAI();
         }
 
+        /// <summary>
+        /// Give scope to player if he is holding sniper rifles
+        /// </summary>
+        private void SniperScope()
+        {
+            if (Insurgency.SniperRifles.Contains(HeldItem.type))
+                Player.scope = true;
+
+            if (SetBonusTracking.sniperScope && HeldItem.ModItem is WeaponUtils weapon)
+                if (weapon.WeaponPerk == ((int)PerkSystem.Perks.Sharpshooter))
+                    Player.scope = true;
+        }
+
         public override void AI()
         {
+            if (Projectile.active)
+                MagazineTracking.isActive = true;
+
             if (Insurgency.AssaultRifles.Contains(HeldItem.type) || Insurgency.Carbines.Contains(HeldItem.type))
                 SpecificWeaponFix = new(0, -2);
 
@@ -504,27 +523,23 @@ namespace InsurgencyWeapons.Projectiles
                 Projectile.netUpdate = true;
             }
 
-            //Give scope to player if he is holding sniper rifles
-            if (Insurgency.SniperRifles.Contains(HeldItem.type))
-                Player.scope = true;
+            SniperScope();
+            WeaponPosition();
+        }
 
-            if (SetBonusTracking.sniperScope && HeldItem.ModItem is WeaponUtils weapon)
-                if (weapon.WeaponPerk == ((int)PerkSystem.Perks.Sharpshooter))
-                    Player.scope = true;
-
-            if (Projectile.active)
-                MagazineTracking.isActive = true;
-
-            //positioning / velocity
-            #region
+        /// <summary>
+        /// Positioning / velocity
+        /// </summary>
+        private void WeaponPosition()
+        {
             idlePos = new Vector2(-12, -40);
             recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
 
             if (Insurgency.Shotguns.Contains(HeldItem.type) || Insurgency.SniperRifles.Contains(HeldItem.type))
                 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * -Math.Clamp((ShotDelay - 12) / -3f, 0, 100);
 
-            if (LauncherCheck())
-                recoil *= 0.2f; // if this is recoiless launcher, lower recoil
+            if (InsurgencyWeapons.LauncherCheck(HeldItem))
+                recoil *= 0.2f;
 
             Vector2 distance = (Player.MountedCenter.DirectionTo(MouseAim) * OffsetFromPlayerCenter) - recoil;
             muzzlePos = Player.MountedCenter + SpecificWeaponFix + distance;
@@ -548,25 +563,26 @@ namespace InsurgencyWeapons.Projectiles
             }
             else if (ReloadTimer == 0)
             {
+                bool directionCheck = Player.direction == -1;
                 isIdle = true;
-                Projectile.rotation = Player.direction == -1 ? -MathHelper.PiOver4 : MathHelper.PiOver4;
-                if (isPistol)
+                Projectile.rotation = directionCheck ? -MathHelper.PiOver4 : MathHelper.PiOver4;
+                if (isPistolSized)
                 {
-                    int X = Player.direction == -1
+                    int X = directionCheck
                         ? 2 //true
                         : -22; //false
 
-                    Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
+                    Projectile.rotation = directionCheck ? -MathHelper.Pi : MathHelper.Pi;
 
                     idlePos = new Vector2(X, -10);
-                    if (this is Glock17Held or DeagleHeld or WebleyHeld or USPHeld)
+                    if (this is Glock17Held or DeagleHeld or WebleyHeld or USPHeld or VP70Held)
                     {
-                        X = Player.direction == -1
+                        X = directionCheck
                         ? -16 //true
                         : -36; //false
                         if (this is WebleyHeld)
                         {
-                            X = Player.direction == -1
+                            X = directionCheck
                             ? -24 //true
                             : -44; //false
                         }
@@ -575,35 +591,47 @@ namespace InsurgencyWeapons.Projectiles
                 }
                 if (isASmallSprite)
                 {
-                    int X = Player.direction == -1
+                    int x = directionCheck
                         ? -12 //true
                         : -16; //false
 
-                    idlePos = new Vector2(X, -25);
+                    idlePos = new Vector2(x, -25);
                 }
                 if (BigSpriteSpecificIdlePos)
                 {
-                    int X = Player.direction == -1
+                    int x = directionCheck
                        ? -15 //true
                        : -24; //false
-
+                    int y = -40;
                     if (this is M72LAWHeld)
                     {
-                        X = Player.direction == -1
+                        x = directionCheck
                            ? -12 //true
                            : -35; //false
                     }
+                    if (this is M79Held)
+                    {
+                        x = directionCheck
+                           ? -16 //true
+                           : -38; //false
+                    }
+                    if (this is Kar98kHeld)
+                    {
+                        x = directionCheck
+                           ? -48 //true
+                           : -76; //false
+                        y = -15;
+                    }
 
-                    idlePos = new Vector2(X, -40);
-                    Projectile.rotation = Player.direction == -1 ? -MathHelper.Pi : MathHelper.Pi;
+                    idlePos = new Vector2(x, y);
+                    Projectile.rotation = directionCheck ? -MathHelper.Pi : MathHelper.Pi;
                 }
                 Projectile.position = Player.Center + idlePos;
                 Projectile.position.Y += Player.gfxOffY;
                 Projectile.spriteDirection = Player.direction;
-                if (isPistol)
+                if (isPistolSized)
                     Projectile.frame = 0;
             }
-            #endregion
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -629,10 +657,10 @@ namespace InsurgencyWeapons.Projectiles
         }
 
         /// <summary>
-        /// Inserts a single shell
+        /// Inserts a single round
         /// </summary>
         /// <param name="setReload">Tick delay to set ReloadTimer to</param>
-        public void ReloadShotgun(int setReload)
+        public void ReloadSingle(int setReload)
         {
             ammoStackCount = Math.Clamp(Player.CountItem(Ammo.type), 1, 1);
             Player.ConsumeMultiple(ammoStackCount, Ammo.type);
@@ -668,24 +696,6 @@ namespace InsurgencyWeapons.Projectiles
                 return;
             ammoStackCount = CurrentAmmo;
             Ammo.stack += ammoStackCount;
-        }
-
-        private static readonly HashSet<Type> validLaunchers =
-        [
-            typeof(M72LAW),
-            typeof(Panzerfaust),
-            typeof(RPG7),
-            typeof(AT4),
-            typeof(Panzerschreck)
-        ];
-
-        /// <summary>
-        /// Check if this launcher has a backport for recoiless firing
-        /// </summary>
-        /// <returns></returns>
-        private bool LauncherCheck()
-        {
-            return HeldItem.ModItem != null && validLaunchers.Contains(HeldItem.ModItem.GetType());
         }
     }
 }

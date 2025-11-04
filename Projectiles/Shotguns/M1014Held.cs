@@ -145,7 +145,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     if (LiteMode && CurrentAmmo < MagazineSize && CanReload())
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
-                        ReloadShotgun(13);
+                        ReloadSingle(13);
                     }
                     ReloadStarted = ManualReload = false;
                     break;
@@ -158,7 +158,7 @@ namespace InsurgencyWeapons.Projectiles.Shotguns
                     if (CurrentAmmo < MagazineSize && CanReload())
                     {
                         SoundEngine.PlaySound(Insert, Projectile.Center);
-                        ReloadShotgun(70);
+                        ReloadSingle(70);
                     }
                     break;
 

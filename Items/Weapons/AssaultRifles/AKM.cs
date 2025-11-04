@@ -10,7 +10,7 @@ namespace InsurgencyWeapons.Items.Weapons.AssaultRifles
     {
         public override void SetStaticDefaults()
         {
-            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet545>(), Type);
+            AmmoItem.AddRelationShip(ModContent.ItemType<Bullet762>(), Type);
             base.SetStaticDefaults();
         }
 
