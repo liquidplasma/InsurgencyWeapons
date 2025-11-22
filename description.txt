@@ -101,4 +101,5 @@ Source: [url=https://github.com/liquidplasma/InsurgencyWeapons/tree/main] GitHub
 		* H&K UMP-45 .45ACP
 
 Changelog//
-v0.9.7.3
+v0.9.8
+	- Added Sterling L2A3 9x19mm, L85A2 5.56x45mm, Lewis Model 1915 MK.I, Karabiner 98K, M3 Greasegun .45ACP, H&K VP-70M and M79 Grenade launcher
