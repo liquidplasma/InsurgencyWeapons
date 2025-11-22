@@ -240,8 +240,8 @@ namespace InsurgencyWeapons.Projectiles
         public Vector2 WeaponFireSpreadCalc(int maxDegree, bool shotgun = false)
         {
             bool shouldNotIncrease = Player.scope && MouseRightPressed;
-            if (Player.channel && Main.rand.NextBool(5))
-                Degree += 1;
+            if (Player.channel)
+                Degree += 0.25f;
 
             if (Degree > maxDegree)
                 Degree = maxDegree;

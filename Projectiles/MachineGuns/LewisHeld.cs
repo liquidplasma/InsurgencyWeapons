@@ -1,75 +1,77 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.SubMachineGuns;
-using InsurgencyWeapons.Projectiles.WeaponMagazines.SubMachineGuns;
+using InsurgencyWeapons.Items.Weapons.MachineGuns;
+using InsurgencyWeapons.Projectiles.WeaponMagazines.MachineGuns;
 using System.IO;
 
-namespace InsurgencyWeapons.Projectiles.SubMachineGuns
+namespace InsurgencyWeapons.Projectiles.MachineGuns
 {
-    public class GreaseGunHeld : WeaponBase
+    public class LewisHeld : WeaponBase
     {
         public override int CurrentAmmo
         {
             get
             {
-                return MagazineTracking.GreaseGunMagazine;
+                return MagazineTracking.LewisDrum;
             }
             set
             {
-                MagazineTracking.GreaseGunMagazine = value;
+                MagazineTracking.LewisDrum = value;
             }
         }
 
-        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/grease/shoot")
+        private SoundStyle Fire => new("InsurgencyWeapons/Sounds/Weapons/Ins2/lewis/shoot")
         {
             Pitch = Main.rand.NextFloat(-0.1f, 0.1f),
             MaxInstances = 0,
             Volume = 0.4f
         };
 
-        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/grease/empty");
-        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/grease/magin");
-        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/grease/magout");
-        private SoundStyle BoltLock => new("InsurgencyWeapons/Sounds/Weapons/Ins2/grease/bltfd");
+        private SoundStyle Empty => new("InsurgencyWeapons/Sounds/Weapons/Ins2/lewis/empty");
+        private SoundStyle MagIn => new("InsurgencyWeapons/Sounds/Weapons/Ins2/lewis/magin");
+        private SoundStyle MagOut => new("InsurgencyWeapons/Sounds/Weapons/Ins2/lewis/magout");
+        private SoundStyle Hit => new("InsurgencyWeapons/Sounds/Weapons/Ins2/lewis/hit");
+        private SoundStyle BoltBack => new("InsurgencyWeapons/Sounds/Weapons/Ins2/lewis/bltbk");
 
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = 4;
         }
 
-        public override void SetDefaults()
-        {
-            Projectile.width = 42;
-            Projectile.height = 56;
-            MagazineSize = 30;
-            AmmoType = ModContent.ItemType<Bullet45ACP>();
-            isASmallSprite = true;
-            base.SetDefaults();
-        }
-
         public override bool PreDraw(ref Color lightColor)
         {
-            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 15);
+            DrawMuzzleFlash(Color.Yellow, 1f, Projectile.height - 50);
             return base.PreDraw(ref lightColor);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.width = 38;
+            Projectile.height = 110;
+            MagazineSize = 47;
+            AmmoType = ModContent.ItemType<Bullet303>();
+            BigSpriteSpecificIdlePos = true;
+            drawScale = 0.75f;
+            base.SetDefaults();
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.GreaseGunMagazine;
+            CurrentAmmo = MagazineTracking.LewisDrum;
             ShotDelay = HeldItem.useTime;
         }
 
         public override void AI()
         {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
-            OffsetFromPlayerCenter = 4f;
-            SpecificWeaponFix = new Vector2(0, -2);
+            OffsetFromPlayerCenter = 11f;
+            SpecificWeaponFix = new Vector2(0, -2f);
             if (AllowedToFire(CurrentAmmo))
             {
                 ShotDelay = 0;
                 CurrentAmmo--;
                 SoundEngine.PlaySound(Fire, Projectile.Center);
-                Shoot(1);
+                Shoot(5);
             }
 
             if (LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
@@ -80,7 +82,8 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 
             if (!LiteMode && CurrentAmmo == 0 && CanReload() && !ReloadStarted)
             {
-                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.LightMachineGuns;
+                ReloadTimer -= 25;
                 ReloadStarted = true;
             }
 
@@ -94,7 +97,9 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
             {
                 ManualReload = true;
                 ReloadStarted = true;
-                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.Carbines;
+                ReloadTimer = HeldItem.useTime * (int)Insurgency.ReloadModifiers.LightMachineGuns;
+                ReloadTimer -= 25;
+                Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                 if (LiteMode)
                     ReloadTimer = 14;
             }
@@ -104,7 +109,7 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
                 case 6:
                     if (LiteMode)
                     {
-                        SoundEngine.PlaySound(BoltLock, Projectile.Center);
+                        SoundEngine.PlaySound(Hit, Projectile.Center);
                         ReturnAmmo();
                         if (CanReload())
                             ReloadMagazine();
@@ -114,33 +119,42 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 
                 case 15:
                     if (!ManualReload)
-                        SoundEngine.PlaySound(BoltLock, Projectile.Center);
+                        SoundEngine.PlaySound(BoltBack, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     break;
 
-                case 40:
-                    SoundEngine.PlaySound(MagIn, Projectile.Center);
+                case 30:
+                    if (!ManualReload)
+                        SoundEngine.PlaySound(Hit, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagIn;
+                    break;
+
+                case 110:
+                    SoundEngine.PlaySound(MagIn, Projectile.Center);
+                    Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
                     if (ManualReload)
+                    {
                         Projectile.frame = (int)Insurgency.MagazineState.Reloaded;
+                        ReloadTimer = 25;
+                    }
                     if (CanReload())
                         ReloadMagazine();
                     break;
 
-                case 80:
+                case 175:
                     SoundEngine.PlaySound(MagOut, Projectile.Center);
                     Projectile.frame = (int)Insurgency.MagazineState.EmptyMagOut;
                     ReturnAmmo();
                     CurrentAmmo = 0;
                     if (!ManualReload)
-                        DropMagazine(ModContent.ProjectileType<GreaseGunMagazine>());
+                        DropMagazine(ModContent.ProjectileType<LewisMagazine>());
                     break;
             }
 
             if (CurrentAmmo > 0 && Player.channel)
                 Projectile.frame = Math.Clamp(ShotDelay, 0, 2);
 
-            if (HeldItem.type != ModContent.ItemType<GreaseGun>())
+            if (HeldItem.type != ModContent.ItemType<Lewis>())
                 Projectile.Kill();
 
             base.AI();

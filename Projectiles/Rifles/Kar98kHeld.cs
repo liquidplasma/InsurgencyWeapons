@@ -1,7 +1,6 @@
 ﻿using InsurgencyWeapons.Helpers;
 using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Rifles;
-using InsurgencyWeapons.Items.Weapons.SniperRifles;
 using System.IO;
 
 namespace InsurgencyWeapons.Projectiles.Rifles

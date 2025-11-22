@@ -99,7 +99,7 @@ namespace InsurgencyWeapons.Projectiles.Pistols
                 burstShotsRemaining = Math.Min(3, CurrentAmmo);
                 burstCooldown = 0;
                 burstArmed = false;
-            }           
+            }
 
             if (burstShotsRemaining > 0 && burstCooldown == 0 && AllowedToFire(CurrentAmmo) && !UnderAlternateFireCoolDown)
             {

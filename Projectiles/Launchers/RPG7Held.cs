@@ -1,6 +1,4 @@
-﻿using InsurgencyWeapons.Helpers;
-using InsurgencyWeapons.Items.Ammo;
-using InsurgencyWeapons.Items.Weapons.AssaultRifles;
+﻿using InsurgencyWeapons.Items.Ammo;
 using InsurgencyWeapons.Items.Weapons.Launchers;
 using InsurgencyWeapons.Projectiles.WeaponExtras.Warheads;
 using System.IO;
@@ -58,7 +56,7 @@ namespace InsurgencyWeapons.Projectiles.Launchers
         }
 
         public override void AI()
-        {            
+        {
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = -8;
             SpecificWeaponFix = new Vector2(0, -5);

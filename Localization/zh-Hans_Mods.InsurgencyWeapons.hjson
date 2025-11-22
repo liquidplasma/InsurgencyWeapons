@@ -558,8 +558,54 @@ Items: {
 		DisplayName: “坦克杀手”火箭筒
 		Tooltip: ""
 	}
+
+	Buckshot40mm: {
+		// DisplayName: M79 40mm Buckshot M576
+		// Tooltip: Contains 20 pellets
+	}
+
+	Grenade40mm: {
+		// DisplayName: 40mm Grenade M406
+		// Tooltip: ""
+	}
+
+	M79: {
+		// DisplayName: M79 Grenade Launcher
+		// Tooltip: ""
+	}
+
+	VP70: {
+		// DisplayName: H&K VP-70M 9x19mm
+		// Tooltip: 3 round burst
+	}
+
+	GreaseGun: {
+		// DisplayName: M3 Greasegun .45ACP
+		// Tooltip: ""
+	}
+
+	Kar98k: {
+		// DisplayName: Karabiner 98K 7.92x57mm
+		// Tooltip: ""
+	}
+
+	L2A3: {
+		// DisplayName: Sterling L2A3 9x19mm
+		// Tooltip: ""
+	}
+
+	L85A2: {
+		// DisplayName: L85A2 5.56x45mm + AG-36 40mm M406
+		// Tooltip: ""
+	}
+
+	Lewis: {
+		// DisplayName: Lewis Model 1915 MK.I .303
+		// Tooltip: ""
+	}
 }
 
+//Projectiles - Irrelevant translations below, player will probably never see these
 Projectiles: {
 	AKMHeld.DisplayName: AKM
 	NormalBullet.DisplayName: 子弹
@@ -678,6 +724,21 @@ Projectiles: {
 	RPGWarhead.DisplayName: R P G Warhead
 	PanzerschreckHeld.DisplayName: Panzerschreck Held
 	PanzerschreckWarhead.DisplayName: Panzerschreck Warhead
+	// M79Held.DisplayName: M79 Held
+	// Grenade40mmProj.DisplayName: Grenade40mm Proj
+	// Buckshot40mmUsed.DisplayName: Buckshot40mm Used
+	// Grenade40mmUsed.DisplayName: Grenade40mm Used
+	// VP70Held.DisplayName: V P70 Held
+	// GreaseGunHeld.DisplayName: Grease Gun Held
+	// GreaseGunMagazine.DisplayName: Grease Gun Magazine
+	// VP70Magazine.DisplayName: V P70 Magazine
+	// Kar98kHeld.DisplayName: Kar98k Held
+	// L2A3Held.DisplayName: L2 A3 Held
+	// L2A3Magazine.DisplayName: L2 A3 Magazine
+	// L85A2Held.DisplayName: L85 A2 Held
+	// L85A2Magazine.DisplayName: L85 A2 Magazine
+	// LewisHeld.DisplayName: Lewis Held
+	// LewisMagazine.DisplayName: Lewis Magazine
 }
 
 Keybinds: {

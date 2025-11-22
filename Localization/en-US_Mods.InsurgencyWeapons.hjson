@@ -292,7 +292,7 @@ Items: {
 	}
 
 	Bullet303: {
-		DisplayName: Lee-Enfield .303
+		DisplayName: 7.7×56mmR.303
 		Tooltip: ""
 	}
 
@@ -557,7 +557,7 @@ Items: {
 	}
 
 	Grenade40mm: {
-		DisplayName: M79 40mm Grenade M406
+		DisplayName: 40mm Grenade M406
 		Tooltip: ""
 	}
 
@@ -585,9 +585,19 @@ Items: {
 		DisplayName: Sterling L2A3 9x19mm
 		Tooltip: ""
 	}
+
+	L85A2: {
+		DisplayName: L85A2 5.56x45mm + AG-36 40mm M406
+		Tooltip: ""
+	}
+
+	Lewis: {
+		DisplayName: Lewis Model 1915 MK.I .303
+		Tooltip: ""
+	}
 }
 
-//Irrelevant translations below, player will probably never see these
+//Projectiles - Irrelevant translations below, player will probably never see these
 Projectiles: {
 	AKMHeld.DisplayName: AKM
 	NormalBullet.DisplayName: Normal Bullet
@@ -717,6 +727,10 @@ Projectiles: {
 	Kar98kHeld.DisplayName: Kar98k Held
 	L2A3Held.DisplayName: L2 A3 Held
 	L2A3Magazine.DisplayName: L2 A3 Magazine
+	L85A2Held.DisplayName: L85 A2 Held
+	L85A2Magazine.DisplayName: L85 A2 Magazine
+	LewisHeld.DisplayName: Lewis Held
+	LewisMagazine.DisplayName: Lewis Magazine
 }
 
 Keybinds: {

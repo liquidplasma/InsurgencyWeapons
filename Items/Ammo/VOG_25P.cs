@@ -20,8 +20,7 @@ namespace InsurgencyWeapons.Items.Ammo
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            int index = tooltips.FindIndex(tip => tip.Name == "Damage");
-            tooltips.RemoveAt(index);
+            base.ModifyTooltips(tooltips);
         }
     }
 }

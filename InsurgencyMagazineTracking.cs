@@ -21,6 +21,7 @@ namespace InsurgencyWeapons
             F2000Magazine,
             GalilMagazine,
             GrozaMagazine,
+            L85A2Magazine,
             STGMagazine;
 
         //Carbines
@@ -100,6 +101,7 @@ namespace InsurgencyWeapons
         //Light machine guns
         public int
             RPKDrum,
+            LewisDrum,
             M60Box,
             M249Box,
             PKMBox;
@@ -156,6 +158,7 @@ namespace InsurgencyWeapons
             tag[nameof(F2000Magazine)] = F2000Magazine;
             tag[nameof(GalilMagazine)] = GalilMagazine;
             tag[nameof(GrozaMagazine)] = GrozaMagazine;
+            tag[nameof(L85A2Magazine)] = L85A2Magazine;
             tag[nameof(STGMagazine)] = STGMagazine;
 
             //Carbines
@@ -224,6 +227,7 @@ namespace InsurgencyWeapons
 
             //Light Machine guns
             tag[nameof(RPKDrum)] = RPKDrum;
+            tag[nameof(LewisDrum)] = LewisDrum;
             tag[nameof(M60Box)] = M60Box;
             tag[nameof(M249Box)] = M249Box;
             tag[nameof(PKMBox)] = PKMBox;
@@ -239,6 +243,7 @@ namespace InsurgencyWeapons
             F2000Magazine = tag.GetInt(nameof(F2000Magazine));
             GalilMagazine = tag.GetInt(nameof(GalilMagazine));
             GrozaMagazine = tag.GetInt(nameof(GrozaMagazine));
+            L85A2Magazine = tag.GetInt(nameof(L85A2Magazine));
             STGMagazine = tag.GetInt(nameof(STGMagazine));
 
             //Carbines
@@ -307,6 +312,7 @@ namespace InsurgencyWeapons
 
             //Light Machine guns
             RPKDrum = tag.GetInt(nameof(RPKDrum));
+            LewisDrum = tag.GetInt(nameof(LewisDrum));
             M60Box = tag.GetInt(nameof(M60Box));
             M249Box = tag.GetInt(nameof(M249Box));
             PKMBox = tag.GetInt(nameof(PKMBox));

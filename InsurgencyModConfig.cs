@@ -31,7 +31,7 @@ namespace InsurgencyWeapons
         [TooltipKey("$Mods.InsurgencyWeapons.Configs.DropMagazineDesc")]
         public bool DropMagazine { get; set; }
 
-        [Range(1, 100)]
+        [Range(1, 3600)]
         [Increment(1)]
         [DefaultValue(15)]
         [LabelKey("$Mods.InsurgencyWeapons.Configs.CasingLifeTimeLabel")]

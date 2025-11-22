@@ -56,13 +56,12 @@ namespace InsurgencyWeapons.Projectiles.SubMachineGuns
 
         public override void OnSpawn(IEntitySource source)
         {
-            CurrentAmmo = MagazineTracking.MP5KMagazine;
+            CurrentAmmo = MagazineTracking.L2A3Magazine;
             ShotDelay = HeldItem.useTime;
         }
 
         public override void AI()
         {
-            
             ShowAmmoCounter(CurrentAmmo, AmmoType);
             OffsetFromPlayerCenter = 4f;
             SpecificWeaponFix = new Vector2(0, -1);

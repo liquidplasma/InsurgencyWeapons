@@ -9,7 +9,7 @@
             SoundEngine.PlaySound(Drop with
             {
                 Volume = 0.08f,
-                Pitch  = Main.rand.NextFloat(-0.12f, 0.12f),
+                Pitch = Main.rand.NextFloat(-0.12f, 0.12f),
             }, Projectile.Center);
             return base.OnTileCollide(oldVelocity);
         }
